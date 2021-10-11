@@ -1,0 +1,193 @@
+--- 
+title: "The Data Preparation Journey"
+subtitle: "Finding Your Way With R"
+author: "Martin Monkman"
+date: "`r Sys.Date()`"
+documentclass: krantz
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+site: bookdown::bookdown_site
+description: "Before you can analyze your data, you need to ensure that it is clean and tidy."
+github-repo: MonkmanMH/data_preparation_with_r
+graphics: yes
+#cover-image: images/cover.jpg
+---
+
+```{r setup, include=FALSE}
+options(
+  htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
+)
+
+# install the packages needed by this book; you fill out c(), e.g. c('ggplot2', 'dplyr')
+#lapply(c('xfun'), function(pkg) {
+#  if (system.file(package = pkg) == '') install.packages(pkg)
+#})
+
+# packages
+# tidyverse (extended)
+library(tidyverse)
+library(haven)
+
+# utilities
+library(here)
+library(janitor)
+library(labelled)
+
+# data
+library(palmerpenguins)
+
+```
+
+# Preface  {-}
+
+<img src="img\\20478450629_50e4c32d23_c.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
+
+![_Fisgard Lighthouse_](img/20478450629_50e4c32d23_c.jpg)
+
+
+It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modeling, data visualization, and communication.
+
+There is no shortage of material—textbooks, journal articles, blog posts, online courses, podcasts, etc.—about the 20%. That's not to say that there is no material for the other 80%. But it is scattered, found across technique-specific articles and domain-specific books, along with Stack Overflow questions and miscellaneous blog posts. This book serves as a travel guide: an introduction and wayfinder through some of the scattered resources for readers seeking to understand the core elements of data preparation. Like a lighthouse, it is hoped that it will both guide you in the right direction and keep you from running aground.
+
+The book will introduce the principles of data preparation, framed in a systematic approach that follows a typical data science or statistical workflow. With that context, readers will then work through practical solutions to resolving problems in data using the statistical & data science programming language R. These solutions will include examples of complex real-world data.
+
+
+
+## You, the reader {-}
+
+You might be an academic, working in the physical sciences, social sciences, or humanities, who is (or will be) analyzing data as part of your research. You might be working in a business setting, where important decisions are being made based on the insights you draw from the data collected as part of interactions with customers. As a public servant, you might be creating the evidence a government or other public agency is using to inform policy and program decisions. The principles and practices described in this book will apply no matter the context.
+
+It is assumed that the reader of this book will have a working knowledge of the fundamental data manipulation functions in R (whether base or tidyverse or packages beyond those) or another programming language that supports that work. If you can filter for specific values in the variables and select the columns you want, know the difference between a character string and a numeric value (`"1"` or `1`), and can create a new variable as the result of a manipulation of others, then we're on our way. 
+
+If you don't possess that knowledge yet, I would recommend that you work through _R for Data Science_ by Hadley Wickham and Garrett Grolemund [@Wickham_Grolemund2016]. This book, freely available at [r4ds.had.co.nz](https://r4ds.had.co.nz/), will give you a running start.
+
+While some of the topics covered here may be similar to what you'll find in _R for Data Science_ and other introductory books and similar resources, it is hoped that the examples in this book add more context and expose you to greater technical challenges.
+
+
+## Outline {-}
+
+
+**SECTION A**
+
+**Chapter 1: Foundations**
+
+* Understanding that data in the wild is different than typical textbook examples
+
+* Putting the destination first, which will guide decisions along the way
+
+* Code for reproduciblity: keeping a record of the changes you make
+
+* Adopting good naming practices
+
+* Using appropriate and existing classification systems
+
+
+
+**SECTION B: DATA SOURCES**
+
+**Chapter 2: Importing data**
+
+* Getting data in a variety of formats, including fixed-width text files and SPSS, SAS, and Stata files
+
+
+**Chapter 3: Data from web sources**
+
+* Acquiring data using web APIs and webscraping
+
+
+**Chapter 4: Linking to relational databases** 
+
+* Accessing data directly from databases (SQL)
+
+* The benefits and strengths of relational databases
+
+
+**SECTION C: CLEANING DATA**
+
+**Chapter 5: Clean data principles**
+
+* Understanding tidy data principles
+
+* Understanding what makes data "dirty", and why context matters
+
+* Serving the research question
+
+
+**Chapter 6: Validation strategies**
+
+* Exploratory data analysis to identify problems
+
+* Using the {validate} package
+
+
+**Chapter 7: Cleaning techniques**
+
+* Cleaning dates and strings
+
+* Creating conditional and calculated variables
+
+
+**SECTION D: PREPARING DATA**
+
+**Chapter 8: Data documentation** 
+
+* Creating documentation, including data dictionaries and literate programming
+
+* Data management strategies
+
+
+**Chapter 9: Making data available**
+
+* Sampling techniques
+
+* Maintaining anonymity and confidentiality in published data sets
+
+
+
+
+
+
+
+
+
+## Acknowledgements {-}
+
+I would like to acknowledge everyone who has contributed to the books, articles, blog posts, and R packages cited within.
+
+
+## Some important details {-}
+
+### License {-}
+
+<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/ca/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png" /></a><br />This work by [Martin Monkman](https://github.com/MonkmanMH) is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/ca/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 Canada License</a>.
+
+
+### Source code {-}
+
+The source code for this ebook can be found at this github repository: https://github.com/MonkmanMH/data_preparation_with_r 
+
+This book is written in **Markdown**, using the {bookdown} package [@R-bookdown], and published to the web at [bookdown.org](https://bookdown.org/).
+
+
+```{r eval=FALSE}
+install.packages("bookdown")
+# or the development version
+# devtools::install_github("rstudio/bookdown")
+```
+
+
+### Cover image {-}
+
+The cover image is a wayfinder close to my home: [Fisgard Lighthouse](https://www.pc.gc.ca/en/lhn-nhs/bc/fortroddhill), marking the entrance to Esquimalt Harbour in Victoria, British Columbia, Canada. (Location: https://www.openstreetmap.org/#map=16/48.4307/-123.4477)
+
+The photo was taken by Jeff Hitchcock, and was downloaded from [flickr.com](https://flic.kr/p/xcBpUZ); that site notes that the image is licensed under the [Creative Commons license Attribution 2.0 Generic (CC BY 2.0)](https://creativecommons.org/licenses/by/2.0/).
+
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
