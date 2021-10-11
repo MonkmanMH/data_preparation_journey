@@ -1,0 +1,117 @@
+\mainmatter
+
+# Introduction {#intro}
+
+## The origin of data
+
+Data is proliferating, collected as part of scientific research (whether measuring sub-atomic particles or galaxies in the early universe, plant growth or the migration of animals, people's behaviour or where they live and work in cities), and by the tools that are used to conduct the business of the world. 
+
+Today, data about _you_ might be collected when you: 
+
+* Buy a cup of coffee at a café. This generates at least three types of data: about the type of drink you ordered, about your coffee habits through the rewards program, and about the financial transaction—which is used by the store to measure sales and by you to manage your personal budget. 
+
+* Use a streaming service to watch a movie or listen to some music. The service provider builds a profile about your preferences, which it can then use to make recommendations as to what you might also enjoy. The service can also use the aggregated data from all subscribers to evaluate the success of the content on their platform, and pay the creators of the content.
+
+* Renew your driver's license. Information about you such as date of birth, height, weight, and current address is recorded, which you can then use as a piece of identification to authenticate who you are. The licensing agency can also use the data in aggregate to estimate how many people will be renewing their licenses each month, and often share the data (securely, of course!) with other agencies. In British Columbia, the agency that licenses drivers shares elements of the database, such as your current address, with the provincial electoral agency, allowing for an up-to-date list of eligible voters in the province. [@EBC_Annual_201718, page 70]
+
+* Travel to your place of work or study, captured through the movement of your cell phone. Aggregated location and movement can be used for a variety of purposes, including by GPS systems to indicate areas of road congestion, or to let you know when the next bus will arrive at your stop.
+
+* Respond to a survey, perhaps about your opinions about the platforms of various political parties and the people who represent those parties.
+
+
+## Analyzing data: the data science process
+
+A lot has been written about the benefits of organizations being "data-driven", when good data analysis leads to better decisions. There is no limit to the contexts where data analysis is being applied. In the private sector businesses can compete on analytics [@Davenport_Harris_2007], including retailers [@stitchfix_algo] and supply chain management [@Ashton_2018]. It can also be used in the public sector: data analysis can inform 
+public health strategies during a pandemic [@Polonsky_etal_2019].
+
+The process of going from raw data, collected during processes like those described above, to decision support is often called data science. Data science combines the academic disciplines of statistics, computer programming, and the subject matter (be it astronomy, psychology, economics, or business). [@Conway_Venn_2010]
+
+The typical data science process has been described in this model [@Wickham_Grolemund2016]:
+
+![The data science process](img\data-science.png)
+
+The generalist data scientist has a hand in all the steps through this cycle [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps, an in-depth look at the process of getting data ready for analysis, sharing, and publication.
+
+
+ 
+
+## Data in the wild
+
+Most data science and statistics textbooks use example data sets that are nicely formatted and easy to import.  Anscombe's Quartet [@Anscombe_1973] is a famous example of a small data set that was designed to produce specific statistical results; it is included in the base version of R [@R-base]. Other data sets might be excerpted to use as teaching examples [@R-gapminder], chosen for their statistical properties [@R-palmerpenguins], compiled as examples to demonstrate a methodology or technique [@R-modeldata], or to clean, validate, and aggregate still-larger data collections [@R-Lahman]. 
+
+
+But in real life the data we find ourselves working with is, more often than not, entirely different from those text book examples. 
+
+> Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out its mouth. ^[quote attributed to Jenny Bryan, "Teach Data Science and They Will Come", Joint Statistical Meetings, 2015]
+
+* Data can be stored in different formats–spreadsheets, databases, software-specific file formats, websites, and PDF files. We need to have tools to access the data, no matter the file format.
+
+* The data might be stored in an untidy layout [@tidydata], or inconsistently structured.
+
+* We might receive data from multiple sources, so we end up with two files that have the same value but coded in different ways. For example, my home province in Canada can be represented as "British Columbia", "B.C.", or "BC". All three are accurate, but it can cause problems if they are inconsistent across the data sources (or even more problematically, in the same variable). And don't get me started on date formats—we'll save that for later.
+
+* Data might have as-of-yet undetected errors. It might be incomplete, inconsistent, or it might have data entry mistakes and typos.
+
+* It might have bias...and there are many different types of bias.
+
+* It might contain sensitive information, and our sharing of the data, including the publication of reports, needs to protect the individual records of the people or businesses that provided the information. For example, you might be working with health or financial records. Any disclosure of an individual record might be considered a privacy breach...so you have to take great care to ensure that what you've published doesn't violate any legal, ethical, or moral frameworks.
+
+
+
+This book will introduce steps necessary to ensure that you can assemble your data in a way that allows you to undertake the rest of the data science process, including making data and analysis available for a wider audience, such as other data analysts who might seek to use the data in further analysis. 
+
+
+## A record of your work
+
+Undertaking the steps of the data science process in a scripting environment such as R means that your work will be reproducible and auditable, accurate, and has the potential to be collaborative. [@Parker_2017]
+
+The idea of reproducibility\index{reproducibility} is a fundamental element of good scientific practice, and should be extended to include the analysis of the data. "The standard of reproducibility calls for the data and the computer code used to analyze the data be made available to others." [@Peng_reproducible_2011, p.1226] 
+
+And while it's important in an academic environment, this necessity for reproducibility\index{reproducibility} extends to business and government settings as well. In any situation where the data analysis is supporting decisions, it is imperative that the analyst (i.e. you) be able to explain their methods, and quickly and effectively respond to changes in the data (you might receive an update to the data with more records or revisions to the existing records).
+
+
+David Smith has summarized the benefits of a reproducible data science process\index{reproducibility}. It: 
+
+* Saves time,
+* Produces better science,
+* Creates more trusted research,
+* Reduces the risk of errors, and
+* Encourages collaboration. [@Smith_reproducible_2017]
+
+
+All of the details involved with creating a reproducible workflow is outside the scope of this book;  a summary of approaches associated with documentation of data sourcing and preparation is included in the [**Data documentation** chapter](#documentation). 
+
+For a deeper look at reproducible workflow, it has been summarized by Wilson et al. [@Wilson_Bryan_good_enough_2017]. Specific methods for reproducibility\index{reproducibility} in R and RStudio are dealt with in depth by Christopher Gandrud [@Gandrud_2015].  
+
+
+## Data collection
+
+Before we can start our data science workflow—before we get to the "Import" step—someone has to collect the data. This book _won't_ cover the process of collecting data, a topic both broad and deep. Included in that would be determining the research question (or hypothesis) or business need that the data will support, designing the experiment or the business process to be captured (both could include a survey questionnaire), and undertaking the experiment (including fieldwork) or implementing the business data collection. The details of the data collection process are often domain-specific, so I encourage you to seek out reference materials that are tailored for your chosen subject area.
+
+
+
+## Test of Figure
+
+Now unplug your Internet cable, and start doing some serious work.
+
+We have a nice figure in Figure \@ref(fig:hello), and also a table in Table \@ref(tab:iris).
+
+```{r hello, fig.cap='Hello World!', out.width='90%'}
+par(mar = c(4, 4, 1, .1))
+plot(cars, pch = 19)
+```
+
+```{r iris}
+knitr::kable(
+  head(iris), caption = 'The boring iris data.',
+  booktabs = TRUE
+)
+```
+
+More chapters to come in `02-foo.Rmd`, `03-bar`.Rmd, ...
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+

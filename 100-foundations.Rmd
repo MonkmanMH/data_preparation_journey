@@ -1,0 +1,96 @@
+# Foundations {#foundations}
+
+As we get started on the path of preparing our data, we should think first about where we want to go.
+
+
+## The goal
+
+Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who are have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
+
+While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are be essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities are often different. The data collection and storage is often to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That person is often also the one responsible for the modeling, visualization, and reporting.
+
+At the end of the data preparation phase, before visualization and modeling can start, there should be:
+
+**1. The raw data.**
+
+**2. A tidy dataset [@tidydata]**
+
+**3. A code book describing each variable and its values in the tidy dataset.**
+
+**4. An explicit and exact recipe used by the researcher to go from 1 to 2 to 3.**
+
+The article spells out in more detail what is included in each.
+
+
+See also [@White_etal_nine_simple_ways]
+
+
+## What is data?
+
+One definition of data is as follows:
+
+> Characteristics or information, usually numerical, that are collected through observation. [@OECD_glossary_2007, p.180]
+
+This can be expanded:
+
+> The data obtained from observations are related to the variable being studied. These data are quantitative, qualitative, discrete or continuous if the corresponding variable is quantitative, qualitative, discrete or continuous, respectively. [@Dodge_encyclopedia_2008, "Data", pp.149-150]
+
+
+### What do we mean
+
+"Data" has some nuance that we need to pay attention to.
+
+> Here are four different things that are closely related to each other:
+>
+> **__A theoretical construct__**. This is the thing that you’re trying to take a measurement of, like “age”, “gender” or an “opinion”. A theoretical construct can’t be directly observed, and often they’re actually a bit vague.
+>
+>**__A measure__**. The measure refers to the method or the tool that you use to make your observations. A question in a survey, a behavioural observation or a brain scan could all count as a measure.
+>
+>**__An operationalisation__**. The term “operationalisation” refers to the logical connection between the measure and the theoretical construct, or to the process by which we try to derive a measure from a theoretical construct.
+>
+>**__A variable__**. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets.
+
+[@Navarro_learning_statistics_2019, pp.13–14]
+
+Here's an example. A company wants to understand its workforce because there's a sense that a large number of the staff are thinking about retirement in the next couple of years. The term the human resource (HR) department is using is "succession planning", meaning developing existing staff and recruiting to prepare for departures. Before making the business decision to allocate any resources to this initiative, the company's executive has asked the HR department to describe the magnitude of the risk to the organization: What percent of the staff are about to retire? In what departments? What positions do these potential retirees occupy? Now the HR department has asked you, the data scientist, for an analysis of the demographics of the company. 
+
+We know that _age_ is going to be a _theoretical construct_ we want to measure. In Canada you can start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older, and a second group who are within three years of that age.
+
+A _measure_ we have available is in the human resource database: each staff member's date of birth. This is collected when people are hired, and is required for various purposes, including tax accounting.
+
+But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation, using the functions in the package {lubridate}, that looks like this:
+
+`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of [Ichiro Suzuki](https://en.wikipedia.org/wiki/Ichiro_Suzuki).] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package [@R-lubridate]; see [@Ford_lubridate_2017].]
+
+
+And our _variable_ results from this calculation: in the code example we called it `age_this_year`. Note that this variable will require recalculation every time we repeat our analysis—one's age is not a static value! In a company with roughly 2,500 staff, there's 50-50 chance it is someone's birthday today, and with 4,000 staff it is virtually certain at least one person is celebrating a birthday. [@Yau_birthday_2017] And of course, staff join and leave an organization, so the individuals in our database will change. This means that this variable will only be precisely correct for a few days at most.
+
+
+
+## Classification systems
+
+It's useful to be aware of various classification systems that already exist. That way, you can: 
+
+* save yourself the challenge of coming up with your own classifications for your variables, and
+
+* ensure that your analysis can be compared to other results.
+
+Of course, these classification systems are subject-matter specific. 
+
+As one example, in much social and business data, people's ages are often grouped into 5-year "bins", starting with ages 0–4, 5–9, 10–14, and so on. But not all age classification systems follow this; it will be driven by the specific context. A case in point is Statistics Canada, who provide different data sets with the ages grouped in a variety of ways. [@StatCan_age_of_person]
+
+And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the larger city expanding to add smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
+
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is designed to allow for international comparisons. Here are some examples:
+
+* International: United Nations Statistics Division [@UNSD_classifications]
+
+* Statistics Canada [@StatCan_definitions]
+
+
+
+ <!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
