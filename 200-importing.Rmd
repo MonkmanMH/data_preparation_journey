@@ -4,6 +4,13 @@ output:
   html_document: default
 ---
 
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
 ```{r setup_ch200, include=FALSE}
 
 # packages
@@ -598,9 +605,4 @@ Other examples of importing files can be found here:
 * Wickham and Grolemund, _R for Data Science_ [@Wickham_Grolemund2016, Chapter 11 Data Import] https://r4ds.had.co.nz/data-import.html
 
 * Zumel and Mount, _Practical Data Science with R_ [@Zumel_Mount_2019, chapter 2]
-
-
-<!-- 
-This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
--->
 

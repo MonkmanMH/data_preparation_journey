@@ -1,0 +1,32 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch500, include=FALSE}
+
+# packages
+
+```
+
+
+# Clean data principles {#clean-data}
+
+placeholder for chapter 5
+
+
+* Understanding tidy data principles
+
+* Understanding what makes data “dirty”, and why context matters
+
+* Serving the research question
+
+

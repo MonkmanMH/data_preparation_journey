@@ -15,6 +15,12 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 _the future chapter 8_
 
+* Creating documentation, including data dictionaries and literate programming
+
+* Data management strategies
+
+
+
 ## Data documentation
 
 The documentation of the data sources, methods, etc is vital for reproducibility\index{reproducibility}.

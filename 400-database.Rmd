@@ -1,0 +1,28 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch400, include=FALSE}
+
+# packages
+
+```
+
+
+# Linking to relational databases {#databases}
+
+placeholder for chapter 4
+
+
+* Accessing data directly from databases (SQL)
+
+* The benefits and strengths of relational databases

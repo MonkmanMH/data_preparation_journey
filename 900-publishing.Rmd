@@ -1,0 +1,30 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch900, include=FALSE}
+
+# packages
+
+```
+
+
+# Making data available {#publishing}
+
+placeholder for chapter 9
+
+
+* Sampling techniques
+
+* Maintaining anonymity and confidentiality in published data sets
+
+

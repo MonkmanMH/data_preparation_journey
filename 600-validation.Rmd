@@ -1,0 +1,30 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch600, include=FALSE}
+
+# packages
+
+```
+
+
+# Validation strategies {#validation}
+
+placeholder for chapter 6
+
+
+* Exploratory data analysis to identify problems
+
+* Using the {validate} package
+
+

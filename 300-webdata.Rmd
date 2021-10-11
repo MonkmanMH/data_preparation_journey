@@ -1,0 +1,25 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch300, include=FALSE}
+
+# packages
+
+```
+
+
+# Data from web sources {#webdata}
+
+placeholder for chapter 3
+
+* Acquiring data using web APIs and webscraping
