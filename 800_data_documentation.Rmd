@@ -26,12 +26,10 @@ _the future chapter 8_
 The documentation of the data sources, methods, etc is vital for reproducibility\index{reproducibility}.
 
 
-"Document and comment your code for yourself as if you will need to understand it in 6 months."
-—Jenny Bryan
+> "Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan
 
 
-"If you're not thinking about keeping track of things, you won't keep track of things."
-—Karl Broman
+> "If you're not thinking about keeping track of things, you won't keep track of things." —Karl Broman
 
 
 
@@ -67,11 +65,9 @@ As well, things change (the data, the sofware and hardware we use, the motivatio
 
 There doesn't seem to be a single-best how-to instruction on "documentation" in the context of data science. The term appears in the periphery of some of the textbooks and manuals on how to do data science, and there are some journal articles that address documentation in the context of reproducible research. It seems what advice there is tends to be prescriptive at a high level, and not overly descriptive of what makes good documentation.
 
-In the journal article "Good enough practices in scientific computing", the authors write
+In the journal article "Good enough practices in scientific computing", the authors write "Good documentation is a key factor in software adoption, but in practice, people won't write comprehensive documentation until they have collaborators who will use it. They will, however, quickly see the point of a brief explanatory comment at the start of each script, so we have recommended that as a first step." [@Wilson_Bryan_good_enough_2017]
 
-"Good documentation is a key factor in software adoption, but in practice, people won't write comprehensive documentation until they have collaborators who will use it. They will, however, quickly see the point of a brief explanatory comment at the start of each script, so we have recommended that as a first step."
-—Wilson, Bryan, et al.
-^[Wilson, Bryan, et al., "Good enough practices in scientific computing", _PLOS Computational Biology_, 13:6, June 22, 2017](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+
 
 Similar sentiments are expressed in a recent blog post by Randy Au ^[["Let's Get Intentional About Documentation"](https://counting.substack.com/p/lets-get-intentional-about-documentation), 2020-09-29] expresses on key idea in the title, and builds on it: we need to be intentional in our actions around documentation (or as he argues, a better term might be "recordkeeping").
 
@@ -81,7 +77,8 @@ I like the way this is framed. "Documentation" then becomes a fully-realized use
 
 If it's a one-off project, you can probably have a minimum (but not zero!) recordkeeping. But a project that repeats on a regular schedule (whether daily or annually) should have more robust recordkeeping, and potentially some documentation.
 
-And it's important to think about this at the beginning—maybe even _before_ the beginning. Then it gets built into the process and your daily workflow, and becomes part of the work. For example, record the source of your data as you're downloading it, or make comments about why you chose a particular function as soon as you incorporate the function into your script. These habits will not only capture what you're thinking at the time, but will also encourage you to think about the "why" of your decisions—and perhaps lead you to a different choice.
+And it's important to think about this at the beginning—maybe even _before_ the beginning—of your work. Taking this approach, recordkeeping gets built into the process and your daily workflow, and becomes part of the work. For example, record the source of your data as you're downloading it, or make comments about why you chose a particular function as soon as you incorporate the function into your script. These habits will not only capture what you're thinking at the time, but will also encourage you to think about the "why" of your decisions—and perhaps lead you to a different choice.
+
 
 ### Literate programming
 
@@ -114,7 +111,7 @@ For those working in an academic setting, Marwick, Boettiger and Mullen have def
 
 * Specify the computational environment that was used.
 
-^[Ben Marwick, Carl Boettiger & Lincoln Mullen, "Packaging Data Analytical Work Reproducibly Using R (and Friends)", _The American Statistician_, 72: Special Issue on Data Science (2018)], p.81(https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375986?journalCode=utas20)
+[@Marwick_etal_2018]
 
 They also provide some concrete examples of that a file structure might look like; note that the structure explicitly follows that of an R package. Their figure showing a "medium compendia" is below:
 
