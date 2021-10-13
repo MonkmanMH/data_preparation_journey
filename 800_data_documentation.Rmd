@@ -202,7 +202,7 @@ Some other tips the authors provide:
 * "Aggressively linkify!"
 
 
-Another source that describes a README for data files is the ["Guide to writing "readme" style metadata"](https://data.research.cornell.edu/content/readme#:~:text=A%20readme%20file%20provides%20information,when%20sharing%20or%20publishing%20data.) written by the Research Data Management Service Group at Cornell University.
+Another source that describes a README for data files is the "Guide to writing "readme" style metadata" written by the Research Data Management Service Group at Cornell University. [@Research_Data_readme]
 
 The SFBrigade, a San Francisco volunteer civic tech group, has created a data science specific README outline for their projects: https://github.com/sfbrigade/data-science-wg/blob/master/dswg_project_resources/Project-README-template.md
 
@@ -230,12 +230,19 @@ Some examples:
 Some other good tips can be found in [Make a README](https://www.makeareadme.com/) and [Readme Best Practices](https://github.com/jehna/readme-best-practices#readme)
 
 
+Other references: 
+
+* [@Prana]
+
+* https://tilburgsciencehub.com/building-blocks/store-and-document-your-data/document-data/readme-best-practices/
+
+
 
 ### The instruction list
 
 The instruction list is descriptive text that describes what chunks of code are doing.
 
-In "How to Share Data for Collaboration", Ellis and Leek suggest something that is essential is a high-level outline of what the code is doing. Here's a rephrase of their first two steps:  
+In "How to Share Data for Collaboration", Ellis and Leek [@Ellis_Leek_2017] suggest something that is essential is a high-level outline of what the code is doing. Here's a rephrase of their first two steps:  
 
 * Step 1: Take the raw data file, run summarize code with parameters _a_ = 1, _b_ = 2
 
@@ -259,7 +266,7 @@ Here are the three minimum components of a data dictionary:
 
 1. information about the experimental study design [or the data source]
 
-—Ellis & Leek ^[Ellis and Leek, ["How to Share Data for Collaboration"](https://peerj.com/preprints/3139/)]
+—Ellis & Leek [@Ellis_Leek_2017]
 
 
 
