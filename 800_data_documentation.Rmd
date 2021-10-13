@@ -99,6 +99,9 @@ In practice, you may create an outline of the basic plan, then within that add s
 For example, one heading of your outline might be "Read data", which would be followed by "This chunk reads the {palmerpenguin} data, downloaded from https://github.com/allisonhorst/palmerpenguins." (Include the link!) Then the code chunk to enable that would be written. If you make a change to the code, you may want to add an additional note to the text: " Note that the variables `island` and `species` are converted to factors."
 
 
+The first of Benjamin D. Lee's "Ten simple rules for documenting scientific
+software" [@Lee_ten_simple_rules_2018] is "Write comments as you code."
+
 
 
 ### Principles for a research compendia
@@ -200,6 +203,14 @@ Some other tips the authors provide:
 * "The ideal README is as short as it can be without being any shorter."
 
 * "Aggressively linkify!"
+
+
+
+Benjamin D. Lee's fourth rule in "Ten simple rules for documenting scientific
+software" [@Lee_ten_simple_rules_2018] is "Include a README file with basic information."
+
+
+
 
 
 Another source that describes a README for data files is the "Guide to writing "readme" style metadata" written by the Research Data Management Service Group at Cornell University. [@Research_Data_readme]

@@ -30,3 +30,46 @@ placeholder for chapter 5
 * Serving the research question
 
 
+
+[@De_Jonge_van_der_Loo_2013]
+
+[@Hubbard_data_cleaning_2017]
+
+
+
+## Structure
+
+The first place to start with cleaning your data is the structure.
+
+
+### Tidy data
+
+Tidy data\index{tidy data}
+
+[@tidydata]
+
+
+
+### Row counts (records)
+
+Did your import step give you as many rows as you anticipated?
+
+
+### Columns (variables)
+
+Did your import step capture all of the variables?
+
+Did the variables import as the correct classes?
+
+Things to look for:
+
+* did variables that should be numbers load as numeric types, or as character?
+
+* if working with labelled variables, did they load as factor type?
+
+
+
+## Validation
+
+
+
