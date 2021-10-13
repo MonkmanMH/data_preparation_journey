@@ -162,7 +162,7 @@ So what are the elements of effective recordkeeping? Some of the things to captu
 
 * Details about the analysis and code:
 
-  - The aim is to help people understand the code. "Document interfaces and reasons, not implementations." ^[Wilson et al., "Best Practices in Scientific Computing", _PLOS Biology_, 12:1, January 2014](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745)
+  - The aim is to help people understand the code. "Document interfaces and reasons, not implementations." [@Wilson_etal_best_practices_2014]
 
   - Things that informed decisions ("I chose this statistical test because..." or "The variable date of birth was transformed into 'Age on July 1, 2020' because...")
   
