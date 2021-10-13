@@ -1,7 +1,7 @@
 ---
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 <!-- 
@@ -31,6 +31,8 @@ The documentation of the data sources, methods, etc is vital for reproducibility
 
 > "If you're not thinking about keeping track of things, you won't keep track of things." —Karl Broman
 
+
+It's also essential if you intend to share your data [@White_etal_nine_simple_ways]. This documentation provides metadata (which we will see more of in the data dictionary section below), 
 
 
 
@@ -243,7 +245,7 @@ Some other good tips can be found in [Make a README](https://www.makeareadme.com
 
 Other references: 
 
-* [@Prana]
+* [@Prana_readme_2019]
 
 * https://tilburgsciencehub.com/building-blocks/store-and-document-your-data/document-data/readme-best-practices/
 
