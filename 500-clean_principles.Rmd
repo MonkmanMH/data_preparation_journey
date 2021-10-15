@@ -73,3 +73,7 @@ Things to look for:
 
 
 
+## Feature engineering
+
+[@R-bcEpiRate]
+
