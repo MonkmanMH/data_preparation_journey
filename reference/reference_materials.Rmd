@@ -1,0 +1,45 @@
+---
+title: "Reference materials"
+subtitle: "Data Preparation Journey"
+output: html_notebook
+---
+
+A collection of things to come back to later...
+
+## Naming things
+
+### Variables: don't impose your cultural assumptions
+
+Names
+
+https://twitter.com/NomeDaBarbarian/status/1451230758673264643?s=20
+
+
+
+## Setting up folders
+
+### Writing output to the "output" folder
+
+https://twitter.com/djnavarro/status/1451384301581307909?s=20
+
+from @djnavarro, twitter 2021-10-21
+
+"the TL;DR is that it redirects the HTML output to the here::here("output") folder rather than writing output files to the same folder as the source code"
+
+In the YAML:
+
+```
+
+knit:
+  # override annoying knitr default & redirect HTML to "output" folder
+  (function(inputFile, encoding) {
+    outputFile <- gsub("Rmd$", "html", basename(inputFile))
+    rmarkdown::render(
+      input = inputFile,
+      encoding = encoding,
+      output_file = here::here("output", outputFile)
+    )
+  })
+
+
+```
