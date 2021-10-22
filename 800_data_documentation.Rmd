@@ -299,5 +299,35 @@ Here are a couple of good articles with good ideas about how to structure your p
   - This one goes deep into things like version control and the {targets} package, all of which are worth introducing into your workflow...but are beyond the scope of this project.
 
 
+### Capturing the directory structure
+
+The package {fs} [@R-fs] has a function `dir_tree()` that will create a dendogram of the file folder structure and files in your project folder.
+
+The `recurse =` argument specifies how deep into the directory structure the diagram will be drawn. The default is to show all of the sub-folders and files below the current directory.
+
+```{r dir_tree_true}
+library(fs)
+
+fs::dir_tree(path = "project_template")
+
+```
+
+The `recurse =` argument gives control over how many layers of the directory structure are shown. Specifying `recurse = FALSE` limits what is shown to the files and sub-folders within the current directory. 
+
+
+```{r dir_tree_false}
+fs::dir_tree(path = "project_template", recurse = FALSE)
+```
+
+It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
+
+```{r dir_tree_false}
+fs::dir_tree(path = "project_template", recurse = 2)
+```
+
+
+
 _still needs **R TOOLS** section_
+
+
 
