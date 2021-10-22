@@ -321,7 +321,7 @@ fs::dir_tree(path = "project_template", recurse = FALSE)
 
 It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
 
-```{r dir_tree_false}
+```{r dir_tree_integer}
 fs::dir_tree(path = "project_template", recurse = 2)
 ```
 
