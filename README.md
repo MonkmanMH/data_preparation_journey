@@ -1,11 +1,8 @@
-# A bookdown example for Chapman & Hall books
+# The Data Preparation Journey: Finding Your Way With R
 
-This is a minimal example for those who plan to write books for Chapman & Hall. Basically you download this repository from Github, fill out the content in R Markdown files, and add more Rmd files as necessary.
+It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modeling, data visualization, and communication.
 
-Since this example is minimal, it does not cover all technical details (e.g. the Markdown syntax), and you need to read the [**bookdown** book](https://bookdown.org/yihui/bookdown) before you write anything that is slightly complicated.
+There is no shortage of material—textbooks, journal articles, blog posts, online courses, podcasts, etc.—about the 20%. That's not to say that there is no material for the other 80%. But it is scattered, found across technique-specific articles and domain-specific books, along with Stack Overflow questions and miscellaneous blog posts. This book serves as a travel guide: an introduction and wayfinder through some of the scattered resources for readers seeking to understand the core elements of data preparation. Like a lighthouse, it is hoped that it will both guide you in the right direction and keep you from running aground.
 
-For a full example, you may take a look at [the source](https://github.com/rstudio/bookdown/tree/master/inst/examples) of the **bookdown** book, or any books on https://bookdown.org that have public source repositories.
+The book will introduce the principles of data preparation, framed in a systematic approach that follows a typical data science or statistical workflow. With that context, readers will then work through practical solutions to resolving problems in data using the statistical & data science programming language R. These solutions will include examples of complex real-world data.
 
-![front page](https://user-images.githubusercontent.com/163582/43735138-808971fe-997f-11e8-987a-180b5baacefd.png)
-
-![contents page](https://user-images.githubusercontent.com/163582/43735153-8e6c9f94-997f-11e8-92e3-9fcb8db321c6.png)
