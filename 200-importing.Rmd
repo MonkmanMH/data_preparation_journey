@@ -11,17 +11,9 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 
 
-```{r setup_ch200, include=FALSE}
+```{r setup_ch200, include=FALSE, eval=FALSE}
 
-# packages
-# tidyverse (extended)
-library(tidyverse)
-library(haven)
-
-# utilities
-library(here)
-library(janitor)
-library(labelled)
+source(package_load.R)
 
 ```
 
@@ -118,10 +110,20 @@ Base R has a number of functions to read CSV, TSV, and fixed-width files.
 
 For example, `read.csv()` is a base R function to read CSV files.
 
+
 ```{r}
 # example
 # assign path using the {here} package
 mtcars_path <- here::here("data", "mtcars.csv")
+
+mtcars <- read.csv(mtcars_path)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+# alternative approach with {dpjr} package
+library(dpjr)
+mtcars_path <- dpjr_data("mtcars.csv")
 
 mtcars <- read.csv(mtcars_path)
 
@@ -135,7 +137,7 @@ The {readr} [@R-readr] package is part of the tidyverse, and works very well to 
 
 We activate {readr} by using the `library()` function:
 
-```{r}
+```{r, eval=FALSE}
 library(readr)
 ```
 
@@ -144,7 +146,7 @@ This chunk creates a string object that contains the path name, and then uses th
 
 * Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
-`read_csv()` is quite a bit faster with big data files, has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types), returns a tibble instead of a data frame. (For information about the difference, see [_R for Data Science_, 10 Tibbles](https://r4ds.had.co.nz/tibbles.html) [@Wickham_Grolemund2016])
+`read_csv()` is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [_R for Data Science_, 10 Tibbles](https://r4ds.had.co.nz/tibbles.html) [@Wickham_Grolemund2016])
 
 ```{r}
 # read the file and assign it to the object "mtcars"

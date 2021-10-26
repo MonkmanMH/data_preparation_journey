@@ -1,20 +1,20 @@
 --- 
 title: "The Data Preparation Journey"
-subtitle: "Finding Your Way With R"
 author: "Martin Monkman"
 date: "`r Sys.Date()`"
-documentclass: krantz
-bibliography: [book.bib]
-biblio-style: apalike
-link-citations: yes
 colorlinks: yes
-lot: yes
-lof: yes
-site: bookdown::bookdown_site
-description: "Before you can analyze your data, you need to ensure that it is clean and tidy."
+bibliography: book.bib
+description: Before you can analyze your data, you need to ensure that it is clean
+  and tidy.
+documentclass: krantz
 github-repo: MonkmanMH/data_preparation_with_r
 graphics: yes
-#cover-image: images/cover.jpg
+link-citations: yes
+lof: yes
+lot: yes
+site: bookdown::bookdown_site
+subtitle: Finding Your Way With R
+biblio-style: apalike
 ---
 
 ```{r setup, include=FALSE}
@@ -27,19 +27,7 @@ options(
 #  if (system.file(package = pkg) == '') install.packages(pkg)
 #})
 
-# packages
-# tidyverse (extended)
-library(tidyverse)
-library(haven)
-
-# utilities
-library(here)
-library(janitor)
-library(labelled)
-
-# data
-library(palmerpenguins)
-
+source("package_load.R")
 ```
 
 # Preface  {-}
