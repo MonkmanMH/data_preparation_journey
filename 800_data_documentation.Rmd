@@ -303,10 +303,14 @@ Here are a couple of good articles with good ideas about how to structure your p
 
 The package {fs} [@R-fs] has a function `dir_tree()` that will create a dendogram of the file folder structure and files in your project folder.
 
+```{r, eval=FALSE}
+library(fs)
+```
+
+
 The `recurse =` argument specifies how deep into the directory structure the diagram will be drawn. The default is to show all of the sub-folders and files below the current directory.
 
 ```{r dir_tree_true}
-library(fs)
 
 fs::dir_tree(path = "project_template")
 
