@@ -295,6 +295,15 @@ read_fwf(fwf_sample2,
 ```
 
 
+### {vroom} - another package for plain text
+
+https://www.tidyverse.org/blog/2019/05/vroom-1-0-0/
+
+https://vroom.r-lib.org/
+
+
+
+
 
 
 ### An extreme example of a fixed-width file
