@@ -603,11 +603,19 @@ For more about {labelled}, see
 
 
 
+## File archives
+
+There are a variety of file archive types, which permit multiple files to be bundled as a single file. Many of these types also include compression, so that the file size is minimized. These file types include ZIP, tar, 7-Zip, RAR, gzip, bzip2, XZ and Zstandard.
+
+The {archive} package [@R-archive] allows us to write R code to work with these files. There are functions for extracting from and writing to archive file types.
+
+{archive} https://www.tidyverse.org/blog/2021/11/archive-1-1-2/
 
 
 ***
 
 ## Additional resources
+
 
 Other examples of importing files can be found here:
 
