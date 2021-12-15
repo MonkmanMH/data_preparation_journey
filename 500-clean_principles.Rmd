@@ -23,9 +23,11 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 placeholder for chapter 5
 
 
-* Understanding tidy data principles
+* The principles of data quality
 
 * Understanding what makes data “dirty”, and why context matters
+
+* Understanding tidy data principles
 
 * Serving the research question
 
@@ -34,6 +36,14 @@ placeholder for chapter 5
 [@De_Jonge_van_der_Loo_2013]
 
 [@Hubbard_data_cleaning_2017]
+
+
+## Data Quality
+
+[@Ligon_1996]
+
+[@Ligon_2015], [@Ligon_2007]
+
 
 
 
