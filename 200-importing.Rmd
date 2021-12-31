@@ -11,14 +11,23 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 
 
-```{r setup_ch200, include=FALSE, eval=FALSE}
+```{r setup_ch200, include=FALSE, eval=TRUE}
 
-source(package_load.R)
+source("package_load.R")
 
 ```
 
 
 # Importing data {#importing}
+
+
+## Principles
+
+1. "Use the arguments of your import function to get as far as you can, as fast as possible."—Jenny Bryan^[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
+
+
+
+## Introduction
 
 The data has been collected. It might be the result of:
 
@@ -98,7 +107,7 @@ general R advice on import/export:  https://cran.r-project.org/doc/manuals/r-dev
 
 Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data.  They are limited in what they can contain, which has both upsides and downsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
 
-They come in two varieties, delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common format is the CSV file; the letters in the file name stand for "Comma Separated Values". Another delimited type, although less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
+They come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, although less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
 
 
 
@@ -194,30 +203,46 @@ Fixed-width files are a hold-over from the days when storage was expensive and/o
 
 If you ever have to deal with a fixed-width file, you will (or should!) receive a companion file letting you know the locations of each variable in every row.
 
-In this example, we will use the one provided in the {readr} package, `fwf-sample.txt`. This simple file has four (or as we will see, sometimes three, if we combine first and last name as one) variables, and three records (or rows).
+In this example, we will use the one provided in the {dpjr} package, `authors_fwf.txt`. This code chunk assigns the path to the file location, which we can use in our code later.
+
+
+```{r}
+authors_path <- dpjr::dpjr_data("authors_fwf.txt")
+```
+
+
+This simple file has four (or as we will see, sometimes three, if we combine first and last name as one) variables, and three records (or rows).
+
+* first name
+
+* last name
+
+* U.S. state of birth (two-letter abbreviation)
+
+* randomly generated unique ID
 
 If we open the file in a text editor, we see this:
 
-![fwf-sample.txt](img/names_img1.jpg)
+![authors_fwf.txt](img/authors_img.jpg)
 
-
-Note that the column names are specified in a list. 
 
 The first approach would be to allow {readr} to guess where the column breaks are. The `fwf_empty()` function looks through the specified file and returns the beginning and ending locations it has guessed, as well as the `skip` value that the `read_fwf()` function uses.
 
-```{r}
-fwf_sample <- here::here("data", "fwf-sample.txt")
+Note that the column names are specified in a list. 
 
-fwf_empty(fwf_sample, col_names = c("first", "last", "state", "ssn"))
+
+
+```{r}
+fwf_empty(authors_path, col_names = c("first", "last", "state", "unique_id"))
 ```
 
 That information can then be used by the `read_fwf()` function:
 
 ```{r}
 
-read_fwf(fwf_sample, 
-         fwf_empty(fwf_sample, 
-                   col_names = c("first", "last", "state", "ssn")))
+read_fwf(authors_path, 
+         fwf_empty(authors_path, 
+                   col_names = c("first", "last", "state", "unique_id")))
 
 ```
 
@@ -227,13 +252,22 @@ Note that {readr} will impute the variable type, as it did with the CSV file. An
 
 So that worked, but it could break quite easily. We just need one person with a three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the parser.
 
+```{r, eval=FALSE}
+authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
+
+fwf_empty(authors2_path, 
+                   col_names = c("first", "last", "state", "unique_id"))
+
+
+read_fwf(dpjr::dpjr_data("authors2_fwf.txt"))
+```
+
+
 ```{r}
 
-fwf_sample2 <- here::here("data", "fwf-sample2.txt")
-
-read_fwf(fwf_sample2, 
-         fwf_empty(fwf_sample2, 
-                   col_names = c("first", "last", "state", "ssn")))
+read_fwf(authors2_path, 
+         fwf_empty(authors2_path, 
+                   col_names = c("first", "last", "state", "unique_id")))
 
 ```
 
@@ -246,7 +280,7 @@ Variable           Width   Start position   End position
 --------           -----   --------------   ------------
 name               20       1               20
 state              10       21              30
-ssn                12       31              42
+uniqueID           12       31              42
 
 
 Visually, the file looks like this (the digits across the top represent the column position):
@@ -264,24 +298,24 @@ The widths can be added to the `fwf_widths` argument:
 
 ```{r}
 
-read_fwf(fwf_sample2, 
-         fwf_widths(c(20, 10, 12), c("name", "state", "ssn")))
+read_fwf(authors2_path, 
+         fwf_widths(c(20, 10, 12), c("name", "state", "unique_id")))
 
 ```
 
 A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable "name" starts at position 1 and ends at position 20, and the second variable "ssn" starts at 30 and ends at 42. Note that we won't read the "state" variable which occupies the ten columns from 21 through 29.
 
 ```{r}
-read_fwf(fwf_sample2, 
-         fwf_positions(c(1, 31), c(20, 42), c("name", "ssn")))
+read_fwf(authors2_path, 
+         fwf_positions(c(1, 31), c(20, 42), c("name", "unique_id")))
 ```
 
 The fourth is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the name followed by the start and end locations.
 
 ```{r}
 
-read_fwf(fwf_sample2, 
-         fwf_cols(name = c(1, 20), ssn = c(31, 42)))
+read_fwf(authors2_path, 
+         fwf_cols(name = c(1, 20), unique_id = c(31, 42)))
 
 ```
 
@@ -289,8 +323,8 @@ And finally, {readr} provides a fifth way to read in a fixed-width file that is 
 
 ```{r}
 
-read_fwf(fwf_sample2, 
-         fwf_cols(name = 20, state = 10, ssn = 12))
+read_fwf(authors2_path, 
+         fwf_cols(name = 20, state = 10, unique_id = 12))
 
 ```
 
