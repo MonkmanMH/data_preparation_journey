@@ -79,6 +79,166 @@ Things to look for:
 
 
 
+We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. That is, what is the data's _quality_? 
+
+A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
+
+What are common dirty data problems?
+
+* Column headers are values instead of variable names, or there are duplicate variable names.
+
+* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
+
+* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
+
+* Misspellings (typing errors) 
+
+* Value in wrong field (e.g. country entered into `city` field).
+
+* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
+
+* Default values in the place of missing values.
+
+> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
+
+* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+
+
+See [@Zumel_Mount_2019, chapters 3 and 4]
+
+### Data quality
+
+There is quite a lot of literature on how to define data quality; the concepts in the hierarchical dimensions described by Wang, Reddy and Kon ^[Richard Y. Wang, M.P. Reddy and Henry B. Kon, "Toward quality data: An attribute-based approach", _Decision Support Systems_, 13 (1995) 349-372] is as follows:
+
+* Accessible
+
+  - Available
+  
+* Interpretable
+
+  - Syntax
+  
+  - Semantics
+  
+* Useful
+
+  - Relevant
+  
+  - Timely
+  
+    - Current
+    
+    - Non-volatile
+    
+* Believable
+
+  - Complete
+  
+  - Consistent
+  
+  - From a credible source
+  
+  - Accurate
+  
+
+"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. 
+
+**Complete**
+
+For our purposes, "complete" means whether any values in each record are missing (internally complete).
+
+Is it possible to determine whether the records are an accurate representation of the whole. With a well-designed sample, it is possible that a sub-set of the population can provide an accurate set of measures about the population. 
+
+**Consistent**
+
+We will consider a measure to be consistent if the same value is reported in the same way.
+
+Some examples:
+
+* units are consistent; temperature is consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin, or income is in a single currency.
+
+* spelling is consistent. "British Columbia", "B.C." and "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+
+**Accurate**
+
+(How to evaluate?)
+
+
+
+
+If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists to uncover the insights hiding in the data? 
+
+> The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
+
+
+So what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
+
+
+**The first challenge**: how do we find these things?
+
+**The second challenge**: what can and should we do about them?
+
+
+## Exploratory data analysis
+
+One way to identify dirty data is through the process of _exploratory data analysis_ (EDA). This consists of two groups of techniques:
+
+* summary statistics
+
+* data visualization
+
+### Summary statistics
+
+(need to revise data set)
+
+```{r}
+
+# read in the data
+customer_data <- readRDS("data_temp/custdata.RDS")
+
+```
+
+We can use R's `summary()` function to quickly get a glimpse of the data.
+
+The things to look for:
+
+* missing values
+
+* invalid values and outliers
+
+* data ranges that are too wide or too narrow
+
+* the units of the data
+
+```{r}
+summary(customer_data)
+```
+
+### Data visualization
+
+A plot can show us a wealth of information that cannot be expressed in the summary statistics. Here's the `age` variable from the customer data:
+
+```{r}
+
+summary(customer_data$age)
+
+```
+
+
+And here is the plot:
+
+```{r}
+
+ggplot(customer_data, aes(x = age)) +
+  geom_density(bw = .75)
+
+```
+
+
+
+
+
+
 ## Validation {#validation-intro}
 
 

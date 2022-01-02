@@ -5,9 +5,11 @@ As we get started on the path of preparing our data, we should think first about
 
 ## The goal
 
-Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who are have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
+Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
 
-While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are be essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities are often different. The data collection and storage is often to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That person is often also the one responsible for the modeling, visualization, and reporting.
+While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That person is often also the one responsible for the modeling, visualization, and reporting.
+
+(Add example of financial information? Purpose to track revenue and expenses, but can be applied to understanding customer spending patterns.)
 
 At the end of the data preparation phase, before visualization and modeling can start, there should be:
 
