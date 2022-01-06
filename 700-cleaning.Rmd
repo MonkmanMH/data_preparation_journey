@@ -25,6 +25,34 @@ placeholder for chapter 7
 
 * Cleaning dates and strings
 
+* Dealing with missing values
+
 * Creating conditional and calculated variables
+
+  - indicator variables [@Gelman_etal_2014, p.366] (also known as dummy variables [@Suits_1957] and "one hot" encoding)
+
+
+## Dealing with missing values
+
+Convert -999 etc to `NA`
+
+Imputation methods
+
+* apply average
+
+* hot deck imputation
+
+
+## Creating conditional and calculated variables
+
+Recoding with `dplyr::case_when()`
+
+
+Creating indicator variables 
+
+> To include a categorical variable in a regression, a natural approach is to construct an 'indicator variable' for each category. This allows a separate effect for each level of the category, without assuming any ordering or other structure on the categories. [@Gelman_etal_2014, p.366]
+
+* also known as dummy variables [@Suits_1957] and "one hot" encoding
+
 
 

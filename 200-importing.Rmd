@@ -206,7 +206,7 @@ If you ever have to deal with a fixed-width file, you will (or should!) receive 
 In this example, we will use the one provided in the {dpjr} package, `authors_fwf.txt`. This code chunk assigns the path to the file location, which we can use in our code later.
 
 
-```{r}
+```{r importing_authors_path}
 authors_path <- dpjr::dpjr_data("authors_fwf.txt")
 ```
 
@@ -232,13 +232,13 @@ Note that the column names are specified in a list.
 
 
 
-```{r}
+```{r importing_authors_path_2}
 fwf_empty(authors_path, col_names = c("first", "last", "state", "unique_id"))
 ```
 
 That information can then be used by the `read_fwf()` function:
 
-```{r}
+```{r importing_authors_path_3}
 
 read_fwf(authors_path, 
          fwf_empty(authors_path, 
@@ -252,7 +252,7 @@ Note that {readr} will impute the variable type, as it did with the CSV file. An
 
 So that worked, but it could break quite easily. We just need one person with a three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the parser.
 
-```{r, eval=FALSE}
+```{r importing_authors2_path_}
 authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
 
 fwf_empty(authors2_path, 

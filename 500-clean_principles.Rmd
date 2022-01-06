@@ -38,75 +38,21 @@ placeholder for chapter 5
 [@Hubbard_data_cleaning_2017]
 
 
+## Why clean data matters
+
+* accuracy
+
+* ability to link to other data sources—consistency matters
+
+
+
 ## Data Quality
 
 [@Ligon_1996]
 
 [@Ligon_2015], [@Ligon_2007]
 
-
-
-
-## Structure
-
-The first place to start with cleaning your data is the structure.
-
-
-### Tidy data
-
-Tidy data\index{tidy data}
-
-[@tidydata]
-
-
-
-### Row counts (records)
-
-Did your import step give you as many rows as you anticipated?
-
-
-### Columns (variables)
-
-Did your import step capture all of the variables?
-
-Did the variables import as the correct classes?
-
-Things to look for:
-
-* did variables that should be numbers load as numeric types, or as character?
-
-* if working with labelled variables, did they load as factor type?
-
-
-
-We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. That is, what is the data's _quality_? 
-
-A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
-
-What are common dirty data problems?
-
-* Column headers are values instead of variable names, or there are duplicate variable names.
-
-* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
-
-* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
-
-* Misspellings (typing errors) 
-
-* Value in wrong field (e.g. country entered into `city` field).
-
-* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
-
-* Default values in the place of missing values.
-
-> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
-
-* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
-
-
-See [@Zumel_Mount_2019, chapters 3 and 4]
-
-### Data quality
+### Data quality literature
 
 There is quite a lot of literature on how to define data quality; the concepts in the hierarchical dimensions described by Wang, Reddy and Kon ^[Richard Y. Wang, M.P. Reddy and Henry B. Kon, "Toward quality data: An attribute-based approach", _Decision Support Systems_, 13 (1995) 349-372] is as follows:
 
@@ -179,6 +125,73 @@ So what are we doing when we say we are "cleaning the data"? And how can we conf
 **The second challenge**: what can and should we do about them?
 
 
+See [@Greve_Clean_data]
+
+
+## Structure
+
+The first place to start with cleaning your data is the structure.
+
+
+### Tidy data
+
+Tidy data\index{tidy data}
+
+[@tidydata]
+
+
+
+### Row counts (records)
+
+Did your import step give you as many rows as you anticipated?
+
+
+### Columns (variables)
+
+Did your import step capture all of the variables?
+
+Did the variables import as the correct classes?
+
+Things to look for:
+
+* did variables that should be numbers load as numeric types, or as character?
+
+* if working with labelled variables, did they load as factor type?
+
+
+
+We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. That is, what is the data's _quality_? 
+
+A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
+
+What are common dirty data problems?
+
+* Column headers are values instead of variable names, or there are duplicate variable names.
+
+* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
+
+* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
+
+* Misspellings (typing errors) 
+
+* Value in wrong field (e.g. country entered into `city` field).
+
+* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
+
+* Default values in the place of missing values.
+
+> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
+
+* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+
+
+See [@Zumel_Mount_2019, chapters 3 and 4]
+
+
+
+
+
+
 ## Exploratory data analysis
 
 One way to identify dirty data is through the process of _exploratory data analysis_ (EDA). This consists of two groups of techniques:
@@ -244,6 +257,12 @@ ggplot(customer_data, aes(x = age)) +
 
 
 ## Feature engineering
+
+Somehow and somewhere, the word "feature" has come to replace "variable" in the lexicon of the data scientist.
+
+"Feature engineering" is a jazzed-up term meaning "calculating a new variable from others in the data"...for example, the unemployment rate in any given month and location is calculated by dividing the number of unemployed people by the total number of people in the labour force (two "features" in our data).
+
+Similarly, "dimensionality reduction" means "selecting the variables to include in your analysis (or model)".
 
 [@R-bcEpiRate]
 
