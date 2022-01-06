@@ -15,6 +15,8 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 # packages
 
+source("package_load.R")
+
 ```
 
 
@@ -55,4 +57,45 @@ Creating indicator variables
 * also known as dummy variables [@Suits_1957] and "one hot" encoding
 
 
+### Base R: `model.matrix`
 
+[@Friendly_Meyer_2016, p.240]
+
+
+
+
+
+### `{fastDummies}` 
+
+[@R-fastDummies]
+
+In this example, we will create a regression model using the {palmerpenguin} data, predicting body mass based on species and sex. The method behind this is 
+
+The `dummy_cols()` function creates new indicator variables from specified factor variables. 
+
+```{r fastDummies}
+
+library(palmerpenguins)
+
+set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
+
+penguins %>% 
+  slice_sample(n = 5) %>% 
+  select(species) %>% 
+  arrange(species) %>% 
+  fastDummies::dummy_cols()
+
+```
+
+
+```{r}
+
+
+penguins %>% 
+  fastDummies::dummy_cols(select_columns = "species")
+
+
+```
+
+
+Later: add dummy rows with `dummy_rows()`
