@@ -36,6 +36,8 @@ placeholder for chapter 7
 
 ## Dealing with missing values
 
+\index{missing values}
+
 Convert -999 etc to `NA`
 
 Imputation methods
@@ -50,11 +52,188 @@ Imputation methods
 Recoding with `dplyr::case_when()`
 
 
-Creating indicator variables 
+Creating indicator variables \index{indicator variables}
 
 > To include a categorical variable in a regression, a natural approach is to construct an 'indicator variable' for each category. This allows a separate effect for each level of the category, without assuming any ordering or other structure on the categories. [@Gelman_etal_2014, p.366]
 
 * also known as dummy variables [@Suits_1957] and "one hot" encoding
+
+Examples of this approach abound. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data are randomly generated.]:
+
+```{r ch700_mixtape_data, echo=FALSE}
+set.seed(111) # The opus number of Beethoven's last piano sonata, a work of transcendent beauty
+
+
+# code directly from _Causal Mixtape_ https://mixtape.scunning.com/dag.html?panelset=r-code
+# except it generates 10 cases, not 10000
+tb <- tibble(
+  female = ifelse(runif(10)>=0.5,1,0),
+  ability = rnorm(10),
+  discrimination = female,
+  occupation = 1 + 2*ability + 0*female - 2*discrimination + rnorm(10),
+  wage = 1 - 1*discrimination + 1*occupation + 2*ability + rnorm(10) 
+)
+
+head(tb)
+```
+
+In this data, the variable `female` is coded as numeric, so it can be used as part of the regression modeling. 
+
+More commonly, though, this variable is more likely to be captured and saved in one called "gender" or "sex", and often as a character string. The source data table that was used to save the data in the above table might have originally looked like this:
+
+```{r}
+
+tb2 <- tb %>% 
+  rename("gender" = "female") %>% 
+  mutate(gender = case_when(
+    gender == 1 ~ "female",
+    TRUE ~ "male"
+  ))
+
+
+tb2
+```
+
+
+
+### `{fastDummies}` 
+
+Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables.
+
+
+```{r}
+
+tb2 %>% 
+  fastDummies::dummy_cols() 
+
+```
+
+The variable `gender` has now been mutated into two additional variables, `gender_female` and `gender_male`. The names of the new variables are a concatenation of the original variable name and value, separated by an underscore.
+
+Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. The opposite is true of `gender_male`.
+
+
+Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the opposite of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result, since the value "female" appears in the first observation (row).
+
+```{r}
+
+tb2 %>% 
+  fastDummies::dummy_cols(remove_first_dummy = TRUE) 
+
+```
+
+Note that the results of this argument can be controlled through the conversion of character variables to factors.
+
+```{r}
+# create new tb table with "gender" as factor
+tb3 <- tb2 %>% 
+  mutate(gender = as.factor(gender)) 
+
+levels(tb3$gender)
+```
+
+Note that the default order is alphabetical, so "female" remains first. When the argument `remove_first_dummy = TRUE` is applied, we get the same result as before.
+
+```{r}
+  
+tb3 %>% 
+  fastDummies::dummy_cols(remove_first_dummy = TRUE) 
+
+
+```
+
+By using the `fct_relevel()` function from the {forcats}[@R-forcats] package, we can assign an arbitrary order.
+
+```{r}
+# reorder levels 
+
+tb3$gender <- fct_relevel(tb3$gender, "male", "female")
+
+levels(tb3$gender)
+```
+
+Rerunning the same code, the `gender_male` variable is dropped.
+
+```{r}
+  
+tb3 %>% 
+  fastDummies::dummy_cols(remove_first_dummy = TRUE) 
+
+
+```
+
+
+There is also an option `remove_most_frequent_dummy = TRUE`. In our discrimination data, there are more observations coded as "male", so the variable `gender_male` is not included.
+
+
+```{r}
+
+tb2 %>% 
+  fastDummies::dummy_cols(remove_most_frequent_dummy = TRUE) 
+
+
+```
+
+
+Another argument in the function is `remove_selected_columns`. The default value is `FALSE`, but if the argument is set to `TRUE`, the source column is excluded from the output. 
+
+```{r}
+
+tb2 %>% 
+  fastDummies::dummy_cols(remove_selected_columns = TRUE) 
+
+
+```
+
+
+
+Some important things to note about `dummy_cols()` 
+
+* the function will create as many indicator variables as there are values in the character or factor variable
+
+* the function will create indicator variables for all of the charactor and factor variables in the data, unless otherwise specified.
+
+Let's look at how `dummy_cols()` behaves with two of the variables in {palmerpenguins}: \index{palmerpenguins}  
+
+```{r ch700_dummy_penguins_1, echo=FALSE}
+
+library(palmerpenguins)
+
+set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
+
+penguin_subset <- penguins %>% 
+  slice_sample(n = 5) %>% 
+  select(species, island) %>% 
+  arrange(species)
+
+penguin_subset
+
+```
+
+```{r ch700_dummy_penguins_2}
+
+penguin_subset %>%  
+  fastDummies::dummy_cols()
+
+```
+
+First, you will notice that we started with two factor variables, `species` and `island`, we now have indicator variables for both.
+
+And because there are three species of penguins and three islands, we have three indicator variables for both of the original variables.
+
+In the instance where we have multiple charactor or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
+
+```{r}
+
+
+penguin_subset %>% 
+  fastDummies::dummy_cols(select_columns = "species")
+
+
+```
+
+
+Later: add dummy rows with `dummy_rows()`
 
 
 ### Base R: `model.matrix`
@@ -63,39 +242,3 @@ Creating indicator variables
 
 
 
-
-
-### `{fastDummies}` 
-
-[@R-fastDummies]
-
-In this example, we will create a regression model using the {palmerpenguin} data, predicting body mass based on species and sex. The method behind this is 
-
-The `dummy_cols()` function creates new indicator variables from specified factor variables. 
-
-```{r fastDummies}
-
-library(palmerpenguins)
-
-set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
-
-penguins %>% 
-  slice_sample(n = 5) %>% 
-  select(species) %>% 
-  arrange(species) %>% 
-  fastDummies::dummy_cols()
-
-```
-
-
-```{r}
-
-
-penguins %>% 
-  fastDummies::dummy_cols(select_columns = "species")
-
-
-```
-
-
-Later: add dummy rows with `dummy_rows()`

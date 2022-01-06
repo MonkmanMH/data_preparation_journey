@@ -5,8 +5,10 @@
 # tidyverse (extended)
 library(tidyverse)
 library(haven)
+library(readxl)
 
 # utilities
+library(fastDummies)
 library(fs)
 library(here)
 library(janitor)
