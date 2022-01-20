@@ -182,7 +182,6 @@ Another argument in the function is `remove_selected_columns`. The default value
 tb2 %>% 
   fastDummies::dummy_cols(remove_selected_columns = TRUE) 
 
-
 ```
 
 

@@ -178,11 +178,26 @@ What are common dirty data problems?
 
 * Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
 
+* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+
 * Default values in the place of missing values.
 
 > Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
 
-* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "MAR1" gets converted to March 1st of the current year. 
+
+* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
+
+```{r}
+readxl::read_excel("date.xlsx", col_types = "text")
+
+lubridate::today() - 44571
+```
+
+
+* Other (I'm not sure how to characterize this—wikipedia uses the term "cultural ignorance" which might fit)
+
+> "Prawo Jazdy" was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
 
 
 See [@Zumel_Mount_2019, chapters 3 and 4]

@@ -21,7 +21,7 @@ _the future chapter 8_
 
 
 
-## Data documentation
+## Introduction {#datadocumentation-intro}
 
 The documentation of the data sources, methods, etc is vital for reproducibility\index{reproducibility}.
 
@@ -184,6 +184,14 @@ So what are the elements of effective recordkeeping? Some of the things to captu
 
 
 ## Some more details
+
+### Names of things
+
+Files, data tables, variables, and the values within those variables are all things that we might want to name (if we are the creator) or rename (if we are the editor).
+
+[@Hermans_programmers_brain_2021]
+
+
 
 ### README files
 
