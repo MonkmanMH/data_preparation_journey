@@ -216,8 +216,7 @@ Some other tips the authors provide:
 
 
 
-Benjamin D. Lee's fourth rule in "Ten simple rules for documenting scientific
-software" [@Lee_ten_simple_rules_2018] is "Include a README file with basic information."
+Benjamin D. Lee's fourth rule in "Ten simple rules for documenting scientific software" [@Lee_ten_simple_rules_2018] is "Include a README file with basic information."
 
 
 
@@ -296,9 +295,7 @@ Caitlin Hudon, ["Field Notes: Building Data Dictionaries"](https://caitlinhudon.
 
 ### Project structure
 
-In this course, we have been using an RStudio project. Within that project, we have created sub-folders for each week, and this week we have folders within.
-
-Here are a couple of good articles with good ideas about how to structure your projects:
+Here are a couple of articles with good ideas about how to structure your projects:
 
 * Martin Chan, ["RStudio Projects and Working Directories: A Beginner's Guide"](https://martinctc.github.io/blog/rstudio-projects-and-working-directories-a-beginner's-guide/), 2020-01-23
 

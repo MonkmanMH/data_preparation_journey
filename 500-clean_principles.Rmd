@@ -112,7 +112,7 @@ Some examples:
 
 
 
-If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists to uncover the insights hiding in the data? 
+If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? 
 
 > The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
 
