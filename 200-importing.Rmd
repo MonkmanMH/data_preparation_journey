@@ -342,27 +342,54 @@ https://vroom.r-lib.org/
 
 ### An extreme example of a fixed-width file
 
-Statistics Canada has made available a Public-Use Microdata File (PUMF) of the Joint Canada/United States Survey of Health, a telephone survey conducted in late 2002 and early 2003. There were 8,688 respondents to the survey, 3,505 Canadians and 5,183 Americans. The data file that's available is anonymized, so we have access to the individual responses, which will facilitate additional analysis.
+A particularly interesting research question is the relationship between education level and different health outcomes. In this example, we will start the process of importing a large file that contains data that will allow us to explore whether there is a correlation.  
+
+Statistics Canada has made available a Public-Use Microdata File (PUMF) of the Joint Canada/United States Survey of Health, a telephone survey conducted in late 2002 and early 2003. There were 8,688 respondents to the survey, 3,505 Canadians and 5,183 Americans. The data file that is available is anonymized, so we have access to the individual responses, which will facilitate additional analysis.
 
 The webpage for the survey, including the PUMF file, data dictionary, and methodological notes, is here:
 https://www150.statcan.gc.ca/n1/pub/82m0022x/2003001/4069119-eng.htm
 
-The PUMF is a fixed-width file. Compared to the names example above, this is _huge_. There are the 8,688 records to start with. But the data takes up 552 columns! 
+The PUMF is a fixed-width file named "JCUSH.txt". Compared to the author names example above, this is _huge_. There are the 8,688 records and each line of data takes up 552 columns! 
 
-Here's what the first two-and-a-bit records look like:
+Here's what the first record look like:
 
-![health survey data](img/health_first10.PNG)
 
-You can spot the end of each record, as the partial line. There's not a bit of white space anywhere in this data file!
+```{r jcush_txt_readlines}
+readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1)
+```
+
+There's not a bit of white space anywhere in this data file!
 
 Here's how one variable, highest level of post-secondary education achieved, appears in the data dictionary:
 
 
 ![health survey example](img/healthsurv_var_postsec.JPG)
 
-The variable is 1 character long, in postion 502 of the data.
+The variable is 1 character long, in position 502 of the data.
 
-The researchers might look at the relationship between education level and different health outcomes, so this variable would be a important one. The variable is only 1 character long, but when coupled with the "content" column, it becomes a very powerful piece of information. 
+The variable is only 1 character long, but when coupled with the "content" column, it becomes a very powerful piece of information. 
+
+For our analysis question, we will read in three variables: the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
+
+| Name | Variable | Length | Position |
+| :--- | :---     | :---:  | :---:  |
+| SPJ1_TYP | country | 1 | 13 |
+| GHJ1DHDI | Health Description Index | 1 | 32 |
+| SDJ1GHED | Highest level of post-secondary education attained | 1 | 32 |
+
+
+You will note in the code below that because the variables occupy only one character, the start and end positions are the same.
+
+```{r jcush_txt_read_vars}
+
+readr::read_fwf(dpjr::dpjr_data("JCUSH.txt"), 
+         fwf_cols(
+           SPJ1_TYP = c(13, 13), 
+           GHJ1DHDI = c(32, 32),
+           SDJ1GHED = c(502, 502)
+           ))
+
+```
 
 Imagine, though, the challenge of handling this amount of data at one time! Between the many variables and the complex value labels, the "data" is more than just the fixed-width file. This is a circumstance where a different data storage solution (as we will see later) might have some strengths.
 
