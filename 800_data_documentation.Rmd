@@ -293,6 +293,10 @@ Here are the three minimum components of a data dictionary:
 Caitlin Hudon, ["Field Notes: Building Data Dictionaries"](https://caitlinhudon.com/2018/10/30/data-dictionaries/), 2018-10-30
 
 
+Also see [@R-labelled] http://larmarange.github.io/labelled/articles/look_for.html
+
+
+
 ### Project structure
 
 Here are a couple of articles with good ideas about how to structure your projects:

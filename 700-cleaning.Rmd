@@ -238,7 +238,15 @@ Later: add dummy rows with `dummy_rows()`
 
 ## Creating labelled factors from numeric variables
 
-The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example to create labelled factors from the numeric values in the variables we imported.
+If you are familiar with statistical software packages such as SPSS, SAS, or Stata you will be used to working with labelled variables. These are categorical variables, where there are a limited number of categories. 
+
+In some cases, there might be one or more values assigned to categories we might want to designate as "missing"—a common example can be found in surveys, where respondents are given the option of answering "don't know" and "not applicable". While these responses might be interesting in and of themselves, in some contexts we will want to assign them as missing.
+
+In other cases, numeric values are used to store the categorical responses. 
+
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example of where categories are stored as numerica variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
+
+We will use this file to create labelled factors from the numeric values in the variables we imported. Here's the code we used previously to read the file:
 
 ```{r jcush_txt_read_vars_2}
 
@@ -256,13 +264,6 @@ jcush <- readr::read_fwf(dpjr::dpjr_data("JCUSH.txt"),
 head(jcush)
 ```
 
-
-```{r}
-jcush %>% 
-  group_by(GHJ1DHDI) %>% 
-  tally()
-
-```
 
 The values for these variables are as follows:
 
@@ -285,22 +286,38 @@ The values for these variables are as follows:
 | &nbsp; | &nbsp; | 9 | Not Stated |
 
 
+
+The variable "GHJ1DHDI" has the respondent's self-assessment of their overall health. Here's a summary table of the responses:
+
+```{r}
+jcush %>% 
+  group_by(GHJ1DHDI) %>% 
+  tally()
+
+```
+
+But it would be much more helpful and efficient if we attach the value labels to the dataframe.
+
 One strategy is to create a new factor variable, that uses the value description instead of the numeric representation. For this, we will use the `fct_recode()` function from the {forcats} package[@R-forcats].
 
 ```{r}
 library(forcats)
 
-jcush2 <- jcush %>% 
+jcush_forcats <- jcush %>%
   # 1st mutate a new factor variable with the original values
-  mutate(health_desc_fct = as.factor(GHJ1DHDI)) %>% 
+  mutate(health_desc_fct = as.factor(GHJ1DHDI)) %>%
   # 2nd recode the values
-  mutate(health_desc_fct = fct_recode(health_desc_fct,
-                                   "Poor" = "0",
-                                   "Fair" = "1",
-                                   "Good" = "2",
-                                   "Very Good" = "3",
-                                   "Excellent" = "4",
-                                   NULL = "9"))
+  mutate(
+    health_desc_fct = fct_recode(
+      health_desc_fct,
+      "Poor" = "0",
+      "Fair" = "1",
+      "Good" = "2",
+      "Very Good" = "3",
+      "Excellent" = "4",
+      NULL = "9"
+    )
+  )
 
 
 ```
@@ -308,13 +325,13 @@ jcush2 <- jcush %>%
 The `levels()` function allows us to inspect the labels. Note that because we specified the original value of "9" as `NULL`, it does not appear in the list.
 
 ```{r}
-levels(jcush2$health_desc_fct)
+levels(jcush_forcats$health_desc_fct)
 ```
 
 When we tally the results by our new variable, the former "9" records are shown as "NA".
 
 ```{r}
-jcush2 %>% 
+jcush_forcats %>% 
   group_by(GHJ1DHDI, health_desc_fct) %>% 
   tally()
 
@@ -326,30 +343,82 @@ jcush2 %>%
 ```{r}
 library(haven)
 
-jcush3 <- jcush %>% 
-  mutate(health_desc_lab = labelled(GHJ1DHDI,
-                                   c("Poor" = 0,
-                                   "Fair" = 1,
-                                   "Good" = 2,
-                                   "Very Good" = 3,
-                                   "Excellent" = 4,
-                                   "Not Stated" = 9)))
+jcush_haven <- jcush %>%
+  mutate(health_desc_lab = labelled(
+    GHJ1DHDI,
+    c(
+      "Poor" = 0,
+      "Fair" = 1,
+      "Good" = 2,
+      "Very Good" = 3,
+      "Excellent" = 4,
+      "Not Stated" = 9
+    )
+  ))
 
 ```
 
-The `levels()` function can again be used to inspect the result of this mutate.
+Note that our new variable is a "S3: haven_labelled" class, and the `ls.str()` function shows it as "dbl+lbl":
+
+```{r}
+ls.str(jcush_haven)
+```
+
+
+The `levels()` function can be used to inspect the result of this mutate.
 
 ```{r}
 
-head(jcush3$health_desc_lab)
-
-# note: `as_factor()` works; `as.factor()` does not
-levels(as_factor(jcush3$health_desc_lab))             
-                                   
-levels(as.factor(jcush3$health_desc_lab))             
+head(jcush_haven$health_desc_lab)
 
 ```
 
+```{r}
+
+# note: `as_factor()` works; `as.factor()` does not
+levels(as_factor(jcush_haven$health_desc_lab))             
+                                   
+levels(as.factor(jcush_haven$health_desc_lab))             
+
+```
+
+
+A third option is to use the functions within the {labelled}[@R-labelled] package. 
+
+```{r}
+jcush_labelled <- jcush %>%
+  mutate(health_desc_lab = labelled(
+    GHJ1DHDI,
+    c(
+      "Poor" = 0,
+      "Fair" = 1,
+      "Good" = 2,
+      "Very Good" = 3,
+      "Excellent" = 4,
+      "Not Stated" = 9
+    )
+  ))
+
+jcush_labelled
+```
+
+
+```{r}
+
+head(jcush_labelled$health_desc_lab)
+
+```
+
+```{r}
+
+# note: `as_factor()` works; `as.factor()` does not
+levels(as_factor(jcush_labelled$health_desc_lab))             
+                                   
+levels(as.factor(jcush_labelled$health_desc_lab))             
+
+```
+
+This package also allows for a descriptive name of the variable to be appended with the `var_lab()` function.
 
 
 ### Base R: `model.matrix`
