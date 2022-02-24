@@ -56,7 +56,7 @@ Creating indicator variables \index{indicator variables}
 
 > To include a categorical variable in a regression, a natural approach is to construct an 'indicator variable' for each category. This allows a separate effect for each level of the category, without assuming any ordering or other structure on the categories. [@Gelman_etal_2014, p.366]
 
-* also known as dummy variables [@Suits_1957] and "one hot" encoding
+* also known as dummy variables\index{dummy variables|see{indicator variables}} [@Suits_1957] and "one hot" encoding\index{one hot encoding|see{indicator variables}}
 
 Examples of this approach abound. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
 
@@ -233,6 +233,123 @@ penguin_subset %>%
 
 
 Later: add dummy rows with `dummy_rows()`
+
+
+
+## Creating labelled factors from numeric variables
+
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example to create labelled factors from the numeric values in the variables we imported.
+
+```{r jcush_txt_read_vars_2}
+
+jcush <- readr::read_fwf(dpjr::dpjr_data("JCUSH.txt"), 
+         fwf_cols(
+           SAMPLEID = c(1, 12),
+           SPJ1_TYP = c(13, 13), 
+           GHJ1DHDI = c(32, 32),
+           SDJ1GHED = c(502, 502)
+           ),
+         col_types = list(
+           SAMPLEID = col_character()
+         ))
+
+head(jcush)
+```
+
+
+```{r}
+jcush %>% 
+  group_by(GHJ1DHDI) %>% 
+  tally()
+
+```
+
+The values for these variables are as follows:
+
+
+| Name | Variable | Code | Value |
+| :--- | :---     | :---:  | :---:  |
+| SAMPLEID | Household identifier | unique number | &nbsp; |
+| SPJ1_TYP | Sample type [country] | 1 | Canada |
+| &nbsp; | &nbsp; | 2 | United States |
+| GHJ1DHDI | Health Description Index | 0 | Poor |
+| &nbsp; | &nbsp; | 1 | Fair |
+| &nbsp; | &nbsp; | 2 | Good |
+| &nbsp; | &nbsp; | 3 | Very Good |
+| &nbsp; | &nbsp; | 4 | Excellent |
+| &nbsp; | &nbsp; | 9 | Not Stated |
+| SDJ1GHED | Highest level of post-secondary education attained | 1 | Less than high school |
+| &nbsp; | &nbsp; | 2 | High school degree or equivalent (GED) |
+| &nbsp; | &nbsp; | 3 | Trades Cert, Voc. Sch./Comm.Col./CEGEP |
+| &nbsp; | &nbsp; | 4 | Univ or Coll. Cert. incl. below Bach. |
+| &nbsp; | &nbsp; | 9 | Not Stated |
+
+
+One strategy is to create a new factor variable, that uses the value description instead of the numeric representation. For this, we will use the `fct_recode()` function from the {forcats} package[@R-forcats].
+
+```{r}
+library(forcats)
+
+jcush2 <- jcush %>% 
+  # 1st mutate a new factor variable with the original values
+  mutate(health_desc_fct = as.factor(GHJ1DHDI)) %>% 
+  # 2nd recode the values
+  mutate(health_desc_fct = fct_recode(health_desc_fct,
+                                   "Poor" = "0",
+                                   "Fair" = "1",
+                                   "Good" = "2",
+                                   "Very Good" = "3",
+                                   "Excellent" = "4",
+                                   NULL = "9"))
+
+
+```
+
+The `levels()` function allows us to inspect the labels. Note that because we specified the original value of "9" as `NULL`, it does not appear in the list.
+
+```{r}
+levels(jcush2$health_desc_fct)
+```
+
+When we tally the results by our new variable, the former "9" records are shown as "NA".
+
+```{r}
+jcush2 %>% 
+  group_by(GHJ1DHDI, health_desc_fct) %>% 
+  tally()
+
+```
+
+
+{haven}[@R-haven] provides another option.
+
+```{r}
+library(haven)
+
+jcush3 <- jcush %>% 
+  mutate(health_desc_lab = labelled(GHJ1DHDI,
+                                   c("Poor" = 0,
+                                   "Fair" = 1,
+                                   "Good" = 2,
+                                   "Very Good" = 3,
+                                   "Excellent" = 4,
+                                   "Not Stated" = 9)))
+
+```
+
+The `levels()` function can again be used to inspect the result of this mutate.
+
+```{r}
+
+head(jcush3$health_desc_lab)
+
+# note: `as_factor()` works; `as.factor()` does not
+levels(as_factor(jcush3$health_desc_lab))             
+                                   
+levels(as.factor(jcush3$health_desc_lab))             
+
+```
+
 
 
 ### Base R: `model.matrix`

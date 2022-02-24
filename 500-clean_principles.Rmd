@@ -141,24 +141,6 @@ Tidy data\index{tidy data}
 
 
 
-### Row counts (records)
-
-Did your import step give you as many rows as you anticipated?
-
-
-### Columns (variables)
-
-Did your import step capture all of the variables?
-
-Did the variables import as the correct classes?
-
-Things to look for:
-
-* did variables that should be numbers load as numeric types, or as character?
-
-* if working with labelled variables, did they load as factor type?
-
-
 
 We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. That is, what is the data's _quality_? 
 
