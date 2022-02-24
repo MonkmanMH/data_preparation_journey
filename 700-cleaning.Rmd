@@ -328,7 +328,7 @@ The `levels()` function allows us to inspect the labels. Note that because we sp
 levels(jcush_forcats$health_desc_fct)
 ```
 
-When we tally the results by our new variable, the former "9" records are shown as "NA".
+When we tally the results by our new variable, the "GHJ1DHDI" records with the value 9 are shown as "NA".
 
 ```{r}
 jcush_forcats %>% 

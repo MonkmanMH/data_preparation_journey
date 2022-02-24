@@ -7,7 +7,7 @@ As we get started on the path of preparing our data, we should think first about
 
 Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
 
-While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That person is often also the one responsible for the modeling, visualization, and reporting.
+While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That same person might also be responsible for the modeling, visualization, and reporting.
 
 (Add example of financial information? Purpose to track revenue and expenses, but can be applied to understanding customer spending patterns.)
 
@@ -62,10 +62,10 @@ A _measure_ we have available is in the human resource database: each staff memb
 
 But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation, using the functions in the package {lubridate}, that looks like this:
 
-`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of [Ichiro Suzuki](https://en.wikipedia.org/wiki/Ichiro_Suzuki).] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package [@R-lubridate]; see [@Ford_lubridate_2017].]
+`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of Ichiro Suzuki.] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package [@R-lubridate]; see [@Ford_lubridate_2017].]
 
 
-And our _variable_ results from this calculation: in the code example we called it `age_this_year`. Note that this variable will require recalculation every time we repeat our analysis—one's age is not a static value! In a company with roughly 2,500 staff, there's 50-50 chance it is someone's birthday today, and with 4,000 staff it is virtually certain at least one person is celebrating a birthday. [@Yau_birthday_2017] And of course, staff join and leave an organization, so the individuals in our database will change. This means that this variable will only be precisely correct for a few days at most.
+And our _variable_ results from this calculation: in the code example we called it `age_this_year`. Note that this variable will require recalculation every time we repeat our analysis—one's age is not a static value! In a company with roughly 2,500 staff, there's 50-50 chance it is someone's birthday today, and with 4,000 staff it is virtually certain at least one person is celebrating a birthday. [@Yau_birthday_2017] And of course, staff join and leave an organization, so the individuals in our database will change. This means that this variable will be precisely correct for only a few days at most.
 
 
 

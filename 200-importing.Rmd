@@ -46,7 +46,7 @@ Once it has been collected in this way, you might have direct access to it. Or i
 
 * Have access to a sample of the raw data.
 
-* Download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be Statistics Canada's Census data tables.
+* Download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
 
 
 
@@ -69,7 +69,7 @@ There is sometimes (often?) no right answer as to the best format for a particul
 
 > It is essential that a statistician can talk to the database specialist, and, as a team member, the statistician, along with most others, will be expected to be able to use the database facilities for most purposes by themselves, and of course advise on aspects of the design. There is always much preliminary 'data cleaning' to do before an analysis can begin, almost regardless of how good a job is done by the database specialist. [@Venables_IDT_review_2010]
 
-There are plenty of resources detailing the complexities of the different data storage formats, and the decision process that goes into deciding which format is appropriate for a specific use-case. I always approach the task assuming that the professionals who built the data storage system made a well-informed decision, including balancing the various trade-offs between different formats, as well as budgetary and technology contraints that they might have faced.
+There are plenty of resources detailing the complexities of the different data storage formats, and the decision process that goes into determining which format is appropriate for a specific use-case. I always approach the task assuming that the professionals who built the data storage system made a well-informed decision, including balancing the various trade-offs between different formats, as well as budgetary and technology constraints that they might have faced.
 
 
 
@@ -78,18 +78,15 @@ Reading: Chapter 5, "Data Storage" of [@Murrell_data_technologies] — [link](ht
 
 ## Importing data
 
-"Enough with the chatter...let's get to it!"
-
-Wait a minute.
 
 Here's some advice that's worth heeding:
 
 1. The arguments in the import functions are your friends! Use them as your first line of defense in your project workflow.
 
 > Data import generally feels one of two ways:
-* “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
-* “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
-In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: use the arguments of your import function to get as far as you can, as fast as possible. Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
+> * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
+ > * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
+> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: use the arguments of your import function to get as far as you can, as fast as possible. Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
 
 [@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
 
