@@ -234,6 +234,13 @@ penguin_subset %>%
 
 Later: add dummy rows with `dummy_rows()`
 
+### a tidyr::pivot_longer() solution
+
+https://twitter.com/_TanHo/status/1415100126272577536?s=20&t=VsY7hHNn01lS17_eXvUvhA  
+
+https://gist.github.com/tanho63/50d9b323e29165ad3e027bc3cf1c5926
+
+https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
 
 
 ## Creating labelled factors from numeric variables
