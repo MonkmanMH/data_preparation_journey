@@ -87,7 +87,7 @@ There is quite a lot of literature on how to define data quality; the concepts i
   - Accurate
   
 
-"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. 
+"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. Note that these categories are not mutually exclusive; a single problem might be simultaneously inconsistent and inaccurate.
 
 **Complete**
 
@@ -101,18 +101,28 @@ We will consider a measure to be consistent if the same value is reported in the
 
 Some examples:
 
-* units are consistent; temperature is consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin, or income is in a single currency.
+* Units are consistent; temperature is consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin, or income is in a single currency.
 
-* spelling is consistent. "British Columbia", "B.C." and "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+* Spelling is consistent. "British Columbia", "B.C." and "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+
+* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [_reference_] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004]
+
+
 
 **Accurate**
 
-(How to evaluate?)
+When we say accurate, we mean that the value recorded in our data is the value measured.
+
+Some examples of inaccurate data are:
+
+* A data entry error.
+
+* The use of a default value in the data collection software, which leads to values that should have been "unknown" be entered as the default.
 
 
+***
 
-
-If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? 
+If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data, which is to say _doing analysis_? 
 
 > The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
 
