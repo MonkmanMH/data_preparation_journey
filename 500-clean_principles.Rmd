@@ -40,9 +40,13 @@ placeholder for chapter 5
 
 ## Why clean data matters
 
-* accuracy
 
-* ability to link to other data sources—consistency matters
+We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. This is important, in that it ensures that our analysis is going to be accurate, and the consistency of our values gives us the ability to link to other data sources.
+
+
+We need to ask what is the data's _quality_? 
+
+A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
 
 
 
@@ -101,11 +105,11 @@ We will consider a measure to be consistent if the same value is reported in the
 
 Some examples:
 
-* Units are consistent; temperature is consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin, or income is in a single currency.
+* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin. Another might be in an international survey or form, where `salary` completed by respondents in the values of their local currency.
 
 * Spelling is consistent. "British Columbia", "B.C." and "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
 
-* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [_reference_] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004]
+* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [_reference_] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
 
 
 
@@ -115,9 +119,53 @@ When we say accurate, we mean that the value recorded in our data is the value m
 
 Some examples of inaccurate data are:
 
-* A data entry error.
+* The use of a default value in place of a missing or "unknown" value. This is sometimes embedded in the data collection or database software, leading to values that should have been "unknown" be entered as the default.
 
-* The use of a default value in the data collection software, which leads to values that should have been "unknown" be entered as the default.
+> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
+
+
+
+* A data entry error. Perhaps the most common are typographical errors, where the wrong value is entered. Another type is what we might call a "variable transposition error" (where the value is transposed one column over, something that happens all to often with address records, where the city name might end up in the state/province column).
+
+* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "MAR1" gets converted to March 1st of the current year. 
+
+
+* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
+
+```{r}
+readxl::read_excel("date.xlsx", col_types = "text")
+
+lubridate::today() - 44571
+```
+
+
+
+* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+
+
+
+* Other (I'm not sure how to characterize this—wikipedia uses the term "cultural ignorance" which might fit)
+
+> "Prawo Jazdy" was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
+
+
+Other common dirty data problems that fall outside the four broad data quality categories include:
+
+* Column headers are values instead of variable names, or there are duplicate variable names.
+
+* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
+
+* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
+
+
+
+
+
+See [@Zumel_Mount_2019, chapters 3 and 4]
+
+
+
+
 
 
 ***
@@ -127,7 +175,7 @@ If the data fails to meet our standards or quality, we need to _clean the data_.
 > The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
 
 
-So what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
+At this point we should ask what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
 
 
 **The first challenge**: how do we find these things?
@@ -148,52 +196,6 @@ The first place to start with cleaning your data is the structure.
 Tidy data\index{tidy data}
 
 [@tidydata]
-
-
-
-
-We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. That is, what is the data's _quality_? 
-
-A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
-
-What are common dirty data problems?
-
-* Column headers are values instead of variable names, or there are duplicate variable names.
-
-* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
-
-* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
-
-* Misspellings (typing errors) 
-
-* Value in wrong field (e.g. country entered into `city` field).
-
-* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
-
-* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
-
-* Default values in the place of missing values.
-
-> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
-
-* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "MAR1" gets converted to March 1st of the current year. 
-
-* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
-
-```{r}
-readxl::read_excel("date.xlsx", col_types = "text")
-
-lubridate::today() - 44571
-```
-
-
-* Other (I'm not sure how to characterize this—wikipedia uses the term "cultural ignorance" which might fit)
-
-> "Prawo Jazdy" was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
-
-
-See [@Zumel_Mount_2019, chapters 3 and 4]
-
 
 
 

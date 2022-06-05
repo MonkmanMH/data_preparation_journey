@@ -37,33 +37,33 @@ The data has been collected. It might be the result of:
 
 * Sampling the people in an area and asking them a series of questions.
 
-* Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which data about grocery purchases, which facilitate operation management of the store by tracking sales and inventory, and generating orders.
+* Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitate operation management of the store by tracking sales and inventory, and generating orders.
 
 
-Once it has been collected in this way, you might have direct access to it. Or it may have a layer of processing between the raw source and the way it appears to your. After this processing, you might:
+Once the data has been collected in this way, you might have direct access to it. Or it may have a layer of processing between the raw source and the way it appears to your. After this processing, you might:
 
 * Have access to a database where the raw data with additional manipulations is stored.
 
 * Have access to a sample of the raw data.
 
-* Download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
+* Be able to download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
 
 
 
 And it's important to note that your analysis project might require more than one of these methods of data collection.
 
-How you assemble the data you need will depend on many factors, including what is already available, what your budget is (for example, some business-related data is collected by companies that then make it available at a cost), and the legal and regulatory environment (for example, the definition of "personal information" varies from one jurisdiction to the next).
+How you assemble the data you need will depend on many factors, including what is already available, what your budget is (for example, some business-related data is collected by companies that then make it available at a cost), and the legal and regulatory environment (note that the definition of "personal information" varies from one jurisdiction to the next).
 
 
 ## Data formats
 
 The data gets stored in a variety of electronic formats. The choice of format might be influenced by any one of the following:
 
-* the underlying needs of the data collectors (some file formats are tailored to a specific use);
+* The underlying needs of the data collectors (some file formats are tailored to a specific use);
 
-* the technology available to the collector;
+* The technology available to the collector;
 
-* the nature of the data being collected.
+* The nature of the data being collected.
 
 There is sometimes (often?) no right answer as to the best format for a particular use case—there are pros and cons to each. (With that said, there is often a clear _less good_ choice for data storage and sharing...we're looking at you, PDF.) What this means is that in your workflow you will have to deal with data that needs to be extracted from a multitude of systems, and will be available to you in a multitude of formats.
 
@@ -101,7 +101,7 @@ general R advice on import/export:  https://cran.r-project.org/doc/manuals/r-dev
 
 ### Check your results
 
-It's always a good idea to quickly check your data after any major processing step—starting with, but not limited to, importing your data.
+It's always a good idea to quickly check your data after any major processing step. This can start with, but is not limited to, importing your data.
 
 Some things to check:
 
@@ -143,18 +143,18 @@ For example, `read.csv()` is a base R function to read CSV files.
 ```{r}
 # example
 # assign path using the {here} package
-mtcars_path <- here::here("data", "mtcars.csv")
+penguins_path <- here::here("data", "penguins.csv")
 
-mtcars <- read.csv(mtcars_path)
+penguins_data <- read.csv(penguins_path)
 ```
 
 
 ```{r, echo=FALSE, eval=FALSE}
 # alternative approach with {dpjr} package
 library(dpjr)
-mtcars_path <- dpjr_data("mtcars.csv")
+penguins_path <- dpjr_data("penguins.csv")
 
-mtcars <- read.csv(mtcars_path)
+penguins_data <- read.csv(penguins_path)
 
 ```
 
@@ -162,7 +162,7 @@ mtcars <- read.csv(mtcars_path)
 
 ### {readr} (tidyverse)
 
-The {readr} [@R-readr] package is part of the tidyverse, and works very well to read plain-text files. (This example comes straight from the reference page for {readr} ^[{readr} reference page: https://readr.tidyverse.org/index.html])
+The {readr} [@R-readr] package is part of the tidyverse, and works very well to read plain-text files. (This example is a modification of the example provided at the reference page for {readr} ^[{readr} reference page: https://readr.tidyverse.org/index.html])
 
 We activate {readr} by using the `library()` function:
 
@@ -171,7 +171,7 @@ library(readr)
 ```
 
 
-This chunk creates a string object that contains the path name, and then uses the function `read_csv()` * to create an object called `mtcars`, from a CSV file of the same name.
+This chunk creates a string object that contains the path name, and then uses the function `read_csv()` * to create an object called `penguins_data`, from a CSV file of the same name.
 
 * Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
@@ -179,21 +179,21 @@ This chunk creates a string object that contains the path name, and then uses th
 
 ```{r}
 # read the file and assign it to the object "mtcars"
-mtcars <- read_csv(mtcars_path)
+penguins_data <- read_csv(penguins_path)
 
 ```
 
 The function has the message shown above, letting us know the variable type that each is assigned.
 
-Adding the `col_types = cols()` parameter allows us to alter what {readr} has decided for us. For example, we could set the `cyl` variable to be an integer.
+Adding the `col_types = cols()` parameter allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be an factor.
 
-When we show the entire table, we can see that the variable `cyl` is now an "<int>" type.
+When we show the entire table, we can see that the variable `species` is now an "<fctr>" type.
 
 ```{r}
-mtcars <- read_csv(mtcars_path,
+penguins_data <- read_csv(penguins_path,
                    col_types =
-                     cols(cyl = col_integer()))
-mtcars
+                     cols(species = col_factor()))
+penguins_data
 ```
 
 
@@ -210,7 +210,7 @@ The {readr} package allows a lot of control over how the file is read. Of partic
 For example, if we were working with a very large file and wanted to read the first five rows, just to see what's there, we could write the following:
 
 ```{r}
-read_csv(mtcars_path, 
+read_csv(penguins_path, 
          n_max = 5)
 ```
 
@@ -429,16 +429,16 @@ Spreadsheets and similar data tables are perhaps the most common way that data i
 
 Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet,but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Spreadsheets have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
 
-Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis.
+Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. But as his article, and the others cited earlier make plain, it's possible to achieve both goals.
 
 
 ### Excel files
 
-If anything, Excel files (with the .XLS or .XLSX extensions) are more common than CSV and other plain-text data files. They seem to multiply like coat hangers in the closet...
+If anything, Excel files (with either the .XLS or .XLSX extensions) are more common than CSV and other plain-text data files. They seem to multiply like coat hangers in the closet.
 
-And as we see in the article by Karl Broman & Kara Woo, ["Data Organization in Spreadsheets"](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989), Excel files can encourage some ways of storing information that makes it hard for us to analyze. Excel files can also contain a wide variety of data format types. 
+And as we see in the article by Karl Broman & Kara Woo, ["Data Organization in Spreadsheets"] [@Broman_Woo_2017], Excel files can encourage some ways of storing information that makes it hard for us to analyze. Excel files can also contain a wide variety of data format types. 
 
-The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on, but like {readr}, it allows you to override some of those automatic decisions.
+The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions.
 
 ```{r}
 library(readxl)
@@ -507,7 +507,7 @@ For most of these examples, we will work with SPSS formatted files; the approach
 
 ```{r}
 
-haven::read_dta(here("data", "iris.dta"))
+haven::read_dta(here::here("data", "penguins.dta"))
 
 ```
 
@@ -516,7 +516,7 @@ The equivalent for a SAS file is as follows:
 
 ```{r}
 
-haven::read_sas(here("data", "iris.sas7bdat"))
+haven::read_sas(here::here("data", "penguins.sas"))
 
 ```
 
@@ -524,7 +524,7 @@ Here's the code to read that same data file in SPSS's ".sav" format:
 
 ```{r}
 
-haven::read_sav(here("data", "iris.sav"))
+haven::read_sav(here::here("data", "penguins.sav"))
 
 ```
 
