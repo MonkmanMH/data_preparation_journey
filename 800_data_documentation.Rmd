@@ -295,6 +295,7 @@ Caitlin Hudon, ["Field Notes: Building Data Dictionaries"](https://caitlinhudon.
 
 Also see [@R-labelled] http://larmarange.github.io/labelled/articles/look_for.html
 
+* One of the most useful functions is `look_for()`, which provides a data dictionary of the dataframe.
 
 
 ### Project structure

@@ -493,7 +493,7 @@ deaths
 ## Statistical software
 
 
-If you work with statisticians, economists, sociologists, survey practioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS, and Stata. They have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985) and have evolved, demonstrating their robustness, and have become common in many academic, corporate, and government settings. 
+If you are one or work with statisticians, economists, sociologists, survey practitioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS, and Stata. These tools have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985) and have evolved, demonstrating their robustness, and have become common in many academic, corporate, and government settings. 
 
 A feature of these programs is that the variables and the associated values can be _labelled_. If you're familiar with **R**, value labelling is conceptually similar to the use of factor labels. These labels can carry a great deal of detail to which you might otherwise not have easy access.
 
@@ -520,13 +520,37 @@ haven::read_sas(here::here("data", "penguins.sas"))
 
 ```
 
-Here's the code to read that same data file in SPSS's ".sav" format:
+Here's the code to read that same data file in SPSS's ".sav" format and assigns it to an R object `penguins_sav`:
 
 ```{r}
 
-haven::read_sav(here::here("data", "penguins.sav"))
+penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
 
+penguins_sav
 ```
+
+
+
+### {labelled} -
+
+The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe.
+
+The package's reference page is here: http://larmarange.github.io/labelled/index.html
+
+As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
+
+
+
+
+
+For more about {labelled}, see 
+
+* http://larmarange.github.io/labelled/
+
+* https://cran.r-project.org/web/packages/labelled/
+
+
+
 
 
 
@@ -669,27 +693,6 @@ In the code below, we will set all of the variables in the `df_video` dataframe 
 (df_video_both <- as_factor(df_video, levels="both"))
 
 ```
-
-
-### {labelled} -
-
-The package {labelled} gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe.
-
-The package's reference page is here: http://larmarange.github.io/labelled/index.html
-
-As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
-
-
-One of the most useful functions is `look_for()`, which provides a data dictionary of the dataframe.
-
-
-
-For more about {labelled}, see 
-
-* http://larmarange.github.io/labelled/
-
-* https://cran.r-project.org/web/packages/labelled/
-
 
 
 
