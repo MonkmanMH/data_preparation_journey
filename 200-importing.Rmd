@@ -529,17 +529,48 @@ penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
 penguins_sav
 ```
 
+You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables are numeric—species, instead of being a character, is a numeric (double) type.
 
 
 ### {labelled} -
 
 The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe.
 
-The package's reference page is here: http://larmarange.github.io/labelled/index.html
+```{r 200-labelled}
+library(labelled)
+```
 
-As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
 
 
+The first function we will use is `look_for()`, which returns the labels, column types, and values of the variables in our data.
+
+```{r}
+look_for(penguins_sav)
+```
+
+In this view, we can spot the species names in the "values" column. Also notice that the "col_type" column shows "dbl+lbl": double and label. In this dataframe, there are no labels.
+
+The function `var_label()` allows us to add a descriptive label to a variable. Here, we add a label to the `species` variable:
+
+```{r}
+var_label(penguins_sav$species) <- "Penguin species"
+
+```
+
+The label is now incorporated into the dataframe:
+
+```{r}
+look_for(penguins_sav)
+```
+
+It's also possible to add multiple labels. Note that in this example, a label is added to both "dbl+lbl" and "dbl" types.
+
+```{r}
+var_label(penguins_sav) <- list(island = "Island of record", 
+                                body_mass_g = "Weight, in grams")
+
+look_for(penguins_sav)
+```
 
 
 
@@ -549,6 +580,10 @@ For more about {labelled}, see
 
 * https://cran.r-project.org/web/packages/labelled/
 
+
+The package's reference page is here: http://larmarange.github.io/labelled/index.html
+
+As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
 
 
 
