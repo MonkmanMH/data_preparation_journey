@@ -592,6 +592,8 @@ As well, there is a good introduction to the functions in the package here: http
 
 ### Reading an SPSS file: "Video"
 
+The functionality of a labelled dataframe is very beneficial when working with survey data. The dataframe can contain the variable codes as captured in the form, the values associated with those values, as well as the text of the question in the label.
+
 The file used in this example comes from the University of Sheffield Mathematics and Statistics Help's "Datasets for Teaching"
 https://www.sheffield.ac.uk/mash/statistics/datasets
 
@@ -634,19 +636,22 @@ df_video
 
 Note that in the variable descriptions, it includes `<S3: haven_labelled>` for those that bring the SPSS labels with them.
 
-But some of the variable names have leading `@` (at sign)...they will cause us some headaches later, so let's use the `clean_names()` function from the {janitor} package to clean them up.
+But some of the variable names have leading `@` (at sign)...they will cause us some headaches later, so let's use the `clean_names()` function from the {janitor} package [@R-janitor]^[The reference page for {janitor} is here: http://sfirke.github.io/janitor/] to clean them up.
 
-* the reference page for {janitor} is here: http://sfirke.github.io/janitor/
 
 ```{r}
 
 df_video <- janitor::clean_names(df_video)
 
-df_video
-
 ```
 
 
+Now, we can use the `look_for()` function from {labelled} to view the contents of the dataframe:
+
+
+```{r}
+look_for(df_video)
+```
 
 
 #### Handling missing values 
