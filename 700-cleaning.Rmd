@@ -115,6 +115,8 @@ Where the value of `gender` is "female", the value of `gender_female` is assigne
 
 Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the opposite of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result, since the value "female" appears in the first observation (row).
 
+{Note to self: this is not entirely clear, esp. the reference in the last sentence to the first observation.}
+
 ```{r}
 
 tb2 %>% 
@@ -220,7 +222,7 @@ First, you will notice that we started with two factor variables, `species` and 
 
 And because there are three species of penguins and three islands, we have three indicator variables for both of the original variables.
 
-In the instance where we have multiple charactor or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
+In the instance where we have multiple character or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
 
 ```{r}
 
@@ -251,7 +253,7 @@ In some cases, there might be one or more values assigned to categories we might
 
 In other cases, numeric values are used to store the categorical responses. 
 
-The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example of where categories are stored as numerica variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
 
 We will use this file to create labelled factors from the numeric values in the variables we imported. Here's the code we used previously to read the file:
 

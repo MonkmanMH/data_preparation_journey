@@ -44,9 +44,9 @@ placeholder for chapter 5
 We've read in our raw data. The next step is to make sure that the data is what we expect, and what we need for our analysis. This is important, in that it ensures that our analysis is going to be accurate, and the consistency of our values gives us the ability to link to other data sources.
 
 
-We need to ask what is the data's _quality_? 
+We need to ask "What is the data's _quality_?" 
 
-A different way this is sometimes approached is whether or not the data is _dirty_ and needs _cleaning_.
+Sometimes, we will see this questions framed as whether or not the data is _dirty_, and whether it needs _cleaning_.
 
 
 
@@ -58,7 +58,7 @@ A different way this is sometimes approached is whether or not the data is _dirt
 
 ### Data quality literature
 
-There is quite a lot of literature on how to define data quality; the concepts in the hierarchical dimensions described by Wang, Reddy and Kon ^[Richard Y. Wang, M.P. Reddy and Henry B. Kon, "Toward quality data: An attribute-based approach", _Decision Support Systems_, 13 (1995) 349-372] is as follows:
+There is quite a lot of literature on how to define data quality. The concepts in the hierarchical dimensions described by Wang, Reddy and Kon ^[Richard Y. Wang, M.P. Reddy and Henry B. Kon, "Toward quality data: An attribute-based approach", _Decision Support Systems_, 13 (1995) 349-372] are as follows:
 
 * Accessible
 
@@ -91,13 +91,13 @@ There is quite a lot of literature on how to define data quality; the concepts i
   - Accurate
   
 
-"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. Note that these categories are not mutually exclusive; a single problem might be simultaneously inconsistent and inaccurate.
+"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
 
 **Complete**
 
 For our purposes, "complete" means whether any values in each record are missing (internally complete).
 
-Is it possible to determine whether the records are an accurate representation of the whole. With a well-designed sample, it is possible that a sub-set of the population can provide an accurate set of measures about the population. 
+"Complete" does not mean that every possible member of the population is represented in the data. With a well-designed sample, it is possible that a sub-set of the population can provide an accurate set of measures about the population. Furthermore, it is possible to determine whether the records are an accurate representation of the whole.
 
 **Consistent**
 
@@ -105,9 +105,9 @@ We will consider a measure to be consistent if the same value is reported in the
 
 Some examples:
 
-* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin. Another might be in an international survey or form, where `salary` completed by respondents in the values of their local currency.
+* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin. Another might be in a survey or form with an international audience, where `salary` might be completed by respondents in the values of their local currency.
 
-* Spelling is consistent. "British Columbia", "B.C." and "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+* Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
 
 * In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [_reference_] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
 
@@ -140,7 +140,7 @@ lubridate::today() - 44571
 
 
 
-* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
+* Contradiction (for example, imagine that a single individual is entered into two databases, but when we compare them we see that the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
 
 
 
@@ -170,7 +170,7 @@ See [@Zumel_Mount_2019, chapters 3 and 4]
 
 ***
 
-If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data, which is to say _doing analysis_? 
+If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? Don't we want to be _doing analysis_? 
 
 > The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
 
@@ -178,9 +178,9 @@ If the data fails to meet our standards or quality, we need to _clean the data_.
 At this point we should ask what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
 
 
-**The first challenge**: how do we find these things?
+**The first challenge**: How do we find these things?
 
-**The second challenge**: what can and should we do about them?
+**The second challenge**: What can and should we do about them?
 
 
 See [@Greve_Clean_data]
