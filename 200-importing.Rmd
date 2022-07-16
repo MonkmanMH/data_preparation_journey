@@ -497,12 +497,13 @@ If you are one or work with statisticians, economists, sociologists, survey prac
 
 A feature of these programs is that the variables and the associated values can be _labelled_. If you're familiar with **R**, value labelling is conceptually similar to the use of factor labels. These labels can carry a great deal of detail to which you might otherwise not have easy access.
 
-The **R** package {haven} [@R-haven] provides the functionality to read these three types of files; the reference page for {haven} is here: https://haven.tidyverse.org/index.html
+The **R** package {haven} [@R-haven] provides the functionality to read these three types of files. ^[The reference page for {haven} is here: https://haven.tidyverse.org/index.html] There are other packages related to {haven} that we will also use.
+
 
 `library(haven)`
 
 
-For most of these examples, we will work with SPSS formatted files; the approach is similar for the other two formats, and only differs in the details. For example, the `read_()` functions vary only with the extension. For example, a Stata data file has the extension ".dta", so the read function is `read_dta()`:
+For these examples, we will work with SPSS formatted files; the approach is similar for the other two formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension. For example, a Stata data file has the extension ".dta", so the read function is `read_dta()`:
 
 
 ```{r}
@@ -529,12 +530,12 @@ penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
 penguins_sav
 ```
 
-You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables are numeric—species, instead of being a character, is a numeric (double) type.
+You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables are numeric. For example the variable "species", instead of being a character, is a numeric (double) type.
 
 
 ### {labelled} -
 
-The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe.
+The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe that we have read into R using one of the {haven} functions.
 
 ```{r 200-labelled}
 library(labelled)
@@ -544,7 +545,7 @@ library(labelled)
 
 The first function we will use is `look_for()`, which returns the labels, column types, and values of the variables in our data.
 
-```{r}
+```{r 200-look_for}
 look_for(penguins_sav)
 ```
 
@@ -649,7 +650,7 @@ df_video <- janitor::clean_names(df_video)
 Now, we can use the `look_for()` function from {labelled} to view the contents of the dataframe:
 
 
-```{r}
+```{r 200-look_for_1, eval=FALSE}
 look_for(df_video)
 ```
 
@@ -664,12 +665,11 @@ Very often, SPSS files will have "user defined missing values". As we see above,
 
 * the analyst may have decided to code "Don't know" or "Not applicable" as "missing" when calculating the percentages of responses in the other categories.
 
-Depending on the circumstance, you may want to count some of these. For example, if there a lot of "Don't know" and "Not applicable" responses, you may wish to analyze which one it is (they mean very different things!) If the are all coded as 
-"NA", you have lost that ability.
+Depending on the circumstance, you may want to count some of these. For example, if there a lot of "Don't know" and "Not applicable" responses, you may wish to analyze which one it is (they mean very different things!) If the are all coded as "NA", you have lost that ability.
 
-In the code below, adding the `user_na = TRUE` maintains the original values.
+In the code below, adding the `user_na = TRUE` argument to the `read_spss()` function maintains the original values.
 
-```{r}
+```{r 200_read_spss_video}
 df_video <- read_spss(here("data", "Video_SPSS.sav"), user_na = TRUE)
 
 df_video <- janitor::clean_names(df_video)
@@ -703,7 +703,7 @@ attributes(df_video$heardofcondition)
 
 The `$label` is the question, and the `$labels` are the labels associated with each value, including N/A. Note that there's also a `$na_values` shown.
 
-You can also string these together; for example, if we want to see the value labels and nothing else, the code would be as follows:
+You can also string these together in our code. For example, if we want to see the value labels and nothing else, the code would be as follows:
 
 
 ```{r}
@@ -719,7 +719,7 @@ attributes(df_video$heardofcondition)$labels
 
 Factors behave differently than labels: they don't preserve both the label and the value. Instead they display the value and preserve the sort order (that can be either automatically set, or defined in the code).
 
-In the code below, we will set all of the variables in the `df_video` dataframe as factors, first without any additional parameters, and then with the `levels` parameter set to `both`.
+In the code below, we will set all of the variables in the `df_video` dataframe as factors. In the first code chunk there are no additional parameters.
 
 ```{r}
 
@@ -727,8 +727,9 @@ In the code below, we will set all of the variables in the `df_video` dataframe 
 
 ```
 
+In this second chunk, the `levels` parameter is set to `both`.
 
-```{r}
+```{r 200-df_video}
 
 (df_video_both <- as_factor(df_video, levels="both"))
 
