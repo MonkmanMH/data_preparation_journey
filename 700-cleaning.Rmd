@@ -58,7 +58,9 @@ Creating indicator variables \index{indicator variables}
 
 * also known as dummy variables\index{dummy variables|see{indicator variables}} [@Suits_1957] and "one hot" encoding\index{one hot encoding|see{indicator variables}}
 
-Examples of this approach abound. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
+Examples of this approach abound. It can be a useful approach in forecasting methods; Hyndman and Athanasopoulos provide examples where public holidays and days of the week are set as dummy variables [@Hyndman_Athanasopoulos_2021, section 7.4 "Some useful predictors"]
+
+It is aslo a common approach in social data analysis, where categorical variables are frequently used to code information. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
 
 ```{r ch700_mixtape_data, echo=FALSE}
 set.seed(111) # The opus number of Beethoven's last piano sonata, a work of transcendent beauty
