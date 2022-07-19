@@ -714,6 +714,135 @@ attributes(df_video$heardofcondition)$labels
 
 
 
+### Creating a labelled dataframe from SPSS syntax
+
+
+To achieve this, we will use the functions in the package {memisc} [@R-memisc]
+
+`library(memisc)`
+
+This uses information from the National Travel Survey, collected and published by Statistics Canada [@StatCan_NTS_2020]. 
+
+Step 1 - download the "SPSS" zip file for the 2020 reference period, and unzip it in the project sub-folder "data". This should create a sub-folder, so that the file path is now "data\\2020-spss"
+
+The zip file does _not_ include an SPSS-format data file (.sav). Instead, the folder has a fixed-width text file for each of the three survey components (person, trips, and visits), and corresponding SPSS syntax files that can be used to read the files into the correct variables and to apply the variable and value labels. 
+
+Step 2 - use the SPSS syntax files (in R)
+
+For this example, we will use the 2020 NTS "Person" file. The file provided by Statistics Canada is "PERSON_NTS2020_PUMF.txt"; the zip bundle also includes the trips and visit files associated with those persons.
+
+Because there is also the 2018 and 2019 data available, we want to be flexible in our code, so we can rerun it later with a minimum number of changes. Accordingly, we will assign the year of the data as an object.
+
+```{r memisc_year}
+
+nts_year <- "2020"
+
+```
+
+We can now use that in a variety of ways, as we define the locations of the various input files.
+
+
+```{r memisc_inputs}
+
+# define locations of input files
+
+nts_year_format <- glue::glue(nts_year, "-SPSS")
+
+input_folder <- here::here("data", nts_year_format)
+input_folder
+
+layout_folder <- here::here("data", nts_year_format, "Layout_cards")
+layout_folder
+
+columns_file_1 <- glue::glue("Person_NTS", nts_year, "_Pumf_i.sps")
+columns_file <- glue::glue(layout_folder, columns_file_1, .sep = "/")
+columns_file
+
+variable_labels_1 <- glue::glue("Person_NTS", nts_year, "_Pumf_vare.sps")
+variable_labels <- glue::glue(layout_folder, variable_labels_1, .sep = "/")
+
+
+variable_values_1 <- glue::glue("Person_NTS", nts_year, "_Pumf_vale.sps")
+variable_values <- glue::glue(layout_folder, variable_values_1, .sep = "/")
+
+missing_values_1 <- glue::glue("Person_NTS", nts_year, "_Pumf_miss.sps")
+missing_values <- glue::glue(layout_folder, missing_values_1, .sep = "/")
+
+data_file_1 <- glue::glue("PERSON_NTS", nts_year, "_PUMF.txt")
+data_file <- glue::glue(input_folder, "/Data_Données/", data_file_1)
+
+```
+
+
+The next stage is to create a definition of the dataset using the `memisc::spss.fixed.file()` import procedure.
+
+```{r memisc_import}
+
+nts_person_2020 <- spss.fixed.file(
+  data_file,
+  columns_file,
+  varlab.file = variable_labels,
+  codes.file = variable_values,
+  missval.file = missing_values,
+  count.cases = TRUE,
+  to.lower = TRUE
+)
+
+# convert the resulting object into a "data.set" format 
+nts_person_2020_ds <- as.data.set(nts_person_2020)
+
+```
+
+
+Do we need this?
+
+```{r eval=FALSE}
+
+outlist <- c("nts_person_2020_ds")
+
+#save(list=outlist,file="sfs2016_efam_save.Rsave")
+save(list=outlist, file = here::here("data_output", "nts_person_2020_ds.RSave"))
+
+```
+
+
+
+Convert to tibble. This tibble has all of the labels assigned, accessible via the functions in the {labelled} package.
+
+
+```{r convert_to_haven_tibble}
+
+nts_person_2020_hav <- as_haven(nts_person_2020_ds)
+nts_person_2020_hav
+
+```
+
+
+In our final step, we will save the dataframe as an SPSS, Stata, and RDS files for future use.
+
+One important note for Stata users is that there is a "version" argument, which allows us to create a file that can be read by older versions of Stata (the default is Stata 15).
+
+
+```{r export}
+# export haven format table as SPSS .dta file
+haven::write_sav(nts_person_2020_hav,
+                 here::here("data_output", "nts_person_2020.sav"))
+
+# export haven format table as Stata .dta file
+haven::write_dta(nts_person_2020_hav,
+                 here::here("data_output", "nts_person_2020.13.dta"),
+                 version = 13)
+
+
+# export RDS 
+readr::write_rds(nts_person_2020_hav,
+                 here::here("data_output", "nts_person_2020.rds"))
+
+```
+
+
+
+
 
 ### Factors
 

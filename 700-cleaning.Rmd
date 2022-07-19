@@ -52,6 +52,8 @@ Imputation methods
 Recoding with `dplyr::case_when()`
 
 
+### Indicator variables
+
 Creating indicator variables \index{indicator variables}
 
 > To include a categorical variable in a regression, a natural approach is to construct an 'indicator variable' for each category. This allows a separate effect for each level of the category, without assuming any ordering or other structure on the categories. [@Gelman_etal_2014, p.366]
@@ -245,6 +247,12 @@ https://twitter.com/_TanHo/status/1415100126272577536?s=20&t=VsY7hHNn01lS17_eXvU
 https://gist.github.com/tanho63/50d9b323e29165ad3e027bc3cf1c5926
 
 https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
+
+
+### Fill missing values
+
+`dplyr::fill()`
+
 
 
 ## Creating labelled factors from numeric variables
