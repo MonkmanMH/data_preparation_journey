@@ -228,7 +228,7 @@ And because there are three species of penguins and three islands, we have three
 
 In the instance where we have multiple character or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
 
-```{r}
+```{r 700_penguin_dummy}
 
 
 penguin_subset %>% 
@@ -249,10 +249,28 @@ https://gist.github.com/tanho63/50d9b323e29165ad3e027bc3cf1c5926
 https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
 
 
-### Fill missing values
+## Fill missing values
+
+Frequently, our data will have missing values. There are a variety of solutions to dealing with missingness, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value.
 
 `dplyr::fill()`
 
+
+### Imputation of missing values
+
+There is a great deal of literature on the topic of imputation.
+
+[@doi:10.1080/00223891.2018.1530680]
+
+{simputation}: https://cran.r-project.org/web/packages/simputation/vignettes/intro.html
+
+https://github.com/markvanderloo/simputation
+
+
+
+#### Imputation of missing values in time series
+
+A special case of imputation are time series. For R users, the package {imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics"
 
 
 ## Creating labelled factors from numeric variables

@@ -14,6 +14,14 @@ library(fs)
 library(here)
 library(janitor)
 library(labelled)
+library(memisc) # for applying labels etc to PUMF
+
+# 
+# reference docs:
+# CRAN https://cran.r-project.org/web/packages/memisc/index.html
+# github https://github.com/melff/memisc/
+# reference http://memisc.elff.eu/
+
 
 # data
 library(palmerpenguins)
