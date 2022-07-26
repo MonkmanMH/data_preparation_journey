@@ -88,7 +88,7 @@ More commonly, though, this variable is more likely to be captured and saved in 
 ```{r}
 
 tb2 <- tb %>% 
-  rename("gender" = "female") %>% 
+  dplyr::rename(gender = female) %>% 
   mutate(gender = case_when(
     gender == 1 ~ "female",
     TRUE ~ "male"
@@ -102,7 +102,9 @@ tb2
 
 ### `{fastDummies}` 
 
-Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables. ^[If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result. The book _Tidy Modeling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8 "Feature Engineering with recipes".]
+Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables. 
+
+> If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy Modeling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8 "Feature Engineering with recipes".
 
 
 
