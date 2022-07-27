@@ -256,7 +256,29 @@ https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
 
 Frequently, our data will have missing values. There are a variety of solutions to dealing with missingness, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value.
 
-`dplyr::fill()`
+
+A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In our example Excel file, the sheet "Report" contains the data we want in a wide format. The name individual institution is in the second column (in Excel nomanclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
+
+Our first step is to read in the data. Note that the code uses the Excel naming convention to define the rectangular range to be read, and omits the title rows at the top and the notes at the bottom of the sheet.
+
+```{r}
+
+tuition_data <- readxl::read_excel(here("data", "tui2_international_tuition_fees_at_public_post_secondary_institutions_by_economic_development_r.xlsx"),
+                                   sheet = "Report",
+                                   range = "A5:L36")
+
+head(tuition_data)
+
+```
+
+The contents of the file have been read correctly, but there are many "NA" values in the "Economic Development Region" variable. The `fill()` function, in the {tidyr} package [@R-tidyr] [\index{{tidyr}}], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
+
+```{r}
+
+tuition_data %>% 
+  fill("Economic Development Region")
+
+```
 
 
 ### Imputation of missing values
@@ -271,7 +293,7 @@ https://github.com/markvanderloo/simputation
 
 
 
-#### Imputation of missing values in time series
+#### Time series imputation
 
 A special case of imputation are time series. For R users, the package {imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics"
 
