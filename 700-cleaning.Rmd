@@ -263,7 +263,7 @@ Our first step is to read in the data. Note that the code uses the Excel naming 
 
 ```{r}
 
-tuition_data <- readxl::read_excel(here("data", "tui2_international_tuition_fees_at_public_post_secondary_institutions_by_economic_development_r.xlsx"),
+tuition_data <- readxl::read_excel(dpjr::dpjr_data("intl_tuition_fees_bc.xlsx"),
                                    sheet = "Report",
                                    range = "A5:L36")
 
@@ -275,10 +275,26 @@ The contents of the file have been read correctly, but there are many "NA" value
 
 ```{r}
 
-tuition_data %>% 
+tuition_data <- tuition_data %>% 
   fill("Economic Development Region")
 
+head(tuition_data)
 ```
+
+The next step is to use the {tidyr} function `drop_na()` to omit any row that contains an NA value. In this case, we want to drop what were the header rows that contained just the region name in the first column, and no values in the other columns.
+
+These two solutions yield the same result:
+
+```{r}
+drop_na(tuition_data)
+
+tuition_data %>% 
+  drop_na()
+
+```
+
+It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an NA in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
+
 
 
 ### Imputation of missing values
