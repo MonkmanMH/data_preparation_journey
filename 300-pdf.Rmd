@@ -1,0 +1,36 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch300, include=FALSE}
+
+# packages
+
+```
+
+
+# Data from PDF files {#pdf}
+
+> Portable Document Format (PDF)...is a file format developed by Adobe in 1992 to present documents, including text formatting and images, in a manner independent of application software, hardware, and operating systems.^[Wikipedia entry, "PDF" [@wiki:PDF]]
+
+
+The PDF file format provides a great deal of functionality and flexibility to create high quality output. PDF files are often used for things like  branded marketing materials and annual reports, where there is a use-case for a document that looks on screen as it would if printed on paper, with a combination of text and images, all formatted in a way to make it visually appealing.
+
+
+Included in those documents may be data we want for our analysis. Or we may want to analyze the text in the document. The way a PDF file is structured can make extracting the contents, whether it's data tables or text, a challenge.
+
+Fortunately for us, other data scientists have already confronted this challenge, and have made tools available for the rest of  us. One such package is {pdftools}[@R-pdftools]
+
+
+* the main reference page: https://docs.ropensci.org/pdftools/ 
+
+

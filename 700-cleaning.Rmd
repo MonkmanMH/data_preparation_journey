@@ -211,7 +211,7 @@ set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
 
 penguin_subset <- penguins %>% 
   slice_sample(n = 5) %>% 
-  select(species, island) %>% 
+  dplyr::select(species, island) %>% 
   arrange(species)
 
 penguin_subset
