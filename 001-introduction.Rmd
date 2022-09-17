@@ -79,7 +79,7 @@ David Smith has summarized the benefits of a reproducible data science process\i
 * Encourages collaboration. [@Smith_reproducible_2017]
 
 
-All of the details involved with creating a reproducible workflow is outside the scope of this book;  a summary of approaches associated with documentation of data sourcing and preparation is included in the [**Data documentation** chapter](#documentation). 
+All of the details involved with creating a reproducible workflow is outside the scope of this book;  a summary of approaches associated with documentation of data sourcing and preparation is included in the [**Data documentation** chapter](#datadocumentation). 
 
 For a deeper look at reproducible workflow, it has been summarized by Wilson et al. [@Wilson_Bryan_good_enough_2017]. Specific methods for reproducibility\index{reproducibility} in R and RStudio are dealt with in depth by Christopher Gandrud [@Gandrud_2015].  
 

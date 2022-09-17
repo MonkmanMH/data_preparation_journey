@@ -40,7 +40,7 @@ This can be expanded:
 
 ### What do we mean
 
-"Data" has some nuance that we need to pay attention to.
+"Data" has some nuance that we need to pay attention to. In _Learning Statistics with r: A Tutorial for Psychology Students and Other Beginners_, Danielle Navarro writes:
 
 > Here are four different things that are closely related to each other:
 >
@@ -50,13 +50,11 @@ This can be expanded:
 >
 >**__An operationalisation__**. The term “operationalisation” refers to the logical connection between the measure and the theoretical construct, or to the process by which we try to derive a measure from a theoretical construct.
 >
->**__A variable__**. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets.
-
-[@Navarro_learning_statistics_2019, pp.13–14]
+>**__A variable__**. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets. [@Navarro_learning_statistics_2019, pp.13–14]
 
 Here's an example. A company wants to understand its workforce because there's a sense that a large number of the staff are thinking about retirement in the next couple of years. The term the human resource (HR) department is using is "succession planning", meaning developing existing staff and recruiting to prepare for departures. Before making the business decision to allocate any resources to this initiative, the company's executive has asked the HR department to describe the magnitude of the risk to the organization: What percent of the staff are about to retire? In what departments? What positions do these potential retirees occupy? Now the HR department has asked you, the data scientist, for an analysis of the demographics of the company. 
 
-We know that _age_ is going to be a _theoretical construct_ we want to measure. In Canada you can start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older, and a second group who are within three years of that age.
+We know that _age_ is going to be a _theoretical construct_ we want to measure. When it comes to retirement, that is constrained to older workers, but we will have to be more precise in our definitions that simply "older". In Canada you can start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older (those who could collect their national pension now), and a second group who are between 55 and 59 (those who are within five years of their earliest pension).
 
 A _measure_ we have available is in the human resource database: each staff member's date of birth. This is collected when people are hired, and is required for various purposes, including tax accounting.
 

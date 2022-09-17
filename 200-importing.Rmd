@@ -382,7 +382,7 @@ Here's how one variable, highest level of post-secondary education achieved, app
 
 The variable is 1 character long, in position 502 of the data.
 
-The variable is only 1 character long, but when coupled with the "content" column, it becomes a very powerful piece of information. 
+The variable might be only 1 character long, but when coupled with the "content" column, it becomes a very powerful piece of information. 
 
 For our analysis question, we will read in three variables: the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
 
@@ -420,9 +420,9 @@ Imagine, though, the challenge of handling this amount of data at one time! Betw
 
 ## Spreadsheets
 
-Spreadsheets and similar data tables are perhaps the most common way that data is made available. Because they originated as an electronic version of accounting worksheets, they have a tabular structure that works for other applications data storage, analysis, and sharing (i.e. publishing). Spreadsheet of one from or another is often standard when you buy a new computer, and Microsoft Excel is the most common of all. And Google makes available a web-based spreadsheet tool, Google Sheets.
+Spreadsheets and similar data tables are perhaps the most common way that data is made available. Because they originated as an electronic version of accounting worksheets, they have a tabular structure that works for other situations when data collection, storage, analysis, and sharing (i.e. publishing) are required. Spreadsheet software of one form or another is often standard when you buy a new computer, and Microsoft Excel is the most common of all. And Google makes available a web-based spreadsheet tool, Google Sheets.
 
-Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet,but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Spreadsheets have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
+Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet, but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Spreadsheets have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
 
 Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. But as his article, and the others cited earlier make plain, it's possible to achieve both goals.
 
