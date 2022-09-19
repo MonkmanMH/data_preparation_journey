@@ -1,5 +1,6 @@
 --- 
 title: "The Data Preparation Journey"
+subtitle: "Finding Your Way With R"
 author: "Martin Monkman"
 date: "`r Sys.Date()`"
 colorlinks: yes
@@ -13,7 +14,6 @@ link-citations: yes
 lof: yes
 lot: yes
 site: bookdown::bookdown_site
-subtitle: Finding Your Way With R
 biblio-style: apalike
 ---
 
@@ -30,11 +30,16 @@ options(
 source("package_load.R")
 ```
 
+
 # Preface  {-}
+
+This is the online home of _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
+
+
 
 <img src="img\\20478450629_50e4c32d23_c.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
 
-![_Fisgard Lighthouse_](img/20478450629_50e4c32d23_c.jpg)
+
 
 
 It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modeling, data visualization, and communication.
@@ -61,9 +66,18 @@ While some of the topics covered here may be similar to what you'll find in _R f
 
 **SECTION A**
 
-**Chapter 1: Foundations**
+**Chapter 2: Introduction**
+
+* The origin of data
+
+* Analyzing data
 
 * Understanding that data in the wild is different than typical textbook examples
+
+* Keeping a record of your work
+
+
+**Chapter 2: Foundations**
 
 * Putting the destination first, which will guide decisions along the way
 
@@ -77,17 +91,22 @@ While some of the topics covered here may be similar to what you'll find in _R f
 
 **SECTION B: DATA SOURCES**
 
-**Chapter 2: Importing data**
+**Chapter 3: Importing data**
 
 * Getting data in a variety of formats, including fixed-width text files and SPSS, SAS, and Stata files
 
 
-**Chapter 3: Data from web sources**
+**Chapter 4: Data from PDF files**
+
+* Getting data out of a PDF file, whether quantitative or qualitative (text)
+
+
+**Chapter 5: Data from web sources**
 
 * Acquiring data using web APIs and webscraping
 
 
-**Chapter 4: Linking to relational databases** 
+**Chapter 6: Linking to relational databases** 
 
 * Accessing data directly from databases (SQL)
 
@@ -96,7 +115,7 @@ While some of the topics covered here may be similar to what you'll find in _R f
 
 **SECTION C: CLEANING DATA**
 
-**Chapter 5: Clean data principles**
+**Chapter 7: Clean data principles**
 
 * Understanding tidy data principles
 
@@ -105,14 +124,14 @@ While some of the topics covered here may be similar to what you'll find in _R f
 * Serving the research question
 
 
-**Chapter 6: Validation strategies**
+**Chapter 8: Validation strategies**
 
 * Exploratory data analysis to identify problems
 
 * Using the {validate} package
 
 
-**Chapter 7: Cleaning techniques**
+**Chapter 9: Cleaning techniques**
 
 * Cleaning dates and strings
 
@@ -121,14 +140,14 @@ While some of the topics covered here may be similar to what you'll find in _R f
 
 **SECTION D: PREPARING DATA**
 
-**Chapter 8: Data documentation** 
+**Chapter 10: Data documentation** 
 
 * Creating documentation, including data dictionaries and literate programming
 
 * Data management strategies
 
 
-**Chapter 9: Making data available**
+**Chapter 11: Making data available**
 
 * Sampling techniques
 

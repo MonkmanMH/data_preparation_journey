@@ -15,12 +15,14 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 # packages
 
+library(tibble)
+
 ```
 
 
 # Data from PDF files {#pdf}
 
-> Portable Document Format (PDF)...is a file format developed by Adobe in 1992 to present documents, including text formatting and images, in a manner independent of application software, hardware, and operating systems.^[Wikipedia entry, "PDF" [@wiki:PDF]]
+> Portable Document Format (PDF)\index{Portable Document Format (PDF)}...is a file format developed by Adobe in 1992 to present documents, including text formatting and images, in a manner independent of application software, hardware, and operating systems.^[Wikipedia entry, "PDF" [@wiki:PDF]]
 
 
 The PDF file format provides a great deal of functionality and flexibility to create high quality output. PDF files are often used for things like  branded marketing materials and annual reports, where there is a use-case for a document that looks on screen as it would if printed on paper, with a combination of text and images, all formatted in a way to make it visually appealing.
@@ -34,3 +36,319 @@ Fortunately for us, other data scientists have already confronted this challenge
 * the main reference page: https://docs.ropensci.org/pdftools/ 
 
 
+In addition to {pdftools}, for this chapter we will also be using the data manipulation packages {dplyr} and {tidyr}, and the text manipulation package {stringr}[@R-stringr]
+
+```{r library_pdftools}
+
+# reading the contents of a PDF file
+library(pdftools)
+
+# data wrangling packages
+library(dplyr)
+library(tidyr)
+
+# string manipulation
+library(stringr)
+
+```
+
+
+For this exercise, we will extract a data table from _Annual Report to the British Columbia Ferries Commissioner_ for the fiscal year ending March 31, 2021 (that is, the twelve month period from 2020-04-01 to 2021-03-31).
+
+The report can be downloaded from the web here:  https://www.bcferries.com/web_image/h29/h7a/8854124527646.pdf
+
+* Annual reports from previous years can be downloaded from this page: https://www.bcferries.com/in-the-community/resources
+
+
+This report is 101 pages long, and contains a mixture of written text and data tables.
+
+
+{pdftools} gives us the ability to download and read the file from a local copy, or from the web.
+
+
+```{r 300_download_file, eval=FALSE}
+
+download.file(url = "https://www.bcferries.com/web_image/h29/h7a/8854124527646.pdf",
+              destfile = "bcferries_2021.pdf", 
+              mode = "wb")
+
+```
+
+
+Once the file is downloaded, we can then read the file using the `pdf_text()` function and assign the contents to an R object in our environment. Of course, we also have the option to read a file that we've already downloaded.
+
+Once it's downloaded, we can use the `str()` function to display a summary of the structure of our new object.
+
+```{r}
+
+bcf <- pdf_text("bcferries_2021.pdf")
+
+str(bcf)
+```
+
+What we see is a vector with 101 character strings—one for each page of the original document. We can access each page, using the square bracket accessor syntax of R. Here is the code to see the contents of the first page:
+
+
+```{r}
+
+bcf[1]
+
+```
+
+
+Another way to look at the contents of a page is to use the `cat()` function (from base R), which displays the contents as it would be printed:
+
+```{r}
+
+cat(bcf[1])
+
+```
+
+
+If we compare these two outputs, we see that the first shows the characters "\n", which indicates the end of a line. These have been converted in the final version.
+
+
+
+
+The period covered by this annual report captures the profound impact on travel during the first year of the COVID-19 pandemic, and the report has comparisons in vehicle and passenger volumes with the previous, pre-pandemic year. Let's pull the data from the table that compares the number of passengers by each of the routes in the system. This table is on page 11:
+ 
+![BC Ferries, passenger total](bcferries_passengers_2021.jpg)
+
+
+From the object we created from the PDF report, we can separate the contents of page 11 into its own object:
+
+```{r 300_bcf_p11}
+
+bcf_11 <- bcf[11]
+
+bcf_11
+```
+
+Wait! This isn't the page we want! While the PDF file numbers the pages, the title page isn't numbered...so page 11 is in fact the twelfth page in the file.
+
+
+```{r}
+
+bcf_11 <- bcf[12]
+
+bcf_11
+```
+
+
+Now we have an object that is a single text string. All of the data we want is there, but it is going to take some finesse to extract the columns we want, and in a format that we can use.
+
+
+Using the "\n" line break character, we can split this single value into as many lines as there are.
+
+```{r}
+# break into lines
+bcf_11_lines <- bcf_11[[1]] %>% 
+  strsplit(split = "\n")
+
+bcf_11_lines
+
+```
+
+Now we have a list of 1, with 55 individual elements in it.
+
+The first thing that I notice is that the table starts a few rows down, and more problematically, the header row with the variable names is split due to text wrapping. I'm going to make the decision to enter the variable names manually, and focus on extracting the numbers. The numbers start at row 13, which we can access as follows:
+
+
+```{r}
+bcf_11_lines[[1]][13]
+```
+
+We can specify a range of rows; let's set up the first two rows as our tester sample.
+
+```{r}
+tester <- bcf_11_lines[[1]][13:14]
+tester
+```
+
+
+So how will we split this into separate pieces? Here's where the {stringr} package and our knowledge of regular expressions comes into use. We want to split the string where there are multiple spaces. If we split at every space, we'd get lots of columns. So we are separating (or splitting) where the spaces occur.
+
+The regular expression to find any white space is "\s", and to find any number of them we need to add the plus sign "+". Remember that in R, we need to escape the backslash, so our regex gets expresses as "\\s+". 
+
+```{r}
+
+test_result <- str_split(tester, "\\s+")
+test_result
+```
+
+This remains a single list, now with two elements—one for each row.
+
+Below, the code creates an object with a list of the variable names.
+
+```{r}
+bcf_col_names <- c(
+  "blank",
+  "route",
+  "passengers_2021",
+  "passengers_2020",
+  "passenger_growth",
+  "passenger_tariff_revenue_2021",
+  "passenger_tariff_revenue_2020",
+  "passenger_tariff_growth",
+  "pct_sailings_10_mins_2019",
+  "pct_sailings_10_mins_2020",
+  "pct_sailings_10_mins_2021"
+)
+
+```
+
+```{r}
+
+as_tibble(test_result, .name_repair = "unique")
+
+```
+
+
+```{r}
+bcf_table <- tibble(value = NULL)
+
+for (j in 1:2) {
+  dat <- as_tibble(tester[j])
+  bcf_table <- bind_rows(bcf_table, dat)
+}  
+
+bcf_table
+```
+
+```{r}
+
+bcf_table_2 <- tidyr::separate(bcf_table, value, 
+                               into = bcf_col_names,
+                               "\\s+")
+
+bcf_table_2
+```
+
+Hooray! (I should have left in all the failed attempts I made, before getting to this result...a lot of attempts that either failed outright, or ones where I managed a step or two before getting stuck.)
+
+Except...all of the variables are character type, because of the commas that are used as thousand separators and the percent signs.
+
+Let's go back to the "tester" object, and see what we can do to pull them out the commas using the {stringr} function `str_remove_all()`. (Note that `str_remove()` removes the first instance of the specified string.)
+
+For the purpose of our exercise, we won't worry about the numbers in parentheses, which are the difference between the two previous variables (and since they are negative, they are represented using the accounting format style of being in parentheses.) We won't deal with the percentages, but the percent signs could be removed in the same way as the commas.
+
+```{r}
+# remove all commas
+str_remove_all(tester, ",")
+
+```
+
+Now let's put all of this together to capture the full table.
+
+```{r}
+# read the relevant rows and remove the commas
+bcf_data <- bcf_11_lines[[1]][13:42]
+bcf_data <- str_remove_all(bcf_data, ",")
+
+# set up the variable (column) names
+bcf_col_names <- c(
+  "blank",
+  "route",
+  "passengers_2021",
+  "passengers_2020",
+  "passenger_growth",
+  "passenger_tariff_revenue_2021",
+  "passenger_tariff_revenue_2020",
+  "passenger_tariff_growth",
+  "pct_sailings_10_mins_2019",
+  "pct_sailings_10_mins_2020",
+  "pct_sailings_10_mins_2021"
+)
+
+
+# set up the final table
+bcf_table <- tibble(value = NULL)
+
+# bind the rows together
+for (j in 1:30) {
+  dat <- as_tibble(bcf_data[j])
+  bcf_table <- bind_rows(bcf_table, dat)
+}  
+
+bcf_table
+
+bcf_table_2 <- tidyr::separate(bcf_table, value, 
+                               into = bcf_col_names,
+                               "\\s\\s+")
+
+bcf_table_2
+```
+
+It's not quite perfect, and some things need to be removed: 
+
+  * there's the route type sub-total rows
+  * a blank row
+  * the difference columns
+
+```{r 300_remove_NA}
+# succinct way to remove a row which has a single "NA"
+bcf_table_3 <- bcf_table_2 %>% 
+  na.omit %>% 
+  select(route,
+         starts_with("passengers_"),
+         starts_with("passenger_tariff_rev")) %>% 
+  mutate(passengers_2021 = as.numeric(passengers_2021),
+         passengers_2020 = as.numeric(passengers_2020),
+         passenger_tariff_revenue_2021 = as.numeric(passenger_tariff_revenue_2021),
+         passenger_tariff_revenue_2020 = as.numeric(passenger_tariff_revenue_2020))
+
+
+bcf_table_3
+```
+
+(More options for removing rows can be found here: https://stackoverflow.com/questions/6437164/removing-empty-rows-of-a-data-file-in-r)
+
+If we need to create sub-totals by route type, it would be better to have a separate variable for that. Here's where we can use the `case_when()` function from {dplyr}.
+
+```{r}
+
+bcf_table_3 <- bcf_table_3 %>% 
+  mutate(route_type = case_when(
+    route %in% c("1", "2", "3", "30") ~ "major",
+    route %in% c("10", "11", "28") ~ "northern",
+    TRUE ~ "minor"
+  ))
+
+bcf_table_3
+```
+
+Now we can use our data wrangling skills to calculate the percent change between the two years. Let's look at with passenger volume.
+
+```{r}
+
+bcf_table_3 %>% 
+  group_by(route_type) %>% 
+  summarise(total_2021 = sum(passengers_2021),
+            total_2020 = sum(passengers_2020)) %>% 
+  mutate(pct_change = (total_2021 - total_2020) / total_2020 * 100)
+
+```
+
+
+Yikes.
+
+
+## REFERENCES & FURTHER RESOURCES
+
+
+https://ropensci.org/technotes/2018/12/14/pdftools-20/
+
+https://www.brodrigues.co/blog/2018-06-10-scraping_pdfs/
+
+https://www.r-bloggers.com/how-to-extract-data-from-a-pdf-file-with-r/
+
+https://data.library.virginia.edu/reading-pdf-files-into-r-for-text-mining/
+
+
+
+### {tabulizer}
+
+Another package for extracting the contents of a PDF file is [{tabulizer}](https://docs.ropensci.org/tabulizer/), which is designed to extract tables from PDFs—but it requires Windows users to install of Java, which can be a challenge on many locked-down workplace computers. 
+
+
+-30-
