@@ -7,6 +7,11 @@ output:
 
 <!-- 
 This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+
+Elements are drawn from the reference materials for the packages
+* {haven} -- https://haven.tidyverse.org/
+* {labelled} -- http://larmarange.github.io/labelled/reference/index.html
+
 -->
 
 
@@ -20,6 +25,142 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 # Data from web sources {#webdata}
 
-placeholder for chapter 3
+There is a lot of valuable data out there on the internet, just waiting for curious data analysts to pull nuggets of insight out of it. There are a variety of ways to get it; in some cases, you can download a CSV or Excel file and then read that into R.
 
-* Acquiring data using web APIs and webscraping
+But the brilliant people that make up the R community have made our life a whole lot easier by creating packages that allow us to write R scripts that link directly to data we want. This is particularly valuable if you are accessing a data set that gets updated regularly (say, a weekly financial report or the results of a monthly survey).
+
+The foundation of this connection to data sources on the internet are APIs (for Application Programming Interface). APIs allow two pieces of software to communicate. In the context of data access, a site will be set up with an API that defines how data can be accessed, and how it will be provided.
+
+
+There are two sorts of R packages that utilize APIs. The first are those that are dedicated to a particular source of data, such as a national statistics agency. In addition to getting the data, these packages often have additional functions which do a lot of the initial manipulation of the data for us, getting it into a format that is useful for R.  The second are those that allow us to connect to the raw data source; often with these sources, we will need to do some wrangling of the data before we can use it.
+
+
+## R packages for direct connection
+
+
+In this section, we will explore two examples that allow access to the data repository hosted by Statistics Canada, and the British Columbia Government's open data catalogue. There are many other tools available; some are listed at the bottom of this page.
+
+Run this code chunk to load the packages we need:
+
+```{r setup, eval = FALSE}
+library(tidyverse)  
+
+# 
+library(cansim)     # access Statistics Canada's CANSIM data repository
+library(bcdata)     # access the BC Government's open data catalogue
+
+```
+
+
+Statistics Canada, a department of the Government of Canada, provides a socioeconomic time series database known as "CANSIM". The data posted to the database is most of the aggregate data collected by Statistics Canada on a regular basis, such as the Labour Force Survey (from which we get updates on the unemployment rate), the Consumer Price Index Survey (about inflation), and health-related information from pregnancy and births to life expectancy and deaths.
+
+One of the many tables related to international travel that is published in CANSIM is "Table: 24-10-0006-01 Non-resident travellers entering Canada, by country of residence, seasonally adjusted". 
+
+The webpage for the table, showing the most recently available data, is here: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2410000601
+
+
+Here's a screenshot of the table, showing the number of people arriving by their continent of residence. 
+
+![table](cansim_24-10-0006-01_2020-09-10.JPG)
+
+
+This table might be useful if you were developing a marketing campaign and you wanted to understand where tourists are coming from—the biggest markets and the fastest growing. But as shown, it is at too high a level; this is Canada by continent. For our purposes, we need to see specific country, those entering Canada via British Columbia, and a longer time series. 
+
+We could use the filters and fiddle around making sure we got the right selections and then download the data, but if we have to do that next month it is going to be inefficient. We could also first click on the "download options" button and select "download entire table..." but again, this is not the most efficient way to do this, since there are a few manual steps we have to take and then open the file into R and filter to select the series we want. 
+
+This is where the {cansim} package comes it. 
+
+Step 1: download the data.
+
+* the `get_cansim()` function takes the table number as the parameter, and connects to CANSIM and downloads the data into an R dataframe.
+
+```{r}
+
+travellers <- get_cansim("24-10-0006-01")
+
+```
+
+We will come back to filtering and variable selection along with working with date fields later, but here's the code in R using the functions of the {dplyr} package to filter for the British Columbia cases during the month of June 2020:
+
+```{r}
+
+travellers_bc <-
+travellers %>% 
+  filter(GEO == "British Columbia",
+         REF_DATE == "2020-06")
+
+travellers_bc
+
+```
+
+There are six categories in the `Country of residence` variable. What if we just want a monthly report on a single continent? One of the features of CANSIM and other similar tables is that the individual series are given a single identifier. In the case of CANSIM, these are called the "vector numbers". Scroll to the right on this table, and you'll see a variable called `VECTOR`. The vector identifier (sometimes called "the vector number" even though it's a character string!) for European travellers entering Canada via British Columbia is v32214508.
+
+CANSIM gives us a function to select a single vector number, so we can be more efficient still. We can speed up the download time _and_ skip the filtering steps to get to the one we want. (Note that this function requires us to enter a start date, and converts the reference date variable to the YYYY-MM-DD format.)
+
+```{r}
+
+get_cansim_vector("v32214508", "2015-01-01")
+
+```
+
+
+There are other very useful functions if you find yourself exploring Statistics Canada data sets. 
+
+The function `get_cansim_table_overview()` provides an abstract about the data table.
+
+```{r}
+
+get_cansim_table_overview("24-10-0006-01")
+
+```
+
+
+
+
+## R packages to set up API connections
+
+
+
+```{r packages_api, eval=FALSE}
+#
+library(httr)         # sets up API connection
+#
+library(jsonlite)     # working with JSON data structures
+```
+
+
+
+## Getting data
+
+
+### How many astronauts are currently in space?
+
+```{r}
+res <- GET("http://api.open-notify.org/astros.json")
+```
+
+
+```{r}
+res
+```
+
+now convert from JSON to R format
+
+```{r}
+astro <- fromJSON(rawToChar(res$content))
+
+astro
+
+names(astro)
+```
+
+
+```{r}
+astro$people
+```
+
+```{r}
+astro_people <- astro$people
+```
+
+

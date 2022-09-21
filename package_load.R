@@ -27,3 +27,11 @@ library(memisc) # for applying labels etc to PUMF
 library(palmerpenguins)
 library(dpjr) # custom package for _The Data Preparation Journey_
 
+# apis 
+library(cansim)     # access Statistics Canada's CANSIM data repository
+library(bcdata)     # access the BC Government's open data catalogue
+#
+library(httr)         # sets up API connection
+library(jsonlite)     # working with JSON data structures
+
+
