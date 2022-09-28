@@ -20,8 +20,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 # Clean data principles {#clean-data}
 
-placeholder for chapter 5
-
+In this chapter:
 
 * The principles of data quality
 
@@ -48,13 +47,33 @@ We need to ask "What is the data's _quality_?"
 
 Sometimes, we will see this questions framed as whether or not the data is _dirty_, and whether it needs _cleaning_.
 
+What are common dirty data problems?
+
+* Column headers are values instead of variable names, or there are duplicate variable names.
+
+* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
+
+* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
+
+* Misspellings (typing errors) 
+
+* Value in wrong field (e.g. country entered into `city` field).
+
+* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
+
+* Default values in the place of missing values.
+
+> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
+
+* Contradiction (for example, two databases with the same person but the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?)
 
 
-## Data Quality
+See 
 
-[@Ligon_1996]
+* [@Zumel_Mount_2019, chapters 3 and 4]
 
-[@Ligon_2015], [@Ligon_2007]
+
+
 
 ### Data quality literature
 
@@ -161,9 +180,12 @@ Other common dirty data problems that fall outside the four broad data quality c
 
 
 
-See [@Zumel_Mount_2019, chapters 3 and 4]
+See 
+
+* [@Zumel_Mount_2019, chapters 3 and 4]
 
 
+* [@Ligon_1996], [@Ligon_2015], [@Ligon_2007] 
 
 
 
@@ -247,7 +269,9 @@ summary(customer_data$age)
 ```
 
 
-And here is the plot:
+
+And here is a density plot that shows the distribution of customers by their age.
+
 
 ```{r}
 
@@ -255,6 +279,14 @@ ggplot(customer_data, aes(x = age)) +
   geom_density(bw = .75)
 
 ```
+
+
+
+Here are some questions that we might want to explore further in the `age` variable, after seeing the results of the `summary()` function and the plot:
+
+* The maximum age is 120—perhaps you are already aware of the fact that only one person whose age has been independently verified lived long enough to celebrate their 120th birthday (they were 122 years, 164 days old when they passed away). [Wikipedia, "List of the verified oldest people"](https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people)
+
+* Why is there a sudden cluster of customers age 95? We would expect this to be a relatively smooth line from one age category to the next.
 
 
 

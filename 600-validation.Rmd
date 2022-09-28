@@ -14,18 +14,283 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 ```{r setup_ch600, include=FALSE}
 
 # packages
-library(validate)
+source("package_load.R")
+
 
 ```
 
 
 # Validation strategies {#validation}
 
-placeholder for chapter 6
-
+In this chapter:
 
 * Exploratory data analysis to identify problems
 
 * Using the {validate} package
+
+
+
+## Identifying dirty data
+
+There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation" methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected.
+
+Validation while the data is being collected might be through the use of drop-down boxes that eliminates spelling mistakes, or that forces entries to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (with some exceptions), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
+
+* All of these have risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a zero or a preposterously very large number, neither of them accurate.
+
+For our work here, we will focus on validating data after is has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
+
+
+* A field such as postal code has to be structured in a certain way (this is where your regex skills come in)
+
+* A value might have a certain range 
+
+* Some values, such as age, have to be positive
+
+* There might be a known relationship between two or more variables
+
+
+### The {validate} package
+
+As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands.
+
+The first function we will investigate is `check_that()`, using the data in {palmerpenguins}. We know that these data are nice and clean—they have already gone through a validation process.
+
+```{r ch600_packages, eval=FALSE}
+library(tidyverse)
+
+library(palmerpenguins)
+library(validate)
+
+```
+
+
+**Range of values**: we know, being experts on all things penguin, that gentoo penguins are the third largest of the penguin species, and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
+
+
+```{r ch600_penguin_check01}
+
+check_penguins <- check_that(penguins, body_mass_g <= 8500)
+
+summary(check_penguins)
+
+```
+
+What we see is that all of the penguins have a body mass of less than or equal to 8500 grams, and there are 2 "NA" values in the data.
+
+
+**Relationship**: 
+
+While the heaviest gentoo penguins can be up to 8.5 kg, it is very unusual to find an Adélie or Chinstrap penguin that weighs more than 5 kg. What happens if we change the body mass threshold to 5000 grams?
+
+```{r}
+
+check_penguins <- check_that(penguins, body_mass_g <= 5000)
+
+summary(check_penguins)
+
+```
+
+In addition to telling us that there are 61 records where the value in the `body_mass_g` variable is greater than 5000 grams, it is also letting us know that there are 2 `NA` values.
+
+We can add an `if()` statement that filters out the gentoo penguins, and then check the body mass.
+
+
+```{r}
+
+check_penguins <- check_that(penguins, 
+                             if (species != "Gentoo") body_mass_g <= 5000)
+
+summary(check_penguins)
+
+```
+
+Now all the records (except the single "NA") pass. What has happened? The first thing is that we have excluded all of the gentoo penguins—if it's gentoo, it gets marked "pass". All the remaining penguins (that is, the chinstrap and Adélie birds) are evaluated against the body mass value of 5000 grams. And they all pass.
+
+Let's explore the data a bit more...if we filter our penguins by those that are over 5000 grams, what do we find?
+
+```{r}
+penguins %>%
+  filter(body_mass_g > 5000) %>% 
+  distinct(species)
+
+```
+
+So this is confirms that all of the heavier penguins are gentoos, meeting our expectations.
+
+
+**Range:** Year
+
+We know that the palmerpenguin data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls witin that range.
+
+```{r}
+
+check_penguins <- check_that(penguins, year >= 2007 & year <= 2009)
+summary(check_penguins)
+
+```
+
+What if we check for a single year?
+
+```{r}
+check_penguins <- check_that(penguins, year == 2009)
+summary(check_penguins)
+
+```
+
+The output gives us the number of cases in that year in the `passes` the test, and the number of cases that are not in that year in the `fails`.
+
+
+
+
+**Relationship**: we know that some species have only been measured on one of the three islands. Gentoo penguins have only been sampled on Biscoe Island, and chinstrap penguins in our sample come only from Dream Island. Does the data reflect that?
+
+In the first test (labelled `g` for gentoo), if it's not a gentoo it gets included in the `passes`--and if it is a gentoo, it has to be on Biscoe Island to get a pass. In the `c` (for chinstrap) test, we will do the same for chinstrap penguins, which should all be on Dream Island.
+
+
+```{r}
+
+check_penguins <- check_that(penguins, 
+                             g = if (species == "Gentoo") island == "Biscoe",
+                             c = if  (species == "Chinstrap") island == "Dream")
+
+summary(check_penguins)
+
+```
+
+The output now includes the results of the two tests. Both tests have all of the cases pass, and none fail. 
+
+We could have written code to generate a summary table to check this. In many datasets, however, there will be too many combinations to reliably investigate in this manner.
+
+```{r}
+penguins %>% 
+  group_by(species, island) %>% 
+  tally
+```
+
+A single `check_that()` test could be written using the "AND" operator `&`.
+
+```{r}
+
+check_penguins <- check_that(penguins, 
+                             if (species == "Gentoo") island == "Biscoe" &
+                             if  (species == "Chinstrap") island == "Dream")
+
+summary(check_penguins)
+
+
+
+```
+
+
+We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that can be read into your R environment, and the test run against that list.
+
+```{r}
+island_list <- c("Biscoe", "Dream", "Torgersen")
+
+check_penguins <- check_that(penguins, if (species == "Adelie") island %in% island_list)
+
+summary(check_penguins)
+
+
+```
+
+_What happens if we fail to include Dream Island in our list of islands where Adélie penguins are found?_
+
+
+The {validator} also allows us to check variable types within our `check_that()` function. Because R stores a dataframe column as a single type, this returns only one pass/fail evaluation.
+
+```{r}
+
+penguins
+
+is.integer(penguins$year)
+
+summary(check_that(penguins, is.integer(year)))
+
+```
+
+### badpenguins
+
+I changed the penguins data by adding five fictional penguins, and added some measurement data for them. Let's load the data file "badpenguins.rds" (an R data file) and run a couple of the tests we used earlier:
+
+
+
+```{r}
+#penguins_path <- dpjr_data("penguins.rds")
+
+badpenguins <- read_rds(dpjr_data("badpenguins.rds"))
+
+tail(badpenguins)
+
+check_penguins <- check_that(badpenguins, year >= 2007 & year <= 2009)
+summary(check_penguins)
+
+```
+
+```{r}
+check_penguins <- check_that(badpenguins, island %in% island_list)
+summary(check_penguins)
+```
+
+In both cases, we get 5 "fails". 
+
+### Investigating the fails
+
+How can we check which records have failed?
+
+{validate} provides two other functions, `validator()` and `confront()`, which give us a way to generate detailed record-by-record account of which records have failed our test.
+
+First, we assign the syntax of our tests using `validator()` to an object "penguin_tests".
+
+
+```{r}
+
+penguin_tests <- validator(
+  island %in% island_list,
+  year >= 2007 & year <= 2009,
+  body_mass_g <= 8500
+)
+
+penguin_tests
+
+```
+
+In the next step, we apply those tests in a sequence of "confrontations" using the `confront()` function, generating an output object that we can investigate.
+
+
+```{r}
+
+penguin_confront <- confront(badpenguins, penguin_tests)
+
+penguin_confront
+
+summary(penguin_confront)
+```
+
+Let's look at the last ten rows of the results of the `confront()` function of our `badpenguins` data. Rows 340 through 344 are original to the clean `penguins` dataset; 345 through 349 are the bad penguins I added. The first one fails on all 3 tests, while the others fail on the first two but have "NA" values for the remainder.
+
+```{r}
+
+tail(values(penguin_confront), 10)
+
+```
+
+
+In this example, our prior knowledge of the data gives us the insight to quickly target the rows that failed the validation tests. In the real world, filtering the object that results from our validation tests will allow us to identify the rows that contain the records that fail the tests. The function we use for this is `violating()`
+
+```{r}
+
+violating(badpenguins, penguin_confront)
+
+```
+
+
+
+Now we know the details of the cases that have failed the test, we can now make some decisions—based on our understanding of the research we are undertaking—how to deal with these cases.
+
+
+
+-30-
 
 
