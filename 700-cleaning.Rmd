@@ -27,24 +27,18 @@ placeholder for chapter 7
 
 * Cleaning dates and strings
 
-* Dealing with missing values
-
 * Creating conditional and calculated variables
 
   - indicator variables [@Gelman_etal_2014, p.366] (also known as dummy variables [@Suits_1957] and "one hot" encoding)
 
+* Dealing with missing values
 
-## Dealing with missing values
 
-\index{missing values}
 
-Convert -999 etc to `NA`
+## Cleaning dates and strings
 
-Imputation methods
 
-* apply average
 
-* hot deck imputation
 
 
 ## Creating conditional and calculated variables
@@ -62,7 +56,7 @@ Creating indicator variables \index{indicator variables}
 
 Examples of this approach abound. It can be a useful approach in forecasting methods; Hyndman and Athanasopoulos provide examples where public holidays and days of the week are set as dummy variables [@Hyndman_Athanasopoulos_2021, section 7.4 "Some useful predictors"]
 
-It is aslo a common approach in social data analysis, where categorical variables are frequently used to code information. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
+It is also a common approach in social data analysis, where categorical variables are used to code information. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
 
 ```{r ch700_mixtape_data, echo=FALSE}
 set.seed(111) # The opus number of Beethoven's last piano sonata, a work of transcendent beauty
@@ -252,9 +246,28 @@ https://gist.github.com/tanho63/50d9b323e29165ad3e027bc3cf1c5926
 https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
 
 
-## Fill missing values
+## Missing values
+
+\index{missing values}
+
+
 
 Frequently, our data will have missing values. There are a variety of solutions to dealing with missingness, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value.
+
+### Strategies for dealing with missing values
+
+Explicit user-defined missing: convert -999 etc to `NA`
+
+Imputation methods:
+
+* fill
+
+* average or regression model estimate
+
+* hot deck imputation
+
+
+### Missing as formatting
 
 
 A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In our example Excel file, the sheet "Report" contains the data we want in a wide format. The name individual institution is in the second column (in Excel nomanclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
