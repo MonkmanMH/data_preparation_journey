@@ -308,6 +308,64 @@ tuition_data %>%
 
 It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an NA in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
 
+### Filling missing values
+
+Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
+
+
+
+```{r read_naics721, echo=FALSE}
+naics721_sal <- read_rds("naics721_bc_sal.rds")
+
+naics721_sal
+
+```
+
+
+{tidyr} functions to deal with the missing values in the series
+
+
+* drop the rows that have an NA value
+
+```{r}
+  
+naics721_sal %>% 
+  tidyr::drop_na()
+
+```
+
+
+* `tidyr::fill()` variants
+
+```{r}
+# fill down  
+naics721_sal %>% 
+  mutate(old_value = VALUE) %>% 
+  tidyr::fill(VALUE)  # default direction is down
+
+# spelled out
+naics721_sal %>% 
+  mutate(down = VALUE) %>% 
+  tidyr::fill(VALUE, .direction = "down")  # default direction is down
+
+naics721_sal %>% 
+  mutate(up = VALUE) %>% 
+  tidyr::fill(VALUE, .direction = "up")  # default direction is down
+
+
+```
+
+
+
+
+### references
+
+* CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
+
+* https://www.elff.eu/book/data-management-r/07-dates-times-timeseries/handling-missing-values/
+
+
+
 
 
 ### Imputation of missing values
@@ -322,10 +380,57 @@ https://github.com/markvanderloo/simputation
 
 
 
-#### Time series imputation
+### Time series imputation
 
 A special case of imputation are time series. For R users, the package {imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics"
 
+Missing values in time series models can sometimes be problematic, so there's a need to fill in the missing values.
+
+
+#### {forecast} fill functions
+
+The {forecast} package has time series oriented imputation fill functions
+
+See:
+
+* Hyndman and Athanasopoulos, _Forecasting: Principles and Practice_ (2nd ed), https://otexts.com/fpp2/missing-outliers.html
+
+* https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/time-series-analysis/Dealing-with-missing-values/Imputing-missing-values/index.html
+
+
+Use `na.interp()` function from {forecast}
+
+```{r}
+naics721_sal %>% 
+  mutate(val_new = forecast::na.interp(VALUE))
+```
+
+
+### {imputeTS} package
+
+The {imputeTS} package has functions that implement more sophisticated time series imputation methods, such as those with seasonal components.
+
+https://CRAN.R-project.org/package=imputeTS
+
+
+
+
+### {zoo} fill functions
+
+Somewhat similar to {forecast}, the {zoo} package has a range of functions for time series data.
+
+CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
+
+
+
+```{r zoo_na_approx}
+library(zoo)
+
+naics721_sal %>%
+  mutate(old_value = VALUE) %>% 
+  mutate(VALUE = zoo::na.approx(VALUE))
+
+```
 
 ## Creating labelled factors from numeric variables
 
