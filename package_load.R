@@ -34,4 +34,6 @@ library(bcdata)     # access the BC Government's open data catalogue
 library(httr)         # sets up API connection
 library(jsonlite)     # working with JSON data structures
 
+# validate
+library(validate)
 

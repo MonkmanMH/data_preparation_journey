@@ -14,13 +14,21 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 ```{r setup_ch300, include=FALSE}
 
 # packages
-
-library(tibble)
+source("package_load.R")
 
 ```
 
 
 # Data from PDF files {#pdf}
+
+In this chapter:
+
+* Reading data and text from PDF files
+
+* Manipulating the resulting objects into a tidy structure
+
+
+## PDF files
 
 > Portable Document Format (PDF)\index{Portable Document Format (PDF)}...is a file format developed by Adobe in 1992 to present documents, including text formatting and images, in a manner independent of application software, hardware, and operating systems.^[Wikipedia entry, "PDF" [@wiki:PDF]]
 
@@ -38,7 +46,7 @@ Fortunately for us, other data scientists have already confronted this challenge
 
 In addition to {pdftools}, for this chapter we will also be using the data manipulation packages {dplyr} and {tidyr}, and the text manipulation package {stringr}[@R-stringr]
 
-```{r library_pdftools}
+```{r library_pdftools, eval=FALSE}
 
 # reading the contents of a PDF file
 library(pdftools)
@@ -77,11 +85,19 @@ download.file(url = "https://www.bcferries.com/web_image/h29/h7a/8854124527646.p
 
 Once the file is downloaded, we can then read the file using the `pdf_text()` function and assign the contents to an R object in our environment. Of course, we also have the option to read a file that we've already downloaded.
 
-Once it's downloaded, we can use the `str()` function to display a summary of the structure of our new object.
+Once the file has been downloaded, we can use the `str()` function to display a summary of the structure of our new object.
 
 ```{r}
 
 bcf <- pdf_text("bcferries_2021.pdf")
+
+```
+
+```{r, eval=FALSE}
+
+# alternative, from the {dpjr} package
+bcf <- pdf_text(dpjr_data("bcferries_2021.pdf"))
+
 
 str(bcf)
 ```

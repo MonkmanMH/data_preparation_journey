@@ -4,7 +4,7 @@
 
 ## The origin of data
 
-Data is proliferating, collected as part of scientific research (whether measuring sub-atomic particles or galaxies in the early universe, plant growth or the migration of animals, people's behaviour or where they live and work in cities), and by the tools that are used to conduct the business of the world. 
+Data is proliferating, collected as part of scientific research (whether measuring sub-atomic particles or galaxies in the early universe, plant growth or the migration of animals, people's socio-economic characteristics or where they live and work in cities), and by the tools that are used to conduct the business of the world. 
 
 Today, data about _you_ might be collected when you: 
 
@@ -14,9 +14,9 @@ Today, data about _you_ might be collected when you:
 
 * Renew your driver's license. Information about you such as date of birth, height, weight, and current address is recorded, which you can then use as a piece of identification to authenticate who you are. The licensing agency can also use the data in aggregate to estimate how many people will be renewing their licenses each month, and often share the data (securely, of course!) with other agencies. In British Columbia, the agency that licenses drivers shares elements of the database, such as your current address, with the provincial electoral agency, allowing for an up-to-date list of eligible voters in the province. [@EBC_Annual_201718, page 70]
 
-* Travel to your place of work or study, captured through the movement of your cell phone. Aggregated location and movement can be used for a variety of purposes, including by GPS systems to indicate areas of road congestion, or to let you know when the next bus will arrive at your stop.
+* Travel to your place of work or study, captured through the movement of your cell phone. Aggregated location and movement can be used for a variety of purposes, including use by GPS systems to indicate areas of road congestion, or to let you know when the next bus will arrive at your stop.
 
-* Respond to a survey, perhaps about your opinions about the platforms of various political parties and the people who represent those parties.
+* Respond to a survey, perhaps asking for your opinions about the platforms of various political parties and the people who represent those parties.
 
 
 ## Analyzing data: the data science process
