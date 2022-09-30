@@ -315,7 +315,8 @@ Similar to what we saw above with text, the same `fill()` function can be applie
 
 
 ```{r read_naics721, echo=FALSE}
-naics721_sal <- read_rds("naics721_bc_sal.rds")
+
+naics721_sal <- read_rds(dpjr::dpjr_data("seph_naics721_bc_sal.rds"))
 
 naics721_sal
 

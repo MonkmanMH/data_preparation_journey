@@ -16,7 +16,8 @@ install.packages(c(
   "fs",
   "here",
   "janitor",
-  "labelled"
+  "labelled",
+  "pdftools"
   ))
 
 # data
