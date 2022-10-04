@@ -22,7 +22,7 @@ source("package_load.R")
 
 # Cleaning techniques {#cleaning}
 
-placeholder for chapter 7
+In this chapter:
 
 
 * Cleaning dates and strings
@@ -35,7 +35,419 @@ placeholder for chapter 7
 
 
 
-## Cleaning dates and strings
+## Cleaning dates
+
+
+## Cleaning strings
+
+
+> Strings are not glamorous, high-profile components of R, but they do play a big role in many data cleaning and preparation tasks. 
+—{stringr} reference page
+
+R provides some robust tools for working with characters strings. In particular, the {stringr}[@R-stringr] package is very flexible. But before we get there, we need to take a look at regular expressions.
+
+
+### Regular expressions
+
+>Some people, when confronted with a problem, think: “I know, I’ll use regular expressions.” Now they have two problems.
+— Jamie Zawinski
+
+An excellent resource for learning the basics of regular expressions\index{regular expressions} is the vignette "Regular Expressions", hosted at the {stringr} package website^[["Regular Expressions", stringr.tidyverse.org](https://stringr.tidyverse.org/articles/regular-expressions.html)].
+
+
+Some useful regex matching functions:
+
+| character | what it does |
+| ---- | ---- |
+| "abc" | matches "abc" |
+| "[a][b][c]" | matches "abc" |
+| "[abc]" | matches "a", "b", or "c" |
+| "[a-c]" | matches any of "a" to "c" <br>(that is, matches "a", "b", or "c") |
+| "[^abc]" | matches anything _except_ "a", "b", or "c" |
+| "^" | match start of string |
+| "$" | match end of string |
+| "." | matches any string |
+
+
+frequency of match
+
+| character | what it does |
+| ---- | ---- |
+| "?" | 0 or 1 |
+| "+" | 1 or more |
+| "*" | 0 or more |
+| "{n}" | exactly n times |
+| "{n,}" | n or more |
+| "{n,m}" | between n and m times |
+
+
+**other special characters**
+
+These also need to be escaped:
+
+| character | what it is |
+| ---- | ---- |
+| "\"" | double quotation mark |
+| "\'" | single quotation mark |
+| "\\" | backslash |
+| "\d" | any digit |
+| "\n" | newline (line break) |
+| "\s" | any whitespace (space, tab, newline)
+| "\t" | tab |
+| "\u..." | unicode characters* |
+
+
+An example of a unicode character^[The full list of unicode characters can be found on Wikipedia[@wiki:unicode].] is the "interobang", a combination of question mark and exclamation mark.
+
+```{r}
+interrobang <- "\u2048"
+interrobang
+
+```
+
+
+
+### Example: Canadian postal codes
+
+Canadian postal codes follow a consistent pattern:
+ - letter digit letter (space, or sometimes a hyphen) digit letter digit
+
+The regex for this is shown below, with the component parts as follows:
+
+* ^ : start of string
+
+* [A-Za-z] : all the letters upper and lower case
+
+* \\d : any numerical digit
+
+* [ -]? : space or hyphen; "?" to make either optional (i.e. it may be there or not)
+
+* $ : end of string
+
+
+```{r}
+# regex for Canadian postal codes
+# ^ : start of string
+# [A-Za-z] : all the letters upper and lower case
+# \\d : any numerical digit
+# [ -]? : space or hyphen, ? to make either optional (i.e. it may be there or not)
+# $ : end of string
+
+postalcode <- "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$"
+
+# option: (?i) : make it case insensitive
+#         (?-i) : turn off insensitivity
+postalcode <- "(?i)^[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d$(?-i)"
+
+# list of postal codes
+pc1 <- c("V1A2B3", "V1A 2B3", "v1a-2b3", "V1A 2B33")
+
+str_detect(pc1, postalcode)
+
+
+```
+
+Advice from the masters:
+
+> If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations.
+—Wickham and Grolemund, _R for Data Science_, ["Detect matches"](https://r4ds.had.co.nz/strings.html#detect-matches)
+
+
+### Useful {stringr} functions
+
+
+```{r load_stringr, eval=FALSE}
+library(stringr)
+```
+
+
+See 
+
+* reference page: [stringr.tidyverse.org](https://stringr.tidyverse.org/)
+
+* cheat sheet: at RStudio "Cheatsheets" page https://rstudio.com/resources/cheatsheets/ 
+
+#### string characteristics
+
+| function | purpose |
+| ---- | ---- |
+| `str_length()` | numeric; returns the length of the string |
+| `str_detect()` | logical; returns TRUE if pattern found |
+| `str_sub()` | character; returns the defined subset using start and end positions |
+| `str_subset()` | character; returns the cases which contain a match |
+| `str_which()` | numeric; returns the vector location of matches |
+| `str_count()` | numeric; returns the number of times the pattern appears in the string |
+
+
+```{r}
+
+fruit <- c("apple", "banana", "pear", "pineapple")
+
+str_length(fruit)       # how many characters is the string?
+str_detect(fruit, "e")  # does the string have the pattern ("e")?
+str_sub(fruit, 1, 2)    # starting at the first position (1), end at second position (2)
+
+
+```
+
+```{r}
+str_subset(fruit, "e")  # which strings have the pattern ("e")?
+str_which(fruit, "e")   # which strings have the pattern ("e"), by location?
+
+```
+
+```{r}
+str_count(fruit, "e")     # how many times does the letter "e" appear in the string?
+str_count(fruit, "[aeiou]") # how many times does a vowel (a, e, i, o, or u) appear in the string?
+```
+
+#### matching, replacing, spliting
+
+| function | purpose |
+| ---- | ---- |
+| `str_locate()` | numeric; gives the position of the first match |
+| `str_extract()` | extracts the text of the match
+| `str_match()` | extracts the text of the match and parts of the match within parenthesis |
+| `str_replace()` and `str_replace_all()` | replaces the matches with new text |
+| `str_split()` | splits up a string at the pattern |
+
+
+
+```{r}
+
+str_locate(fruit, "e") # where is the first e" in the string?
+str_locate(fruit, "[aeiou]") # where is the first vowel in the string?
+
+vowel_ex <- str_extract(fruit, "[aeiou]")  # which is the first vowel?
+
+vowel_ma <- str_match(fruit, "(.)[aeiou]") # what is the first letter that comes before a vowel?
+
+fruit_t <- as.tibble(fruit)
+
+fruit_t %>% 
+  mutate(first_v = str_match(value, "[aeiou]"))
+
+```
+
+
+What's the difference between `str_replace()` and `str_replace_all()`?
+
+```{r}
+str_replace(fruit, "e", "E")
+str_replace_all(fruit, "e", "E")
+```
+
+
+```{r}
+str_split(fruit, "e")
+```
+
+
+Below, we split an address based on comma location.
+
+```{r}
+UVic_address <- "Continuing Studies, Continuing Studies Building, 3800 Finnerty Rd, Victoria, BC, V8P 5C2"
+  
+str_split(UVic_address, ", ")
+```
+
+#### convert case
+
+{stringr} has functions to change the case of the string. See [{stringr}: Convert case of a string](https://stringr.tidyverse.org/reference/case.html)
+
+
+### Examples
+
+#### Postal code: consistent layout
+
+
+How can we clean up this list so that our postal codes are in a consistent format?
+
+```{r}
+# list of postal codes
+pc1 <- c("V1A2B3", "V1A 2B3", "v1a-2b3")
+```
+
+One solution:
+
+step 1. remove space or hyphen
+
+* `gsub()` is a function in {base} R
+
+```{r}
+
+gsub(pattern = " ", replacement = "", x = pc1)
+gsub(pattern = "-", replacement = "", x = pc1)
+
+# combine the two in single regex
+pc_clean <- gsub("[ -]", "", pc1)
+pc_clean
+
+
+```
+
+* alternative, using `stringr::str_replace()`  https://stringr.tidyverse.org/reference/str_replace.html
+
+* or (preferable) `stringr::str_remove()` https://stringr.tidyverse.org/reference/str_remove.html
+
+
+```{r}
+
+str_replace(string = pc1, pattern = "-", replacement = "")
+
+str_remove(string = pc1, pattern = "-")
+
+# a regex that removes either space or hyphen
+str_remove(string = pc1, pattern = "[ -]")
+
+```
+
+
+
+
+step 2. all caps
+
+```{r}
+pc_clean <- str_to_upper(pc_clean)
+pc_clean
+```
+
+If this was in a data frame (or tibble), these functions can be added to a `mutate()`...
+
+```{r}
+# convert string to tibble
+pc1_tbl <- as_tibble(pc1)
+
+# mutate new values--note that creating three separate variables is to allow for comparisons as the values change from one step to the next
+pc1_tbl %>%
+  mutate(value_2 = str_remove(value, "[ -]")) %>%   # remove space or hyphen
+  mutate(value_3 = str_to_upper(value_2))           # change to upper case
+  
+
+```
+
+
+
+#### NOC: split code from title
+
+This example is drawn from a real-life case, where the NOC (National Occupation Classification) code is in the same column as the code's title.
+
+It's occupations in B.C.'s accommodation industry^[Copied from go2HR report ["Accommodation Workforce Profile"](https://www.go2hr.ca/research/bc-tourism-and-hospitality-labour-market-information-workforce-profile#1657831995289-efea257d-563d)]
+
+
+```{r read_noc, include=FALSE}
+
+noc_table <- read_rds(here("data", "noc_table.rds"))
+
+noc_table
+
+```
+
+This table has four variables in three columns, each of which has at least one data cleaning challenge.
+
+**`noc_occupation_title`**
+
+This variable combines two values: the three-digit NOC code, and the title of the occupation.
+
+We will use the {tidyr} function `separate()` to separate it into two variables. 
+
+* https://tidyr.tidyverse.org/reference/separate.html
+
+```{r}
+
+noc_table_clean <- noc_table %>% 
+  tidyr::separate(
+    col = noc_occupation_title, 
+    into = c("noc", "occupation_title"), 
+    sep = ": ")
+
+noc_table_clean
+
+```
+
+(See more complex version below)
+
+**`certification_training_requirements`**
+
+This variable has a weird square character at the beginning, and also a space between the weird character and the first letter. 
+
+Here we can use the {stringr} function `str_remove_all()`
+
+```{r}
+
+noc_table_clean <- noc_table_clean %>% 
+  mutate(
+    certification_training_requirements =
+      str_remove_all(certification_training_requirements, " ")
+    )
+
+noc_table_clean
+
+```
+
+
+**`employment`**
+
+This variable should be numbers, but is a character type. This is because
+
+* there are commas used as the thousands separator
+
+* the smallest categories are represented with "-*" to indicate a table note.
+
+This requires three steps:
+
+1. remove commas
+
+2. replace "-*" with NA
+
+3. convert to numeric value
+
+```{r}
+
+noc_table_clean <- noc_table_clean %>% 
+  # remove commas
+  mutate(
+    employment =
+      str_remove_all(employment, ",")
+    ) %>% 
+  # replace with NA
+  mutate(
+    employment =
+      str_replace_all(employment, "-\\*", replacement = NA_character_)
+    ) %>% 
+  # convert to numeric
+  mutate(
+    employment =
+      as.numeric(employment)
+    )
+  
+
+noc_table_clean
+
+```
+
+
+
+In the first column, there was a colon and a separating the NOC code and the title. What would we do if there was only a space? 
+
+The revised table explores that.
+
+```{r read_noc_table_2, include=FALSE}
+noc_table_2 <- read_rds(here("data", "noc_table_2.rds"))
+```
+
+
+There are multiple spaces in the string...what happens to the split if we change the code to `sep = " "`?
+
+```{r}
+noc_table_2 %>% 
+  tidyr::separate(
+    col = noc_occupation_title, 
+    into = c("noc", "occupation_title"), 
+    sep = " ")
+```
+
+The function keeps only the first two pieces...so a lot of valuable information that follows the second string (the first word of the title) is discarded.
 
 
 
@@ -46,7 +458,7 @@ placeholder for chapter 7
 Recoding with `dplyr::case_when()`
 
 
-### Indicator variables
+## Indicator variables
 
 Creating indicator variables \index{indicator variables}
 
