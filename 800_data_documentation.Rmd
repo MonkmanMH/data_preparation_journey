@@ -13,9 +13,14 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 # Data documentation {#datadocumentation}
 
 
-_the future chapter 8_
+In this chapter:
+
 
 * Creating documentation, including data dictionaries and literate programming
+
+  - Why we want to create documentation
+  
+  - What elements to record
 
 * Data management strategies
 
@@ -23,7 +28,7 @@ _the future chapter 8_
 
 ## Introduction {#datadocumentation-intro}
 
-The documentation of the data sources, methods, etc is vital for reproducibility\index{reproducibility}.
+The documentation of the data sources, methods, and workflow is vital for reproducibility\index{reproducibility}.
 
 
 > "Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan
@@ -32,18 +37,8 @@ The documentation of the data sources, methods, etc is vital for reproducibility
 > "If you're not thinking about keeping track of things, you won't keep track of things." —Karl Broman
 
 
-It's also essential if you intend to share your data [@White_etal_nine_simple_ways]. This documentation provides metadata (which we will see more of in the data dictionary section below), 
+It's also essential if you intend to share your data [@White_etal_nine_simple_ways]. The documentation we creates provides metadata (which we will see more of in the data dictionary section below), 
 
-
-
-
-## Objectives
-
-* Demonstrate understanding of the reasons for documentation and record keeping,
-
-* Demonstrate understanding of the important elements to record, and
-
-* Demonstrate the ability to create an artifact that captures the computing environment that a project was created in.
 
 
 ## Documentation and Recordkeeping
@@ -61,7 +56,7 @@ The reasons for documenting our workflow are similar to the reasons we would sav
 
 
 
-As well, things change (the data, the sofware and hardware we use, the motivations for our work) and capturing the details about those things helps us make any necessary changes that might be required at a later date.
+As well, things change (the data, the software and hardware we use, the motivations for our work) and capturing the details about those things helps us make any necessary changes that might be required at a later date.
 
 
 
@@ -71,28 +66,28 @@ In the journal article "Good enough practices in scientific computing", the auth
 
 
 
-Similar sentiments are expressed in a recent blog post by Randy Au ^[["Let's Get Intentional About Documentation"](https://counting.substack.com/p/lets-get-intentional-about-documentation), 2020-09-29] expresses on key idea in the title, and builds on it: we need to be intentional in our actions around documentation (or as he argues, a better term might be "recordkeeping").
+Similar sentiments are expressed in a blog post by Randy Au, "Let's Get Intentional About Documentation". ^[["Let's Get Intentional About Documentation"](https://counting.substack.com/p/lets-get-intentional-about-documentation), 2020-09-29] While the article's key idea is in the title, Au presents the case that a better term might be "recordkeeping".
 
-"Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use."
+>"Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use."
 
 I like the way this is framed. "Documentation" then becomes a fully-realized user manual, suitable for complex and recurring projects with many different contributors, and that might be considered mission critical. A lot of data science work doesn't meet those criteria, so what we need isn't "documentation" but the notes that someone could use to build the documentation.
 
 If it's a one-off project, you can probably have a minimum (but not zero!) recordkeeping. But a project that repeats on a regular schedule (whether daily or annually) should have more robust recordkeeping, and potentially some documentation.
 
-And it's important to think about this at the beginning—maybe even _before_ the beginning—of your work. Taking this approach, recordkeeping gets built into the process and your daily workflow, and becomes part of the work. For example, record the source of your data as you're downloading it, or make comments about why you chose a particular function as soon as you incorporate the function into your script. These habits will not only capture what you're thinking at the time, but will also encourage you to think about the "why" of your decisions—and perhaps lead you to a different choice.
+And it's important to think about this at the beginning of your work, perhaps even _before_ the beginning. Taking this approach, recordkeeping gets built into the process and your daily workflow, and becomes part of the work. For example, you could record the source of your data as you're downloading it, or make comments about why you chose a particular function as soon as you incorporate the function into your script. These habits will not only capture what you're thinking at the time, but will also encourage you to think about the "why" of your decisions—and perhaps lead you to a different choice.
 
 
 ### Literate programming
 
-Computer scientist Donald Knuth introduced the idea of "literate programming". 
+Computer scientist Donald Knuth introduced the idea of "literate programming" in 1984. 
 
 "... a computer program is given an explanation of its logic in a natural language, such as English, interspersed with snippets of macros and traditional source code, from which compilable source code can be generated. ... [Literate programming] enables programmers to develop programs in the order demanded by the logic and flow of their thoughts."
 —Source: Wikipedia, [Literate programming](https://en.wikipedia.org/wiki/Literate_programming)
 
 The idea is to "code your documentation, instead of document your code".
 
-"Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."
-—Donald Knuth
+>"Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."
+—Donald Knuth [citation needed!]
 
 In the context of a data science project, this is enabled in R Markdown (or Jupyter notebooks), where text descriptions of the what and why of a code chunk can precede that chunk. So rather than existing as a separate "documentation" document, the record of the programmer's thoughts are captured in the file that runs the code.
 
