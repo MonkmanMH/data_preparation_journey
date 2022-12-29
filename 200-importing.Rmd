@@ -37,18 +37,18 @@ The data has been collected. It might be the result of:
 
 * Running trials or experiments in a controlled laboratory setting.
 
-* Making observations and recording the results of those observations (for example, as an astronomer or biologist might).
+* Making observations and recording the results of those observations (as an astronomer or biologist might).
 
 * Sampling the people in an area and asking them a series of questions.
 
 * Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitate operation management of the store by tracking sales and inventory, and generating orders.
 
 
-Once the data has been collected in this way, you might have direct access to it. Or it may have a layer of processing between the raw source and the way it appears to your. After this processing, you might:
+Once the data has been collected in this way, you might have direct access to it. Or there may be a layer of processing between the raw source and the way it appears to your. After this processing, you might:
 
-* Have access to a database where the raw data with additional manipulations is stored.
+* Have access to a database where the raw data is stored, including where additional post-collection manipulation might happen.
 
-* Have access to a sample of the raw data.
+* Be sent a file that contains a sample of the raw data.
 
 * Be able to download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
 

@@ -33,7 +33,9 @@ source("package_load.R")
 
 # Preface  {-}
 
-This is the online home of _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
+Welcome to the online home of _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
+
+This is a work-in-progress; the most recent update is `r sys.Date()`.
 
 
 
