@@ -30,6 +30,8 @@ In this chapter:
 * Creating conditional and calculated variables
 
   - indicator variables [@Gelman_etal_2014, p.366] (also known as dummy variables [@Suits_1957] and "one hot" encoding)
+  
+  - normalization
 
 * Dealing with missing values
 
@@ -578,7 +580,7 @@ tb3 %>%
 ```
 
 
-There is also an option `remove_most_frequent_dummy = TRUE`. In our discrimination data, there are more observations coded as "male", so the variable `gender_male` is not included.
+There is also an option in `fastDummies::dummy_cols()` to `remove_most_frequent_dummy = TRUE`. In our discrimination data, there are more observations coded as "male", so the variable `gender_male` is not included.
 
 
 ```{r}
