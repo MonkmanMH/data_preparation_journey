@@ -31,10 +31,10 @@ In this chapter:
 The documentation of the data sources, methods, and workflow is vital for reproducibility\index{reproducibility}.
 
 
-> "Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan
+"Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan
 
 
-> "If you're not thinking about keeping track of things, you won't keep track of things." —Karl Broman
+"If you're not thinking about keeping track of things, you won't keep track of things." —Karl Broman
 
 
 It's also essential if you intend to share your data [@White_etal_nine_simple_ways]. The documentation we create provides metadata (which we will see more of in the data dictionary section below), 
@@ -68,7 +68,7 @@ In the journal article "Good enough practices in scientific computing", the auth
 
 Similar sentiments are expressed in a blog post by Randy Au, "Let's Get Intentional About Documentation". ^[["Let's Get Intentional About Documentation"](https://counting.substack.com/p/lets-get-intentional-about-documentation), 2020-09-29] While the article's key idea is in the title, Au presents the case that a better term might be "recordkeeping".
 
->"Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use."
+"Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use."
 
 I like the way this is framed. "Documentation" then becomes a fully-realized user manual, suitable for complex and recurring projects with many different contributors, and that might be considered mission critical. A lot of data science work doesn't meet those criteria, so what we need isn't "documentation" but the notes that someone could use to build the documentation.
 
@@ -86,8 +86,7 @@ Computer scientist Donald Knuth introduced the idea of "literate programming" in
 
 The idea is to "code your documentation, instead of document your code".
 
->"Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."
-—Donald Knuth [citation needed!]
+"Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do." —Donald Knuth [citation needed!]
 
 In the context of a data science project, this is enabled in R Markdown (or Jupyter notebooks), where text descriptions of the what and why of a code chunk can precede that chunk. So rather than existing as a separate "documentation" document, the record of the programmer's thoughts are captured in the file that runs the code.
 
@@ -344,12 +343,12 @@ fs::dir_tree(path = "project_template", recurse = FALSE)
 It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
 
 ```{r dir_tree_integer}
+
 fs::dir_tree(path = "project_template", recurse = 2)
+
 ```
 
 
-
-_still needs **R TOOLS** section_
 
 
 

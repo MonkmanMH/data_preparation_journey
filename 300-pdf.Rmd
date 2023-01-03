@@ -121,14 +121,14 @@ cat(bcf[1])
 ```
 
 
-If we compare these two outputs, we see that the first shows the characters "\n", which indicates the end of a line. These have been converted in the final version.
+If we compare these two outputs, we see that the first shows the characters "\\n", which indicates the end of a line. These have been converted in the final version.
 
 
 
 
 The period covered by this annual report captures the profound impact on travel during the first year of the COVID-19 pandemic, and the report has comparisons in vehicle and passenger volumes with the previous, pre-pandemic year. Let's pull the data from the table that compares the number of passengers by each of the routes in the system. This table is on page 11:
  
-![BC Ferries, passenger total](bcferries_passengers_2021.jpg)
+![BC Ferries, passenger total](img/bcferries_passengers_2021.jpg)
 
 
 From the object we created from the PDF report, we can separate the contents of page 11 into its own object:
@@ -154,9 +154,9 @@ bcf_11
 Now we have an object that is a single text string. All of the data we want is there, but it is going to take some finesse to extract the columns we want, and in a format that we can use.
 
 
-Using the "\n" line break character, we can split this single value into as many lines as there are.
+Using the "\\n" line break character, we can split this single value into as many lines as there are.
 
-```{r}
+```{r 300_pdf_linebreak}
 # break into lines
 bcf_11_lines <- bcf_11[[1]] %>% 
   strsplit(split = "\n")
@@ -184,7 +184,7 @@ tester
 
 So how will we split this into separate pieces? Here's where the {stringr} package and our knowledge of regular expressions comes into use. We want to split the string where there are multiple spaces. If we split at every space, we'd get lots of columns. So we are separating (or splitting) where the spaces occur.
 
-The regular expression to find any white space is "\s", and to find any number of them we need to add the plus sign "+". Remember that in R, we need to escape the backslash, so our regex gets expresses as "\\s+". 
+The regular expression to find any white space is "\\s", and to find any number of them we need to add the plus sign "+". Remember that in R, we need to escape the backslash, so our regex gets expresses as "\\s+". 
 
 ```{r}
 

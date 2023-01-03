@@ -42,17 +42,14 @@ In this chapter:
 
 ## Cleaning strings
 
-
-> Strings are not glamorous, high-profile components of R, but they do play a big role in many data cleaning and preparation tasks. 
-—{stringr} reference page
+"Strings are not glamorous, high-profile components of R, but they do play a big role in many data cleaning and preparation tasks." —{stringr} reference page
 
 R provides some robust tools for working with characters strings. In particular, the {stringr}[@R-stringr] package is very flexible. But before we get there, we need to take a look at regular expressions.
 
 
 ### Regular expressions
 
->Some people, when confronted with a problem, think: “I know, I’ll use regular expressions.” Now they have two problems.
-— Jamie Zawinski
+"Some people, when confronted with a problem, think: 'I know, I’ll use regular expressions.' Now they have two problems." — Jamie Zawinski
 
 An excellent resource for learning the basics of regular expressions\index{regular expressions} is the vignette "Regular Expressions", hosted at the {stringr} package website^[["Regular Expressions", stringr.tidyverse.org](https://stringr.tidyverse.org/articles/regular-expressions.html)].
 
@@ -69,6 +66,7 @@ Some useful regex matching functions:
 | "^" | match start of string |
 | "$" | match end of string |
 | "." | matches any string |
+
 
 
 frequency of match
@@ -92,12 +90,11 @@ These also need to be escaped:
 | "\"" | double quotation mark |
 | "\'" | single quotation mark |
 | "\\" | backslash |
-| "\d" | any digit |
-| "\n" | newline (line break) |
-| "\s" | any whitespace (space, tab, newline)
-| "\t" | tab |
-| "\u..." | unicode characters* |
-
+| "\\d" | any digit |
+| "\\n" | newline (line break) |
+| "\\s" | any whitespace (space, tab, newline)
+| "\\t" | tab |
+| "\\u..." | unicode characters* |
 
 An example of a unicode character^[The full list of unicode characters can be found on Wikipedia[@wiki:unicode].] is the "interobang", a combination of question mark and exclamation mark.
 
@@ -151,8 +148,7 @@ str_detect(pc1, postalcode)
 
 Advice from the masters:
 
-> If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations.
-—Wickham and Grolemund, _R for Data Science_, ["Detect matches"](https://r4ds.had.co.nz/strings.html#detect-matches)
+"If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations." —Wickham and Grolemund, _R for Data Science_, ["Detect matches"](https://r4ds.had.co.nz/strings.html#detect-matches)
 
 
 ### Useful {stringr} functions
@@ -1035,6 +1031,11 @@ This package also allows for a descriptive name of the variable to be appended w
 ### Base R: `model.matrix`
 
 [@Friendly_Meyer_2016, p.240]
+
+
+
+
+
 
 
 
