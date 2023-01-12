@@ -497,7 +497,7 @@ deaths
 ## Statistical software
 
 
-If you are one or work with statisticians, economists, sociologists, survey practitioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS, and Stata. These tools have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985) and have evolved, demonstrating their robustness, and have become common in many academic, corporate, and government settings. 
+If you are one or work with statisticians, economists, sociologists, survey practitioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS, and Stata. These tools have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985), and over the years they have evolved, demonstrated their robustness, and have become common in many academic, corporate, and government settings. 
 
 A feature of these programs is that the variables and the associated values can be _labelled_. If you're familiar with **R**, value labelling is conceptually similar to the use of factor labels. These labels can carry a great deal of detail to which you might otherwise not have easy access.
 
@@ -534,7 +534,7 @@ penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
 penguins_sav
 ```
 
-You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables are numeric. For example the variable "species", instead of being a character, is a numeric (double) type.
+You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables, including those that were character strings, are numeric. For example the variable "species", instead of being a character, is a column of "1"s, "2"s, and "3"s.
 
 
 ### {labelled} -
@@ -591,7 +591,54 @@ The package's reference page is here: http://larmarange.github.io/labelled/index
 As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
 
 
+#### Using labels
 
+The labels in an dataframe created by {haven} can be converted to a factor type, using the `unlabelled()` function. 
+
+If we were to tally the number of penguins in each species using the penguins dataframe that originated from the SPSS file, we would see this:
+
+```{r}
+penguins_sav %>% 
+  group_by(species) %>% 
+  tally()
+
+palmerpenguins::penguins %>% 
+  group_by(species) %>% 
+  tally()
+
+```
+
+In this version, the "species" variable retains the numeric values.
+
+By applying the `unlabelled()` function, the "haven_labelled" type variables are transformed into factor types, with the labels now the values shown:
+
+```{r}
+penguins_sav %>% 
+  unlabelled() %>% 
+  group_by(species) %>% 
+  tally()
+
+```
+
+
+An alternative approach is the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions. In this first example, the variable "species" is mutated from labelled to factor type.
+
+```{r}
+penguins_sav %>% 
+  mutate(species = as_factor(species)) %>% 
+  group_by(species) %>% 
+  tally
+```
+
+
+In this second variant, the `mutate_if()` function transforms all of the labelled variables.
+
+```{r}
+penguins_sav %>% 
+  mutate_if(is.labelled, to_factor) %>% 
+  group_by(species, island) %>% 
+  tally()
+```
 
 
 
@@ -716,6 +763,84 @@ attributes(df_video$heardofcondition)$labels
 
 ```
 
+
+### Creating a labelled dataframe from an Excel file
+
+Very often, the data collectors will make the data available in two parts: 
+
+* the individual records, with the variables coded numerically
+
+* a separate "code book", with the labels associated with each numeric value.
+
+
+PENGUINS EXCEL CODE BOOK
+
+```{r}
+penguins_path <- here::here("data", "penguins_coded.xlsx")
+
+penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
+
+head(penguins_data)
+
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+# alternative approach with {dpjr} package
+library(dpjr)
+penguins_path <- dpjr_data("penguins_coded.xlsx")
+
+penguins_data <- read.csv(penguins_path)
+
+
+```
+
+
+A glance at the dataframe shows that the variables "species", "island", and "sex" are all coded as numeric variables. Unlike the .sav file we read earlier in this chapter, this dataframe does not carry the labels as part of the variable.
+
+The second sheet in the Excel file, "penguins_codebook", contains the values associated with each variable. 
+
+We could add the labels with a coded solution, using the `val_labels()` function from the {labelled} package:
+
+```{r}
+# assign the species names as labels
+val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" = 3)
+
+# view the labels
+val_labels(penguins_data$species)
+
+
+```
+
+```{r}
+# tally
+penguins_data %>% 
+  group_by(species) %>% 
+  tally()
+
+# convert to factor with `unlabelled()`
+penguins_data %>% 
+  unlabelled() %>% 
+  group_by(species) %>% 
+  tally()
+
+
+```
+
+We can also read in the values, and apply them programmatically. This will save time and effort, and reduce the risk of typographical errors, particularly if there are many variables with many values to label.
+
+First, we read the contents of the second sheet in the Excel file, containing the codebook:
+
+```{r}
+
+penguins_path <- here::here("data", "penguins_coded.xlsx")
+
+penguins_code <- read_excel(penguins_path, sheet = "penguins_codebook")
+
+penguins_code
+
+
+```
 
 
 ### Creating a labelled dataframe from SPSS syntax

@@ -25,6 +25,13 @@ Elements are drawn from the reference materials for the packages
 
 # Data from web sources {#webdata}
 
+In this chapter:
+
+* Importing data from web repositories
+
+
+
+
 There is a lot of valuable data out there on the internet, just waiting for curious data analysts to pull nuggets of insight out of it. There are a variety of ways to get it; in some cases, you can download a CSV or Excel file and then read that into R.
 
 But the brilliant people that make up the R community have made our life a whole lot easier by creating packages that allow us to write R scripts that link directly to data we want. This is particularly valuable if you are accessing a data set that gets updated regularly (say, a weekly financial report or the results of a monthly survey).
