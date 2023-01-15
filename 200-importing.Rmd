@@ -773,6 +773,9 @@ Very often, the data collectors will make the data available in two parts:
 * a separate "codebook", with the labels associated with each numeric value.
 
 
+In the following example, the penguins data [@R-palmerpenguins] has been stored in an Excel file. The first sheet in this Excel file contains the data, where the values in the three character variables (species, island, and sex) have been converted to numeric codes. For example, for the species variable, the Adelie penguins are represented by the value "1", Chinstrap are represented by "2", and Gentoo are represented by "3".
+
+
 
 ```{r}
 penguins_path <- here::here("data", "penguins_labelled.xlsx")
@@ -797,14 +800,17 @@ penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
 
 A glance at the dataframe shows that the variables "species", "island", and "sex" are all coded as numeric variables. Unlike the .sav file we read earlier in this chapter, this dataframe does not carry the labels as part of the variable.
 
-We could write some code, using the `val_labels()` function from the {labelled} package:
+We could write some code to apply labels and change the variable type, using the `val_labels()` function from the {labelled} package:
 
 ```{r}
 # assign the species names as labels
-val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" = 3)
+labelled::val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" = 3)
 
 # view the labels
 val_labels(penguins_data$species)
+
+# 
+ls(penguins_data$species)
 
 ```
 
@@ -825,7 +831,7 @@ First, we read the contents of specific rectangle of data in the second sheet in
 penguins_path <- here::here("data", "penguins_labelled.xlsx")
 
 penguins_code <- read_excel(penguins_path,
-                            sheet = "penguins_codebook_source",
+                            sheet = "penguins_codebook",
                             range = anchored("A37", dim = c(9, 3)))
 
 penguins_code
@@ -833,7 +839,30 @@ penguins_code
 
 ```
 
-There is additional wrangling required.
+We have read the table as output by SPSS and saved in the Excel file, but there is additional wrangling required.
+
+The first step in the pipe is to rename the variables. Not only has the "Value" been given to the "Variable" column, but the value has interpreted as blank, and has been given the variable name "...2". 
+
+The second step is to use the {dplyr} `fill()` function to populate the missing values in the "variable" variable. The default direction of the fill is downwards, so we don't need to specify the direction as an argument. We will examine other options for cleaning data later.
+
+```{r}
+
+penguins_code <- penguins_code %>% 
+  # rename variables
+  rename(Value = "variable",
+    ...2 = "variable_value",
+    Label = "variable_label") %>% 
+  # fill in blank names
+  fill(variable)
+
+penguins_code
+
+```
+
+
+`fill()`
+
+left_join
 
 
 ### Creating a labelled dataframe from SPSS syntax
