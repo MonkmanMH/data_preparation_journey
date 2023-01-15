@@ -497,7 +497,7 @@ deaths
 ## Statistical software
 
 
-If you are one or work with statisticians, economists, sociologists, survey practitioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS, and Stata. These tools have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985), and over the years they have evolved, demonstrated their robustness, and have become common in many academic, corporate, and government settings. 
+If you are one or work with statisticians, economists, sociologists, survey practitioners, and many others, you will find yourself encountering data files created using the software packages SAS, SPSS\index{SPSS}, and Stata. These tools have been around a long time (SAS and SPSS trace their history back to the late 1960s, and Stata was created in 1985), and over the years they have evolved, demonstrated their robustness, and have become common in many academic, corporate, and government settings. 
 
 A feature of these programs is that the variables and the associated values can be _labelled_. If you're familiar with **R**, value labelling is conceptually similar to the use of factor labels. These labels can carry a great deal of detail to which you might otherwise not have easy access.
 
@@ -539,7 +539,7 @@ You will notice that the variables in the `.sav` version of the `penguins` dataf
 
 ### {labelled} -
 
-The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS (or SAS or Stata) dataframe that we have read into R using one of the {haven} functions.
+The package {labelled}[@R-labelled] gives us a range of powerful tools for working with the variable labels, value labels and defined missing values in an SPSS\index{SPSS} (or SAS or Stata) dataframe that we have read into R using one of the {haven} functions.
 
 ```{r 200-labelled}
 library(labelled)
@@ -642,7 +642,7 @@ penguins_sav %>%
 
 
 
-### Reading an SPSS file: "Video"
+### Reading an SPSS\index{SPSS} file: "Video"
 
 The functionality of a labelled dataframe is very beneficial when working with survey data. The dataframe can contain the variable codes as captured in the form, the values associated with those values, as well as the text of the question in the label.
 
@@ -673,7 +673,7 @@ The R package {haven} allows us to capture all of this information.
 
 
 
-#### Read SPSS data into R
+#### Read SPSSSPSS\index{SPSS} data into R
 
 For the first step, we will read in the data with the default parameters.
 
@@ -770,13 +770,12 @@ Very often, the data collectors will make the data available in two parts:
 
 * the individual records, with the variables coded numerically
 
-* a separate "code book", with the labels associated with each numeric value.
+* a separate "codebook", with the labels associated with each numeric value.
 
 
-PENGUINS EXCEL CODE BOOK
 
 ```{r}
-penguins_path <- here::here("data", "penguins_coded.xlsx")
+penguins_path <- here::here("data", "penguins_labelled.xlsx")
 
 penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
 
@@ -788,9 +787,9 @@ head(penguins_data)
 ```{r, echo=FALSE, eval=FALSE}
 # alternative approach with {dpjr} package
 library(dpjr)
-penguins_path <- dpjr_data("penguins_coded.xlsx")
+penguins_path <- dpjr_data("penguins_labelled.xlsx")
 
-penguins_data <- read.csv(penguins_path)
+penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
 
 
 ```
@@ -798,9 +797,7 @@ penguins_data <- read.csv(penguins_path)
 
 A glance at the dataframe shows that the variables "species", "island", and "sex" are all coded as numeric variables. Unlike the .sav file we read earlier in this chapter, this dataframe does not carry the labels as part of the variable.
 
-The second sheet in the Excel file, "penguins_codebook", contains the values associated with each variable. 
-
-We could add the labels with a coded solution, using the `val_labels()` function from the {labelled} package:
+We could write some code, using the `val_labels()` function from the {labelled} package:
 
 ```{r}
 # assign the species names as labels
@@ -809,38 +806,34 @@ val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" =
 # view the labels
 val_labels(penguins_data$species)
 
-
 ```
 
-```{r}
-# tally
-penguins_data %>% 
-  group_by(species) %>% 
-  tally()
-
-# convert to factor with `unlabelled()`
-penguins_data %>% 
-  unlabelled() %>% 
-  group_by(species) %>% 
-  tally()
 
 
-```
+We can also use R to read in the values, and apply them programmatically. This will save time and effort, and reduce the risk of typographical errors, particularly if there are many variables and those variables have many values to label.
 
-We can also read in the values, and apply them programmatically. This will save time and effort, and reduce the risk of typographical errors, particularly if there are many variables with many values to label.
+If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains output SPSS creates when the "DISPLAY DICTIONARY" function in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
 
-First, we read the contents of the second sheet in the Excel file, containing the codebook:
+Of particular interest to us are the values associated with each variable. This information is saved under the heading "Variable Values"; for the penguins data file, this appears in row 36 of the Excel sheet.
+
+!["Variable Values" from penguins SPSS output](img/penguins_variable_values_spss.JPG)
+
+First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the codebook. Note that we start reading at row 37, so that row with "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
 
 ```{r}
 
-penguins_path <- here::here("data", "penguins_coded.xlsx")
+penguins_path <- here::here("data", "penguins_labelled.xlsx")
 
-penguins_code <- read_excel(penguins_path, sheet = "penguins_codebook")
+penguins_code <- read_excel(penguins_path,
+                            sheet = "penguins_codebook_source",
+                            range = anchored("A37", dim = c(9, 3)))
 
 penguins_code
 
 
 ```
+
+There is additional wrangling required.
 
 
 ### Creating a labelled dataframe from SPSS syntax
