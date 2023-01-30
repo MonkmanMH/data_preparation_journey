@@ -75,6 +75,8 @@ There are plenty of resources detailing the complexities of the different data s
 Reading: Chapter 5, "Data Storage" of [@Murrell_data_technologies] — [link](http://statmath.wu.ac.at/courses/data-analysis/itdtHTML/node51.html)
 
 
+
+
 ## Importing data
 
 > "Use the arguments of your import function to get as far as you can, as fast as possible."—Jenny Bryan^[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
@@ -116,25 +118,21 @@ Some things to ask about the data:
 
 
 
-We will look at structured ways investigate the contents of the data in the chapter [Validation strategies]{#validation}.
-
-
+We will look at structured ways investigate the contents of the data in the chapter [Validation strategies]{#validation}. For now, we will focus on the process of reading the contents of different types of files.
 
 
 
 ## Delimited plain text files
 
-Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data.  They are limited in what they can contain, which has both upsides and downsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
+Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data. They are limited in what they can contain, which has both upsides and downsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
 
-They come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, although less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
+Plain text files come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common delimited format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, somewhat less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
 
 
 
 ### using base R
 
-Base R has a number of functions to read CSV, TSV, and fixed-width files.
-
-{base} [@R-base]
+Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width files.
 
 For example, `read.csv()` is a base R function to read CSV files.
 
@@ -144,6 +142,7 @@ For example, `read.csv()` is a base R function to read CSV files.
 # assign path using the {here} package
 penguins_path <- here::here("data", "penguins.csv")
 
+# read the contents of the CSV file
 penguins_data <- read.csv(penguins_path)
 ```
 
@@ -161,7 +160,9 @@ penguins_data <- read.csv(penguins_path)
 
 ### {readr} (tidyverse)
 
-The {readr} [@R-readr] package is part of the tidyverse, and works very well to read plain-text files. (This example is a modification of the example provided at the reference page for {readr} ^[{readr} reference page: https://readr.tidyverse.org/index.html])
+The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions to read plain-text files.
+
+This example is a modification of the example provided at the reference page for {readr} ^[{readr} reference page: https://readr.tidyverse.org/index.html]
 
 We activate {readr} by using the `library()` function:
 
@@ -170,19 +171,20 @@ library(readr)
 ```
 
 
-This chunk creates a string object that contains the path name, and then uses the function `read_csv()` * to create an object called `penguins_data`, from a CSV file of the same name.
+This chunk creates a string object that contains the path name, and then uses the function `read_csv()` to create an object called `penguins_data`, from a CSV file of the same name.
 
 * Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
 `read_csv()` is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [_R for Data Science_, 10 Tibbles](https://r4ds.had.co.nz/tibbles.html) [@Wickham_Grolemund2016])
 
 ```{r}
-# read the file and assign it to the object "mtcars"
+# read the file and assign it to the object "penguins_data"
+# note that this uses the "penguins_path" object created earlier
 penguins_data <- read_csv(penguins_path)
 
 ```
 
-The function has the message shown above, letting us know the variable type that each is assigned.
+The function returns a message letting us know the type that each variable is assigned.
 
 Adding the `col_types = cols()` parameter allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be an factor.
 
@@ -245,6 +247,7 @@ If we open the file in a text editor, we see this:
 ![authors_fwf.txt](img/authors_img.jpg)
 
 
+
 The first approach would be to allow {readr} to guess where the column breaks are. The `fwf_empty()` function looks through the specified file and returns the beginning and ending locations it has guessed, as well as the `skip` value that the `read_fwf()` function uses.
 
 Note that the column names are specified in a list. 
@@ -266,10 +269,12 @@ read_fwf(authors_path,
 ```
 
 
-Note that {readr} will impute the variable type, as it did with the CSV file. And although we won't implement it in these examples, in the same way we can use the `col_types` specification, as well as `na`, `skip`, and others. See the `read_fwf` reference at https://readr.tidyverse.org/reference/read_fwf.html for all the details.
+Note that {readr} will impute the variable type, as it did with the CSV file. And although we won't implement it in these examples, in the same way `read_fwf()` allows us to use the `col_types` specification, as well as `na`, `skip`, and others. See the `read_fwf()` reference at https://readr.tidyverse.org/reference/read_fwf.html for all the details.
 
 
-So that worked, but it could break quite easily. We just need one person with a three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the parser.
+Reading this fixed-width file with these three author names worked, but it could break quite easily. We just need one person with a three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the `read_fwf()` parser.
+
+In this example, we read a longer list of author names:
 
 ```{r importing_authors2_path_}
 authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
@@ -277,10 +282,18 @@ authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
 fwf_empty(authors2_path, 
                    col_names = c("first", "last", "state", "unique_id"))
 
+```
 
+The `fwf_empty()` function found only three columns, as shown in the "begin" and "end" values that are returned.
+
+When we use the read function, it finds three columns:
+
+```{r}
 read_fwf(dpjr::dpjr_data("authors2_fwf.txt"))
 ```
 
+
+Adding the `col_names =` argument now mis-identifies the variables.
 
 ```{r}
 
@@ -302,7 +315,7 @@ state              10       21              30
 uniqueID           12       31              42
 
 
-Visually, the file looks like this (the digits across the top represent the column position):
+Visually, the file looks like this:
 
 
 ![fwf-sample.txt](img/names_columns.png)
@@ -368,7 +381,7 @@ Statistics Canada has made available a Public-Use Microdata File (PUMF) of the J
 The webpage for the survey, including the PUMF file, data dictionary, and methodological notes, is here:
 https://www150.statcan.gc.ca/n1/pub/82m0022x/2003001/4069119-eng.htm
 
-The PUMF is a fixed-width file named "JCUSH.txt". Compared to the author names example above, this is _huge_. There are the 8,688 records and each line of data takes up 552 columns! 
+The PUMF is a fixed-width file named "JCUSH.txt". This file is quite a lot larger than the author names example above. There are the 8,688 records and each line of data takes up 552 columns! 
 
 Here's what the first record looks like:
 
