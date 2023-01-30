@@ -23,9 +23,6 @@ In this chapter:
 
 
 
-## Principles
-
-1. "Use the arguments of your import function to get as far as you can, as fast as possible."—Jenny Bryan^[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
 
 
 
@@ -80,6 +77,8 @@ Reading: Chapter 5, "Data Storage" of [@Murrell_data_technologies] — [link](ht
 
 ## Importing data
 
+> "Use the arguments of your import function to get as far as you can, as fast as possible."—Jenny Bryan^[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
+
 
 Here's some advice that's worth heeding:
 
@@ -98,14 +97,12 @@ Here's some advice that's worth heeding:
 > A plain text file that is readable by a human being in a text editor should be your default until you have **actual proof** that this will not work. Reading and writing to exotic or proprietary formats will be the first thing to break in the future or on a different computer. It also creates barriers for anyone who has a different toolkit than you do. Be software-agnostic. Aim for future-proof and moron-proof.
 
 
-general R advice on import/export:  https://cran.r-project.org/doc/manuals/r-devel/R-data.html
-
 
 ### Check your results
 
 It's always a good idea to quickly check your data after any major processing step. This can start with, but is not limited to, importing your data.
 
-Some things to check:
+Some things to ask about the data:
 
 * Did the import step give you as many records (rows) as you expected?
 
@@ -119,7 +116,7 @@ Some things to check:
 
 
 
-We will investigate the contents of the data in the chapter [Validation strategies]{#validation}.
+We will look at structured ways investigate the contents of the data in the chapter [Validation strategies]{#validation}.
 
 
 

@@ -34,6 +34,10 @@ In this chapter:
 
 There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation" methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected.
 
+The article "Nine simple ways to make it easier to (re)use your data" [@White_etal_nine_simple_ways] 
+
+* 7 Perform basic quality control
+
 Validation while the data is being collected might be through the use of drop-down boxes that eliminates spelling mistakes, or that forces entries to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
 * All of these have risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a zero or a preposterously very large number, neither of them accurate.

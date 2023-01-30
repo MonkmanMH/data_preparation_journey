@@ -293,7 +293,7 @@ attributes(df_video$heardofcondition)$labels
 
 ## Creating a labelled dataframe from an Excel file
 
-Very often, the data collectors will make the data available in two parts: 
+You might encounter a circumstance where the data collectors have originally used SPSS, SAS, or Stata, but because the receiving party doesn't have one of these proprietary tools, will share the data as an Excel file. Typically in these circumstances, the data collectors make the data available in two parts: 
 
 * the individual records, with the variables coded numerically
 
@@ -336,8 +336,8 @@ labelled::val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, 
 # view the labels
 val_labels(penguins_data$species)
 
-# 
-ls(penguins_data$species)
+# another way to view the labels 
+attr(penguins_data$species, "labels")
 
 ```
 
@@ -345,7 +345,7 @@ ls(penguins_data$species)
 
 We can also use R to read in the values, and apply them programmatically. This will save time and effort, and reduce the risk of typographical errors, particularly if there are many variables and those variables have many values to label.
 
-If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains output SPSS creates when the "DISPLAY DICTIONARY" function in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
+If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains output SPSS creates when the "DISPLAY DICTIONARY" syntax (or the "File > Display Data File Information > Working File" GUI menu sequence) in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
 
 Of particular interest to us are the values associated with each variable. This information is saved under the heading "Variable Values"; for the penguins data file, this appears in row 36 of the Excel sheet.
 
@@ -380,16 +380,32 @@ penguins_code <- penguins_code %>%
     ...2 = "variable_value",
     Label = "variable_label") %>% 
   # fill in blank names
-  fill(variable)
+  fill(variable) %>% 
+  # change to numeric
+  mutate(variable_value = as.numeric(variable_value))
 
 penguins_code
 
 ```
 
 
-`fill()`
+At this point, there are two possible solutions:
 
-left_join
+1. Join the values from the "penguins_code" dataframe, so that in addition to the variable with numeric values, there is also a variable with the character strings.
+
+2. Using the functions in the {labelled} package, convert the variables into "labelled" type, so the the numeric values remain and the labels are applied. In this scenario, the end-state is the same as reading the SPSS file directly.
+
+#### Join variables
+
+
+```{r}
+penguins_code_wide <- penguins_code %>% 
+#  mutate(row_num = row_number()) %>% 
+  pivot_wider(names_from = c(variable), values_from = variable_label)
+
+penguins_code_wide
+```
+
 
 
 ## Creating a labelled dataframe from SPSS syntax

@@ -40,6 +40,12 @@ The documentation of the data sources, methods, and workflow is vital for reprod
 It's also essential if you intend to share your data [@White_etal_nine_simple_ways]. The documentation we create provides metadata (which we will see more of in the data dictionary section below), 
 
 
+## Metadata
+
+[@White_etal_nine_simple_ways]
+
+* see additional references under "Metadata"
+
 
 ## Documentation and Recordkeeping
 
