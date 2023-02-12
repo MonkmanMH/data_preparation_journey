@@ -81,7 +81,7 @@ Step 1: download the data.
 
 * the `get_cansim()` function takes the table number as the parameter, and connects to CANSIM and downloads the data into an R dataframe.
 
-```{r}
+```{r get_cansim_2410000601}
 
 travellers <- get_cansim("24-10-0006-01")
 
@@ -104,7 +104,7 @@ There are six categories in the `Country of residence` variable. What if we just
 
 CANSIM gives us a function to select a single vector number, so we can be more efficient still. We can speed up the download time _and_ skip the filtering steps to get to the one we want. (Note that this function requires us to enter a start date, and converts the reference date variable to the YYYY-MM-DD format.)
 
-```{r}
+```{r get_cansim_vector, eval=FALSE}
 
 get_cansim_vector("v32214508", "2015-01-01")
 
@@ -115,7 +115,7 @@ There are other very useful functions if you find yourself exploring Statistics 
 
 The function `get_cansim_table_overview()` provides an abstract about the data table.
 
-```{r}
+```{r get_cansim_table_overview, eval=FALSE}
 
 get_cansim_table_overview("24-10-0006-01")
 

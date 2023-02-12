@@ -175,6 +175,18 @@ I would like to acknowledge everyone who has contributed to the books, articles,
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/ca/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png" /></a><br />This work by [Martin Monkman](https://github.com/MonkmanMH) is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/ca/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 Canada License</a>.
 
 
+### Data in this book {-}
+
+The various data files used in the examples are bundled in the R package {dpjr} [@R-dpjr].
+
+The package website is here: https://monkmanmh.github.io/dpjr/
+
+Instructions for installation and usage can be found at the package site.
+
+The data files used in the examples are covered by various open licenses; details can be found at the "Data licenses" page at the package website.
+
+
+
 ### Source code {-}
 
 The source code for this ebook can be found at this github repository: https://github.com/MonkmanMH/data_preparation_with_r 
