@@ -680,7 +680,7 @@ Imputation methods:
 ### Missing as formatting
 
 
-A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In our example Excel file, the sheet "Report" contains the data we want in a wide format. The name individual institution is in the second column (in Excel nomanclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
+A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In our example Excel file, the sheet "Report" contains the data we want in a wide format. The name individual institution is in the second column (in Excel nomenclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
 
 Our first step is to read in the data. Note that the code uses the Excel naming convention to define the rectangular range to be read, and omits the title rows at the top and the notes at the bottom of the sheet.
 
@@ -698,10 +698,10 @@ The contents of the file have been read correctly, but there are many "NA" value
 
 ```{r}
 
-tuition_data <- tuition_data %>% 
+tuition_data_filled <- tuition_data %>% 
   fill("Economic Development Region")
 
-head(tuition_data)
+head(tuition_data_filled)
 ```
 
 The next step is to use the {tidyr} function `drop_na()` to omit any row that contains an NA value. In this case, we want to drop what were the header rows that contained just the region name in the first column, and no values in the other columns.
@@ -709,18 +709,28 @@ The next step is to use the {tidyr} function `drop_na()` to omit any row that co
 These two solutions yield the same result:
 
 ```{r}
-drop_na(tuition_data)
+drop_na(tuition_data_filled)
 
-tuition_data %>% 
+tuition_data_filled %>% 
   drop_na()
 
 ```
 
 It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an NA in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
 
-### Filling missing values
 
-Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
+## Missing numeric values
+
+
+"Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value." [@Little_Rubin_2020 ]
+
+The functions used above for filling missing text values can also be used for missing numeric values. But when dealing with the replacement of numeric values we need to be mindful that the values we use will be incorporated into models and analysis; we need to be clear that the filled values are _estimates_, including sufficient documentation in our methodology section.
+
+Furthermore, there is a great deal of literature on the topic of imputation of missing values. As researchers, we need to be aware of _why_ the values are missing; are we dealing with values that are missing "at completely random", "at random", or "not at random"? Delving into the literature, you'll discover that these terms are precisely defined, and the solutions we adopt to deal with missingness will depend on why the data are missing. [@Little_Rubin_2020]
+
+For the examples presented here, we will assume that you have already given significant thought to these methodological questions. As we discussed earlier in this chapter, _how_ we clean data is influenced by our research questions. As well, we need to consider our cleaning strategy in light of why the raw data are the way they are.
+
+With that preamble, let's move to working with some real data. In this example, the data series is the number of salaried employees in the Accommodation services industry in British Columbia, Canada, for the years 2001 through 2020. The data is collected and published by Statistics Canada, and for some years the data are judged to be "too unreliable to be published". This leaves some gaps in our data. [@R-dpjr]
 
 
 
@@ -728,9 +738,24 @@ Similar to what we saw above with text, the same `fill()` function can be applie
 
 naics721_sal <- read_rds(dpjr::dpjr_data("seph_naics721_bc_sal.rds"))
 
-naics721_sal
+head(naics721_sal)
 
 ```
+
+Plotting the data, here's what we see:
+
+```{r}
+ggplot(naics721_sal, aes(x = ref_year, y = VALUE)) +
+  geom_line() 
+```
+
+
+Our first approach will be to simply fill the series with the previous valid entry.  
+
+Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
+
+
+
 
 
 {tidyr} functions to deal with the missing values in the series
@@ -754,70 +779,79 @@ naics721_sal %>%
   mutate(old_value = VALUE) %>% 
   tidyr::fill(VALUE)  # default direction is down
 
-# spelled out
+# specified
+# down
 naics721_sal %>% 
   mutate(down = VALUE) %>% 
-  tidyr::fill(VALUE, .direction = "down")  # default direction is down
-
+  tidyr::fill(VALUE, .direction = "down")  # direction is specified as down
+# up
 naics721_sal %>% 
   mutate(up = VALUE) %>% 
-  tidyr::fill(VALUE, .direction = "up")  # default direction is down
+  tidyr::fill(VALUE, .direction = "up")  # direction is specified as up
 
 
 ```
 
 
-
-
-### references
-
-* CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
-
-* https://www.elff.eu/book/data-management-r/07-dates-times-timeseries/handling-missing-values/
-
-
-
-
-
-### Imputation of missing values
-
-There is a great deal of literature on the topic of imputation.
-
-[@doi:10.1080/00223891.2018.1530680]
-
-{simputation}: https://cran.r-project.org/web/packages/simputation/vignettes/intro.html
-
-https://github.com/markvanderloo/simputation
 
 
 
 ### Time series imputation
 
-A special case of imputation are time series. For R users, the package {imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics"
+You may already have realized that the values we filled above are drawn from a time series. Economists, biologists, and many other researchers who work with time series data have built up a large arsenal of tools to work with time series data, including for dealing with missing values in a time series. 
 
-Missing values in time series models can sometimes be problematic, so there's a need to fill in the missing values.
-
-
-#### {forecast} fill functions
-
-The {forecast} package has time series oriented imputation fill functions
-
-See:
-
-* Hyndman and Athanasopoulos, _Forecasting: Principles and Practice_ (2nd ed), https://otexts.com/fpp2/missing-outliers.html
-
-* https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/time-series-analysis/Dealing-with-missing-values/Imputing-missing-values/index.html
+For R users, the package {forecast} has time series oriented imputation fill functions. [@R-forecast; @Hyndman_Khandakar_2008]
 
 
-Use `na.interp()` function from {forecast}
+The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example
+
+```{r}
+x <- c(1, NA, 3)
+x
+```
+
+The series from 1 to 3 has an NA value in the middle. The `na.interp()` function fills in the missing value.
+
+```{r}
+
+forecast::na.interp(x)
+```
+
+For longer series, a similar process occurs:
+
+```{r}
+y <- c(1, NA, NA, 3)
+y
+```
+
+```{r}
+forecast::na.interp(y)
+
+```
+
+You will notice that the function has calculated replacement values that give us a linear series.
+
+For our count of salaried employees, here's what we get when we create a new value `value_new` with this function:
 
 ```{r}
 naics721_sal %>% 
-  mutate(val_new = forecast::na.interp(VALUE))
+  mutate(value_new = forecast::na.interp(VALUE))
 ```
+
+The function also has the capacity to create non-linear models.
+
+
+
+Other examples can be found in [@Hyndman_Athanasopoulos_2021].
+
+
 
 
 ### {imputeTS} package
+
+{imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics."
+
+
 
 The {imputeTS} package has functions that implement more sophisticated time series imputation methods, such as those with seasonal components.
 
@@ -842,6 +876,30 @@ naics721_sal %>%
   mutate(VALUE = zoo::na.approx(VALUE))
 
 ```
+
+
+
+### references
+
+* CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
+
+* https://www.elff.eu/book/data-management-r/07-dates-times-timeseries/handling-missing-values/
+
+
+{simputation}: https://cran.r-project.org/web/packages/simputation/vignettes/intro.html
+
+https://github.com/markvanderloo/simputation
+
+
+[@doi:10.1080/00223891.2018.1530680]
+
+
+{forecast} examples:
+
+* https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/time-series-analysis/Dealing-with-missing-values/Imputing-missing-values/index.html
+
+
+
 
 ## Creating labelled factors from numeric variables
 

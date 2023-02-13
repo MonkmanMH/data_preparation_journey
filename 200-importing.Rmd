@@ -79,17 +79,18 @@ Reading: Chapter 5, "Data Storage" of [@Murrell_data_technologies] — [link](ht
 
 ## Importing data
 
-> "Use the arguments of your import function to get as far as you can, as fast as possible."—Jenny Bryan^[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
-
 
 Here's some advice that's worth heeding:
 
-1. The arguments in the import functions are your friends! Use them as your first line of defense in your project workflow.
+1. The arguments in the import functions are your friends. Use them as your first line of defense in your project workflow.
 
 > Data import generally feels one of two ways:
+
 > * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
+
  > * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
-> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: use the arguments of your import function to get as far as you can, as fast as possible. Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
+
+> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [Emphasis added.] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
 
 [@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
 
@@ -124,7 +125,7 @@ We will look at structured ways investigate the contents of the data in the chap
 
 ## Delimited plain text files
 
-Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data. They are limited in what they can contain, which has both upsides and downsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
+Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data. They are limited in what they can contain, which has both downsides and upsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
 
 Plain text files come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common delimited format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, somewhat less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
 
@@ -160,7 +161,7 @@ penguins_data <- read.csv(penguins_path)
 
 ### {readr} (tidyverse)
 
-The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions to read plain-text files.
+The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions when it comes to plain-text files.
 
 This example is a modification of the example provided at the reference page for {readr} ^[{readr} reference page: https://readr.tidyverse.org/index.html]
 
@@ -175,7 +176,7 @@ This chunk creates a string object that contains the path name, and then uses th
 
 * Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
-`read_csv()` is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [_R for Data Science_, 10 Tibbles](https://r4ds.had.co.nz/tibbles.html) [@Wickham_Grolemund2016])
+`read_csv()` is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [@Wickham_Grolemund2016 10 Tibbles])
 
 ```{r}
 # read the file and assign it to the object "penguins_data"
