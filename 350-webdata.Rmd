@@ -123,6 +123,12 @@ get_cansim_table_overview("24-10-0006-01")
 
 
 
+## R packages for direct access to data
+
+The {readabs} package downloads and tidies data from the Australian Bureau of Statistics [@R-readabs]
+
+{RBNZ} downloads data from the Reserve Bank of New Zealand Website [@R-RBNZ]
+
 
 ## R packages to set up API connections
 
