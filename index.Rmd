@@ -50,6 +50,8 @@ There is no shortage of material—textbooks, journal articles, blog posts, onli
 
 The book will introduce the principles of data preparation, framed in a systematic approach that follows a typical data science or statistical workflow. With that context, readers will then work through practical solutions to resolving problems in data using the statistical & data science programming language R. These solutions will include examples of complex real-world data.
 
+In _Exploratory Data Analysis_, Tukey writes "the analyst of data needs both tools and understanding. The purpose of this book is to provide some of each." [@Tukey_1977, p.1] It is my hope that this book accomplishes the same.
+
 
 
 ## You, the reader {-}

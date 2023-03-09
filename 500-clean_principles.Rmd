@@ -222,7 +222,9 @@ Tidy data\index{tidy data}
 
 ## Exploratory data analysis
 
-One way to identify dirty data is through the process of _exploratory data analysis_ (EDA). This consists of two groups of techniques:
+One way to identify dirty data is through the process of _exploratory data analysis_ (EDA). [@Tukey_1977] 
+
+This consists of two groups of techniques:
 
 * summary statistics
 
@@ -292,16 +294,5 @@ Here are some questions that we might want to explore further in the `age` varia
 
 ## Validation {#validation-intro}
 
-
-
-## Feature engineering
-
-Somehow and somewhere, the word "feature" has come to replace "variable" in the lexicon of the data scientist.
-
-"Feature engineering" is a jazzed-up term meaning "calculating a new variable from others in the data"...for example, the unemployment rate in any given month and location is calculated by dividing the number of unemployed people by the total number of people in the labour force (two "features" in our data).
-
-Similarly, "dimensionality reduction" means "selecting the variables to include in your analysis (or model)".
-
-[@R-bcEpiRate]
 
 
