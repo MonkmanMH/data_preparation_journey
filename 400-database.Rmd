@@ -34,3 +34,16 @@ placeholder for chapter 4
 * Accessing data directly from databases (SQL)
 
 * The benefits and strengths of relational databases
+
+## Using the {tidylog} package
+
+An important element of any table join is to check the result, to see if it conforms to our expectations. The {tidylog} package [@R-tidylog] 
+
+The authors of the package acknowledge that the functionality adds some computational and time overhead to the processing, but this may be worth the cost. Judiciously used, the information it returns can give an immediate indication if the code has worked. This is particularly true in the early stages of writing your code.
+
+```
+library("tidylog", warn.conflicts = FALSE)
+```
+
+https://github.com/elbersb/tidylog
+

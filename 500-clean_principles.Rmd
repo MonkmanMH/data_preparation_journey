@@ -32,23 +32,6 @@ In this chapter:
 
 
 
-[@De_Jonge_van_der_Loo_2013]
-
-[@Hubbard_data_cleaning_2017]
-
-The article "Nine simple ways to make it easier to (re)use your data" [@White_etal_nine_simple_ways] 
-
-* Use standard file formats
-
-* Use standard table formats
-
-* Use standard formats within cells
-
-* Use good null values
-
-* Make it easy to combine your data with other datasets
-
-
 
 ## Why clean data matters
 
@@ -320,4 +303,5 @@ Somehow and somewhere, the word "feature" has come to replace "variable" in the 
 Similarly, "dimensionality reduction" means "selecting the variables to include in your analysis (or model)".
 
 [@R-bcEpiRate]
+
 

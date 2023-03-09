@@ -34,7 +34,7 @@ The **R** package {haven} [@R-haven] provides the functionality to read these th
 `library(haven)`
 
 
-For these examples, we will work with SPSS formatted files; the approach is similar for the other two formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension. For example, a Stata data file has the extension ".dta", so the read function is `read_dta()`:
+For these examples, we will work with SPSS formatted files; the approach is similar for the other two formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension; a Stata data file has the extension ".dta", so the read function is `read_dta()`:
 
 
 ```{r}
@@ -61,7 +61,7 @@ penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
 penguins_sav
 ```
 
-You will notice that the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables, including those that were character strings, are numeric. For example the variable "species", instead of being a character, is a column of "1"s, "2"s, and "3"s.
+You will notice that the values of the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables, including those that were character strings, are numeric. For example the variable "species", instead of being the names of the species, the values are a column of "1"s, "2"s, and "3"s.
 
 
 ### {labelled} -
@@ -129,10 +129,6 @@ penguins_sav %>%
   group_by(species) %>% 
   tally()
 
-palmerpenguins::penguins %>% 
-  group_by(species) %>% 
-  tally()
-
 ```
 
 In this version, the "species" variable retains the numeric values.
@@ -169,7 +165,7 @@ penguins_sav %>%
 
 
 
-### Reading an SPSS\index{SPSS} file: "Video"
+### Reading an SPSS\index{SPSS} survey file: "Video"
 
 The functionality of a labelled dataframe is very beneficial when working with survey data. The dataframe can contain the variable codes as captured in the form, the values associated with those values, as well as the text of the question in the label.
 

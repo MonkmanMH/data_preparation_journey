@@ -57,13 +57,13 @@ Before we can turn these definitions into something we can put into our model, w
 
 Let's consider an example. A company wants to understand its workforce because there's a sense that a large number of the staff are thinking about retirement in the next couple of years. The term used by the human resource (HR) department is "succession planning", meaning developing existing staff and recruiting to prepare for departures. Before making the business decision to allocate any resources to this initiative, the company's executive has asked the HR department to describe the magnitude of the risk to the organization: What percent of the staff are about to retire? In what departments? What positions do these potential retirees occupy? Now the HR department has asked you, the data scientist, for an analysis of the demographics of the company. 
 
-We know that _age_ is going to be a _theoretical construct_ we want to measure. When it comes to retirement, that is constrained to older workers, but we will have to be more precise in our definitions that simply "older". In Canada you can start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older (those who could collect their national pension now), and a second group who are between 55 and 59 (those who are within five years of their earliest pension).
+We know that _age_ is going to be a _theoretical construct_ we want to measure. When it comes to retirement, that is constrained to older workers, but we will have to be more precise in our definitions that simply "older". In Canada you can choose to start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older (those who could collect their national pension now), and a second group who are between 55 and 59 (those who are within five years of their earliest pension).
 
 A _measure_ we have available is in the human resource database: each staff member's date of birth. This is collected when people are hired, and is required for various purposes, including tax accounting.
 
-But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation, using the functions in the package {lubridate}, that looks like this:
+But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation. Using the functions in the package {lubridate} [@R-lubridate], that looks like this:
 
-`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of Ichiro Suzuki.] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package [@R-lubridate]; see [@Ford_lubridate_2017].]
+`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of Ichiro Suzuki.] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package; see [@Ford_lubridate_2017].]
 
 
 And our _variable_ results from this calculation: in the code example we called it `age_this_year`. Note that this variable will require recalculation every time we repeat our analysis—one's age is not a static value! In a company with roughly 2,500 staff, there's 50-50 chance it is someone's birthday today, and with 4,000 staff it is virtually certain at least one person is celebrating a birthday. [@Yau_birthday_2017] And of course, staff join and leave an organization, so the individuals in our database will change. This means that the variable we calculate will be precisely correct for only a few days at most.
@@ -82,15 +82,20 @@ Of course, these classification systems are subject-matter specific.
 
 As one example, in much social and business data, people's ages are often grouped into 5-year "bins", starting with ages 0–4, 5–9, 10–14, and so on. But not all age classification systems follow this; it will be driven by the specific context. The demographics of a workforce will not require a "0–4" category, while an analysis of school-age children might group them by the ages they attend junior, middle, and secondary school. As a consequence, many demographic tables will provide different data sets with the ages grouped in a variety of ways. (For an example, see [@StatCan_age_of_person].)
 
-And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the larger city expanding to add smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
+And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
 
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. Here are some examples:
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. 
+
+The North American Industry Classification System (NAICS) is one such classification system, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS] The system is used to classify businesses into a specific industry based on their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. 
+
+Here are some other resources with further examples:
 
 * International: United Nations Statistics Division [@UNSD_classifications]
 
 * Statistics Canada [@StatCan_definitions]
 
-Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
+
+Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
 
 
 <!-- 

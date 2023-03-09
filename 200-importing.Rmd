@@ -176,7 +176,7 @@ This chunk creates a string object that contains the path name, and then uses th
 
 * Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
-`read_csv()` is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [@Wickham_Grolemund2016 10 Tibbles])
+The `read_csv()` function is quite a bit faster with big data files, and has some handy flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [@Wickham_Grolemund2016 10 Tibbles])
 
 ```{r}
 # read the file and assign it to the object "penguins_data"
