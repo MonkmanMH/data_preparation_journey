@@ -68,6 +68,24 @@ See
 
 
 
+## Data quality
+
+One resource that is useful to frame your thinking on this is Statistics Canada's _Quality Guidelines_ [@StatCan_data_quality_6]. Like other official statistical agencies around the world, Statistics Canada's reputation is staked on making high quality data available to the widest possible audience.
+
+* Relevance: The degree to which the data meets the user's needs, and relates to the issues that the user cares about.
+
+* Timeliness and punctuality: The delay between the information reference period and the date when the data becomes available.
+
+* Accuracy and reliability: Accuracy "is the degree to which the information correctly describes the phenomena it was designed to measure."
+
+* Accessibility and clarity: "The ease with which users can learn that the information (including metadata) exists, find it, view it and import it into their own work environment."
+
+* Interpretability: "The availability of supplementary information and metadata needed to interpret and use statistical information appropriately."
+
+* Coherence and comparability: "The degree to which it can be reliably combined and compared with other statistical information within a broad analytical framework over time."
+
+
+
 
 ### Data quality literature
 
@@ -103,6 +121,7 @@ There is quite a lot of literature on how to define data quality. The concepts i
   
   - Accurate
   
+
 
 "Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
 

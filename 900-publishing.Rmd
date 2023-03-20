@@ -11,20 +11,82 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 
 
-```{r setup_ch900, include=FALSE}
+```{r setup_ch900, include=FALSE, eval=TRUE}
 
-# packages
+source("package_load.R")
 
 ```
 
 
 # Making data available {#publishing}
 
-placeholder for chapter 9
 
-
-* Sampling techniques
+In this chapter:
 
 * Maintaining anonymity and confidentiality in published data sets
+
+* Statistical disclosure control (SDC) methods
+
+## Confidentiality and Anonymity
+
+\index{anonymity}
+\index{confidentiality}
+\index{statistical disclosure control (SDC)}
+\index{statistical disclosure limitation (SDL)|see{statistical disclosure control (SDC)}}
+
+The confidentiality of many data that are ripe for analysis are covered under some form of legal, ethical, and moral constraints. How do we as researchers ensure that the data we work with—whether it's in aggregated form or released as a micro (individual) record that is stripped of personal identifiers such as name—remains anonymous, thereby ensuring that any personal information remains private?
+
+Many of the practical applications of statistical disclosure control\index{statistical disclosure control (SDC)} can be traced back to the work of various statistical agencies around the world, who are confronted with the challenge of balancing increased expectations for openness and transparency (which translates into an increasing demand for the release of data) with "an increasing public consciousness about the privacy of individuals" ([@Bethlehem_2009], p.342). 
+
+> Statistical Disclosure Control (SDC) or Statistical Disclosure
+Limitation (SDL)\index{statistical disclosure limitation (SDL)|see{statistical disclosure control (SDC)}} seeks to protect statistical data in such a way that they can be
+released without giving away confidential information that can be linked to specific
+individuals or entities. ([@Hundepool_etal_2012], p.1)
+
+Because statistical agencies have this role and take the responsibility very seriously (their reputations rest heavily on the willingness of individuals, businesses, and other public agencies to provide data to them) means much of the material on the topic comes directly or indirectly from those agencies (see, for example, the Australian National Statistical Service and Statistics Canada publications discussed below).
+
+A related topic is data masking, "the process of hiding original data with random characters or data." 
+
+> The main reason for applying masking to a data field is to protect data that is classified as personal identifiable data, personal sensitive data or commercially sensitive data, however the data must remain usable for the purposes of undertaking valid test cycles. It must also look real and appear consistent.
+[@wiki:data_masking]
+
+
+
+### Sidebar: The Mosaic Effect
+
+Often bandied about is the term "the mosaic effect". A good definition comes from Vivek Kundra, who at the time was the U.S. Government's Chief Information Officer:
+
+> Individual pieces of data when released independently may not reveal sensitive information but when combined, this “mosaic effect” could be used to derive personal information or information vital to national security. [@Kundra_2010]
+
+
+Aggregation, masking, and other SDC methods should reduce (if not entirely eliminate) a "mosaic effect". 
+
+
+
+## Statistical Disclosure Control (SCD) methods
+
+\index{statistical disclosure control (SDC)}
+
+
+
+## Further reading
+
+
+
+Gregory J. Matthews, Pétala Gardênia da Silva Estrela Tuy, and Robert K. Arthur, 
+"An examination of statistical disclosure issues related to publication of aggregate statistics in the presence of a known subset of the dataset using Baseball Hall of Fame ballots" [@Matthews_etal_2017]
+
+
+Li, Xiao-Bai and Qin, Jialun, "Anonymizing and Sharing Medical Text Records" [@Li_Qin_2017]
+
+
+Khaled El Emam and Luk Arbuckle, _Anonymizing Health Data_ [@ElEmam_Arbuckle_2013] -- a variety of case studies
+
+
+
+Latanya Sweeney, "Information Explosion" in _Confidentiality, Disclosure, and Data Access: Theory and Practical Applications for Statistical Agencies_ [@Sweeney_2001]
+
+Latanya Sweeney, Michael von Loewenfeldt, and Melissa Perry, "Saying it’s Anonymous Doesn't Make It So: Re-identifications of “anonymized” law school data" in _Journal of Technology Science_ [@Sweeney_etal_2018]
+
 
 
