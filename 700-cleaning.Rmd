@@ -326,6 +326,12 @@ pc1_tbl %>%
 
 
 
+#### Labour Force Survey: remove NAICS code
+
+https://regex101.com/r/jOP4fq/1
+
+
+
 #### NOC: split code from title
 
 This example is drawn from a real-life case, where the NOC (National Occupation Classification) code is in the same column as the code's title.
