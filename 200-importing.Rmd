@@ -148,7 +148,7 @@ penguins_data <- read.csv(penguins_path)
 ```
 
 
-```{r, echo=FALSE, eval=FALSE}
+```{r penguins_csv, echo=FALSE, eval=FALSE}
 # alternative approach with {dpjr} package
 library(dpjr)
 penguins_path <- dpjr_data("penguins.csv")

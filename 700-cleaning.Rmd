@@ -353,7 +353,7 @@ This table has four variables in three columns, each of which has at least one d
 
 This variable combines two values: the three-digit NOC code, and the title of the occupation.
 
-We will use the {tidyr} function `separate()` to separate it into two variables. 
+We will use the {tidyr} function `separate()` to split it into two variables. 
 
 * https://tidyr.tidyverse.org/reference/separate.html
 
@@ -475,7 +475,7 @@ Examples of this approach abound. It can be a useful approach in forecasting met
 It is also a common approach in social data analysis, where categorical variables are used to code information. In the section on "Discrimination and collider bias" in [@Cunningham_mixtape, pp.106–110], the data are represented in the following way ^[Note: the data in this table is different from what appears in _Causal Inference: The Mixtape_, since the values in the data in that source are randomly generated.]:
 
 ```{r ch700_mixtape_data, echo=FALSE}
-set.seed(111) # The opus number of Beethoven's last piano sonata, a work of transcendent beauty
+set.seed(1066) # The rural framework was complete
 
 
 # code directly from _Causal Mixtape_ https://mixtape.scunning.com/dag.html?panelset=r-code
@@ -493,7 +493,7 @@ head(tb)
 
 In this data, the variable `female` is coded as numeric, so it can be used as part of the regression modeling. 
 
-More commonly, though, this variable is more likely to be captured and saved in one called "gender" or "sex", and often as a character string. The source data table that was used to save the data in the above table might have originally looked like this:
+More commonly, though, this variable will have been captured and saved in one called "gender" or "sex", and often as a character string. The source data for the above table might have originally looked like this:
 
 ```{r}
 
@@ -527,12 +527,12 @@ tb2 %>%
 
 The variable `gender` has now been mutated into two additional variables, `gender_female` and `gender_male`. The names of the new variables are a concatenation of the original variable name and value, separated by an underscore.
 
-Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. The opposite is true of `gender_male`.
+Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value 1.
 
 
-Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the opposite of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result, since the value "female" appears in the first observation (row).
+Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetic order ("female" coming before "male"), and the first is dropped.
 
-{Note to self: this is not entirely clear, esp. the reference in the last sentence to the first observation.}
+{Note to self: can this be controlled? To match the original dataframe we might want the `gender_female` variable to be the one that persists...}
 
 ```{r}
 
@@ -582,7 +582,7 @@ tb3 %>%
 ```
 
 
-There is also an option in `fastDummies::dummy_cols()` to `remove_most_frequent_dummy = TRUE`. In our discrimination data, there are more observations coded as "male", so the variable `gender_male` is not included.
+There is also an option in `fastDummies::dummy_cols()` to `remove_most_frequent_dummy = TRUE`. In our discrimination data, there are more observations coded as "female", so the variable `gender_female` is not included.
 
 
 ```{r}
@@ -620,7 +620,7 @@ library(palmerpenguins)
 set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
 
 penguin_subset <- penguins %>% 
-  slice_sample(n = 5) %>% 
+  slice_sample(n = 6) %>% 
   dplyr::select(species, island) %>% 
   arrange(species)
 
@@ -641,11 +641,15 @@ And because there are three species of penguins and three islands, we have three
 
 In the instance where we have multiple character or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
 
+In addition, rather than dropping the first created variable, we can specify that the most frequently occurring value be removed with the argument `remove_most_frequent_dummy = TRUE`. Because there are more Gentoo penguins in our sample of the data, the indicator variable `species_Gentoo` is not created.
+
 ```{r 700_penguin_dummy}
 
 
 penguin_subset %>% 
-  fastDummies::dummy_cols(select_columns = "species")
+  fastDummies::dummy_cols(
+    select_columns = "species",
+    remove_most_frequent_dummy = TRUE)
 
 
 ```
