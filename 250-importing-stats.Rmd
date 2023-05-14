@@ -444,7 +444,7 @@ In the previous chapter, we imported data files that had been created using the 
 
 In our quest for data to analyze, we might come across a circumstance where an organization has collected survey data, and the data collectors have published the individual records, allowing researchers like you and me to further explore the data.
 
-These data files contain individual records, rather than a data file that has been summarized with counts and percentages. A file with the individual records is sometimes referred to as a "micro-file", and one that has been anonymized for publication might be described as a Public-Use Micro File\index{Public-Use Micro File} (abbreviated as "PUMF"\index{PUMF|see {Public-Use Micro File}}).
+These data files contain individual records, rather than a data file that has been summarized with counts and percentages. A file with the individual records is sometimes referred to as a "micro-file", and one that has been anonymized for publication might be described as a Public-Use Micro File\index{Public-Use Micro File} (abbreviated as "PUMF"\index{PUMF|see {Public-Use Micro File}}) or Public Use Microdata Sample (PUMS)\\index{PUMS|see {Public-Use Micro File}}.
 
 In this chapter, we will look at two circumstances where the data collectors have done just that. But rather than releasing the micro-data in a variety of formats, they have published a bundle that contains the raw text flat file along with syntax (code) files that apply variable names, variable labels, and value labels. This is great if we have a license for one of those proprietary software tools^[Or a friend we can bribe with the promise of a chocolate bar.], but what if we are an R user?
 
