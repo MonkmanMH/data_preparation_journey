@@ -39,6 +39,56 @@ In this chapter:
 
 ## Cleaning dates
 
+A recurring challenge in many data analysis projects is to deal with date and time fields. One of the first steps of any data cleaning project should be to ensure that these are in a consistent format that can be easily manipulated.
+
+As we saw in [@Broman_Woo_2017], there is an international standard (ISO 8601)\index{ISO 8601} for an unambiguous and principled way to write dates and times (and in combination, date-times). For dates, we write **YYYY-MM-DD**. Similarly, time is written **T[hh][mm][ss]** or **T[hh]:[mm]:[ss]**, with hours (on a 24-hour clock) followed by minutes and seconds.
+
+The benefits of this format are many, not the least of which is that there are R tools built for us to make our work straight-forward. We will work with {lubridate}, part of the tidyverse.
+
+
+### Building a date-time field
+
+The first way that dates might be represented in your data is as three separate fields, one for year, one for month, and one for day. These can be assembled into a single <date> variable using the `make_date()`, or a single <datetime> variable using `make_datetime()`.
+
+In the {nycflights13} table, the date and time variables are stored as separate variables. They can be combined using these two functions:
+
+```{r}
+flights %>% 
+  select(year, month, day, hour, minute) %>% 
+  # create date-time variable
+   mutate(depart = make_datetime(year, month, day, hour, minute)) %>% 
+  # create date variable
+  mutate(depart_day= make_date(year, month, day))
+```
+
+
+The second problematic way dates are stored are in a variety of often-ambibuous sequences. This might included text strings for the month (for example "Jan", "January", or "Janvier" rather than "01"), two-digit years (does "12" refer to 2012 or 1912?), and ambiguous ordering of months and days (does "12" refer to December or the twelfth day of the month?)
+
+If we know the way the data is stored, we can use {lubridate} functions to process the data into YYYY-MM-DD.
+
+```{r}
+ymd("2017-01-31")
+mdy("January 31st, 2017")
+dmy("31-Jan-2017")
+```
+
+
+A third manner in which dates can be stored is with a truncated representation. For example, to total sales for the entire month might be recorded as a single value associated with "Jan 2017" or "2017-01".
+
+```{r}
+
+ym("2017-01")
+my("Jan 2017")
+
+```
+
+If we have a variable with annual data, we have to use the parameter `truncated =` to convert our year into a date format:
+
+```{r}
+ymd("2017", truncated = 2)
+```
+
+
 
 ## Cleaning strings
 
