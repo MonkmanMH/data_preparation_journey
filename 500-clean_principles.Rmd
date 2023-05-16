@@ -55,12 +55,15 @@ What are common dirty data problems? In some cases, the problems are with how th
 
 * Value in wrong field (e.g. country entered into `city` field).
 
-* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency).
+* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency)
+
+* Inconsistency in how values are recorded (all-too common is finding that dates are stored as both "2017-07-01" and "July 1, 2017").
 
 * Default values in the place of missing values.
 
 * Contradiction, where two fields or databases have the same variable for the same observation but each has a different value.
 
+* Logical inconsistency between variables (for example, union dues deducted from a non-union staff member)
 
 See 
 
