@@ -125,9 +125,43 @@ get_cansim_table_overview("24-10-0006-01")
 
 ## R packages for direct access to data
 
+{onsr}: package downloads data from the UK's Office of National Statistics [@R-osnr]
+
+```{r api_onsr, eval=FALSE}
+library(onsr)
+```
+
+For this, we would like the quarterly labour market statistics 
+
+```{r}
+datasets <- ons_datasets()
+
+datasets
+```
+
+
+```{r}
+ons_browse_qmi(id = "labour-market")
+```
+
+
+```{r}
+# lfs - quarterly but Dec-Feb etc
+#df <- ons_get(id = "labour-market")
+
+# shipping - calendar year
+#df <- ons_get(id = "faster-indicators-shipping-data")
+
+# well-being -- quarterly
+df <- ons_get(id = "wellbeing-quarterly")
+```
+
+
 The {readabs} package downloads and tidies data from the Australian Bureau of Statistics [@R-readabs]
 
 {RBNZ} downloads data from the Reserve Bank of New Zealand Website [@R-RBNZ]
+
+
 
 
 ## R packages to set up API connections
