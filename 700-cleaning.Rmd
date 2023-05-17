@@ -56,7 +56,7 @@ In the {nycflights13} table, the date and time variables are stored as separate 
 (Straight from _R for Data Science_; find a different example!)
 
 ```{r}
-flights %>% 
+nycflights13::flights %>% 
   select(year, month, day, hour, minute) %>% 
   # create date-time variable
    mutate(depart = make_datetime(year, month, day, hour, minute)) %>% 
