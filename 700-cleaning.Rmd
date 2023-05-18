@@ -43,7 +43,7 @@ A recurring challenge in many data analysis projects is to deal with date and ti
 
 As we saw in [@Broman_Woo_2017], there is an international standard (ISO 8601)\index{ISO 8601} for an unambiguous and principled way to write dates and times (and in combination, date-times). For dates, we write **YYYY-MM-DD**. Similarly, time is written **T[hh][mm][ss]** or **T[hh]:[mm]:[ss]**, with hours (on a 24-hour clock) followed by minutes and seconds.
 
-When we are working with dates, the objective of our cleaning is to transform the date into the ISO 8601 standard. The benefits of this format are many, not the least of which is that there are R tools built for us to make analysis of this structure straight-forward, and those same tools allow us to tackle that cleaning. 
+When we are working with dates, the objective of our cleaning is to transform the date into the ISO 8601 standard. The benefits of this format are many, not the least of which is that there are R tools built for us to streamline analysis and visualization using this structure, and those same tools allow us to tackle any cleaning. 
 
 We will work with {lubridate}, part of the tidyverse.
 
