@@ -51,28 +51,26 @@ We will work with {lubridate}, part of the tidyverse.
 
 The first way that dates might be represented in your data is as three separate fields, one for year, one for month, and one for day. These can be assembled into a single <date> variable using the `make_date()`, or a single <datetime> variable using `make_datetime()`.
 
-In the {nycflights13} table, the date and time variables are stored as separate variables. They can be combined using these two functions:
-
-(Straight from _R for Data Science_; find a different example!)
+In the {Lahman}[@R-Lahman] table "People", each player's birthdate is stored as three separate variables. They can be combined into a single variable using `make_date()`:
 
 ```{r}
-nycflights13::flights %>% 
-  select(year, month, day, hour, minute) %>% 
+Lahman::People %>% 
+  slice_head(n = 10) %>% 
+  select(playerID, birthYear, birthMonth, birthMonth, birthDay) %>% 
   # create date-time variable
-   mutate(depart = make_datetime(year, month, day, hour, minute)) %>% 
-  # create date variable
-  mutate(depart_day= make_date(year, month, day))
+   mutate(birthDate = make_datetime(birthYear, birthMonth, birthDay)) 
+
 ```
 
 
-The second problematic way dates are stored are in a variety of often-ambibuous sequences. This might included text strings for the month (for example "Jan", "January", or "Janvier" rather than "01"), two-digit years (does "12" refer to 2012 or 1912?), and ambiguous ordering of months and days (does "12" refer to December or the twelfth day of the month?)
+The second problematic way dates are stored is in a variety of often-ambiguous sequences. This might included text strings for the month (for example "Jan", "January", or "Janvier" rather than "01"), two-digit years (does "12" refer to 2012 or 1912?), and ambiguous ordering of months and days (does "12" refer to December or the twelfth day of the month?)
 
 If we know the way the data is stored, we can use {lubridate} functions to process the data into YYYY-MM-DD. These three very different date formats can be transformed into a consistent format:
 
 ```{r}
-ymd("2017-01-31")
-mdy("January 31st, 2017")
-dmy("31-Jan-2017")
+ymd("1973-10-22")
+mdy("October 22nd, 1973")
+dmy("22-Oct-1973")
 ```
 
 
@@ -80,18 +78,18 @@ A third manner in which dates can be stored is with a truncated representation. 
 
 ```{r}
 # month
-ym("2017-01")
-my("Jan 2017")
+ym("1973-10")
+my("Oct 1973")
 
 # quarter
-yq("2017-Q1")
+yq("1973-Q1")
 
 ```
 
 If we have a variable with annual data, we have to use the parameter `truncated =` to convert our year into a date format:
 
 ```{r}
-ymd("2017", truncated = 2)
+ymd("1973", truncated = 2)
 ```
 
 
