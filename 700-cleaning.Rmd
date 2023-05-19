@@ -2,6 +2,7 @@
 output:
   pdf_document: default
   html_document: default
+#  word_document: default
 ---
 
 
@@ -232,17 +233,26 @@ postalcode <- "(?i)^[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d$(?-i)"
 # list of postal codes
 pc1 <- c("V1A2B3", "V1A 2B3", "v1a-2b3", "V1A 2B33")
 
-str_detect(pc1, postalcode)
+```
 
+> "If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations." —Wickham and Grolemund, _R for Data Science_ [@Wickham_Grolemund2016, p.209]
+
+
+
+One of the {stringr} functions is `str_detect()`, tests for the presence of a pattern, and returns a logical value (true or false). Here, we test the list of four postal codes using the `postalcode` object that contains the regular expression for Canadian postal codes.
+
+```{r str_detect_postalcode}
+
+str_detect(string = pc1, pattern = postalcode)
 
 ```
 
-Advice from the masters:
+As we see, the last character string—which contains an extra digit at the end—returns a "FALSE" value. 
 
-"If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations." —Wickham and Grolemund, _R for Data Science_, ["Detect matches"](https://r4ds.had.co.nz/strings.html#detect-matches)
+Armed with the power of regular expressions, we can use the functions within the {stringr} package to filter, select, and clean our data.
 
 
-### Useful {stringr} functions
+### Data cleaning with {stringr} 
 
 
 ```{r load_stringr, eval=FALSE}
