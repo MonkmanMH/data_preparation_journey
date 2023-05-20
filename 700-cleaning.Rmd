@@ -146,7 +146,8 @@ R provides some robust tools for working with characters strings. In particular,
 An excellent resource for learning the basics of regular expressions\index{regular expressions} is the vignette "Regular Expressions", hosted at the {stringr} package website^[["Regular Expressions", stringr.tidyverse.org](https://stringr.tidyverse.org/articles/regular-expressions.html)].
 
 
-Some useful regex matching functions:
+Here are some useful regex matching functions. Note that the square brackets enclose the regex to identify a single character. In the examples below, with three sets of square brackets, "[a][b][c]" contains three separate character positions, whereas "[abc]" is identifying a single character.
+
 
 | character | what it does |
 | ---- | ---- |
@@ -201,13 +202,15 @@ interrobang
 ### Example: Canadian postal codes
 
 Canadian postal codes follow a consistent pattern:
- - letter digit letter (space, or sometimes a hyphen) digit letter digit
+
+* letter digit letter, followed by a space or a hyphen, then digit letter digit
+
 
 The regex for this is shown below, with the component parts as follows:
 
 * ^ : start of string
 
-* [A-Za-z] : all the letters upper and lower case
+* [A-Za-z] : all the letters, both upper and lower case
 
 * \\d : any numerical digit
 
@@ -226,203 +229,197 @@ The regex for this is shown below, with the component parts as follows:
 
 postalcode <- "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$"
 
-# option: (?i) : make it case insensitive
-#         (?-i) : turn off insensitivity
-postalcode <- "(?i)^[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d$(?-i)"
-
-# list of postal codes
-pc1 <- c("V1A2B3", "V1A 2B3", "v1a-2b3", "V1A 2B33")
-
 ```
+
 
 > "If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations." —Wickham and Grolemund, _R for Data Science_ [@Wickham_Grolemund2016, p.209]
 
 
 
-One of the {stringr} functions is `str_detect()`, tests for the presence of a pattern, and returns a logical value (true or false). Here, we test the list of four postal codes using the `postalcode` object that contains the regular expression for Canadian postal codes.
+The regular expression for Canadian postal codes can be shortened, using the case sensitivity operator,  "(?i)". Putting this at the beginning of the expression applies it to all of the letter identifiers in the regex; it can be turned off with "(?-i)".
 
-```{r str_detect_postalcode}
+```{r}
 
-str_detect(string = pc1, pattern = postalcode)
+# option: (?i) : make it case insensitive
+#         (?-i) : turn off insensitivity
+postalcode <- "(?i)^[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d$(?-i)"
 
 ```
 
-As we see, the last character string—which contains an extra digit at the end—returns a "FALSE" value. 
+The postal code for Kimberley, British Columbia is "V1A 2B3". Here's a list with some variations of that code, which we will use to test our regular expression.
 
-Armed with the power of regular expressions, we can use the functions within the {stringr} package to filter, select, and clean our data.
+```{r postalcode_kimberley}
 
+# list of postal codes
+pc_kimberley <- c("V1A2B3", "V1A 2B3", "v1a 2B3xyz", "v1a-2b3")
+
+```
 
 ### Data cleaning with {stringr} 
+
+
+Armed with the power of regular expressions, we can use the functions within the {stringr} package to filter, select, and clean our data.
 
 
 ```{r load_stringr, eval=FALSE}
 library(stringr)
 ```
 
+As with many R packages, the reference page provides good explanations of the functions in the package, as well as vignettes that give working examples of those functions. The reference page for {stringr} is [stringr.tidyverse.org](https://stringr.tidyverse.org/).
 
-See 
 
-* reference page: [stringr.tidyverse.org](https://stringr.tidyverse.org/)
 
-* cheat sheet: at RStudio "Cheatsheets" page https://rstudio.com/resources/cheatsheets/ 
+Let's look at some of the functions within {stringr} that are particularly suited to cleaning tasks.
+
+
 
 #### string characteristics
 
 | function | purpose |
 | ---- | ---- |
-| `str_length()` | numeric; returns the length of the string |
-| `str_detect()` | logical; returns TRUE if pattern found |
-| `str_sub()` | character; returns the defined subset using start and end positions |
 | `str_subset()` | character; returns the cases which contain a match |
 | `str_which()` | numeric; returns the vector location of matches |
-| `str_count()` | numeric; returns the number of times the pattern appears in the string |
+| `str_detect()` | logical; returns TRUE if pattern found |
 
+
+
+The {stringr} functions `str_subset()` and `str_which()` return the strings that have the pattern, either in whole or by location.
 
 ```{r}
-
-fruit <- c("apple", "banana", "pear", "pineapple")
-
-str_length(fruit)       # how many characters is the string?
-str_detect(fruit, "e")  # does the string have the pattern ("e")?
-str_sub(fruit, 1, 2)    # starting at the first position (1), end at second position (2)
-
+str_subset(pc_kimberley, postalcode)  # which strings have the pattern?
+str_which(pc_kimberley, postalcode)   # which strings have the pattern ("e"), by location?
 
 ```
 
-```{r}
-str_subset(fruit, "e")  # which strings have the pattern ("e")?
-str_which(fruit, "e")   # which strings have the pattern ("e"), by location?
+Another of the {stringr} functions is `str_detect()`, tests for the presence of a pattern, and returns a logical value (true or false). Here, we test the list of four postal codes using the `postalcode` object that contains the regular expression for Canadian postal codes.
+
+```{r str_detect_postalcode}
+
+str_detect(string = pc_kimberley, pattern = postalcode)
 
 ```
 
+As we see, the last example postal code—which contains an extra digit at the end—returns a "FALSE" value. It might contain something that looks like a postal code in the first 7 spaces, but because it has the extra letter, it is not a postal code. To find a string that matches the postal code in any part of a string, we have to change our regex to remove the start "^" and end "$" specifications:
+
+
 ```{r}
-str_count(fruit, "e")     # how many times does the letter "e" appear in the string?
-str_count(fruit, "[aeiou]") # how many times does a vowel (a, e, i, o, or u) appear in the string?
+# remove start and end specifications
+postalcode <- "(?i)[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d(?-i)"
+
+
+str_detect(string = pc_kimberley, pattern = postalcode)
+
 ```
 
-#### matching, replacing, spliting
+All of the strings have something that matches the structure of a Canadian postal code. How can we extract the parts that match?
+
+If we rerun the `str_subset()` and `str_which()` functions, we see that all four of the strings are now returned.
+
+
+```{r}
+str_subset(pc_kimberley, postalcode)  # which strings have the pattern?
+str_which(pc_kimberley, postalcode)   # which strings have the pattern ("e"), by location?
+
+```
+
+With those two functions, we can identify which strings have the characters that we're looking for. To retrieve a particular string, we can use `str_extract()`:
+
+```{r}
+
+pc_kimberley_all <- str_extract(pc_kimberley, postalcode)
+pc_kimberley_all
+```
+
+
+
+#### replacing and spliting functions
 
 | function | purpose |
 | ---- | ---- |
-| `str_locate()` | numeric; gives the position of the first match |
-| `str_extract()` | extracts the text of the match
 | `str_match()` | extracts the text of the match and parts of the match within parenthesis |
 | `str_replace()` and `str_replace_all()` | replaces the matches with new text |
 | `str_split()` | splits up a string at the pattern |
 
 
+How can we clean up this list so that our postal codes are in a consistent format?
+
+Our goal will be a string of six characters, with upper-case letters and neither a space nor a hyphen. 
+
+| function | purpose |
+| ---- | ---- |
+| `str_match()` | extracts the text of the match and parts of the match within parenthesis |
+| `str_replace()` and `str_replace_all()` | replaces the matches with new text |
+| `str_split()` | splits up a string at the pattern |
+
+
+The first step will be to remove the space or hyphen.
+
+Here are two separate lines to achieve this, one for a space, and one for a hyphen, that uses the `gsub()` function in {base} R.  
+
 
 ```{r}
 
-str_locate(fruit, "e") # where is the first e" in the string?
-str_locate(fruit, "[aeiou]") # where is the first vowel in the string?
+gsub(pattern = " ", replacement = "", x = pc_kimberley_all)
+gsub(pattern = "-", replacement = "", x = pc_kimberley_all)
 
-vowel_ex <- str_extract(fruit, "[aeiou]")  # which is the first vowel?
+```
 
-vowel_ma <- str_match(fruit, "(.)[aeiou]") # what is the first letter that comes before a vowel?
+Those two steps can be combined by using a single regular expression which replaces either a space or a hyphen:
 
-fruit_t <- as.tibble(fruit)
+```{r}
 
-fruit_t %>% 
-  mutate(first_v = str_match(value, "[aeiou]"))
+pc_kimberley_clean <- gsub("[ -]", "", pc_kimberley_all)
+pc_kimberley_clean
+
+
+```
+
+There are functions within {stringr} that have the same result, `stringr::str_replace()` and `stringr::str_remove()`.
+
+
+```{r}
+
+str_replace(string = pc_kimberley_all, pattern = "[ -]", replacement = "")
+
+str_remove(string = pc_kimberley_all, pattern = "[ -]")
 
 ```
 
 
-What's the difference between `str_replace()` and `str_replace_all()`?
+The second step will be to capitalize the letters. The {stringr} function for this is `str_to_upper`. (There is also parallel `str_to_lower`, `str_to_title`, and `str_to_sentence` functions.)
 
 ```{r}
-str_replace(fruit, "e", "E")
-str_replace_all(fruit, "e", "E")
+pc_kimberley_clean <- str_to_upper(pc_kimberley_clean)
+pc_kimberley_clean
 ```
 
 
+If this was in a data frame, these functions can be added to a `mutate()`.
+
 ```{r}
-str_split(fruit, "e")
+
+# convert string to tibble
+pc_kimberley_tbl <- as_tibble(pc_kimberley)
+
+# mutate new values--note that creating three separate variables is to allow for comparisons as the values change from one step to the next
+pc_kimberley_tbl %>%
+  mutate(pc_extract = str_extract(value, postalcode)) %>% 
+  mutate(pc_remove = str_remove(pc_extract, "[ -]")) %>%   # remove space or hyphen
+  mutate(pc_upper = str_to_upper(pc_remove))           # change to upper case
+  
+
 ```
 
 
-Below, we split an address based on comma location.
+
+### split and combine strings
+
+Below, we split an address based on comma and space location, using the `str_split()` function.
 
 ```{r}
 UVic_address <- "Continuing Studies, Continuing Studies Building, 3800 Finnerty Rd, Victoria, BC, V8P 5C2"
   
 str_split(UVic_address, ", ")
-```
-
-#### convert case
-
-{stringr} has functions to change the case of the string. See [{stringr}: Convert case of a string](https://stringr.tidyverse.org/reference/case.html)
-
-
-### Examples
-
-#### Postal code: consistent layout
-
-
-How can we clean up this list so that our postal codes are in a consistent format?
-
-```{r}
-# list of postal codes
-pc1 <- c("V1A2B3", "V1A 2B3", "v1a-2b3")
-```
-
-One solution:
-
-step 1. remove space or hyphen
-
-* `gsub()` is a function in {base} R
-
-```{r}
-
-gsub(pattern = " ", replacement = "", x = pc1)
-gsub(pattern = "-", replacement = "", x = pc1)
-
-# combine the two in single regex
-pc_clean <- gsub("[ -]", "", pc1)
-pc_clean
-
-
-```
-
-* alternative, using `stringr::str_replace()`  https://stringr.tidyverse.org/reference/str_replace.html
-
-* or (preferable) `stringr::str_remove()` https://stringr.tidyverse.org/reference/str_remove.html
-
-
-```{r}
-
-str_replace(string = pc1, pattern = "-", replacement = "")
-
-str_remove(string = pc1, pattern = "-")
-
-# a regex that removes either space or hyphen
-str_remove(string = pc1, pattern = "[ -]")
-
-```
-
-
-
-
-step 2. all caps
-
-```{r}
-pc_clean <- str_to_upper(pc_clean)
-pc_clean
-```
-
-If this was in a data frame (or tibble), these functions can be added to a `mutate()`...
-
-```{r}
-# convert string to tibble
-pc1_tbl <- as_tibble(pc1)
-
-# mutate new values--note that creating three separate variables is to allow for comparisons as the values change from one step to the next
-pc1_tbl %>%
-  mutate(value_2 = str_remove(value, "[ -]")) %>%   # remove space or hyphen
-  mutate(value_3 = str_to_upper(value_2))           # change to upper case
-  
-
 ```
 
 
