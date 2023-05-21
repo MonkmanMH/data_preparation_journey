@@ -401,7 +401,7 @@ If this was in a data frame, these functions can be added to a `mutate()`.
 # convert string to tibble
 pc_kimberley_tbl <- as_tibble(pc_kimberley)
 
-# mutate new values--note that creating three separate variables is to allow for comparisons as the values change from one step to the next
+# mutate new values--note that creating three separate variables allows for comparisons as the values change from one step to the next
 pc_kimberley_tbl %>%
   mutate(pc_extract = str_extract(value, postalcode)) %>% 
   mutate(pc_remove = str_remove(pc_extract, "[ -]")) %>%   # remove space or hyphen
@@ -424,9 +424,137 @@ str_split(UVic_address, ", ")
 
 
 
-#### Labour Force Survey: remove NAICS code
+{stringr} contains three useful functions for combining strings. `str_c()` collapses multipe strings into a single string, separated by whatever we specify (the default is nothing, that is to say, `""`.)
 
-https://regex101.com/r/jOP4fq/1
+Below we will combine the components of an address into a single string, with the components separated by a comma and a space.
+
+```{r}
+
+UVic_address_components <- c("Continuing Studies", "Continuing Studies Building", "3800 Finnerty Rd", "Victoria", "BC", "V8P 5C2")
+
+str_c(UVic_address_components, collapse = ", ")
+
+```
+
+The `str_flatten_comma()` is a shortcut to the same result:
+
+```{r}
+str_flatten_comma(UVic_address_components)
+
+```
+
+Note that `str_flatten` has a path to the same destination, but we need to specify the separator:
+
+```{r}
+
+str_flatten(UVic_address_components, collapse = ", ")
+
+```
+
+These functions also have the argument `last =`, which allows us to specify the final separator:
+
+
+```{r}
+
+str_flatten(UVic_address_components, collapse = ", ", last = " ")
+
+```
+
+
+### Example: Bureau of Labor Statistics by NAICS code
+
+
+```{r}
+
+bls_employment <- read_csv("us_bls_employment_2010-2020.csv")
+
+```
+
+
+filter for hierarchy
+
+* https://www.bls.gov/iag/tgs/iag_index_naics.htm
+
+Mining, Quarrying, and Oil and Gas Extraction (NAICS 21)
+
+* Oil and Gas Extraction (NAICS 211)
+
+* Mining (except Oil and Gas) (NAICS 212)
+
+  - Coal Mining: NAICS 2121
+
+  - Metal Ore Mining: NAICS 2122
+  
+  - Nonmetallic Mineral Mining and Quarrying: NAICS 2123
+
+* Support Activities for Mining (NAICS 213)
+
+The "Series ID" variable string starts with "CEU", then the first 2 digits are the high-level "supersector", of which there are three: primary industries, goods-producing industries, and service-producing industries.
+
+Mining, Quarrying, and Oil and Gas Extraction (NAICS 21) is a sector within the goods-producing industries, with the NAICS code number 21. This is represented at digits 6 and 7 of the string.
+
+Mining (NAICS 212) is a subsector, comprised of three industries (at the four-digit level).
+
+
+The hierarchical structure of the data means that there is double-counting: the sum of coal, metal ore, and non-metalic mineral industry rows is reported as the employment in Mining (except Oil and Gas).
+
+
+
+```{r}
+
+# NAICS 212
+bls_employment %>% 
+  filter(str_detect(`Series ID`, "CEU1021"))
+
+```
+
+
+Task: 
+
+* extract the rows for Mining, Quarrying, and Oil and Gas Extraction (NAICS 21), but only at the 3 digit level.
+
+
+```{r}
+
+# NAICS 212
+bls_employment %>% 
+  # start with previous table
+  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+  # remove the ones that have a zero in the 5th spot from the end
+  filter(str_detect(`Series ID`, "00001$"))
+
+```
+
+That's not quite right--it includes the "21" sector aggregate.
+
+Let's add the digits 1 to 9 to the front of the second filter:
+
+```{r}
+
+# NAICS 212
+bls_employment %>% 
+  # start with previous table
+  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+  # remove the ones that have a zero in the 5th spot from the end
+  # - add any digit from 1-9
+  filter(str_detect(`Series ID`, "[1-9]00001$"))
+
+```
+
+A second option would be to use a negate zero, "[^0]". You'll notice that this uses the carat symbol, "^". Because it is inside the square brackets, it has the effect of negating the named values. This is different behaviour than when it's outside the square brackets and means "start of the string".
+
+```{r}
+
+# NAICS 212
+bls_employment %>% 
+  # start with previous table
+  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+  # remove the ones that have a zero in the 5th spot from the end
+  # - add any digit from 1-9
+  filter(str_detect(`Series ID`, "[^0]00001$"))
+
+```
+
 
 
 
