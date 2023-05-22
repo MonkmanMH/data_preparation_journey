@@ -497,13 +497,15 @@ The hierarchical structure of the dataframe means that if we simply summed the c
 
 Let's imagine our assignment is to produce a chart showing the employment in the three subsectors, represented at the three-digit level.
 
-First, let's look the rows associated with the sector, NAICS 21. 
+First, let's create a table with all the rows associated with the sector, NAICS 21. 
 
 ```{r}
 
-# NAICS 212
-bls_employment %>% 
+# create NAICS 21 table
+bls_employment_naics21 <- bls_employment %>% 
   filter(str_detect(`Series ID`, "CEU1021"))
+
+bls_employment_naics21
 
 ```
 
@@ -513,9 +515,7 @@ What if we selected only the values that have a zero in the ninth spot?
 
 ```{r}
 
-bls_employment %>% 
-  # start with previous table
-  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+bls_employment_naics21 %>% 
   # remove the ones that have a zero in the 5th spot from the end
   filter(str_detect(`Series ID`, "00001$"))
 
@@ -527,9 +527,7 @@ Let's filter out the rows that have a zero after the "21" using an exclamation m
 
 ```{r}
 # NAICS 212
-bls_employment %>% 
-  # start with previous table
-  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+bls_employment_naics21 %>% 
   # use the exclamation mark to filter those that don't match
   filter(!str_detect(`Series ID`, "CEU10210"))
 
@@ -537,16 +535,16 @@ bls_employment %>%
 
 That doesn't work, because it leaves in the four-digit industries, starting with 2121.
 
-The solution can be found by focussing on the characters that  Let's add the digits 1 to 9 to the front of the second filter:
+The solution can be found by focussing on the characters that differentiate the levels in the hierarchy. There is only a zero 
+
+Let's add the digits 1 to 9 to the front of the second filter:
 
 ```{r}
 
 # NAICS 212
-bls_employment %>% 
-  # start with previous table
-  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+bls_employment_naics21 %>% 
   # remove the ones that have a zero in the 5th spot from the end
-  # - add any digit from 1-9
+  # - add any digit from 1-9, leave the following digit as 0
   filter(str_detect(`Series ID`, "[1-9]00001$"))
 
 ```
@@ -556,9 +554,7 @@ A second option would be to use a negate zero, "[^0]". You'll notice that this u
 ```{r}
 
 # NAICS 212
-bls_employment %>% 
-  # start with previous table
-  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+bls_employment_naics21 %>% 
   # remove the ones that have a zero in the 6th spot from the end
   # - add any digit that is not a zero
   filter(str_detect(`Series ID`, "[^0]00001$"))
@@ -566,35 +562,50 @@ bls_employment %>%
 ```
 
 
-One final option, using `str_sub()` to specify the location, inside the `str_detect()` function.
+And here's one final option, using `str_sub()` to specify the location, inside the `str_detect()` function. 
+
+
+Let's look at the results of the `str_sub()` function in isolation before we move on. In this code, the function extracts all of the character strings from the 8th and 9th positions in the "Series ID" variable, resulting in strings that are two characters long.
+
+```{r}
+
+# extract the character strings in the 8th & 9th position
+str_sub(bls_employment_naics21$`Series ID`, start = 8, end = 9)
+
+```
+
+Starting on the inside of the parentheses, we have the `str_sub()` function to create those two-character strings. Next, the `str_detect()` with a regex that identifies those that have a digit other than zero in the first position, and a zero in the second. The table is then filtered for those rows where that was detected.
 
 
 ```{r}
 
 # NAICS 212
-bls_employment %>% 
-  # start with previous table
-  filter(str_detect(`Series ID`, "CEU1021")) %>% 
-  # remove the ones that have a zero in the 6th spot from the end
-  # - add any digit that is not a zero
-
-  # work
-#    filter(str_sub(`Series ID`, start = 1, end = 2) == "CE")
-#  filter(str_sub(`Series ID`, start = 8, end = 9) == "00")
-
-  # doesn't work
-  #  filter(str_sub(`Series ID`, start = 8, end = 9) == "[0][0]")
+bls_employment_naics21_3digit <- bls_employment_naics21 %>% 
+  # filter those that match the regex in the 8th & 9th position
   filter(str_detect(str_sub(`Series ID`, start = 8, end = 9), "[^0][0]"))
 
-#str_sub(bls_employment$`Series ID`, start = 8, end = 9)
-  
+bls_employment_naics21_3digit
+
 ```
 
-#### NOC: split code from title
 
-This example is drawn from a real-life case, where the NOC (National Occupation Classification) code is in the same column as the code's title.
+The final step in cleaning this table would be to put it into a tidy structure. Currently it violates the second principle of tidy data, that each observation forms a row. [@tidydata, p.4] In this case, each year should have its own row, rather than a separate column for each.
 
-It's occupations in B.C.'s accommodation industry^[Copied from go2HR report ["Accommodation Workforce Profile"](https://www.go2hr.ca/research/bc-tourism-and-hospitality-labour-market-information-workforce-profile#1657831995289-efea257d-563d)]
+We can use the {tidyr} [@R-tidyr] package's `pivot_longer()` function for this:
+
+```{r bls_final}
+
+bls_employment_naics21_3digit %>% 
+  pivot_longer(cols = contains("Annual"), names_to = "year", values_to = "employment")
+
+```
+
+
+### Example: NOC: split code from title
+
+This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code is in the same column as the code's title.
+
+The table we will use are occupations in British Columbia's accommodation industry.
 
 
 ```{r read_noc, include=FALSE}
@@ -611,29 +622,31 @@ This table has four variables in three columns, each of which has at least one d
 
 This variable combines two values: the three-digit NOC code, and the title of the occupation.
 
-We will use the {tidyr} function `separate()` to split it into two variables. 
+We will use the {tidyr} function `separate_wider_delim()` to split it into two variables. The function gives us the arguments to name the new columns that result from the separation, and the character string that will be used to identify the separation point, in this case ": ". **Don't forget the space!**
 
-* https://tidyr.tidyverse.org/reference/separate.html
+This function also has an argument `cols_remove =`. The default is set to `TRUE`, which removes the original column. Set to `FALSE` it retains the original column; we won't use that here but it can be useful.
+
+There are also `separate_wider_()` functions based on fixed-width positions and regular expressions. 
+
 
 ```{r}
 
 noc_table_clean <- noc_table %>% 
-  tidyr::separate(
-    col = noc_occupation_title, 
-    into = c("noc", "occupation_title"), 
-    sep = ": ")
+  tidyr::separate_wider_delim(
+    cols = noc_occupation_title, 
+    delim = ": ",
+    names = c("noc", "occupation_title") 
+    )
 
 noc_table_clean
 
 ```
 
-(See more complex version below)
-
 **`certification_training_requirements`**
 
-This variable has a weird square character at the beginning, and also a space between the weird character and the first letter. 
+This variable has a character that gets represented as a square at the beginning, and also a space between the square and the first letter. 
 
-Here we can use the {stringr} function `str_remove_all()`
+Here we can use the {stringr} function `str_remove_all()`. (Remember that the `str_remove()` function removes only the first instance of the character.)
 
 ```{r}
 
@@ -687,29 +700,6 @@ noc_table_clean <- noc_table_clean %>%
 noc_table_clean
 
 ```
-
-
-
-In the first column, there was a colon and a separating the NOC code and the title. What would we do if there was only a space? 
-
-The revised table explores that.
-
-```{r read_noc_table_2, include=FALSE}
-noc_table_2 <- read_rds(here("data", "noc_table_2.rds"))
-```
-
-
-There are multiple spaces in the string...what happens to the split if we change the code to `sep = " "`?
-
-```{r}
-noc_table_2 %>% 
-  tidyr::separate(
-    col = noc_occupation_title, 
-    into = c("noc", "occupation_title"), 
-    sep = " ")
-```
-
-The function keeps only the first two pieces...so a lot of valuable information that follows the second string (the first word of the title) is discarded.
 
 
 
