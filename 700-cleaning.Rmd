@@ -199,8 +199,6 @@ interrobang
 
 
 
-### Example: Canadian postal codes
-
 Canadian postal codes follow a consistent pattern:
 
 * letter digit letter, followed by a space or a hyphen, then digit letter digit
@@ -334,16 +332,12 @@ pc_kimberley_all
 
 #### replacing and spliting functions
 
-| function | purpose |
-| ---- | ---- |
-| `str_match()` | extracts the text of the match and parts of the match within parenthesis |
-| `str_replace()` and `str_replace_all()` | replaces the matches with new text |
-| `str_split()` | splits up a string at the pattern |
-
 
 How can we clean up this list so that our postal codes are in a consistent format?
 
 Our goal will be a string of six characters, with upper-case letters and neither a space nor a hyphen. 
+
+This table shows the functions we will use.
 
 | function | purpose |
 | ---- | ---- |
@@ -354,7 +348,7 @@ Our goal will be a string of six characters, with upper-case letters and neither
 
 The first step will be to remove the space or hyphen.
 
-Here are two separate lines to achieve this, one for a space, and one for a hyphen, that uses the `gsub()` function in {base} R.  
+The code below shows two separate lines to achieve this, one for replacing a space, and one for a hyphen, that uses the `gsub()` function in {base} R.  
 
 
 ```{r}
@@ -394,7 +388,7 @@ pc_kimberley_clean
 ```
 
 
-If this was in a data frame, these functions can be added to a `mutate()`.
+If this was in a data frame, these functions can be added to a `mutate()` function, and applied in a pipe sequence, as shown below.
 
 ```{r}
 
@@ -403,9 +397,9 @@ pc_kimberley_tbl <- as_tibble(pc_kimberley)
 
 # mutate new values--note that creating three separate variables allows for comparisons as the values change from one step to the next
 pc_kimberley_tbl %>%
-  mutate(pc_extract = str_extract(value, postalcode)) %>% 
+  mutate(pc_extract = str_extract(value, postalcode)) %>%  # extract the postal codes
   mutate(pc_remove = str_remove(pc_extract, "[ -]")) %>%   # remove space or hyphen
-  mutate(pc_upper = str_to_upper(pc_remove))           # change to upper case
+  mutate(pc_upper = str_to_upper(pc_remove))               # change to upper case
   
 
 ```
@@ -443,7 +437,7 @@ str_flatten_comma(UVic_address_components)
 
 ```
 
-Note that `str_flatten` has a path to the same destination, but we need to specify the separator:
+Note that `str_flatten` could also be used, but we need to explicitly specify the separator:
 
 ```{r}
 
@@ -463,42 +457,47 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 ### Example: Bureau of Labor Statistics by NAICS code
 
+In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020.
+
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS). This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+
+The NAICS system, and the file we are working with, is hierarchical; higher-level categories subdivide into subsets. Let's examine employment in Mining, Quarrying, and Oil and Gas Extraction sector. 
+
+This sector's coding is as follows:
+
+| Industry | NAICS code |
+| ---- | ---- |
+| Mining, Quarrying, and Oil and Gas Extraction | 21 |
+| * Oil and Gas Extraction | 211 |
+| * Mining (except Oil and Gas) | 212 |
+|   - Coal Mining | 2121 |
+|   - Metal Ore Mining | 2122 |
+|   - Nonmetallic Mineral Mining and Quarrying | 2123 |
+| Support Activities for Mining | 213 |
+
+
+Let's look at the data now:
+
 
 ```{r}
 
-bls_employment <- read_csv("us_bls_employment_2010-2020.csv")
+bls_employment <- read_csv("data/us_bls_employment_2010-2020.csv")
+head(bls_employment)
 
 ```
 
+There are three "supersectors" in the NAICS system: primary industries, goods-producing industries, and service-producing industries. The "Series ID" variable string starts with "CEU", then the digits in positions 4 and 5 represent the super-sector. The first row, supersector "00", is the aggregation of the entire workforce.
 
-filter for hierarchy
-
-* https://www.bls.gov/iag/tgs/iag_index_naics.htm
-
-Mining, Quarrying, and Oil and Gas Extraction (NAICS 21)
-
-* Oil and Gas Extraction (NAICS 211)
-
-* Mining (except Oil and Gas) (NAICS 212)
-
-  - Coal Mining: NAICS 2121
-
-  - Metal Ore Mining: NAICS 2122
-  
-  - Nonmetallic Mineral Mining and Quarrying: NAICS 2123
-
-* Support Activities for Mining (NAICS 213)
-
-The "Series ID" variable string starts with "CEU", then the first 2 digits are the high-level "supersector", of which there are three: primary industries, goods-producing industries, and service-producing industries.
-
-Mining, Quarrying, and Oil and Gas Extraction (NAICS 21) is a sector within the goods-producing industries, with the NAICS code number 21. This is represented at digits 6 and 7 of the string.
+Mining, Quarrying, and Oil and Gas Extraction is a sector within the goods-producing industries, with the NAICS code number 21. This is represented at digits 6 and 7 of the string. 
 
 Mining (NAICS 212) is a subsector, comprised of three industries (at the four-digit level).
 
+The hierarchical structure of the dataframe means that if we simply summed the column we would end up double-counting: the sum of coal, metal ore, and non-metalic mineral industry rows is reported as the employment in Mining (except Oil and Gas).
 
-The hierarchical structure of the data means that there is double-counting: the sum of coal, metal ore, and non-metalic mineral industry rows is reported as the employment in Mining (except Oil and Gas).
 
+Let's imagine our assignment is to produce a chart showing the employment in the three subsectors, represented at the three-digit level.
 
+First, let's look the rows associated with the sector, NAICS 21. 
 
 ```{r}
 
@@ -508,15 +507,12 @@ bls_employment %>%
 
 ```
 
+In the table above, we see the first row has the "Series ID" of CEU1021000001. That long string of zeros shows that this is the sector, NAICS 21. The employment total for each year is the aggregation of the subsectors 211, 212, and 213. As well, this table also shows the industries within 212, starting with  CEU1021210001 (NAICS 2121).
 
-Task: 
-
-* extract the rows for Mining, Quarrying, and Oil and Gas Extraction (NAICS 21), but only at the 3 digit level.
-
+What if we selected only the values that have a zero in the ninth spot?
 
 ```{r}
 
-# NAICS 212
 bls_employment %>% 
   # start with previous table
   filter(str_detect(`Series ID`, "CEU1021")) %>% 
@@ -525,9 +521,23 @@ bls_employment %>%
 
 ```
 
-That's not quite right--it includes the "21" sector aggregate.
+That's not quite right—it includes the "21" sector aggregate.
 
-Let's add the digits 1 to 9 to the front of the second filter:
+Let's filter out the rows that have a zero after the "21" using an exclamation mark at the beginning of our `str_detect()` function.
+
+```{r}
+# NAICS 212
+bls_employment %>% 
+  # start with previous table
+  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+  # use the exclamation mark to filter those that don't match
+  filter(!str_detect(`Series ID`, "CEU10210"))
+
+```
+
+That doesn't work, because it leaves in the four-digit industries, starting with 2121.
+
+The solution can be found by focussing on the characters that  Let's add the digits 1 to 9 to the front of the second filter:
 
 ```{r}
 
@@ -549,14 +559,36 @@ A second option would be to use a negate zero, "[^0]". You'll notice that this u
 bls_employment %>% 
   # start with previous table
   filter(str_detect(`Series ID`, "CEU1021")) %>% 
-  # remove the ones that have a zero in the 5th spot from the end
-  # - add any digit from 1-9
+  # remove the ones that have a zero in the 6th spot from the end
+  # - add any digit that is not a zero
   filter(str_detect(`Series ID`, "[^0]00001$"))
 
 ```
 
 
+One final option, using `str_sub()` to specify the location, inside the `str_detect()` function.
 
+
+```{r}
+
+# NAICS 212
+bls_employment %>% 
+  # start with previous table
+  filter(str_detect(`Series ID`, "CEU1021")) %>% 
+  # remove the ones that have a zero in the 6th spot from the end
+  # - add any digit that is not a zero
+
+  # work
+#    filter(str_sub(`Series ID`, start = 1, end = 2) == "CE")
+#  filter(str_sub(`Series ID`, start = 8, end = 9) == "00")
+
+  # doesn't work
+  #  filter(str_sub(`Series ID`, start = 8, end = 9) == "[0][0]")
+  filter(str_detect(str_sub(`Series ID`, start = 8, end = 9), "[^0][0]"))
+
+#str_sub(bls_employment$`Series ID`, start = 8, end = 9)
+  
+```
 
 #### NOC: split code from title
 
