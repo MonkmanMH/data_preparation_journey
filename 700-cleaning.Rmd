@@ -44,9 +44,9 @@ A recurring challenge in many data analysis projects is to deal with date and ti
 
 As we saw in [@Broman_Woo_2017], there is an international standard (ISO 8601)\index{ISO 8601} for an unambiguous and principled way to write dates and times (and in combination, date-times). For dates, we write **YYYY-MM-DD**. Similarly, time is written **T[hh][mm][ss]** or **T[hh]:[mm]:[ss]**, with hours (on a 24-hour clock) followed by minutes and seconds.
 
-When we are working with dates, the objective of our cleaning is to transform the date into the ISO 8601 standard. The benefits of this format are many, not the least of which is that there are R tools built for us to streamline analysis and visualization using this structure, and those same tools allow us to tackle any cleaning. 
+When we are working with dates, the objective of our cleaning is to transform the date into the ISO 8601 standard and then, where appropriate, transform that structure into a <date> type variable. The benefits of this format are many, not the least of which are the R tools built to streamline analysis and visualization that use <date> type variables, and those same tools allow us to tackle cleaning variables that capture date elements. 
 
-We will work with {lubridate}, part of the tidyverse.
+One such package is {lubridate}, part of the tidyverse.
 
 ### Creating a date-time field
 
@@ -55,9 +55,9 @@ The first way that dates might be represented in your data is as three separate 
 In the {Lahman}[@R-Lahman] table "People", each player's birthdate is stored as three separate variables. They can be combined into a single variable using `make_date()`:
 
 ```{r}
-Lahman::People %>% 
-  slice_head(n = 10) %>% 
-  select(playerID, birthYear, birthMonth, birthMonth, birthDay) %>% 
+Lahman::People |> 
+  slice_head(n = 10) |> 
+  select(playerID, birthYear, birthMonth, birthMonth, birthDay) |>
   # create date-time variable
    mutate(birthDate = make_datetime(birthYear, birthMonth, birthDay)) 
 
@@ -107,8 +107,9 @@ head(lfs_canada_employment)
 First, we transform the character variable "REF_DATE" variable into a date.
 
 ```{r}
-lfs_canada_employment <- lfs_canada_employment %>% 
+lfs_canada_employment <- lfs_canada_employment |> 
   mutate(REF_DATE = ym(REF_DATE))
+
 lfs_canada_employment
 ```
 
@@ -117,16 +118,16 @@ With the variable in the <date> type, we can use functions within {lubridate} fo
 To calculate the average employment in each year:
 
 ```{r}
-lfs_canada_employment %>% 
-  group_by(year(REF_DATE)) %>% 
+lfs_canada_employment |> 
+  group_by(year(REF_DATE)) |> 
   summarise(mean(VALUE))
 ```
 
 For the second analysis, we might be interested in determining if there is any seasonality in the Canadian labour force:
 
 ```{r}
-lfs_canada_employment %>% 
-  group_by(month(REF_DATE)) %>% 
+lfs_canada_employment |> 
+  group_by(month(REF_DATE)) |> 
   summarise(mean(VALUE))
 ```
 
@@ -396,9 +397,9 @@ If this was in a data frame, these functions can be added to a `mutate()` functi
 pc_kimberley_tbl <- as_tibble(pc_kimberley)
 
 # mutate new values--note that creating three separate variables allows for comparisons as the values change from one step to the next
-pc_kimberley_tbl %>%
-  mutate(pc_extract = str_extract(value, postalcode)) %>%  # extract the postal codes
-  mutate(pc_remove = str_remove(pc_extract, "[ -]")) %>%   # remove space or hyphen
+pc_kimberley_tbl |>
+  mutate(pc_extract = str_extract(value, postalcode)) |>  # extract the postal codes
+  mutate(pc_remove = str_remove(pc_extract, "[ -]")) |>   # remove space or hyphen
   mutate(pc_upper = str_to_upper(pc_remove))               # change to upper case
   
 
@@ -473,7 +474,7 @@ This sector's coding is as follows:
 |   - Coal Mining | 2121 |
 |   - Metal Ore Mining | 2122 |
 |   - Nonmetallic Mineral Mining and Quarrying | 2123 |
-| Support Activities for Mining | 213 |
+| * Support Activities for Mining | 213 |
 
 
 Let's look at the data now:
@@ -502,7 +503,7 @@ First, let's create a table with all the rows associated with the sector, NAICS 
 ```{r}
 
 # create NAICS 21 table
-bls_employment_naics21 <- bls_employment %>% 
+bls_employment_naics21 <- bls_employment |> 
   filter(str_detect(`Series ID`, "CEU1021"))
 
 bls_employment_naics21
@@ -515,7 +516,7 @@ What if we selected only the values that have a zero in the ninth spot?
 
 ```{r}
 
-bls_employment_naics21 %>% 
+bls_employment_naics21 |> 
   # remove the ones that have a zero in the 5th spot from the end
   filter(str_detect(`Series ID`, "00001$"))
 
@@ -527,7 +528,7 @@ Let's filter out the rows that have a zero after the "21" using an exclamation m
 
 ```{r}
 # NAICS 212
-bls_employment_naics21 %>% 
+bls_employment_naics21 |> 
   # use the exclamation mark to filter those that don't match
   filter(!str_detect(`Series ID`, "CEU10210"))
 
@@ -542,7 +543,7 @@ Let's add the digits 1 to 9 to the front of the second filter:
 ```{r}
 
 # NAICS 212
-bls_employment_naics21 %>% 
+bls_employment_naics21 |> 
   # remove the ones that have a zero in the 5th spot from the end
   # - add any digit from 1-9, leave the following digit as 0
   filter(str_detect(`Series ID`, "[1-9]00001$"))
@@ -554,7 +555,7 @@ A second option would be to use a negate zero, "[^0]". You'll notice that this u
 ```{r}
 
 # NAICS 212
-bls_employment_naics21 %>% 
+bls_employment_naics21 |> 
   # remove the ones that have a zero in the 6th spot from the end
   # - add any digit that is not a zero
   filter(str_detect(`Series ID`, "[^0]00001$"))
@@ -580,7 +581,7 @@ Starting on the inside of the parentheses, we have the `str_sub()` function to c
 ```{r}
 
 # NAICS 212
-bls_employment_naics21_3digit <- bls_employment_naics21 %>% 
+bls_employment_naics21_3digit <- bls_employment_naics21 |> 
   # filter those that match the regex in the 8th & 9th position
   filter(str_detect(str_sub(`Series ID`, start = 8, end = 9), "[^0][0]"))
 
@@ -595,7 +596,7 @@ We can use the {tidyr} [@R-tidyr] package's `pivot_longer()` function for this:
 
 ```{r bls_final}
 
-bls_employment_naics21_3digit %>% 
+bls_employment_naics21_3digit |> 
   pivot_longer(cols = contains("Annual"), names_to = "year", values_to = "employment")
 
 ```
@@ -631,7 +632,7 @@ There are also `separate_wider_()` functions based on fixed-width positions and 
 
 ```{r}
 
-noc_table_clean <- noc_table %>% 
+noc_table_clean <- noc_table |> 
   tidyr::separate_wider_delim(
     cols = noc_occupation_title, 
     delim = ": ",
@@ -650,7 +651,7 @@ Here we can use the {stringr} function `str_remove_all()`. (Remember that the `s
 
 ```{r}
 
-noc_table_clean <- noc_table_clean %>% 
+noc_table_clean <- noc_table_clean |> 
   mutate(
     certification_training_requirements =
       str_remove_all(certification_training_requirements, " ")
@@ -679,17 +680,17 @@ This requires three steps:
 
 ```{r}
 
-noc_table_clean <- noc_table_clean %>% 
+noc_table_clean <- noc_table_clean |> 
   # remove commas
   mutate(
     employment =
       str_remove_all(employment, ",")
-    ) %>% 
+    ) |> 
   # replace with NA
   mutate(
     employment =
       str_replace_all(employment, "-\\*", replacement = NA_character_)
-    ) %>% 
+    ) |> 
   # convert to numeric
   mutate(
     employment =
@@ -745,8 +746,8 @@ More commonly, though, this variable will have been captured and saved in one ca
 
 ```{r}
 
-tb2 <- tb %>% 
-  dplyr::rename(gender = female) %>% 
+tb2 <- tb |> 
+  dplyr::rename(gender = female) |> 
   mutate(gender = case_when(
     gender == 1 ~ "female",
     TRUE ~ "male"
@@ -768,7 +769,7 @@ Because this type of data transformation is common, the package {fastDummies} [@
 
 ```{r}
 
-tb2 %>% 
+tb2 |> 
   fastDummies::dummy_cols() 
 
 ```
@@ -784,7 +785,7 @@ Multicollinearity can occur in a multiple regression model where multiple indica
 
 ```{r}
 
-tb2 %>% 
+tb2 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
 
 ```
@@ -793,7 +794,7 @@ Note that the results of this argument can be controlled through the conversion 
 
 ```{r}
 # create new tb table with "gender" as factor
-tb3 <- tb2 %>% 
+tb3 <- tb2 |> 
   mutate(gender = as.factor(gender)) 
 
 levels(tb3$gender)
@@ -803,7 +804,7 @@ Note that the default order is alphabetical, so "female" remains first. When the
 
 ```{r}
   
-tb3 %>% 
+tb3 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
 
 
@@ -823,7 +824,7 @@ Rerunning the same code, the `gender_male` variable is dropped.
 
 ```{r}
   
-tb3 %>% 
+tb3 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
 
 
@@ -835,7 +836,7 @@ There is also an option in `fastDummies::dummy_cols()` to `remove_most_frequent_
 
 ```{r}
 
-tb2 %>% 
+tb2 |> 
   fastDummies::dummy_cols(remove_most_frequent_dummy = TRUE) 
 
 
@@ -846,7 +847,7 @@ Another argument in the function is `remove_selected_columns`. The default value
 
 ```{r}
 
-tb2 %>% 
+tb2 |> 
   fastDummies::dummy_cols(remove_selected_columns = TRUE) 
 
 ```
@@ -867,9 +868,9 @@ library(palmerpenguins)
 
 set.seed(1729) #Ramanujan's taxicab number: 1^3 + 12^3 = 9^3 + 10^3
 
-penguin_subset <- penguins %>% 
-  slice_sample(n = 6) %>% 
-  dplyr::select(species, island) %>% 
+penguin_subset <- penguins |> 
+  slice_sample(n = 6) |> 
+  dplyr::select(species, island) |> 
   arrange(species)
 
 penguin_subset
@@ -878,7 +879,7 @@ penguin_subset
 
 ```{r ch700_dummy_penguins_2}
 
-penguin_subset %>%  
+penguin_subset |>  
   fastDummies::dummy_cols()
 
 ```
@@ -894,7 +895,7 @@ In addition, rather than dropping the first created variable, we can specify tha
 ```{r 700_penguin_dummy}
 
 
-penguin_subset %>% 
+penguin_subset |> 
   fastDummies::dummy_cols(
     select_columns = "species",
     remove_most_frequent_dummy = TRUE)
@@ -956,7 +957,7 @@ The contents of the file have been read correctly, but there are many "NA" value
 
 ```{r}
 
-tuition_data_filled <- tuition_data %>% 
+tuition_data_filled <- tuition_data |> 
   fill("Economic Development Region")
 
 head(tuition_data_filled)
@@ -969,7 +970,7 @@ These two solutions yield the same result:
 ```{r}
 drop_na(tuition_data_filled)
 
-tuition_data_filled %>% 
+tuition_data_filled |> 
   drop_na()
 
 ```
@@ -1023,7 +1024,7 @@ Similar to what we saw above with text, the same `fill()` function can be applie
 
 ```{r}
   
-naics721_sal %>% 
+naics721_sal |> 
   tidyr::drop_na()
 
 ```
@@ -1033,18 +1034,18 @@ naics721_sal %>%
 
 ```{r}
 # fill down  
-naics721_sal %>% 
-  mutate(old_value = VALUE) %>% 
+naics721_sal |> 
+  mutate(old_value = VALUE) |> 
   tidyr::fill(VALUE)  # default direction is down
 
 # specified
 # down
-naics721_sal %>% 
-  mutate(down = VALUE) %>% 
+naics721_sal |> 
+  mutate(down = VALUE) |> 
   tidyr::fill(VALUE, .direction = "down")  # direction is specified as down
 # up
-naics721_sal %>% 
-  mutate(up = VALUE) %>% 
+naics721_sal |> 
+  mutate(up = VALUE) |> 
   tidyr::fill(VALUE, .direction = "up")  # direction is specified as up
 
 
@@ -1092,7 +1093,7 @@ You will notice that the function has calculated replacement values that give us
 For our count of salaried employees, here's what we get when we create a new value `value_new` with this function:
 
 ```{r}
-naics721_sal %>% 
+naics721_sal |> 
   mutate(value_new = forecast::na.interp(VALUE))
 ```
 
@@ -1129,8 +1130,8 @@ CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
 ```{r zoo_na_approx}
 library(zoo)
 
-naics721_sal %>%
-  mutate(old_value = VALUE) %>% 
+naics721_sal |>
+  mutate(old_value = VALUE) |> 
   mutate(VALUE = zoo::na.approx(VALUE))
 
 ```
@@ -1213,8 +1214,8 @@ The values for these variables are as follows:
 The variable "GHJ1DHDI" has the respondent's self-assessment of their overall health. Here's a summary table of the responses:
 
 ```{r}
-jcush %>% 
-  group_by(GHJ1DHDI) %>% 
+jcush |> 
+  group_by(GHJ1DHDI) |> 
   tally()
 
 ```
@@ -1226,9 +1227,9 @@ One strategy is to create a new factor variable, that uses the value description
 ```{r}
 library(forcats)
 
-jcush_forcats <- jcush %>%
+jcush_forcats <- jcush |>
   # 1st mutate a new factor variable with the original values
-  mutate(health_desc_fct = as.factor(GHJ1DHDI)) %>%
+  mutate(health_desc_fct = as.factor(GHJ1DHDI)) |>
   # 2nd recode the values
   mutate(
     health_desc_fct = fct_recode(
@@ -1254,8 +1255,8 @@ levels(jcush_forcats$health_desc_fct)
 When we tally the results by our new variable, the "GHJ1DHDI" records with the value 9 are shown as "NA".
 
 ```{r}
-jcush_forcats %>% 
-  group_by(GHJ1DHDI, health_desc_fct) %>% 
+jcush_forcats |> 
+  group_by(GHJ1DHDI, health_desc_fct) |> 
   tally()
 
 ```
@@ -1266,7 +1267,7 @@ jcush_forcats %>%
 ```{r}
 library(haven)
 
-jcush_haven <- jcush %>%
+jcush_haven <- jcush |>
   mutate(health_desc_lab = labelled(
     GHJ1DHDI,
     c(
@@ -1309,7 +1310,7 @@ levels(as.factor(jcush_haven$health_desc_lab))
 A third option is to use the functions within the {labelled}[@R-labelled] package. 
 
 ```{r}
-jcush_labelled <- jcush %>%
+jcush_labelled <- jcush |>
   mutate(health_desc_lab = labelled(
     GHJ1DHDI,
     c(
