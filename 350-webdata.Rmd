@@ -133,19 +133,19 @@ library(onsr)
 
 For this, we would like the quarterly labour market statistics 
 
-```{r}
+```{r, eval=FALSE}
 datasets <- ons_datasets()
 
 datasets
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 ons_browse_qmi(id = "labour-market")
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 # lfs - quarterly but Dec-Feb etc
 #df <- ons_get(id = "labour-market")
 

@@ -458,7 +458,7 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 ### Example: Bureau of Labor Statistics by NAICS code
 
-In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020.
+In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
 With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS). This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
 
@@ -477,13 +477,16 @@ This sector's coding is as follows:
 | * Support Activities for Mining | 213 |
 
 
-Let's look at the data now:
+Let's look at the data now. Note t
 
 
-```{r}
+```{r, message=FALSE}
 
 bls_employment <- read_csv("data/us_bls_employment_2010-2020.csv")
-head(bls_employment)
+
+gt(
+  head(bls_employment)
+)
 
 ```
 
@@ -506,7 +509,9 @@ First, let's create a table with all the rows associated with the sector, NAICS 
 bls_employment_naics21 <- bls_employment |> 
   filter(str_detect(`Series ID`, "CEU1021"))
 
-bls_employment_naics21
+gt(
+  bls_employment_naics21
+)
 
 ```
 
@@ -515,11 +520,11 @@ In the table above, we see the first row has the "Series ID" of CEU1021000001. T
 What if we selected only the values that have a zero in the ninth spot?
 
 ```{r}
-
+gt(
 bls_employment_naics21 |> 
   # remove the ones that have a zero in the 5th spot from the end
   filter(str_detect(`Series ID`, "00001$"))
-
+)
 ```
 
 That's not quite right—it includes the "21" sector aggregate.

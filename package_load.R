@@ -3,6 +3,14 @@
 # most recent update: 2022-06-10
 
 # packages
+# --------
+
+
+# print and publish
+library(gt)
+library(kableExtra)
+library(rmarkdown)
+
 # tidyverse (extended)
 library(tidyverse)
 library(haven)
@@ -25,6 +33,7 @@ library(memisc) # for applying labels etc to PUMF
 
 
 # data
+library(Lahman)
 library(palmerpenguins)
 library(dpjr) # custom package for _The Data Preparation Journey_
 
@@ -34,6 +43,8 @@ library(pdftools)
 # apis 
 library(cansim)     # access Statistics Canada's CANSIM data repository
 library(bcdata)     # access the BC Government's open data catalogue
+library(onsr)       # access UK Office of National Statistics (ONS)
+
 #
 library(httr)         # sets up API connection
 library(jsonlite)     # working with JSON data structures
