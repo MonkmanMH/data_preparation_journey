@@ -460,7 +460,7 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
-With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS). This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{NAICS|see{North American Industry Classification System}} . This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
 
 The NAICS system, and the file we are working with, is hierarchical; higher-level categories subdivide into subsets. Let's examine employment in Mining, Quarrying, and Oil and Gas Extraction sector. 
 
@@ -609,7 +609,7 @@ bls_employment_naics21_3digit |>
 
 ### Example: NOC: split code from title
 
-This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code is in the same column as the code's title.
+This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
 
 The table we will use are occupations in British Columbia's accommodation industry.
 
@@ -713,7 +713,69 @@ noc_table_clean
 
 ## Creating conditional and calculated variables
 
-Recoding with `dplyr::case_when()`
+We sometimes find ourselves in a situation where we want to recode our existing variables into other categories. An instance of this is when there are a handful of categories that make up the bulk of the total, and summarizing the smaller categories into an "all other" makes the table or plot easier to read. One example of this are the populations of the 13 Canadian provinces and territories: the four most populous provinces (Ontario, Quebec, British Columbia, and Alberta) account for roughly 85% of the country's population...the other 15% of Canadians are spread across nine provinces and territories. We might want to show a table with only five rows, with the smallest nine provinces and territories grouped into a single row.
+
+We can do this with a function in {dplyr}, `case_when()`.
+
+```{r}
+canpop <- read_csv("data/canpop.csv")
+canpop
+```
+
+In this first solution, we name the largest provinces separately:
+
+```{r}
+
+canpop |> 
+  mutate(pt_grp = case_when(
+    # evaluation ~ new value
+    province_territory == "Ontario" ~ "Ontario",
+    province_territory == "Quebec" ~ "Quebec",
+    province_territory == "British Columbia" ~ "British Columbia",
+    province_territory == "Alberta" ~ "Alberta",
+    # all others get recoded as "other"
+    TRUE ~ "other"
+  ))
+
+```
+
+But that's a lot of typing. A more streamlined approach is to put the name of our provinces in a list, and then recode our new variable with the value from the original variable:
+
+```{r}
+
+canpop |> 
+  mutate(pt_grp = case_when(
+    province_territory %in% c("Ontario", "Quebec", "British Columbia", "Alberta") ~ province_territory,
+    TRUE ~ "other"
+  ))
+
+```
+
+We could also use a comparison to create a population threshold, in this case four million:
+
+```{r}
+
+canpop <- canpop |> 
+  mutate(pt_grp = case_when(
+    population > 4000000 ~ province_territory,
+    TRUE ~ "other"
+  ))
+
+canpop
+
+```
+
+Whatever the approach we choose, that new variable can be used to group a table:
+
+```{r}
+
+canpop |> 
+  group_by(pt_grp) |> 
+  summarise(pt_pop = sum(population)) |> 
+  arrange(desc(pt_pop))
+
+```
+
 
 
 ## Indicator variables
