@@ -457,52 +457,31 @@ The {readxl} package [@R-readxl] is designed to solve many of the challenges rea
 library(readxl)
 ```
 
-
-
-```{r}
-deaths_file_path <- here("data", "deaths.xlsx")
-
-deaths <- read_excel(deaths_file_path)
-deaths
-```
-
-What do you notice about the "Date of birth" and "Date of death" columns?
-
-
-Read in the "deaths" file, but use the `range = ` option to specify when to start reading the file:
-
+In this example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics. The file has the population by local authorities (regions), and includes one sheet with the population by sex, and another that has population by five-year age groups.
 
 ```{r}
-# Example
-deaths <- read_excel(deaths_file_path, 
-                     range = "A1:B3")
-
-deaths
-
-# solution
-deaths <- read_excel(
-  deaths_file_path,
-  range = "A5:F15"
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  skip = 6, n_max = 10
 )
 
-deaths
+uk_census_pop
 
 ```
 
-
-Use the `skip =` and `n_max =` options to achieve the same thing:
+A second option would be define the range of the cells, using Excel nomenclature.
 
 ```{r}
-deaths <- read_excel(deaths_file_path,
-                     skip = 4,
-                     n_max = 10)
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  range = "A7:E382"
+)
 
-deaths
+uk_census_pop
+
 ```
-
-
-
-
 
 
 ## File archives
