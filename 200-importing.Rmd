@@ -457,13 +457,36 @@ The {readxl} package [@R-readxl] is designed to solve many of the challenges rea
 library(readxl)
 ```
 
-In this example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics. The file has the population by local authorities (regions), and includes one sheet with the population by sex, and another that has population by five-year age groups.
+In this example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+
+Our focus is on sheet "P01", with population by sex. The first few rows of the data look like this:
+
+[screenshot]
+
+One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The value "England and Wales" contains the total population, which is the sum of England (row x) and Wales (row 360). England is then further subdivided into ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] into 
+
+The {readxl} package's `read_excel()` function is the one we want to use. The first item is the path to the file. The function's default is to read the first sheet in the Excel file, which is not what we want, so we use the `sheet = ` argument to specify "P01". We will also add the first 
 
 ```{r}
 uk_census_pop <- readxl::read_excel(
   "data/census2021firstresultsenglandwales1.xlsx",
   sheet = "P01",
-  skip = 6, n_max = 10
+  n_max = 10
+)
+
+uk_census_pop
+
+```
+
+The function has a variety of arguments that a
+
+
+```{r}
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  n_max = 10,
+  skip = 6 
 )
 
 uk_census_pop
@@ -482,6 +505,142 @@ uk_census_pop <- readxl::read_excel(
 uk_census_pop
 
 ```
+
+#### Excel formatting
+
+But this loses the hierarchy. We will return to this file in the "Cleaning Solutions" chapter.
+
+[MOVE BLOCK BELOW TO CLEANING CHAPTER]
+
+The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting.
+
+```{r}
+library(tidyxl)
+```
+
+
+https://nacnudus.github.io/tidyxl/articles/tidyxl.html
+
+https://stackoverflow.com/questions/54347764/how-to-read-cell-formatting-indentation-information-from-excel-into-r
+
+https://www.youtube.com/watch?v=Q_McYaDV9H0&ab_channel=DuncanGarmonsway
+
+
+The first thing we need to be aware of is that the {tidyxl} package has some functions that read the first sheet in the file, and won't allow specification of other sheets. But that's ok, because we can write some R code to rearrange the sheets for us.
+
+
+```{r, eval=FALSE}
+library(openxlsx)
+
+```
+
+
+```{r}
+
+
+uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
+
+#openXL(uk_census_path)
+uk_census_file <- loadWorkbook(uk_census_path)
+
+worksheetOrder(uk_census_file)
+names(uk_census_file)
+
+worksheetOrder(uk_census_file) <- c(4, 1, 2, 3, 5:8)
+writeData(uk_census_file, 4, 'This is still the "mtcars" worksheet')
+
+worksheetOrder(uk_census_file)
+
+# now write the new version
+saveWorkbook(uk_census_file, "data/census2021_P01.xlsx", overwrite = TRUE)
+openXL("data/census2021_P01.xlsx")
+
+```
+
+
+
+```{r, eval=FALSE}
+library(tidyxl)
+
+```
+
+
+test
+
+```{r test_tidyxl_700}
+
+library(tidyxl)
+
+
+test_path <- "data/sed17-sr-tab012.xlsx"
+
+test_cells <- xlsx_cells(test_path)
+
+
+glimpse(test_cells) 
+
+# format
+
+test_format <- xlsx_formats(test_path)
+
+```
+
+
+
+```{r}
+
+#uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
+uk_census_path <- "data/census2021_P01_manual.xlsx"
+
+uk_census <- xlsx_cells(
+  uk_census_path
+  )
+
+uk_census
+
+glimpse(uk_census) 
+
+
+```
+
+
+```{r}
+#uk_census_col02 <- uk_census %>% 
+#  filter(row >= 7) %>% 
+#  filter(col == 2)
+#
+#uk_census_col02
+#
+#glimpse(uk_census_col02) 
+  
+```
+
+
+```{r}
+#select(uk_census_col02, row, col, data_type, character, numeric, local_format_id)
+select(uk_census, row, col, data_type, character, numeric, local_format_id)
+
+```
+
+
+```{r}
+
+xlsx_sheet_names(
+  uk_census_path
+  )
+
+```
+
+
+```{r}
+formats <- xlsx_formats(
+  uk_census_path
+)
+
+formats$local$alignment$indent
+
+```
+
 
 
 ## File archives
