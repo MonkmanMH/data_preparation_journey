@@ -561,7 +561,7 @@ openXL("data/census2021_P01.xlsx")
 
 ```{r, eval=FALSE}
 library(tidyxl)
-
+library(unpivotr)
 ```
 
 
@@ -570,7 +570,7 @@ test
 ```{r test_tidyxl_700}
 
 library(tidyxl)
-
+library(unpivotr)
 
 test_path <- "data/sed17-sr-tab012.xlsx"
 
@@ -583,6 +583,17 @@ glimpse(test_cells)
 
 test_format <- xlsx_formats(test_path)
 
+indent <- test_format$local$alignment$indent
+
+# unpivot
+
+test_cells %>% 
+  dplyr::filter((row >= 4)) %>% 
+  behead_if(indent[local_format_id] == 0, direction = "WNW", name = "field1") %>% 
+  behead_if(indent[local_format_id] == 1, direction = "WNW", name = "field2") %>% 
+  behead_if(direction = "WNW", name = "field3") %>% 
+  dplyr::filter(row == 8)
+
 ```
 
 
@@ -591,6 +602,7 @@ test_format <- xlsx_formats(test_path)
 
 #uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
 uk_census_path <- "data/census2021_P01_manual.xlsx"
+#uk_census_path <- "data/nonsense.xlsx"
 
 uk_census <- xlsx_cells(
   uk_census_path
@@ -637,11 +649,30 @@ formats <- xlsx_formats(
   uk_census_path
 )
 
-formats$local$alignment$indent
+formats <- xlsx_formats(
+  uk_census_path
+)
+
+
+#formats$local$alignment$indent
+
+indent <- formats$local$alignment$indent
+
+
 
 ```
 
-
+```{r}
+uk_census %>% 
+  filter(col != 1) %>% 
+  dplyr::filter((row >= 2)) %>% 
+  behead_if(indent[local_format_id] == 0, direction = "WNW", name = "field0") %>% 
+  behead_if(indent[local_format_id] == 1, direction = "WNW", name = "field1") %>% 
+  behead_if(indent[local_format_id] == 2, direction = "WNW", name = "field2") %>% 
+  behead_if(indent[local_format_id] == 3, direction = "WNW", name = "field3") %>% 
+  behead_if(direction = "WNW", name = "field4") %>% 
+  dplyr::filter(row < 15)
+```
 
 ## File archives
 
