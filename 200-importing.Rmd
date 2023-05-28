@@ -508,109 +508,42 @@ uk_census_pop
 
 #### Excel formatting
 
-But this loses the hierarchy. We will return to this file in the "Cleaning Solutions" chapter.
+But this loses the hierarchy. 
 
-[MOVE BLOCK BELOW TO CLEANING CHAPTER]
-
-The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting.
-
-```{r}
-library(tidyxl)
-```
-
-
-https://nacnudus.github.io/tidyxl/articles/tidyxl.html
-
-https://stackoverflow.com/questions/54347764/how-to-read-cell-formatting-indentation-information-from-excel-into-r
-
-https://www.youtube.com/watch?v=Q_McYaDV9H0&ab_channel=DuncanGarmonsway
-
-
-The first thing we need to be aware of is that the {tidyxl} package has some functions that read the first sheet in the file, and won't allow specification of other sheets. But that's ok, because we can write some R code to rearrange the sheets for us.
+The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting. There is an R package that has functions that allow us to turn that formatting into information that we can work with. For this, we will be using the packages {tidyxl} [@R-tidyxl] and {unpivotr} [@R-unpivotr].
 
 
 ```{r, eval=FALSE}
-library(openxlsx)
-
+library(tidyxl)
+library(unpivotr)
 ```
 
 
-```{r}
+We already know that Excel files can contain a lot of information that is outside the data rectangle. Rather than ignore all that at the start, we will use the function `tidyxl::xlsx_cells()` to read the entire sheet, and we can trim it down to the data we need from there.
 
+
+
+```{r}
 
 uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
 
-#openXL(uk_census_path)
-uk_census_file <- loadWorkbook(uk_census_path)
-
-worksheetOrder(uk_census_file)
-names(uk_census_file)
-
-worksheetOrder(uk_census_file) <- c(4, 1, 2, 3, 5:8)
-writeData(uk_census_file, 4, 'This is still the "mtcars" worksheet')
-
-worksheetOrder(uk_census_file)
-
-# now write the new version
-saveWorkbook(uk_census_file, "data/census2021_P01.xlsx", overwrite = TRUE)
-openXL("data/census2021_P01.xlsx")
+xlsx_sheet_names(
+  uk_census_path
+  )
 
 ```
-
-
-
-```{r, eval=FALSE}
-library(tidyxl)
-library(unpivotr)
-```
-
-
-test
-
-```{r test_tidyxl_700}
-
-library(tidyxl)
-library(unpivotr)
-
-test_path <- "data/sed17-sr-tab012.xlsx"
-
-test_cells <- xlsx_cells(test_path)
-
-
-glimpse(test_cells) 
-
-# format
-
-test_format <- xlsx_formats(test_path)
-
-indent <- test_format$local$alignment$indent
-
-# unpivot
-
-test_cells %>% 
-  dplyr::filter((row >= 4)) %>% 
-  behead_if(indent[local_format_id] == 0, direction = "WNW", name = "field1") %>% 
-  behead_if(indent[local_format_id] == 1, direction = "WNW", name = "field2") %>% 
-  behead_if(direction = "WNW", name = "field3") %>% 
-  dplyr::filter(row == 8)
-
-```
-
 
 
 ```{r}
 
-#uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
-uk_census_path <- "data/census2021_P01_manual.xlsx"
-#uk_census_path <- "data/nonsense.xlsx"
-
 uk_census <- xlsx_cells(
-  uk_census_path
+  uk_census_path,
+  sheets = "P01"
   )
 
-uk_census
+#uk_census
 
-glimpse(uk_census) 
+#glimpse(uk_census) 
 
 
 ```
@@ -628,6 +561,8 @@ glimpse(uk_census)
 ```
 
 
+The "local_format_id" is assigned by {tidyxlr}, and helps us solve our problem. It contains a unique value for every different type of formatting that is used in the sheet.
+
 ```{r}
 #select(uk_census_col02, row, col, data_type, character, numeric, local_format_id)
 select(uk_census, row, col, data_type, character, numeric, local_format_id)
@@ -635,32 +570,33 @@ select(uk_census, row, col, data_type, character, numeric, local_format_id)
 ```
 
 
+
+The next thing we need to do is read the formats stored in the Excel file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
+
+The code below reads the formats, and assigns it to a new object "formats".
+
 ```{r}
 
-xlsx_sheet_names(
+formats <- xlsx_formats(
   uk_census_path
-  )
+)
 
 ```
 
+[insert image]
+
+If we examing the "formats" object, we can see that it contains two lists, one called "local" and the other "style". If look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. We can extract that list-within-a-list using the code below:
+
 
 ```{r}
-formats <- xlsx_formats(
-  uk_census_path
-)
 
-formats <- xlsx_formats(
-  uk_census_path
-)
-
-
-#formats$local$alignment$indent
 
 indent <- formats$local$alignment$indent
 
 
-
 ```
+
+
 
 ```{r}
 uk_census %>% 
@@ -671,7 +607,7 @@ uk_census %>%
   behead_if(indent[local_format_id] == 2, direction = "WNW", name = "field2") %>% 
   behead_if(indent[local_format_id] == 3, direction = "WNW", name = "field3") %>% 
   behead_if(direction = "WNW", name = "field4") %>% 
-  dplyr::filter(row < 15)
+  dplyr::filter(row < 30)
 ```
 
 ## File archives
