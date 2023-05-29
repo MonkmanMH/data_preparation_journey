@@ -436,7 +436,7 @@ head(jcush)
 Imagine, though, the challenge of handling this amount of data at one time! Between the many variables and the complex value labels, the "data" is more than just the fixed-width file. This is a circumstance where a different data storage solution ([as we will see later](#700_labelled_factors)) might have some strengths.
 
 
-## Spreadsheets
+## Spreadsheets (starting with Excel)
 
 Spreadsheets and similar data tables are perhaps the most common way that data is made available. Because they originated as an electronic version of accounting worksheets, they have a tabular structure that works for other situations when data collection, storage, analysis, and sharing (i.e. publishing) are required. Spreadsheet software of one form or another is often standard when you buy a new computer, and Microsoft Excel is the most common of all. And Google makes available a web-based spreadsheet tool, Google Sheets.
 
@@ -444,12 +444,9 @@ Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practic
 
 Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. But as his article, and the others cited earlier make plain, it's possible to achieve both goals.
 
+Excel files (with either the .XLS or .XLSX extensions) are widely used, and it seems likely they are more common than CSV and other plain-text data files. Excel files seem to multiply like coat hangers in the closet.
 
-### Excel files
-
-If anything, Excel files (with either the .XLS or .XLSX extensions) are more common than CSV and other plain-text data files. They seem to multiply like coat hangers in the closet.
-
-And as we see in the article by Karl Broman & Kara Woo, ["Data Organization in Spreadsheets"] [@Broman_Woo_2017], Excel files can encourage some ways of storing information that makes it hard for us to analyze. Excel files can also contain a wide variety of data format types. 
+As we see in the article by Karl Broman & Kara Woo, ["Data Organization in Spreadsheets"] [@Broman_Woo_2017], Excel files can encourage some ways of storing information that makes it hard for us to analyze. Excel files can also contain a wide variety of data format types. 
 
 The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions.
 
@@ -518,10 +515,7 @@ library(tidyxl)
 library(unpivotr)
 ```
 
-
-We already know that Excel files can contain a lot of information that is outside the data rectangle. Rather than ignore all that at the start, we will use the function `tidyxl::xlsx_cells()` to read the entire sheet, and we can trim it down to the data we need from there.
-
-
+In the code below, we create an object with the file path as a character string. This has the result of being less typing (and with a name like this, far less risk of a typo), and RStudio can also recognize the object for the autofill feature. The second line of code uses the function `xlsx_sheet_names()` to get the names of all of the sheets in the Excel file. In this case, we are interested in the data in "P01".
 
 ```{r}
 
@@ -534,6 +528,9 @@ xlsx_sheet_names(
 ```
 
 
+We already know that Excel files can contain a lot of information that is outside the data rectangle. Rather than ignore all that at the start, we will use the function `tidyxl::xlsx_cells()` to read the entire sheet, using the object with the file path and the `sheets = ` argument to specify what to read. Unlike `readxl::read_excel()`, we won't specify the sheet geometry. This will read the contents of the entire sheet, we will extract the data we want from the object "uk_census" created below. 
+
+
 ```{r}
 
 uk_census <- xlsx_cells(
@@ -541,37 +538,28 @@ uk_census <- xlsx_cells(
   sheets = "P01"
   )
 
-#uk_census
-
-#glimpse(uk_census) 
-
+# take a quick look
+dplyr::glimpse(uk_census)
 
 ```
 
+The dataframe created by the `xlsx_cells()` function is nothing like the spreadsheet in the Excel file. Instead, every cell in Excel file is row, and details about that cell are captured. The cell location is captured in the variable "address", while there is also a separate variable for the row number and another for the column number. There is also the value we would see if we were to look at the file, in the variable "character". (If there is a formula in a cell, the function returns the result of the formula in the "character" variable, and the text of the formula in the "formula" variable.)
 
-```{r}
-#uk_census_col02 <- uk_census %>% 
-#  filter(row >= 7) %>% 
-#  filter(col == 2)
-#
-#uk_census_col02
-#
-#glimpse(uk_census_col02) 
-  
-```
-
-
-The "local_format_id" is assigned by {tidyxlr}, and helps us solve our problem. It contains a unique value for every different type of formatting that is used in the sheet.
+The "local_format_id" variable is created by {tidyxlr}, and helps us solve the problem of capturing the indentation. This variable contains a unique value for every different type of formatting that is used in the sheet. Below, we look at the first ten rows of the "uk_census" object, and we can see that the value "14" appears repeatedly in the variable "local_format_id".
 
 ```{r}
 #select(uk_census_col02, row, col, data_type, character, numeric, local_format_id)
-select(uk_census, row, col, data_type, character, numeric, local_format_id)
+uk_census |> 
+  slice_head(n = 10) |> 
+  select(address, character, local_format_id)
 
 ```
 
 
 
-The next thing we need to do is read the formats stored in the Excel file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
+The next thing we need to do is read the details of each of the formats stored in the Excel file—the format "14" has particular characteristics, including the number of indentations in the cell. 
+
+For this, we use the {tidyxl} function `xlsx_formats()`. For this, we only need to specify the path to the file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
 
 The code below reads the formats, and assigns it to a new object "formats".
 
@@ -585,30 +573,123 @@ formats <- xlsx_formats(
 
 [insert image]
 
-If we examing the "formats" object, we can see that it contains two lists, one called "local" and the other "style". If look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. We can extract that list-within-a-list using the code below:
+When examining the "formats" object, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. We can extract that list-within-a-list, which contains all the indentation specifications of the different cell formats in the file, using the code below:
 
 
 ```{r}
-
 
 indent <- formats$local$alignment$indent
 
+```
+
+
+Back to the object "uk_census". We are interested in the data starting in the eighth row, so we need to filter for that. 
+
+For the functions to work, we need to have the column that defines the structure in the first position. To accomplish this, we will select it out using the "!=" operator.
+
+The `behead_if()` function is designed to identify a level of headers in a pivot table, and make it part of the data. Similar to the {tidyr} function `pivot_longer()`, it creates a new variable for each row based on the headers. In the case of the UK Census data, the headers are differentiated by the number of indents in the formatting.
+
+
+
+
+```{r}
+uk_census |> 
+  dplyr::filter((row >= 7)) |> 
+  filter(col != 1) |> 
+  behead_if(indent[local_format_id] == 0, 
+            direction = "left-up", 
+            name = "field0"
+            ) |>
+  select(address, row, col, content, field0) |> 
+  dplyr::filter(row < 30)
 
 ```
 
 
 
 ```{r}
-uk_census %>% 
-  filter(col != 1) %>% 
-  dplyr::filter((row >= 2)) %>% 
-  behead_if(indent[local_format_id] == 0, direction = "WNW", name = "field0") %>% 
-  behead_if(indent[local_format_id] == 1, direction = "WNW", name = "field1") %>% 
-  behead_if(indent[local_format_id] == 2, direction = "WNW", name = "field2") %>% 
-  behead_if(indent[local_format_id] == 3, direction = "WNW", name = "field3") %>% 
-  behead_if(direction = "WNW", name = "field4") %>% 
-  dplyr::filter(row < 30)
+uk_census |> 
+  dplyr::filter((row >= 7)) |> 
+  filter(col != 1) |> 
+  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
+  behead_if(indent[local_format_id] == 4, direction = "left-up", name = "field4") 
+
+uk_census_behead <- uk_census |> 
+  dplyr::filter((row >= 7)) |> 
+  filter(col != 1) |> 
+  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
+  behead_if(indent[local_format_id] == 4, direction = "left", name = "field4") 
+#  behead(direction = "left", name = "field4") 
+
+
+uk_census_behead |> 
+  select(field0, field1, field2, field3, field4)
+
+uk_census_behead |> 
+#  behead_if(direction = "left-up", name = "field4") |> 
+#  dplyr::filter(row < 30) |> 
+  select(address, content, field0, field1, field2, field3, field4) |> 
+  group_by(field4) |> 
+  tally() |> 
+  arrange(desc(n))
+  
+uk_census_behead |> 
+  select(address, content, field0, field1, field2, field3, field4) |> 
+  filter(field4 == "Sunderland") 
+  
+  
+uk_census_behead |> 
+  select(address, content, field0, field1, field2, field3, field4) |> 
+  filter(field4 == "Wirral") 
+
 ```
+
+
+Now assign column headers. In this case the structure is not particularly complex, but {tidyr} can also deal with nested hierarchy in the headers as well.
+
+```{r}
+# from the prevous chunk:
+
+uk_census_behead <- uk_census |> 
+  dplyr::filter((row >= 7)) |> 
+  filter(col != 1) |> 
+  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
+  behead(direction = "left", name = "field4") |> 
+#  now strip (behead) the column names 
+  behead(direction = "up", name = "gender")
+
+
+head(uk_census_behead) |> 
+  select(field0:field4, gender, numeric)
+
+```
+
+
+Next step: filter so we only have unique values
+
+```{r}
+
+uk_census_behead |> 
+  filter(is.na(field1))
+  
+uk_census_behead |> 
+  filter(is.na(field2))
+
+uk_census_behead |> 
+  filter(row == 360)
+
+```
+
+
 
 ## File archives
 
