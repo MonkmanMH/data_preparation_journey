@@ -85,11 +85,8 @@ Here's some advice that's worth heeding:
 1. The arguments in the import functions are your friends. Use them as your first line of defense in your project workflow.
 
 > Data import generally feels one of two ways:
-
 > * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
-
- > * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
-
+> * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
 > In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [Emphasis added.] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
 
 [@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]

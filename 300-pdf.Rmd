@@ -112,7 +112,7 @@ bcf[1]
 ```
 
 
-Another way to look at the contents of a page is to use the `cat()` function (from base R), which displays the contents as it would be printed:
+Another way to look at the contents of a page is to use the `cat()` function (from {base R}), which displays the contents as it would be printed:
 
 ```{r}
 
