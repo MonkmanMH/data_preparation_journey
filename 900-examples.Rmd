@@ -40,30 +40,24 @@ In this chapter:
 
 \index{Excel}
 
-In the "Importing data" chapter, we read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+In the "Importing data" chapter, we read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales ("census2021firstresultsenglandwales1.xlsx"). The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+
 
 Our focus is on sheet "P01", with population by sex. The first few rows of the data look like this:
 
-[screenshot]
+![_UK Census data_](img/UK_census_P01.PNG)
 
-One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The value "England and Wales" contains the total population, which is the sum of England (row x) and Wales (row 360). 
+One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The value "England and Wales" contains the total population, which is the sum of England (Excel's row 8) and Wales (row 360). 
 
-England is then further subdivided into nine sub-national regions (coded as "E12" in first three characters of the "Area code" variable). These regions are then are divided into smaller units, but the description of those units varies. These are London Boroughs (E09), Unitary Authorities (E06), Counties (E10), Metropolitan Counties (E11).
+England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the "Area code" variable). These Regions are then are divided into smaller units, but the description of those units varies. These are London Boroughs (E09), Unitary Authorities (E06), Counties (E10), and Metropolitan Counties (E11).
 
-The Counties are divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are further subdivided into Metropolitan Districts (E08).
+The Counties are further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
 
-Wales is divided into Unitary Authorities (there is no intervening region), coded as "W06" in first three characters of the "Area code" variable.
-
-^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links from this page: https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography]
-
-^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] into 
+Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links from this page: https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography]^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] 
 
 
-### Approach 1 - use the Area code
 
-
-### Approach 2 - use Excel's formatting
-
+### Approach 1 - use Excel's formatting
 
 The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting. There is an R package that has functions that allow us to turn that formatting into information that we can work with. For this, we will be using the packages {tidyxl} [@R-tidyxl] and {unpivotr} [@R-unpivotr].
 
@@ -230,14 +224,24 @@ uk_census_behead <- uk_census |>
 
 ```
 
-Let's do some quick checks of the data:
+Did we get the results we expected? Let's do some quick checks of the data, first to see if the 1,125 cells of Excel data (CX to DY) are represented by an individual row (the result of the pivot):
+
+```{r}
+count(uk_census_behead)
+```
+
+
+We can also look at the first few rows of the variables we are interested in, with a combination of `select()` and `slice_head()`.
 
 ```{r}
 
 uk_census_behead |> 
-  select(field0:field4, gender, numeric)
+  select(field0:field4, gender, numeric) |> 
+  slice_head(n = 10)
 
 ```
+
+And the bottom 10 rows, using `slice_tail()`.
 
 ```{r}
 uk_census_behead |> 
@@ -246,11 +250,27 @@ uk_census_behead |>
 
 ```
 
-A check of the tail of the data (above) reveals a problem with the structure of the Excel file, and how our {tidyr} and {unpivotr} work: Wales is not divided into 
+A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! They are doing things exactly correctly. 
+
+The first thing that catches my eye is that "field2"—the Region—should be NA for Wales, but it has been assigned to the South West, which is the last English Region in the data. 
+
+More problematically, the Welsh Unitary Authorities (W06) should be in "field3", at the same level as the English Unitary Authories (E06), but instead have been assigned to "field4". 
+
+Let's take a look at the first row of the Welsh Unitary Authorities. First, in the "uk_census" object, we see that the value of "local_format_id" for the name ("Isle of Anglesey") is 60.
 
 ```{r}
 
+uk_census |> 
+  dplyr::filter((row == 361)) |> 
+  select(address, local_format_id, data_type, character, numeric)
 
+```
+
+We can then use this to examine the details of the formatting.
+
+```{r}
+
+formats$local$alignment$indent[60]
 
 ```
 
@@ -272,6 +292,9 @@ uk_census_behead |>
 ```
 
 
+### Approach 2 - use the Area code
+
+Build separate table with hierarchy, use join functions
 
 
 
