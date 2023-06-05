@@ -1,0 +1,344 @@
+Adelie   Torgersen39.118.71813750male  2007
+Adelie   Torgersen39.517.41863800female2007
+Adelie   Torgersen40.318.01953250female2007
+Adelie   Torgersen                     2007
+Adelie   Torgersen36.719.31933450female2007
+Adelie   Torgersen39.320.61903650male  2007
+Adelie   Torgersen38.917.81813625female2007
+Adelie   Torgersen39.219.61954675male  2007
+Adelie   Torgersen34.118.11933475      2007
+Adelie   Torgersen42.020.21904250      2007
+Adelie   Torgersen37.817.11863300      2007
+Adelie   Torgersen37.817.31803700      2007
+Adelie   Torgersen41.117.61823200female2007
+Adelie   Torgersen38.621.21913800male  2007
+Adelie   Torgersen34.621.11984400male  2007
+Adelie   Torgersen36.617.81853700female2007
+Adelie   Torgersen38.719.01953450female2007
+Adelie   Torgersen42.520.71974500male  2007
+Adelie   Torgersen34.418.41843325female2007
+Adelie   Torgersen46.021.51944200male  2007
+Adelie   Biscoe   37.818.31743400female2007
+Adelie   Biscoe   37.718.71803600male  2007
+Adelie   Biscoe   35.919.21893800female2007
+Adelie   Biscoe   38.218.11853950male  2007
+Adelie   Biscoe   38.817.21803800male  2007
+Adelie   Biscoe   35.318.91873800female2007
+Adelie   Biscoe   40.618.61833550male  2007
+Adelie   Biscoe   40.517.91873200female2007
+Adelie   Biscoe   37.918.61723150female2007
+Adelie   Biscoe   40.518.91803950male  2007
+Adelie   Dream    39.516.71783250female2007
+Adelie   Dream    37.218.11783900male  2007
+Adelie   Dream    39.517.81883300female2007
+Adelie   Dream    40.918.91843900male  2007
+Adelie   Dream    36.417.01953325female2007
+Adelie   Dream    39.221.11964150male  2007
+Adelie   Dream    38.820.01903950male  2007
+Adelie   Dream    42.218.51803550female2007
+Adelie   Dream    37.619.31813300female2007
+Adelie   Dream    39.819.11844650male  2007
+Adelie   Dream    36.518.01823150female2007
+Adelie   Dream    40.818.41953900male  2007
+Adelie   Dream    36.018.51863100female2007
+Adelie   Dream    44.119.71964400male  2007
+Adelie   Dream    37.016.91853000female2007
+Adelie   Dream    39.618.81904600male  2007
+Adelie   Dream    41.119.01823425male  2007
+Adelie   Dream    37.518.91792975      2007
+Adelie   Dream    36.017.91903450female2007
+Adelie   Dream    42.321.21914150male  2007
+Adelie   Biscoe   39.617.71863500female2008
+Adelie   Biscoe   40.118.91884300male  2008
+Adelie   Biscoe   35.017.91903450female2008
+Adelie   Biscoe   42.019.52004050male  2008
+Adelie   Biscoe   34.518.11872900female2008
+Adelie   Biscoe   41.418.61913700male  2008
+Adelie   Biscoe   39.017.51863550female2008
+Adelie   Biscoe   40.618.81933800male  2008
+Adelie   Biscoe   36.516.61812850female2008
+Adelie   Biscoe   37.619.11943750male  2008
+Adelie   Biscoe   35.716.91853150female2008
+Adelie   Biscoe   41.321.11954400male  2008
+Adelie   Biscoe   37.617.01853600female2008
+Adelie   Biscoe   41.118.21924050male  2008
+Adelie   Biscoe   36.417.11842850female2008
+Adelie   Biscoe   41.618.01923950male  2008
+Adelie   Biscoe   35.516.21953350female2008
+Adelie   Biscoe   41.119.11884100male  2008
+Adelie   Torgersen35.916.61903050female2008
+Adelie   Torgersen41.819.41984450male  2008
+Adelie   Torgersen33.519.01903600female2008
+Adelie   Torgersen39.718.41903900male  2008
+Adelie   Torgersen39.617.21963550female2008
+Adelie   Torgersen45.818.91974150male  2008
+Adelie   Torgersen35.517.51903700female2008
+Adelie   Torgersen42.818.51954250male  2008
+Adelie   Torgersen40.916.81913700female2008
+Adelie   Torgersen37.219.41843900male  2008
+Adelie   Torgersen36.216.11873550female2008
+Adelie   Torgersen42.119.11954000male  2008
+Adelie   Torgersen34.617.21893200female2008
+Adelie   Torgersen42.917.61964700male  2008
+Adelie   Torgersen36.718.81873800female2008
+Adelie   Torgersen35.119.41934200male  2008
+Adelie   Dream    37.317.81913350female2008
+Adelie   Dream    41.320.31943550male  2008
+Adelie   Dream    36.319.51903800male  2008
+Adelie   Dream    36.918.61893500female2008
+Adelie   Dream    38.319.21893950male  2008
+Adelie   Dream    38.918.81903600female2008
+Adelie   Dream    35.718.02023550female2008
+Adelie   Dream    41.118.12054300male  2008
+Adelie   Dream    34.017.11853400female2008
+Adelie   Dream    39.618.11864450male  2008
+Adelie   Dream    36.217.31873300female2008
+Adelie   Dream    40.818.92084300male  2008
+Adelie   Dream    38.118.61903700female2008
+Adelie   Dream    40.318.51964350male  2008
+Adelie   Dream    33.116.11782900female2008
+Adelie   Dream    43.218.51924100male  2008
+Adelie   Biscoe   35.017.91923725female2009
+Adelie   Biscoe   41.020.02034725male  2009
+Adelie   Biscoe   37.716.01833075female2009
+Adelie   Biscoe   37.820.01904250male  2009
+Adelie   Biscoe   37.918.61932925female2009
+Adelie   Biscoe   39.718.91843550male  2009
+Adelie   Biscoe   38.617.21993750female2009
+Adelie   Biscoe   38.220.01903900male  2009
+Adelie   Biscoe   38.117.01813175female2009
+Adelie   Biscoe   43.219.01974775male  2009
+Adelie   Biscoe   38.116.51983825female2009
+Adelie   Biscoe   45.620.31914600male  2009
+Adelie   Biscoe   39.717.71933200female2009
+Adelie   Biscoe   42.219.51974275male  2009
+Adelie   Biscoe   39.620.71913900female2009
+Adelie   Biscoe   42.718.31964075male  2009
+Adelie   Torgersen38.617.01882900female2009
+Adelie   Torgersen37.320.51993775male  2009
+Adelie   Torgersen35.717.01893350female2009
+Adelie   Torgersen41.118.61893325male  2009
+Adelie   Torgersen36.217.21873150female2009
+Adelie   Torgersen37.719.81983500male  2009
+Adelie   Torgersen40.217.01763450female2009
+Adelie   Torgersen41.418.52023875male  2009
+Adelie   Torgersen35.215.91863050female2009
+Adelie   Torgersen40.619.01994000male  2009
+Adelie   Torgersen38.817.61913275female2009
+Adelie   Torgersen41.518.31954300male  2009
+Adelie   Torgersen39.017.11913050female2009
+Adelie   Torgersen44.118.02104000male  2009
+Adelie   Torgersen38.517.91903325female2009
+Adelie   Torgersen43.119.21973500male  2009
+Adelie   Dream    36.818.51933500female2009
+Adelie   Dream    37.518.51994475male  2009
+Adelie   Dream    38.117.61873425female2009
+Adelie   Dream    41.117.51903900male  2009
+Adelie   Dream    35.617.51913175female2009
+Adelie   Dream    40.220.12003975male  2009
+Adelie   Dream    37.016.51853400female2009
+Adelie   Dream    39.717.91934250male  2009
+Adelie   Dream    40.217.11933400female2009
+Adelie   Dream    40.617.21873475male  2009
+Adelie   Dream    32.115.51883050female2009
+Adelie   Dream    40.717.01903725male  2009
+Adelie   Dream    37.316.81923000female2009
+Adelie   Dream    39.018.71853650male  2009
+Adelie   Dream    39.218.61904250male  2009
+Adelie   Dream    36.618.41843475female2009
+Adelie   Dream    36.017.81953450female2009
+Adelie   Dream    37.818.11933750male  2009
+Adelie   Dream    36.017.11873700female2009
+Adelie   Dream    41.518.52014000male  2009
+Gentoo   Biscoe   46.113.22114500female2007
+Gentoo   Biscoe   50.016.32305700male  2007
+Gentoo   Biscoe   48.714.12104450female2007
+Gentoo   Biscoe   50.015.22185700male  2007
+Gentoo   Biscoe   47.614.52155400male  2007
+Gentoo   Biscoe   46.513.52104550female2007
+Gentoo   Biscoe   45.414.62114800female2007
+Gentoo   Biscoe   46.715.32195200male  2007
+Gentoo   Biscoe   43.313.42094400female2007
+Gentoo   Biscoe   46.815.42155150male  2007
+Gentoo   Biscoe   40.913.72144650female2007
+Gentoo   Biscoe   49.016.12165550male  2007
+Gentoo   Biscoe   45.513.72144650female2007
+Gentoo   Biscoe   48.414.62135850male  2007
+Gentoo   Biscoe   45.814.62104200female2007
+Gentoo   Biscoe   49.315.72175850male  2007
+Gentoo   Biscoe   42.013.52104150female2007
+Gentoo   Biscoe   49.215.22216300male  2007
+Gentoo   Biscoe   46.214.52094800female2007
+Gentoo   Biscoe   48.715.12225350male  2007
+Gentoo   Biscoe   50.214.32185700male  2007
+Gentoo   Biscoe   45.114.52155000female2007
+Gentoo   Biscoe   46.514.52134400female2007
+Gentoo   Biscoe   46.315.82155050male  2007
+Gentoo   Biscoe   42.913.12155000female2007
+Gentoo   Biscoe   46.115.12155100male  2007
+Gentoo   Biscoe   44.514.32164100      2007
+Gentoo   Biscoe   47.815.02155650male  2007
+Gentoo   Biscoe   48.214.32104600female2007
+Gentoo   Biscoe   50.015.32205550male  2007
+Gentoo   Biscoe   47.315.32225250male  2007
+Gentoo   Biscoe   42.814.22094700female2007
+Gentoo   Biscoe   45.114.52075050female2007
+Gentoo   Biscoe   59.617.02306050male  2007
+Gentoo   Biscoe   49.114.82205150female2008
+Gentoo   Biscoe   48.416.32205400male  2008
+Gentoo   Biscoe   42.613.72134950female2008
+Gentoo   Biscoe   44.417.32195250male  2008
+Gentoo   Biscoe   44.013.62084350female2008
+Gentoo   Biscoe   48.715.72085350male  2008
+Gentoo   Biscoe   42.713.72083950female2008
+Gentoo   Biscoe   49.616.02255700male  2008
+Gentoo   Biscoe   45.313.72104300female2008
+Gentoo   Biscoe   49.615.02164750male  2008
+Gentoo   Biscoe   50.515.92225550male  2008
+Gentoo   Biscoe   43.613.92174900female2008
+Gentoo   Biscoe   45.513.92104200female2008
+Gentoo   Biscoe   50.515.92255400male  2008
+Gentoo   Biscoe   44.913.32135100female2008
+Gentoo   Biscoe   45.215.82155300male  2008
+Gentoo   Biscoe   46.614.22104850female2008
+Gentoo   Biscoe   48.514.12205300male  2008
+Gentoo   Biscoe   45.114.42104400female2008
+Gentoo   Biscoe   50.115.02255000male  2008
+Gentoo   Biscoe   46.514.42174900female2008
+Gentoo   Biscoe   45.015.42205050male  2008
+Gentoo   Biscoe   43.813.92084300female2008
+Gentoo   Biscoe   45.515.02205000male  2008
+Gentoo   Biscoe   43.214.52084450female2008
+Gentoo   Biscoe   50.415.32245550male  2008
+Gentoo   Biscoe   45.313.82084200female2008
+Gentoo   Biscoe   46.214.92215300male  2008
+Gentoo   Biscoe   45.713.92144400female2008
+Gentoo   Biscoe   54.315.72315650male  2008
+Gentoo   Biscoe   45.814.22194700female2008
+Gentoo   Biscoe   49.816.82305700male  2008
+Gentoo   Biscoe   46.214.42144650      2008
+Gentoo   Biscoe   49.516.22295800male  2008
+Gentoo   Biscoe   43.514.22204700female2008
+Gentoo   Biscoe   50.715.02235550male  2008
+Gentoo   Biscoe   47.715.02164750female2008
+Gentoo   Biscoe   46.415.62215000male  2008
+Gentoo   Biscoe   48.215.62215100male  2008
+Gentoo   Biscoe   46.514.82175200female2008
+Gentoo   Biscoe   46.415.02164700female2008
+Gentoo   Biscoe   48.616.02305800male  2008
+Gentoo   Biscoe   47.514.22094600female2008
+Gentoo   Biscoe   51.116.32206000male  2008
+Gentoo   Biscoe   45.213.82154750female2008
+Gentoo   Biscoe   45.216.42235950male  2008
+Gentoo   Biscoe   49.114.52124625female2009
+Gentoo   Biscoe   52.515.62215450male  2009
+Gentoo   Biscoe   47.414.62124725female2009
+Gentoo   Biscoe   50.015.92245350male  2009
+Gentoo   Biscoe   44.913.82124750female2009
+Gentoo   Biscoe   50.817.32285600male  2009
+Gentoo   Biscoe   43.414.42184600female2009
+Gentoo   Biscoe   51.314.22185300male  2009
+Gentoo   Biscoe   47.514.02124875female2009
+Gentoo   Biscoe   52.117.02305550male  2009
+Gentoo   Biscoe   47.515.02184950female2009
+Gentoo   Biscoe   52.217.12285400male  2009
+Gentoo   Biscoe   45.514.52124750female2009
+Gentoo   Biscoe   49.516.12245650male  2009
+Gentoo   Biscoe   44.514.72144850female2009
+Gentoo   Biscoe   50.815.72265200male  2009
+Gentoo   Biscoe   49.415.82164925male  2009
+Gentoo   Biscoe   46.914.62224875female2009
+Gentoo   Biscoe   48.414.42034625female2009
+Gentoo   Biscoe   51.116.52255250male  2009
+Gentoo   Biscoe   48.515.02194850female2009
+Gentoo   Biscoe   55.917.02285600male  2009
+Gentoo   Biscoe   47.215.52154975female2009
+Gentoo   Biscoe   49.115.02285500male  2009
+Gentoo   Biscoe   47.313.82164725      2009
+Gentoo   Biscoe   46.816.12155500male  2009
+Gentoo   Biscoe   41.714.72104700female2009
+Gentoo   Biscoe   53.415.82195500male  2009
+Gentoo   Biscoe   43.314.02084575female2009
+Gentoo   Biscoe   48.115.12095500male  2009
+Gentoo   Biscoe   50.515.22165000female2009
+Gentoo   Biscoe   49.815.92295950male  2009
+Gentoo   Biscoe   43.515.22134650female2009
+Gentoo   Biscoe   51.516.32305500male  2009
+Gentoo   Biscoe   46.214.12174375female2009
+Gentoo   Biscoe   55.116.02305850male  2009
+Gentoo   Biscoe   44.515.72174875      2009
+Gentoo   Biscoe   48.816.22226000male  2009
+Gentoo   Biscoe   47.213.72144925female2009
+Gentoo   Biscoe                        2009
+Gentoo   Biscoe   46.814.32154850female2009
+Gentoo   Biscoe   50.415.72225750male  2009
+Gentoo   Biscoe   45.214.82125200female2009
+Gentoo   Biscoe   49.916.12135400male  2009
+ChinstrapDream    46.517.91923500female2007
+ChinstrapDream    50.019.51963900male  2007
+ChinstrapDream    51.319.21933650male  2007
+ChinstrapDream    45.418.71883525female2007
+ChinstrapDream    52.719.81973725male  2007
+ChinstrapDream    45.217.81983950female2007
+ChinstrapDream    46.118.21783250female2007
+ChinstrapDream    51.318.21973750male  2007
+ChinstrapDream    46.018.91954150female2007
+ChinstrapDream    51.319.91983700male  2007
+ChinstrapDream    46.617.81933800female2007
+ChinstrapDream    51.720.31943775male  2007
+ChinstrapDream    47.017.31853700female2007
+ChinstrapDream    52.018.12014050male  2007
+ChinstrapDream    45.917.11903575female2007
+ChinstrapDream    50.519.62014050male  2007
+ChinstrapDream    50.320.01973300male  2007
+ChinstrapDream    58.017.81813700female2007
+ChinstrapDream    46.418.61903450female2007
+ChinstrapDream    49.218.21954400male  2007
+ChinstrapDream    42.417.31813600female2007
+ChinstrapDream    48.517.51913400male  2007
+ChinstrapDream    43.216.61872900female2007
+ChinstrapDream    50.619.41933800male  2007
+ChinstrapDream    46.717.91953300female2007
+ChinstrapDream    52.019.01974150male  2007
+ChinstrapDream    50.518.42003400female2008
+ChinstrapDream    49.519.02003800male  2008
+ChinstrapDream    46.417.81913700female2008
+ChinstrapDream    52.820.02054550male  2008
+ChinstrapDream    40.916.61873200female2008
+ChinstrapDream    54.220.82014300male  2008
+ChinstrapDream    42.516.71873350female2008
+ChinstrapDream    51.018.82034100male  2008
+ChinstrapDream    49.718.61953600male  2008
+ChinstrapDream    47.516.81993900female2008
+ChinstrapDream    47.618.31953850female2008
+ChinstrapDream    52.020.72104800male  2008
+ChinstrapDream    46.916.61922700female2008
+ChinstrapDream    53.519.92054500male  2008
+ChinstrapDream    49.019.52103950male  2008
+ChinstrapDream    46.217.51873650female2008
+ChinstrapDream    50.919.11963550male  2008
+ChinstrapDream    45.517.01963500female2008
+ChinstrapDream    50.917.91963675female2009
+ChinstrapDream    50.818.52014450male  2009
+ChinstrapDream    50.117.91903400female2009
+ChinstrapDream    49.019.62124300male  2009
+ChinstrapDream    51.518.71873250male  2009
+ChinstrapDream    49.817.31983675female2009
+ChinstrapDream    48.116.41993325female2009
+ChinstrapDream    51.419.02013950male  2009
+ChinstrapDream    45.717.31933600female2009
+ChinstrapDream    50.719.72034050male  2009
+ChinstrapDream    42.517.31873350female2009
+ChinstrapDream    52.218.81973450male  2009
+ChinstrapDream    45.216.61913250female2009
+ChinstrapDream    49.319.92034050male  2009
+ChinstrapDream    50.218.82023800male  2009
+ChinstrapDream    45.619.41943525female2009
+ChinstrapDream    51.919.52063950male  2009
+ChinstrapDream    46.816.51893650female2009
+ChinstrapDream    45.717.01953650female2009
+ChinstrapDream    55.819.82074000male  2009
+ChinstrapDream    43.518.12023400female2009
+ChinstrapDream    49.618.21933775male  2009
+ChinstrapDream    50.819.02104100male  2009
+ChinstrapDream    50.218.71983775female2009
