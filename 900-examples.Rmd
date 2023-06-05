@@ -72,7 +72,7 @@ uk_census_pop <- readxl::read_excel(
   range = "A7:E382"
 ) |> 
   janitor::clean_names() |> 
-  rename("area_code" = area_code_note_2)
+  dplyr::rename(area_code = area_code_note_2)
 
 uk_census_pop
 
@@ -84,24 +84,17 @@ Let's explore approaches to extracting the information that is embedded in the d
 
 The first approach we can take is to extract the regional element in the "area_code" variable, and use that to filter the data.
 
-For example, if we want to plot the population by the UA level, an approach would be to identify all those rows that have an Area code that starts with one of the following:
+For example, if we want to plot the population in England by the UA level, an approach would be to identify all those rows that have an Area code that starts with one of the following:
 
 Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11)
 
-For this, we can design a regular expression that 
+For this, we can design a regular expression that identifies a letter "E" at the beginning (by using the "^" character). This is then followed by either a 0 or a 1 in the 2nd character spot, and in the third spot one of 6, 9, 0, or 1. 
 
 ```{r}
 
-ua_list <- c("E06", "E09", "E10", "E11")
-
 ua_pop <- uk_census_pop |> 
   filter(str_detect(area_code, "^E[01][6901]"))
 
-ua_pop <- uk_census_pop |> 
-  filter(str_detect(area_code, "^E[01][6901]"))
-
-ua_pop  |>  
-  distinct(str_sub(area_code, 1, 3))
 
 ```
 
@@ -142,11 +135,63 @@ ua_pop  |>
 
 ```
 
-While this approach works for our particular example, it 
+While this approach works for our particular example, it will require careful coding every time we want to use it. 
 
 ### Approach 2 - build a concordance table
 
-The first approach we can take is to create a separate concordance table, and then join that table to our data.
+A second and more flexible approach we can take is to create a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once this table is built, it can be joined that our data, as well as any other table we might need to use in the future.
+
+We will save this table as a CSV file, so it's available quickly for other applications. But we can build it programatically in R, using the {tibble} package. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
+
+In addition to the name of the category, the level in the hierarchy is also encoded in this table. 
+
+```{r}
+
+uk_region_table <- tribble(
+  # header row
+  ~"area_code_3", ~"category", ~"geo_level",
+  "K04", "England & Wales", "0",
+  "E92", "England", "1",
+  "E12", "Region", "2",
+  "E09", "London Borough", "3",
+  "E10", "County",  "3",
+  "E07", "Non-Metropolitan District", "4",
+  "E06", "Unitary Authority", "3",
+  "E11", "Metropolitan County", "3",
+  "E08", "Metropolitan District", "4",
+  "W92", "Wales", "1",
+  "W06", "Unitary Authority", "3"
+)
+
+uk_region_table
+```
+
+
+Our next step is to extract the unique values in the area code and area name from the original data file.
+
+```{r}
+uk_census_pop_geo <- uk_census_pop |> 
+#  select(area_code, area_name) |> 
+  mutate(area_code_3 = str_sub(uk_census_pop$area_code, 1, 3)) |> 
+  # join with classification table
+  left_join(
+    uk_region_table,
+    by = c("area_code_3" = "area_code_3")
+    )
+
+uk_census_pop_geo
+```
+
+
+Because the level was encoded, it is possible to filter on the level to get a total population for England and Wales.
+
+```{r}
+uk_census_pop_geo |> 
+  filter(geo_level == "3") |> 
+  summarise(total_population = sum(all_persons))
+```
+
+
 
 ### Approach 2 - use Excel's formatting
 
