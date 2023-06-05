@@ -5,6 +5,8 @@
 # packages
 # --------
 
+library(memisc) # for applying labels etc to PUMF
+
 
 # print and publish
 library(gt)
@@ -23,7 +25,6 @@ library(glue)
 library(here)
 library(janitor)
 library(labelled)
-library(memisc) # for applying labels etc to PUMF
 
 # 
 # reference docs:
@@ -51,4 +52,9 @@ library(jsonlite)     # working with JSON data structures
 
 # validate
 library(validate)
+
+# working with Excel files
+library(tidyxl)
+library(unpivotr)
+
 
