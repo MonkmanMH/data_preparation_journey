@@ -1,0 +1,376 @@
+area_code,area_code_3,category,geo_level,area_name,country,region,ua,city
+K04000001,K04,England & Wales,0,England and Wales,NA,NA,NA,NA
+E92000001,E92,England,1,England,England,NA,NA,NA
+E12000001,E12,Region,2,North East,England,North East,NA,NA
+E06000047,E06,Unitary Authority,3,County Durham,England,North East,County Durham,NA
+E06000005,E06,Unitary Authority,3,Darlington,England,North East,Darlington,NA
+E06000001,E06,Unitary Authority,3,Hartlepool,England,North East,Hartlepool,NA
+E06000002,E06,Unitary Authority,3,Middlesbrough,England,North East,Middlesbrough,NA
+E06000057,E06,Unitary Authority,3,Northumberland,England,North East,Northumberland,NA
+E06000003,E06,Unitary Authority,3,Redcar and Cleveland,England,North East,Redcar and Cleveland,NA
+E06000004,E06,Unitary Authority,3,Stockton-on-Tees,England,North East,Stockton-on-Tees,NA
+E11000007,E11,Metropolitan County,3,Tyne and Wear (Met County),England,North East,Tyne and Wear (Met County),NA
+E08000037,E08,Metropolitan District,4,Gateshead,England,North East,Tyne and Wear (Met County),Gateshead
+E08000021,E08,Metropolitan District,4,Newcastle upon Tyne,England,North East,Tyne and Wear (Met County),Newcastle upon Tyne
+E08000022,E08,Metropolitan District,4,North Tyneside,England,North East,Tyne and Wear (Met County),North Tyneside
+E08000023,E08,Metropolitan District,4,South Tyneside,England,North East,Tyne and Wear (Met County),South Tyneside
+E08000024,E08,Metropolitan District,4,Sunderland,England,North East,Tyne and Wear (Met County),Sunderland
+E12000002,E12,Region,2,North West,England,North West,NA,NA
+E06000008,E06,Unitary Authority,3,Blackburn with Darwen,England,North West,Blackburn with Darwen,NA
+E06000009,E06,Unitary Authority,3,Blackpool,England,North West,Blackpool,NA
+E06000049,E06,Unitary Authority,3,Cheshire East,England,North West,Cheshire East,NA
+E06000050,E06,Unitary Authority,3,Cheshire West and Chester,England,North West,Cheshire West and Chester,NA
+E06000006,E06,Unitary Authority,3,Halton,England,North West,Halton,NA
+E06000007,E06,Unitary Authority,3,Warrington,England,North West,Warrington,NA
+E10000006,E10,County,3,Cumbria,England,North West,Cumbria,NA
+E07000026,E07,Non-Metropolitan District,4,Allerdale,England,North West,Cumbria,Allerdale
+E07000027,E07,Non-Metropolitan District,4,Barrow-in-Furness,England,North West,Cumbria,Barrow-in-Furness
+E07000028,E07,Non-Metropolitan District,4,Carlisle,England,North West,Cumbria,Carlisle
+E07000029,E07,Non-Metropolitan District,4,Copeland,England,North West,Cumbria,Copeland
+E07000030,E07,Non-Metropolitan District,4,Eden,England,North West,Cumbria,Eden
+E07000031,E07,Non-Metropolitan District,4,South Lakeland,England,North West,Cumbria,South Lakeland
+E11000001,E11,Metropolitan County,3,Greater Manchester (Met County),England,North West,Greater Manchester (Met County),NA
+E08000001,E08,Metropolitan District,4,Bolton,England,North West,Greater Manchester (Met County),Bolton
+E08000002,E08,Metropolitan District,4,Bury,England,North West,Greater Manchester (Met County),Bury
+E08000003,E08,Metropolitan District,4,Manchester,England,North West,Greater Manchester (Met County),Manchester
+E08000004,E08,Metropolitan District,4,Oldham,England,North West,Greater Manchester (Met County),Oldham
+E08000005,E08,Metropolitan District,4,Rochdale,England,North West,Greater Manchester (Met County),Rochdale
+E08000006,E08,Metropolitan District,4,Salford,England,North West,Greater Manchester (Met County),Salford
+E08000007,E08,Metropolitan District,4,Stockport,England,North West,Greater Manchester (Met County),Stockport
+E08000008,E08,Metropolitan District,4,Tameside,England,North West,Greater Manchester (Met County),Tameside
+E08000009,E08,Metropolitan District,4,Trafford,England,North West,Greater Manchester (Met County),Trafford
+E08000010,E08,Metropolitan District,4,Wigan,England,North West,Greater Manchester (Met County),Wigan
+E10000017,E10,County,3,Lancashire,England,North West,Lancashire,NA
+E07000117,E07,Non-Metropolitan District,4,Burnley,England,North West,Lancashire,Burnley
+E07000118,E07,Non-Metropolitan District,4,Chorley,England,North West,Lancashire,Chorley
+E07000119,E07,Non-Metropolitan District,4,Fylde,England,North West,Lancashire,Fylde
+E07000120,E07,Non-Metropolitan District,4,Hyndburn,England,North West,Lancashire,Hyndburn
+E07000121,E07,Non-Metropolitan District,4,Lancaster,England,North West,Lancashire,Lancaster
+E07000122,E07,Non-Metropolitan District,4,Pendle,England,North West,Lancashire,Pendle
+E07000123,E07,Non-Metropolitan District,4,Preston,England,North West,Lancashire,Preston
+E07000124,E07,Non-Metropolitan District,4,Ribble Valley,England,North West,Lancashire,Ribble Valley
+E07000125,E07,Non-Metropolitan District,4,Rossendale,England,North West,Lancashire,Rossendale
+E07000126,E07,Non-Metropolitan District,4,South Ribble,England,North West,Lancashire,South Ribble
+E07000127,E07,Non-Metropolitan District,4,West Lancashire,England,North West,Lancashire,West Lancashire
+E07000128,E07,Non-Metropolitan District,4,Wyre,England,North West,Lancashire,Wyre
+E11000002,E11,Metropolitan County,3,Merseyside (Met County),England,North West,Merseyside (Met County),NA
+E08000011,E08,Metropolitan District,4,Knowsley,England,North West,Merseyside (Met County),Knowsley
+E08000012,E08,Metropolitan District,4,Liverpool,England,North West,Merseyside (Met County),Liverpool
+E08000014,E08,Metropolitan District,4,Sefton,England,North West,Merseyside (Met County),Sefton
+E08000013,E08,Metropolitan District,4,St. Helens,England,North West,Merseyside (Met County),St. Helens
+E08000015,E08,Metropolitan District,4,Wirral,England,North West,Merseyside (Met County),Wirral
+E12000003,E12,Region,2,Yorkshire and The Humber,England,Yorkshire and The Humber,NA,NA
+E06000011,E06,Unitary Authority,3,East Riding of Yorkshire,England,Yorkshire and The Humber,East Riding of Yorkshire,NA
+E06000010,E06,Unitary Authority,3,"Kingston upon Hull, City of",England,Yorkshire and The Humber,"Kingston upon Hull, City of",NA
+E06000012,E06,Unitary Authority,3,North East Lincolnshire,England,Yorkshire and The Humber,North East Lincolnshire,NA
+E06000013,E06,Unitary Authority,3,North Lincolnshire,England,Yorkshire and The Humber,North Lincolnshire,NA
+E06000014,E06,Unitary Authority,3,York,England,Yorkshire and The Humber,York,NA
+E10000023,E10,County,3,North Yorkshire,England,Yorkshire and The Humber,North Yorkshire,NA
+E07000163,E07,Non-Metropolitan District,4,Craven,England,Yorkshire and The Humber,North Yorkshire,Craven
+E07000164,E07,Non-Metropolitan District,4,Hambleton,England,Yorkshire and The Humber,North Yorkshire,Hambleton
+E07000165,E07,Non-Metropolitan District,4,Harrogate,England,Yorkshire and The Humber,North Yorkshire,Harrogate
+E07000166,E07,Non-Metropolitan District,4,Richmondshire,England,Yorkshire and The Humber,North Yorkshire,Richmondshire
+E07000167,E07,Non-Metropolitan District,4,Ryedale,England,Yorkshire and The Humber,North Yorkshire,Ryedale
+E07000168,E07,Non-Metropolitan District,4,Scarborough,England,Yorkshire and The Humber,North Yorkshire,Scarborough
+E07000169,E07,Non-Metropolitan District,4,Selby,England,Yorkshire and The Humber,North Yorkshire,Selby
+E11000003,E11,Metropolitan County,3,South Yorkshire (Met County),England,Yorkshire and The Humber,South Yorkshire (Met County),NA
+E08000016,E08,Metropolitan District,4,Barnsley,England,Yorkshire and The Humber,South Yorkshire (Met County),Barnsley
+E08000017,E08,Metropolitan District,4,Doncaster,England,Yorkshire and The Humber,South Yorkshire (Met County),Doncaster
+E08000018,E08,Metropolitan District,4,Rotherham,England,Yorkshire and The Humber,South Yorkshire (Met County),Rotherham
+E08000019,E08,Metropolitan District,4,Sheffield,England,Yorkshire and The Humber,South Yorkshire (Met County),Sheffield
+E11000006,E11,Metropolitan County,3,West Yorkshire (Met County),England,Yorkshire and The Humber,West Yorkshire (Met County),NA
+E08000032,E08,Metropolitan District,4,Bradford,England,Yorkshire and The Humber,West Yorkshire (Met County),Bradford
+E08000033,E08,Metropolitan District,4,Calderdale,England,Yorkshire and The Humber,West Yorkshire (Met County),Calderdale
+E08000034,E08,Metropolitan District,4,Kirklees,England,Yorkshire and The Humber,West Yorkshire (Met County),Kirklees
+E08000035,E08,Metropolitan District,4,Leeds,England,Yorkshire and The Humber,West Yorkshire (Met County),Leeds
+E08000036,E08,Metropolitan District,4,Wakefield,England,Yorkshire and The Humber,West Yorkshire (Met County),Wakefield
+E12000004,E12,Region,2,East Midlands,England,East Midlands,NA,NA
+E06000015,E06,Unitary Authority,3,Derby,England,East Midlands,Derby,NA
+E06000016,E06,Unitary Authority,3,Leicester,England,East Midlands,Leicester,NA
+E06000061,E06,Unitary Authority,3,North Northamptonshire [note 3],England,East Midlands,North Northamptonshire [note 3],NA
+E06000018,E06,Unitary Authority,3,Nottingham,England,East Midlands,Nottingham,NA
+E06000017,E06,Unitary Authority,3,Rutland,England,East Midlands,Rutland,NA
+E06000062,E06,Unitary Authority,3,West Northamptonshire [note 4],England,East Midlands,West Northamptonshire [note 4],NA
+E10000007,E10,County,3,Derbyshire,England,East Midlands,Derbyshire,NA
+E07000032,E07,Non-Metropolitan District,4,Amber Valley,England,East Midlands,Derbyshire,Amber Valley
+E07000033,E07,Non-Metropolitan District,4,Bolsover,England,East Midlands,Derbyshire,Bolsover
+E07000034,E07,Non-Metropolitan District,4,Chesterfield,England,East Midlands,Derbyshire,Chesterfield
+E07000035,E07,Non-Metropolitan District,4,Derbyshire Dales,England,East Midlands,Derbyshire,Derbyshire Dales
+E07000036,E07,Non-Metropolitan District,4,Erewash,England,East Midlands,Derbyshire,Erewash
+E07000037,E07,Non-Metropolitan District,4,High Peak,England,East Midlands,Derbyshire,High Peak
+E07000038,E07,Non-Metropolitan District,4,North East Derbyshire,England,East Midlands,Derbyshire,North East Derbyshire
+E07000039,E07,Non-Metropolitan District,4,South Derbyshire,England,East Midlands,Derbyshire,South Derbyshire
+E10000018,E10,County,3,Leicestershire,England,East Midlands,Leicestershire,NA
+E07000129,E07,Non-Metropolitan District,4,Blaby,England,East Midlands,Leicestershire,Blaby
+E07000130,E07,Non-Metropolitan District,4,Charnwood,England,East Midlands,Leicestershire,Charnwood
+E07000131,E07,Non-Metropolitan District,4,Harborough,England,East Midlands,Leicestershire,Harborough
+E07000132,E07,Non-Metropolitan District,4,Hinckley and Bosworth,England,East Midlands,Leicestershire,Hinckley and Bosworth
+E07000133,E07,Non-Metropolitan District,4,Melton,England,East Midlands,Leicestershire,Melton
+E07000134,E07,Non-Metropolitan District,4,North West Leicestershire,England,East Midlands,Leicestershire,North West Leicestershire
+E07000135,E07,Non-Metropolitan District,4,Oadby and Wigston,England,East Midlands,Leicestershire,Oadby and Wigston
+E10000019,E10,County,3,Lincolnshire,England,East Midlands,Lincolnshire,NA
+E07000136,E07,Non-Metropolitan District,4,Boston,England,East Midlands,Lincolnshire,Boston
+E07000137,E07,Non-Metropolitan District,4,East Lindsey,England,East Midlands,Lincolnshire,East Lindsey
+E07000138,E07,Non-Metropolitan District,4,Lincoln,England,East Midlands,Lincolnshire,Lincoln
+E07000139,E07,Non-Metropolitan District,4,North Kesteven,England,East Midlands,Lincolnshire,North Kesteven
+E07000140,E07,Non-Metropolitan District,4,South Holland,England,East Midlands,Lincolnshire,South Holland
+E07000141,E07,Non-Metropolitan District,4,South Kesteven,England,East Midlands,Lincolnshire,South Kesteven
+E07000142,E07,Non-Metropolitan District,4,West Lindsey,England,East Midlands,Lincolnshire,West Lindsey
+E10000024,E10,County,3,Nottinghamshire,England,East Midlands,Nottinghamshire,NA
+E07000170,E07,Non-Metropolitan District,4,Ashfield,England,East Midlands,Nottinghamshire,Ashfield
+E07000171,E07,Non-Metropolitan District,4,Bassetlaw,England,East Midlands,Nottinghamshire,Bassetlaw
+E07000172,E07,Non-Metropolitan District,4,Broxtowe,England,East Midlands,Nottinghamshire,Broxtowe
+E07000173,E07,Non-Metropolitan District,4,Gedling,England,East Midlands,Nottinghamshire,Gedling
+E07000174,E07,Non-Metropolitan District,4,Mansfield,England,East Midlands,Nottinghamshire,Mansfield
+E07000175,E07,Non-Metropolitan District,4,Newark and Sherwood,England,East Midlands,Nottinghamshire,Newark and Sherwood
+E07000176,E07,Non-Metropolitan District,4,Rushcliffe,England,East Midlands,Nottinghamshire,Rushcliffe
+E12000005,E12,Region,2,West Midlands,England,West Midlands,NA,NA
+E06000019,E06,Unitary Authority,3,"Herefordshire, County of",England,West Midlands,"Herefordshire, County of",NA
+E06000051,E06,Unitary Authority,3,Shropshire,England,West Midlands,Shropshire,NA
+E06000021,E06,Unitary Authority,3,Stoke-on-Trent,England,West Midlands,Stoke-on-Trent,NA
+E06000020,E06,Unitary Authority,3,Telford and Wrekin,England,West Midlands,Telford and Wrekin,NA
+E10000028,E10,County,3,Staffordshire,England,West Midlands,Staffordshire,NA
+E07000192,E07,Non-Metropolitan District,4,Cannock Chase,England,West Midlands,Staffordshire,Cannock Chase
+E07000193,E07,Non-Metropolitan District,4,East Staffordshire,England,West Midlands,Staffordshire,East Staffordshire
+E07000194,E07,Non-Metropolitan District,4,Lichfield,England,West Midlands,Staffordshire,Lichfield
+E07000195,E07,Non-Metropolitan District,4,Newcastle-under-Lyme,England,West Midlands,Staffordshire,Newcastle-under-Lyme
+E07000196,E07,Non-Metropolitan District,4,South Staffordshire,England,West Midlands,Staffordshire,South Staffordshire
+E07000197,E07,Non-Metropolitan District,4,Stafford,England,West Midlands,Staffordshire,Stafford
+E07000198,E07,Non-Metropolitan District,4,Staffordshire Moorlands,England,West Midlands,Staffordshire,Staffordshire Moorlands
+E07000199,E07,Non-Metropolitan District,4,Tamworth,England,West Midlands,Staffordshire,Tamworth
+E10000031,E10,County,3,Warwickshire,England,West Midlands,Warwickshire,NA
+E07000218,E07,Non-Metropolitan District,4,North Warwickshire,England,West Midlands,Warwickshire,North Warwickshire
+E07000219,E07,Non-Metropolitan District,4,Nuneaton and Bedworth,England,West Midlands,Warwickshire,Nuneaton and Bedworth
+E07000220,E07,Non-Metropolitan District,4,Rugby,England,West Midlands,Warwickshire,Rugby
+E07000221,E07,Non-Metropolitan District,4,Stratford-on-Avon,England,West Midlands,Warwickshire,Stratford-on-Avon
+E07000222,E07,Non-Metropolitan District,4,Warwick,England,West Midlands,Warwickshire,Warwick
+E11000005,E11,Metropolitan County,3,West Midlands (Met County),England,West Midlands,West Midlands (Met County),NA
+E08000025,E08,Metropolitan District,4,Birmingham,England,West Midlands,West Midlands (Met County),Birmingham
+E08000026,E08,Metropolitan District,4,Coventry,England,West Midlands,West Midlands (Met County),Coventry
+E08000027,E08,Metropolitan District,4,Dudley,England,West Midlands,West Midlands (Met County),Dudley
+E08000028,E08,Metropolitan District,4,Sandwell,England,West Midlands,West Midlands (Met County),Sandwell
+E08000029,E08,Metropolitan District,4,Solihull,England,West Midlands,West Midlands (Met County),Solihull
+E08000030,E08,Metropolitan District,4,Walsall,England,West Midlands,West Midlands (Met County),Walsall
+E08000031,E08,Metropolitan District,4,Wolverhampton,England,West Midlands,West Midlands (Met County),Wolverhampton
+E10000034,E10,County,3,Worcestershire,England,West Midlands,Worcestershire,NA
+E07000234,E07,Non-Metropolitan District,4,Bromsgrove,England,West Midlands,Worcestershire,Bromsgrove
+E07000235,E07,Non-Metropolitan District,4,Malvern Hills,England,West Midlands,Worcestershire,Malvern Hills
+E07000236,E07,Non-Metropolitan District,4,Redditch,England,West Midlands,Worcestershire,Redditch
+E07000237,E07,Non-Metropolitan District,4,Worcester,England,West Midlands,Worcestershire,Worcester
+E07000238,E07,Non-Metropolitan District,4,Wychavon,England,West Midlands,Worcestershire,Wychavon
+E07000239,E07,Non-Metropolitan District,4,Wyre Forest,England,West Midlands,Worcestershire,Wyre Forest
+E12000006,E12,Region,2,East of England,England,East of England,NA,NA
+E06000055,E06,Unitary Authority,3,Bedford,England,East of England,Bedford,NA
+E06000056,E06,Unitary Authority,3,Central Bedfordshire,England,East of England,Central Bedfordshire,NA
+E06000032,E06,Unitary Authority,3,Luton,England,East of England,Luton,NA
+E06000031,E06,Unitary Authority,3,Peterborough,England,East of England,Peterborough,NA
+E06000033,E06,Unitary Authority,3,Southend-on-Sea,England,East of England,Southend-on-Sea,NA
+E06000034,E06,Unitary Authority,3,Thurrock,England,East of England,Thurrock,NA
+E10000003,E10,County,3,Cambridgeshire,England,East of England,Cambridgeshire,NA
+E07000008,E07,Non-Metropolitan District,4,Cambridge,England,East of England,Cambridgeshire,Cambridge
+E07000009,E07,Non-Metropolitan District,4,East Cambridgeshire,England,East of England,Cambridgeshire,East Cambridgeshire
+E07000010,E07,Non-Metropolitan District,4,Fenland,England,East of England,Cambridgeshire,Fenland
+E07000011,E07,Non-Metropolitan District,4,Huntingdonshire,England,East of England,Cambridgeshire,Huntingdonshire
+E07000012,E07,Non-Metropolitan District,4,South Cambridgeshire,England,East of England,Cambridgeshire,South Cambridgeshire
+E10000012,E10,County,3,Essex,England,East of England,Essex,NA
+E07000066,E07,Non-Metropolitan District,4,Basildon,England,East of England,Essex,Basildon
+E07000067,E07,Non-Metropolitan District,4,Braintree,England,East of England,Essex,Braintree
+E07000068,E07,Non-Metropolitan District,4,Brentwood,England,East of England,Essex,Brentwood
+E07000069,E07,Non-Metropolitan District,4,Castle Point,England,East of England,Essex,Castle Point
+E07000070,E07,Non-Metropolitan District,4,Chelmsford,England,East of England,Essex,Chelmsford
+E07000071,E07,Non-Metropolitan District,4,Colchester,England,East of England,Essex,Colchester
+E07000072,E07,Non-Metropolitan District,4,Epping Forest,England,East of England,Essex,Epping Forest
+E07000073,E07,Non-Metropolitan District,4,Harlow,England,East of England,Essex,Harlow
+E07000074,E07,Non-Metropolitan District,4,Maldon,England,East of England,Essex,Maldon
+E07000075,E07,Non-Metropolitan District,4,Rochford,England,East of England,Essex,Rochford
+E07000076,E07,Non-Metropolitan District,4,Tendring,England,East of England,Essex,Tendring
+E07000077,E07,Non-Metropolitan District,4,Uttlesford,England,East of England,Essex,Uttlesford
+E10000015,E10,County,3,Hertfordshire,England,East of England,Hertfordshire,NA
+E07000095,E07,Non-Metropolitan District,4,Broxbourne,England,East of England,Hertfordshire,Broxbourne
+E07000096,E07,Non-Metropolitan District,4,Dacorum,England,East of England,Hertfordshire,Dacorum
+E07000242,E07,Non-Metropolitan District,4,East Hertfordshire,England,East of England,Hertfordshire,East Hertfordshire
+E07000098,E07,Non-Metropolitan District,4,Hertsmere,England,East of England,Hertfordshire,Hertsmere
+E07000099,E07,Non-Metropolitan District,4,North Hertfordshire,England,East of England,Hertfordshire,North Hertfordshire
+E07000240,E07,Non-Metropolitan District,4,St Albans,England,East of England,Hertfordshire,St Albans
+E07000243,E07,Non-Metropolitan District,4,Stevenage,England,East of England,Hertfordshire,Stevenage
+E07000102,E07,Non-Metropolitan District,4,Three Rivers,England,East of England,Hertfordshire,Three Rivers
+E07000103,E07,Non-Metropolitan District,4,Watford,England,East of England,Hertfordshire,Watford
+E07000241,E07,Non-Metropolitan District,4,Welwyn Hatfield,England,East of England,Hertfordshire,Welwyn Hatfield
+E10000020,E10,County,3,Norfolk,England,East of England,Norfolk,NA
+E07000143,E07,Non-Metropolitan District,4,Breckland,England,East of England,Norfolk,Breckland
+E07000144,E07,Non-Metropolitan District,4,Broadland,England,East of England,Norfolk,Broadland
+E07000145,E07,Non-Metropolitan District,4,Great Yarmouth,England,East of England,Norfolk,Great Yarmouth
+E07000146,E07,Non-Metropolitan District,4,King’s Lynn and West Norfolk,England,East of England,Norfolk,King’s Lynn and West Norfolk
+E07000147,E07,Non-Metropolitan District,4,North Norfolk,England,East of England,Norfolk,North Norfolk
+E07000148,E07,Non-Metropolitan District,4,Norwich,England,East of England,Norfolk,Norwich
+E07000149,E07,Non-Metropolitan District,4,South Norfolk,England,East of England,Norfolk,South Norfolk
+E10000029,E10,County,3,Suffolk,England,East of England,Suffolk,NA
+E07000200,E07,Non-Metropolitan District,4,Babergh,England,East of England,Suffolk,Babergh
+E07000244,E07,Non-Metropolitan District,4,East Suffolk [note 5],England,East of England,Suffolk,East Suffolk [note 5]
+E07000202,E07,Non-Metropolitan District,4,Ipswich,England,East of England,Suffolk,Ipswich
+E07000203,E07,Non-Metropolitan District,4,Mid Suffolk,England,East of England,Suffolk,Mid Suffolk
+E07000245,E07,Non-Metropolitan District,4,West Suffolk [note 6],England,East of England,Suffolk,West Suffolk [note 6]
+E12000007,E12,Region,2,London,England,London,NA,NA
+E13000001,E13,NA,NA,Inner London,England,London,Inner London,NA
+E09000007,E09,London Borough,3,Camden,England,London,Inner London,Camden
+E09000001,E09,London Borough,3,City of London,England,London,Inner London,City of London
+E09000012,E09,London Borough,3,Hackney,England,London,Inner London,Hackney
+E09000013,E09,London Borough,3,Hammersmith and Fulham,England,London,Inner London,Hammersmith and Fulham
+E09000014,E09,London Borough,3,Haringey,England,London,Inner London,Haringey
+E09000019,E09,London Borough,3,Islington,England,London,Inner London,Islington
+E09000020,E09,London Borough,3,Kensington and Chelsea,England,London,Inner London,Kensington and Chelsea
+E09000022,E09,London Borough,3,Lambeth,England,London,Inner London,Lambeth
+E09000023,E09,London Borough,3,Lewisham,England,London,Inner London,Lewisham
+E09000025,E09,London Borough,3,Newham,England,London,Inner London,Newham
+E09000028,E09,London Borough,3,Southwark,England,London,Inner London,Southwark
+E09000030,E09,London Borough,3,Tower Hamlets,England,London,Inner London,Tower Hamlets
+E09000032,E09,London Borough,3,Wandsworth,England,London,Inner London,Wandsworth
+E09000033,E09,London Borough,3,Westminster,England,London,Inner London,Westminster
+E13000002,E13,NA,NA,Outer London,England,London,Outer London,NA
+E09000002,E09,London Borough,3,Barking and Dagenham,England,London,Outer London,Barking and Dagenham
+E09000003,E09,London Borough,3,Barnet,England,London,Outer London,Barnet
+E09000004,E09,London Borough,3,Bexley,England,London,Outer London,Bexley
+E09000005,E09,London Borough,3,Brent,England,London,Outer London,Brent
+E09000006,E09,London Borough,3,Bromley,England,London,Outer London,Bromley
+E09000008,E09,London Borough,3,Croydon,England,London,Outer London,Croydon
+E09000009,E09,London Borough,3,Ealing,England,London,Outer London,Ealing
+E09000010,E09,London Borough,3,Enfield,England,London,Outer London,Enfield
+E09000011,E09,London Borough,3,Greenwich,England,London,Outer London,Greenwich
+E09000015,E09,London Borough,3,Harrow,England,London,Outer London,Harrow
+E09000016,E09,London Borough,3,Havering,England,London,Outer London,Havering
+E09000017,E09,London Borough,3,Hillingdon,England,London,Outer London,Hillingdon
+E09000018,E09,London Borough,3,Hounslow,England,London,Outer London,Hounslow
+E09000021,E09,London Borough,3,Kingston upon Thames,England,London,Outer London,Kingston upon Thames
+E09000024,E09,London Borough,3,Merton,England,London,Outer London,Merton
+E09000026,E09,London Borough,3,Redbridge,England,London,Outer London,Redbridge
+E09000027,E09,London Borough,3,Richmond upon Thames,England,London,Outer London,Richmond upon Thames
+E09000029,E09,London Borough,3,Sutton,England,London,Outer London,Sutton
+E09000031,E09,London Borough,3,Waltham Forest,England,London,Outer London,Waltham Forest
+E12000008,E12,Region,2,South East,England,South East,NA,NA
+E06000036,E06,Unitary Authority,3,Bracknell Forest,England,South East,Bracknell Forest,NA
+E06000043,E06,Unitary Authority,3,Brighton and Hove,England,South East,Brighton and Hove,NA
+E06000046,E06,Unitary Authority,3,Isle of Wight,England,South East,Isle of Wight,NA
+E06000035,E06,Unitary Authority,3,Medway,England,South East,Medway,NA
+E06000042,E06,Unitary Authority,3,Milton Keynes,England,South East,Milton Keynes,NA
+E06000044,E06,Unitary Authority,3,Portsmouth,England,South East,Portsmouth,NA
+E06000038,E06,Unitary Authority,3,Reading,England,South East,Reading,NA
+E06000039,E06,Unitary Authority,3,Slough,England,South East,Slough,NA
+E06000045,E06,Unitary Authority,3,Southampton,England,South East,Southampton,NA
+E06000037,E06,Unitary Authority,3,West Berkshire,England,South East,West Berkshire,NA
+E06000040,E06,Unitary Authority,3,Windsor and Maidenhead,England,South East,Windsor and Maidenhead,NA
+E06000041,E06,Unitary Authority,3,Wokingham,England,South East,Wokingham,NA
+E06000060,E06,Unitary Authority,3,Buckinghamshire [note 7],England,South East,Buckinghamshire [note 7],NA
+E10000011,E10,County,3,East Sussex,England,South East,East Sussex,NA
+E07000061,E07,Non-Metropolitan District,4,Eastbourne,England,South East,East Sussex,Eastbourne
+E07000062,E07,Non-Metropolitan District,4,Hastings,England,South East,East Sussex,Hastings
+E07000063,E07,Non-Metropolitan District,4,Lewes,England,South East,East Sussex,Lewes
+E07000064,E07,Non-Metropolitan District,4,Rother,England,South East,East Sussex,Rother
+E07000065,E07,Non-Metropolitan District,4,Wealden,England,South East,East Sussex,Wealden
+E10000014,E10,County,3,Hampshire,England,South East,Hampshire,NA
+E07000084,E07,Non-Metropolitan District,4,Basingstoke and Deane,England,South East,Hampshire,Basingstoke and Deane
+E07000085,E07,Non-Metropolitan District,4,East Hampshire,England,South East,Hampshire,East Hampshire
+E07000086,E07,Non-Metropolitan District,4,Eastleigh,England,South East,Hampshire,Eastleigh
+E07000087,E07,Non-Metropolitan District,4,Fareham,England,South East,Hampshire,Fareham
+E07000088,E07,Non-Metropolitan District,4,Gosport,England,South East,Hampshire,Gosport
+E07000089,E07,Non-Metropolitan District,4,Hart,England,South East,Hampshire,Hart
+E07000090,E07,Non-Metropolitan District,4,Havant,England,South East,Hampshire,Havant
+E07000091,E07,Non-Metropolitan District,4,New Forest,England,South East,Hampshire,New Forest
+E07000092,E07,Non-Metropolitan District,4,Rushmoor,England,South East,Hampshire,Rushmoor
+E07000093,E07,Non-Metropolitan District,4,Test Valley,England,South East,Hampshire,Test Valley
+E07000094,E07,Non-Metropolitan District,4,Winchester,England,South East,Hampshire,Winchester
+E10000016,E10,County,3,Kent,England,South East,Kent,NA
+E07000105,E07,Non-Metropolitan District,4,Ashford,England,South East,Kent,Ashford
+E07000106,E07,Non-Metropolitan District,4,Canterbury,England,South East,Kent,Canterbury
+E07000107,E07,Non-Metropolitan District,4,Dartford,England,South East,Kent,Dartford
+E07000108,E07,Non-Metropolitan District,4,Dover,England,South East,Kent,Dover
+E07000109,E07,Non-Metropolitan District,4,Gravesham,England,South East,Kent,Gravesham
+E07000110,E07,Non-Metropolitan District,4,Maidstone,England,South East,Kent,Maidstone
+E07000111,E07,Non-Metropolitan District,4,Sevenoaks,England,South East,Kent,Sevenoaks
+E07000112,E07,Non-Metropolitan District,4,Folkestone and Hythe [note 8],England,South East,Kent,Folkestone and Hythe [note 8]
+E07000113,E07,Non-Metropolitan District,4,Swale,England,South East,Kent,Swale
+E07000114,E07,Non-Metropolitan District,4,Thanet,England,South East,Kent,Thanet
+E07000115,E07,Non-Metropolitan District,4,Tonbridge and Malling,England,South East,Kent,Tonbridge and Malling
+E07000116,E07,Non-Metropolitan District,4,Tunbridge Wells,England,South East,Kent,Tunbridge Wells
+E10000025,E10,County,3,Oxfordshire,England,South East,Oxfordshire,NA
+E07000177,E07,Non-Metropolitan District,4,Cherwell,England,South East,Oxfordshire,Cherwell
+E07000178,E07,Non-Metropolitan District,4,Oxford,England,South East,Oxfordshire,Oxford
+E07000179,E07,Non-Metropolitan District,4,South Oxfordshire,England,South East,Oxfordshire,South Oxfordshire
+E07000180,E07,Non-Metropolitan District,4,Vale of White Horse,England,South East,Oxfordshire,Vale of White Horse
+E07000181,E07,Non-Metropolitan District,4,West Oxfordshire,England,South East,Oxfordshire,West Oxfordshire
+E10000030,E10,County,3,Surrey,England,South East,Surrey,NA
+E07000207,E07,Non-Metropolitan District,4,Elmbridge,England,South East,Surrey,Elmbridge
+E07000208,E07,Non-Metropolitan District,4,Epsom and Ewell,England,South East,Surrey,Epsom and Ewell
+E07000209,E07,Non-Metropolitan District,4,Guildford,England,South East,Surrey,Guildford
+E07000210,E07,Non-Metropolitan District,4,Mole Valley,England,South East,Surrey,Mole Valley
+E07000211,E07,Non-Metropolitan District,4,Reigate and Banstead,England,South East,Surrey,Reigate and Banstead
+E07000212,E07,Non-Metropolitan District,4,Runnymede,England,South East,Surrey,Runnymede
+E07000213,E07,Non-Metropolitan District,4,Spelthorne,England,South East,Surrey,Spelthorne
+E07000214,E07,Non-Metropolitan District,4,Surrey Heath,England,South East,Surrey,Surrey Heath
+E07000215,E07,Non-Metropolitan District,4,Tandridge,England,South East,Surrey,Tandridge
+E07000216,E07,Non-Metropolitan District,4,Waverley,England,South East,Surrey,Waverley
+E07000217,E07,Non-Metropolitan District,4,Woking,England,South East,Surrey,Woking
+E10000032,E10,County,3,West Sussex,England,South East,West Sussex,NA
+E07000223,E07,Non-Metropolitan District,4,Adur,England,South East,West Sussex,Adur
+E07000224,E07,Non-Metropolitan District,4,Arun,England,South East,West Sussex,Arun
+E07000225,E07,Non-Metropolitan District,4,Chichester,England,South East,West Sussex,Chichester
+E07000226,E07,Non-Metropolitan District,4,Crawley,England,South East,West Sussex,Crawley
+E07000227,E07,Non-Metropolitan District,4,Horsham,England,South East,West Sussex,Horsham
+E07000228,E07,Non-Metropolitan District,4,Mid Sussex,England,South East,West Sussex,Mid Sussex
+E07000229,E07,Non-Metropolitan District,4,Worthing,England,South East,West Sussex,Worthing
+E12000009,E12,Region,2,South West,England,South West,NA,NA
+E06000022,E06,Unitary Authority,3,Bath and North East Somerset,England,South West,Bath and North East Somerset,NA
+E06000058,E06,Unitary Authority,3,"Bournemouth, Christchurch and Poole [note 9]",England,South West,"Bournemouth, Christchurch and Poole [note 9]",NA
+E06000023,E06,Unitary Authority,3,"Bristol, City of",England,South West,"Bristol, City of",NA
+E06000052,E06,Unitary Authority,3,Cornwall,England,South West,Cornwall,NA
+E06000053,E06,Unitary Authority,3,Isles of Scilly,England,South West,Isles of Scilly,NA
+E06000059,E06,Unitary Authority,3,Dorset [note 10],England,South West,Dorset [note 10],NA
+E06000024,E06,Unitary Authority,3,North Somerset,England,South West,North Somerset,NA
+E06000026,E06,Unitary Authority,3,Plymouth,England,South West,Plymouth,NA
+E06000025,E06,Unitary Authority,3,South Gloucestershire,England,South West,South Gloucestershire,NA
+E06000030,E06,Unitary Authority,3,Swindon,England,South West,Swindon,NA
+E06000027,E06,Unitary Authority,3,Torbay,England,South West,Torbay,NA
+E06000054,E06,Unitary Authority,3,Wiltshire,England,South West,Wiltshire,NA
+E10000008,E10,County,3,Devon,England,South West,Devon,NA
+E07000040,E07,Non-Metropolitan District,4,East Devon,England,South West,Devon,East Devon
+E07000041,E07,Non-Metropolitan District,4,Exeter,England,South West,Devon,Exeter
+E07000042,E07,Non-Metropolitan District,4,Mid Devon,England,South West,Devon,Mid Devon
+E07000043,E07,Non-Metropolitan District,4,North Devon,England,South West,Devon,North Devon
+E07000044,E07,Non-Metropolitan District,4,South Hams,England,South West,Devon,South Hams
+E07000045,E07,Non-Metropolitan District,4,Teignbridge,England,South West,Devon,Teignbridge
+E07000046,E07,Non-Metropolitan District,4,Torridge,England,South West,Devon,Torridge
+E07000047,E07,Non-Metropolitan District,4,West Devon,England,South West,Devon,West Devon
+E10000013,E10,County,3,Gloucestershire,England,South West,Gloucestershire,NA
+E07000078,E07,Non-Metropolitan District,4,Cheltenham,England,South West,Gloucestershire,Cheltenham
+E07000079,E07,Non-Metropolitan District,4,Cotswold,England,South West,Gloucestershire,Cotswold
+E07000080,E07,Non-Metropolitan District,4,Forest of Dean,England,South West,Gloucestershire,Forest of Dean
+E07000081,E07,Non-Metropolitan District,4,Gloucester,England,South West,Gloucestershire,Gloucester
+E07000082,E07,Non-Metropolitan District,4,Stroud,England,South West,Gloucestershire,Stroud
+E07000083,E07,Non-Metropolitan District,4,Tewkesbury,England,South West,Gloucestershire,Tewkesbury
+E10000027,E10,County,3,Somerset,England,South West,Somerset,NA
+E07000187,E07,Non-Metropolitan District,4,Mendip,England,South West,Somerset,Mendip
+E07000188,E07,Non-Metropolitan District,4,Sedgemoor,England,South West,Somerset,Sedgemoor
+E07000246,E07,Non-Metropolitan District,4,Somerset West and Taunton [note 11],England,South West,Somerset,Somerset West and Taunton [note 11]
+E07000189,E07,Non-Metropolitan District,4,South Somerset,England,South West,Somerset,South Somerset
+W92000004,W92,Wales,1,Wales,Wales,NA,NA,NA
+W06000001,W06,Unitary Authority,3,Isle of Anglesey,Wales,NA,Isle of Anglesey,NA
+W06000002,W06,Unitary Authority,3,Gwynedd,Wales,NA,Gwynedd,NA
+W06000003,W06,Unitary Authority,3,Conwy,Wales,NA,Conwy,NA
+W06000004,W06,Unitary Authority,3,Denbighshire,Wales,NA,Denbighshire,NA
+W06000005,W06,Unitary Authority,3,Flintshire,Wales,NA,Flintshire,NA
+W06000006,W06,Unitary Authority,3,Wrexham,Wales,NA,Wrexham,NA
+W06000023,W06,Unitary Authority,3,Powys,Wales,NA,Powys,NA
+W06000008,W06,Unitary Authority,3,Ceredigion,Wales,NA,Ceredigion,NA
+W06000009,W06,Unitary Authority,3,Pembrokeshire,Wales,NA,Pembrokeshire,NA
+W06000010,W06,Unitary Authority,3,Carmarthenshire,Wales,NA,Carmarthenshire,NA
+W06000011,W06,Unitary Authority,3,Swansea,Wales,NA,Swansea,NA
+W06000012,W06,Unitary Authority,3,Neath Port Talbot,Wales,NA,Neath Port Talbot,NA
+W06000013,W06,Unitary Authority,3,Bridgend,Wales,NA,Bridgend,NA
+W06000014,W06,Unitary Authority,3,Vale of Glamorgan,Wales,NA,Vale of Glamorgan,NA
+W06000015,W06,Unitary Authority,3,Cardiff,Wales,NA,Cardiff,NA
+W06000016,W06,Unitary Authority,3,Rhondda Cynon Taf,Wales,NA,Rhondda Cynon Taf,NA
+W06000024,W06,Unitary Authority,3,Merthyr Tydfil,Wales,NA,Merthyr Tydfil,NA
+W06000018,W06,Unitary Authority,3,Caerphilly,Wales,NA,Caerphilly,NA
+W06000019,W06,Unitary Authority,3,Blaenau Gwent,Wales,NA,Blaenau Gwent,NA
+W06000020,W06,Unitary Authority,3,Torfaen,Wales,NA,Torfaen,NA
+W06000021,W06,Unitary Authority,3,Monmouthshire,Wales,NA,Monmouthshire,NA
+W06000022,W06,Unitary Authority,3,Newport,Wales,NA,Newport,NA

@@ -1,0 +1,12 @@
+area_code_3,category,geo_level
+K04,England & Wales,0
+E92,England,1
+E12,Region,2
+E09,London Borough,3
+E10,County,3
+E07,Non-Metropolitan District,4
+E06,Unitary Authority,3
+E11,Metropolitan County,3
+E08,Metropolitan District,4
+W92,Wales,1
+W06,Unitary Authority,3
