@@ -150,21 +150,30 @@ In addition to the name of the category, the level in the hierarchy is also enco
 uk_region_table <- tribble(
   # header row
   ~"area_code_3", ~"category", ~"geo_level",
-  "K04", "England & Wales", "0",
-  "E92", "England", "1",
-  "E12", "Region", "2",
-  "E09", "London Borough", "3",
-  "E10", "County",  "3",
-  "E07", "Non-Metropolitan District", "4",
-  "E06", "Unitary Authority", "3",
-  "E11", "Metropolitan County", "3",
-  "E08", "Metropolitan District", "4",
-  "W92", "Wales", "1",
-  "W06", "Unitary Authority", "3"
+  "K04", "England & Wales", 0,
+  "E92", "England", 1,
+  "E12", "Region", 2,
+  "E09", "London Borough", 3,
+  "E10", "County",  3,
+  "E07", "Non-Metropolitan District", 4,
+  "E06", "Unitary Authority", 3,
+  "E11", "Metropolitan County", 3,
+  "E08", "Metropolitan District", 4,
+  "W92", "Wales", 1,
+  "W06", "Unitary Authority", 3
 )
 
 uk_region_table
 ```
+
+This table can be saved as a CSV file for future reference:
+
+```{r write_uk_region_table_900, eval=FALSE}
+
+write_csv(uk_region_table, "data_output/uk_region_table.csv")
+
+```
+
 
 
 Our next step is to extract the unique values in the area code and area name from the original data file.
@@ -183,17 +192,101 @@ uk_census_pop_geo
 ```
 
 
-Because the level was encoded, it is possible to filter on the level to get a total population for England and Wales.
+Because the level was encoded, it is possible to filter on the level to calculate the total population for England and Wales.
 
 ```{r}
 uk_census_pop_geo |> 
-  filter(geo_level == "3") |> 
+  filter(geo_level == 3) |> 
   summarise(total_population = sum(all_persons))
 ```
 
 
+A more complex concordance table would also include the hierarchy:
 
-### Approach 2 - use Excel's formatting
+```{r}
+
+uk_census_geo <- read_csv("data/uk_census_geo.csv")
+
+uk_census_geo
+
+```
+
+This file could also be joined to the contents of a population sheet, to provide additional detail. 
+
+Let's imagine your assignment is to determine which region at the UA level has the highest proportion of people aged 90 or older. The code below reads the contents of sheet "P02" in the census population file, which has age detail of the population in each area. By appending the contents of the concordance table, a detailed disaggregation without double counting is possible.
+
+In addition to changing the sheet reference, the code also changes the range to reflect the differences in the contents.
+
+```{r}
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P02",
+  range = "A8:V383"
+) |> 
+  janitor::clean_names() |> 
+  dplyr::rename(area_code = area_code_note_2) |> 
+  # remove "_note_12" from population variables
+  dplyr::rename_with(~str_remove(., "_note_12"))
+
+head(uk_census_pop)
+
+```
+
+The `filter()` step below select the area code and the population categories of interest, but this leaves those UA regions that are further disaggregated into the city category. 
+
+```{r}
+
+uk_census_pop |> 
+  select(area_code, all_persons, aged_90_years_and_over) |> 
+  full_join(uk_census_geo, by = "area_code") |> 
+  # filter so that only UAs remain
+  filter(!is.na(ua))
+
+```
+
+The solution to our disaggregation challenge is to count the number of rows for the UA regions, and use that as part of a filter. We want to remove the UA rows that have an NA in the city variable while at the same time have two or more rows representing that UA.
+
+This filter requires two tests:
+
+* all of the rows where the number of rows per UA is 1, and 
+
+* for the cases where the number of rows is greater than 1, we want to remove the aggregate, which has an NA in the city variable. For the last test, note that it is wrapped in parenthesis—this isn't always necessary, but it is useful for human readers, and there are instances where the order of operations will matter.
+
+```{r}
+
+uk_census_pop_90 <- uk_census_pop |>
+  select(area_code, all_persons, aged_90_years_and_over) |>
+  full_join(uk_census_geo, by = "area_code") |>
+  # filter so that only UAs remain
+  filter(!is.na(ua)) |>
+  # count the number of rows of each UA region
+  group_by(ua) |>
+  mutate(number_of_rows = n()) |>
+  ungroup() |>
+  # then filter on NA status where number of rows is >1
+  filter(number_of_rows == 1 |
+           (number_of_rows > 1 & !is.na(city)) # parenthesis!
+         )  
+
+```
+
+With this table, the proportion of persons aged 90 or older can be calcutated and the table sorted in descending order:
+
+```{r}
+
+uk_census_pop_90 |> 
+  mutate(pct_90_plus = aged_90_years_and_over / all_persons) |> 
+  arrange(desc(pct_90_plus)) |> 
+  select(area_name, ua, city, aged_90_years_and_over, pct_90_plus) |> 
+  slice_head(n = 10) 
+  
+
+```
+
+
+### Approach 3 - use Excel's formatting
+
+_NOT WORKING...YET?_
 
 The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting. There is an R package that has functions that allow us to turn that formatting into information that we can work with. For this, we will be using the packages {tidyxl} [@R-tidyxl] and {unpivotr} [@R-unpivotr].
 
