@@ -1,8 +1,7 @@
-
 bookdown::gitbook:
   css: css/style.css
   config:
-     toc:
+    toc:
       collapse: none
       before: |
         <li><a href="./">A Book Example</a></li>
