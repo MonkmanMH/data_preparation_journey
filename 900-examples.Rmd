@@ -503,7 +503,7 @@ We can then use this to examine the details of the indent formatting, which we c
 
 ```{r}
 
-formats$local$alignment$indent[60]
+uk_census_formats$local$alignment$indent[60]
 
 ```
 
