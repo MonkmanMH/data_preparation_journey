@@ -109,41 +109,58 @@ penguin_summary_3
 
 ```
 
-Next, we can use another regular expression to split each row into its "columns", using the `str_split()` function from the {stringr} package.
+Pull names from list
+
+Result is vector with one element
 
 ```{r}
 
-penguin_summary_4 <- penguin_summary_3 |> 
-  str_split("\\s+")
+penguin_variable_vector <- as.vector(penguin_summary_3[1])
 
-penguin_summary_4
+penguin_variable_vector
+```
 
+Split into 4 separate elements
+
+* this returns nested list
+
+```{r}
+
+penguin_variable_list <- str_split(penguin_variable_vector, "\\s+")
+penguin_variable_list
 
 ```
 
-The final step is to convert this into a dataframe. This takes some data manipulation skills, because the PDF file is read as a series of rows, with a single observation (species on an island with certain characteristics). R on the other hand thinks about dataframes as being columns, each of a single variable: a column of species names, a column of island names, and so on.
-
-Fortunately for us, there is a function in {base R} that transposes the direction of a vector: `t()`.
+In order to have the structure we need, we apply the `unlist()` function:
 
 ```{r}
-# step 1: create a dataframe with the variable names (the first vector in "penguin_summary_4")
-#penguin_names <- as.data.frame(t(penguin_summary_4[[1]]))
+penguin_variable_names <- unlist(penguin_variable_list)
+penguin_variable_names
+```
 
-# step 2: create an empty dataframe with as many columns as the number of variable names
-penguin_table <-
-  data.frame(matrix(nrow = 0, ncol = 4))
-#  data.frame(matrix(nrow = 0, ncol = ncol(penguin_names)))
+It is possible to turn those two steps into one by wrapping the string split inside the `unlist()`:
 
-# - assign the variable names to the new table
-#colnames(penguin_table) <- penguin_names
-#names(penguin_table)
+```{r}
 
-loop_length <- length(penguin_summary_4) - 1
+penguin_variable_names <- unlist(str_split(penguin_variable_vector, "\\s+"))
+penguin_variable_names
 
-for (i in seq_along(loop_length)) {
-  i = 1
+```
+
+
+Build table with loop
+
+```{r}
+# 1. define output
+penguin_table <- tibble(value = NULL)
+
+# 2. loop
+# Because the first element is the titles, we want the length to be one shorter
+loop_length <- length(penguin_summary_3) - 1
+
+for (i in 1:5) {
   j <- i + 1
-  dat <- as_tibble(t(penguin_summary_4[[j]]))
+  dat <- as_tibble(penguin_summary_3[j])
   penguin_table <- bind_rows(penguin_table, dat)
 }
 
@@ -152,20 +169,34 @@ penguin_table
 ```
 
 
+Then apply string split
+
 ```{r}
 
+penguin_table <- tidyr::separate(
+  penguin_table, 
+  value,
+  into = penguin_variable_names,
+  "\\s+"
+  )
 
-as_tibble(penguin_summary_4, .name_repair = "unique")
-
-penguin_table <- tribble(
-  ~species, ~island, ~flipper, ~mass
-)
-
-bind_rows(penguin_table, penguin_summary_4[[1]])
-
+penguin_table
 
 ```
 
+Fix variable types
+
+
+
+```{r}
+penguin_table |> 
+  mutate(
+    across(
+    contains("mean_"), 
+    ~ as.numeric(.x)
+    )
+  )
+```
 
 ### Extended example: ferry traffic
 
