@@ -60,6 +60,114 @@ library(stringr)
 
 ```
 
+### Getting started
+
+To get ourselves started, we will read data from a summary of the {palmerpenguins}[@R-palmerpenguins] data.
+
+We can read the file using the `pdf_text()` function from the {pdftools} package and assign the contents to an R object in our environment. 
+
+Next we can use the `str()` function to display a summary of the structure of our new object.
+
+```{r}
+
+penguin_summary <- pdf_text("data/penguin_summary.pdf")
+
+str(penguin_summary)
+
+```
+
+
+Another way to look at the contents of a page is to use the `cat()` function (from {base R}), which displays the contents as it would be printed:
+
+
+```{r}
+cat(penguin_summary)
+```
+
+Next we use the `strsplit()` function (from {base R}) to separate the long string into separate rows. You may have noted that there are two "\\n" character pairs marking the end of each line; if we use only one in the `strsplit()` function, an extra row appears between the data rows.
+
+
+
+```{r}
+penguin_summary_2 <- penguin_summary |> 
+  strsplit(split = "\n\n")
+
+penguin_summary_2
+```
+
+There is an extra line return at the end of the last data cell, so let's use a regular expression to remove it. There's also space at the beginning of the first line, and the number-space combination at the beginning of the 
+
+And by using the square bracket accessor, the object returned is no longer nested, but instead has a single character string for each row.
+
+```{r}
+penguin_summary_3 <- penguin_summary_2[[1]] |> 
+    str_remove("\\n$") |> 
+  str_remove("^\\s+") |> 
+  str_remove("^\\d ") 
+
+penguin_summary_3
+
+```
+
+Next, we can use another regular expression to split each row into its "columns", using the `str_split()` function from the {stringr} package.
+
+```{r}
+
+penguin_summary_4 <- penguin_summary_3 |> 
+  str_split("\\s+")
+
+penguin_summary_4
+
+
+```
+
+The final step is to convert this into a dataframe. This takes some data manipulation skills, because the PDF file is read as a series of rows, with a single observation (species on an island with certain characteristics). R on the other hand thinks about dataframes as being columns, each of a single variable: a column of species names, a column of island names, and so on.
+
+Fortunately for us, there is a function in {base R} that transposes the direction of a vector: `t()`.
+
+```{r}
+# step 1: create a dataframe with the variable names (the first vector in "penguin_summary_4")
+#penguin_names <- as.data.frame(t(penguin_summary_4[[1]]))
+
+# step 2: create an empty dataframe with as many columns as the number of variable names
+penguin_table <-
+  data.frame(matrix(nrow = 0, ncol = 4))
+#  data.frame(matrix(nrow = 0, ncol = ncol(penguin_names)))
+
+# - assign the variable names to the new table
+#colnames(penguin_table) <- penguin_names
+#names(penguin_table)
+
+loop_length <- length(penguin_summary_4) - 1
+
+for (i in seq_along(loop_length)) {
+  i = 1
+  j <- i + 1
+  dat <- as_tibble(t(penguin_summary_4[[j]]))
+  penguin_table <- bind_rows(penguin_table, dat)
+}
+
+penguin_table
+
+```
+
+
+```{r}
+
+
+as_tibble(penguin_summary_4, .name_repair = "unique")
+
+penguin_table <- tribble(
+  ~species, ~island, ~flipper, ~mass
+)
+
+bind_rows(penguin_table, penguin_summary_4[[1]])
+
+
+```
+
+
+### Extended example: ferry traffic
 
 For this exercise, we will extract a data table from _Annual Report to the British Columbia Ferries Commissioner_ for the fiscal year ending March 31, 2021 (that is, the twelve month period from 2020-04-01 to 2021-03-31).
 
@@ -111,8 +219,7 @@ bcf[1]
 
 ```
 
-
-Another way to look at the contents of a page is to use the `cat()` function (from {base R}), which displays the contents as it would be printed:
+Using the `cat()` function:
 
 ```{r}
 
