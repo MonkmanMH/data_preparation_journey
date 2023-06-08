@@ -1,0 +1,123 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+```{r setup_ch225, include=FALSE, eval=TRUE}
+
+source("package_load.R")
+
+```
+
+
+# Importing data from Excel {#Excel}
+
+In this chapter:
+
+* Importing data from Excel spreadsheets
+
+* Extracting data that is stored as formating 
+
+
+
+## Introduction
+
+Spreadsheets and similar data tables are perhaps the most common way that data is made available. Because they originated as an electronic version of accounting worksheets, they have a tabular structure that works for other situations when data collection, storage, analysis, and sharing (i.e. publishing) are required. Spreadsheet software of one form or another is often standard when you buy a new computer, and Microsoft Excel is the most common of all. Google also makes available a web-based spreadsheet tool, Google Sheets.
+
+While the data in a spreadsheet often gets stored in a manner similar to a plain-text file such as the CSV files we worked with in the previous chapter, Excel is designed to deliver far more functionality. 
+
+Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet, but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. 
+
+Spreadsheets like Excel have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet, or anther sheet in another file). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
+
+The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. 
+
+The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions.
+
+```{r}
+library(readxl)
+```
+
+In this example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+
+
+The {readxl} package's `read_excel()` function is the one we want to use. The first item is the path to the file. The function's default is to read the first sheet in the Excel file, which is not what we want, so we use the `sheet = ` argument to specify "P01". We will also read only the first 10 rows in the sheet, using the `n_max = 10` specification.
+
+```{r}
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  n_max = 10
+)
+
+uk_census_pop
+
+```
+
+As is common in Excel files, the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. This is important documentation, but it's not part of the data we want for our analysis.
+
+
+The function has a variety of approaches to specify the data rectangle. One is `skip =`, which tells the `read_excel()` function to skip 6 rows.
+
+
+```{r}
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  n_max = 10,
+  skip = 6 
+)
+
+uk_census_pop
+
+```
+
+A second option would be define the range of the cells, using Excel nomenclature.
+
+```{r}
+uk_census_pop <- readxl::read_excel(
+  "data/census2021firstresultsenglandwales1.xlsx",
+  sheet = "P01",
+  range = "A7:E382"
+)
+
+uk_census_pop
+
+```
+
+
+But this loses the hierarchy. We will return to this file in the "Extended Examples" chapter, and explore methods for extracting the hierarchy information.
+
+
+## File archives
+
+There are a variety of file archive types, which permit multiple files to be bundled as a single file. Many of these types also include compression, so that the file size is minimized. These file types include ZIP, tar, 7-Zip, RAR, gzip, bzip2, XZ and Zstandard.
+
+The {archive} package [@R-archive] allows us to write R code to work with these files. There are functions for extracting from and writing to archive file types.
+
+{archive} https://www.tidyverse.org/blog/2021/11/archive-1-1-2/
+
+
+***
+
+## Additional resources
+
+
+Other examples of importing files can be found here:
+
+* Long and Teetor, _R Cookbook, 2nd ed._ [@Long_Teetor_2019, recipe 4.6] https://rc2e.com/inputandoutput#recipe-id136
+
+* Wickham and Grolemund, _R for Data Science_ [@Wickham_Grolemund2016, Chapter 11 Data Import] https://r4ds.had.co.nz/data-import.html
+
+* Zumel and Mount, _Practical Data Science with R_ [@Zumel_Mount_2019, chapter 2]
+
+
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
