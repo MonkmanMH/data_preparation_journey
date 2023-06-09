@@ -59,6 +59,8 @@ Let's consider an example. A company wants to understand its workforce because t
 
 We know that _age_ is going to be a _theoretical construct_ we want to measure. When it comes to retirement, that is constrained to older workers, but we will have to be more precise in our definitions that simply "older". In Canada you can choose to start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older (those who could collect their national pension now), and a second group who are between 55 and 59 (those who are within five years of their earliest pension).
 
+The database may have historical data, containing the records associated with people who no longer work with the organization. With that information, you would be able to build a model to predict when people might resign or retire, based on various demographic and occupational characteristics.
+
 A _measure_ we have available is in the human resource database: each staff member's date of birth. This is collected when people are hired, and is required for various purposes, including tax accounting.
 
 But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation. Using the functions in the package {lubridate} [@R-lubridate], that looks like this:
@@ -109,7 +111,7 @@ And be aware that the elements with a classification system can change over time
 
 If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. 
 
-The North American Industry Classification System (NAICS) is one such classification system, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS] The system is used to classify businesses into a specific industry based on their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. 
+The North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}} is one such classification system, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS] The system is used to classify businesses into a specific industry based on their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. 
 
 Here are some other resources with further examples:
 

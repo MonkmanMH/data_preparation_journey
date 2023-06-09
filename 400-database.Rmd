@@ -22,7 +22,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 In this chapter:
 
-* Importing data directly from relational databases (SQL)
+* Importing data directly from relational databases\index{relational database} (SQL)\index{SQL}
 
 * Using relational data as part of the data preparation workflow
 
@@ -35,6 +35,184 @@ placeholder for chapter 4
 
 * The benefits and strengths of relational databases
 
+
+
+## Relational data
+
+This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016].
+
+Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the database. 
+
+The table `flights` contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
+
+The other tables in the database are:
+
+* `airlines` lets you look up the full carrier name from its abbreviated code
+
+* `airports` gives information about each airport, identified by the `faa` airport code
+
+* `planes` gives information about each plane, identified by its `tailnum`
+
+* `weather` gives the weather at each NYC airport for each hour:
+
+
+The tables are _related_ to `flights` by the fact that they have variables in common. These are known as the "key" variables.
+
+This diagram shows the relationships:
+
+![nycflights13](img\relational-nycflights.png)
+
+
+### Connect to the database
+
+SQL is a language widely used to manipulate and extract data in relational databases. As a consequence, there are many relational databases built in this format. Most often, these databases will be housed on a network server, but for smaller databases, you might install the file on your computer.
+
+In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the RSQLite connection.
+
+```{r, package_load_400}
+library(dbplyr)
+library(DBI)
+library(RSQLite)
+```
+
+
+
+```{r}
+# establish the connection to the database file
+nycf_con <- DBI::dbConnect(RSQLite::SQLite(), "data/nycflights13_sql.sqlite")
+
+# list the tables in the connected database
+dbListTables(nycf_con)
+
+```
+
+
+Now we are connected to the database, we can establish a connection to a particular table, using the {dplyr} function `tbl()`. Note that the `flights` object is _not_ the table, but is the connection to the table. 
+
+```{r}
+
+flights <- tbl(nycf_con, "flights")
+flights
+```
+
+## Submit queries
+
+
+With the object "flights" now established in our environment, we can write R code to create a subset of the flights—those that went to Seattle. 
+
+```{r}
+flights_SEA <- flights |> 
+  filter(dest == "SEA")
+
+flights_SEA
+```
+
+We can also use the `show_query()` function of {dbplyr} to generate the SQL translation of the R code:
+
+```{r}
+flights_SEA <- flights |> 
+  filter(dest == "SEA") |> 
+  show_query()
+
+```
+
+
+In this code, we create a summary table of the average flight time from New York to Seattle, by airline.
+
+
+```{r}
+
+SEA <- flights_SEA |> 
+  select("month", "carrier", "air_time") |> 
+  group_by(carrier) |> 
+  summarise(
+    n = n(),
+    min_air_time = min(air_time),
+    mean_air_time = mean(air_time),
+    max_air_time = max(air_time)) |> 
+  # enter the resulting table into the R environment
+  collect()
+
+SEA
+```
+
+
+## Using SQL in your R code
+
+In addition to writing R code, we can embed SQL inside our R functions:
+
+```{r}
+
+SEA_sql <- dbSendQuery(nycf_con, "SELECT * FROM flights WHERE dest = 'SEA'")
+dbFetch(SEA_sql)
+
+```
+
+
+## Running SQL language chunks in R Markdown
+
+[_R Markdown: The Definitive Guide_, 2.7.3 SQL](https://bookdown.org/yihui/rmarkdown/language-engines.html#sql) by Yihui Xie, J. J. Allaire, Garrett Grolemund
+
+* instructions on how to set up your R Markdown (in RStudio) so that you can run SQL language chunks, including using SQLite
+
+
+Note that in our SQL chunk, we specify the connection...the `nycf_con` object created earlier.
+
+
+```{sql, connection=nycf_con}
+
+SELECT * 
+FROM flights 
+WHERE dest = 'SEA'
+
+```
+
+
+
+## Mutating joins
+
+A mutating join is one that combines variables from two tables, based on matching observations on _keys_.
+
+In this R code, we create a summary table of the flights that went from New York to Seattle, by the name of the airline. The full airline names is not in the `flights` table; to get that, we need to join the airline name from the `airlines` table to the Seattle summary of the `flights` table. 
+
+The first step is to establish a connection to the `airlines` table. Once the connection is made the tables can be joined, and the summary calculation made and the table sorted from most to least frequent number of flights.
+
+```{r}
+# establish connection to airlines table
+airlines <- tbl(nycf_con, "airlines")
+airlines
+
+# join and summary table
+flights_SEA |>
+#  select(-origin, -dest) |> 
+  left_join(airlines, by = "carrier") |> 
+  group_by(name) |> 
+  tally() |> 
+  arrange(desc(n))
+
+```
+
+
+The SQL version is below.
+
+Note the semi-colon at the end to close the script. 
+
+
+
+
+In SQL, we use `SELECT` to select the columns we want (the same term as {dplyr}). The asterix "*" is a wildcard to select all the tables.
+
+`FROM` indicates which tables. 
+
+The joins are named using terms similar to {dplyr}. This left join will return all of the records from the `flights` table, and the variables from `airlines` where there is a match.
+
+To indicate the key variable for the join, we use `ON`. Note that we specify the table and the variable, separated by a period.
+
+And finally, the filtering by city uses the SQL function `WHERE`.
+
+For more information on using SQL, with a focus on SQLite, Thomas Nield's _Getting Started with SQL_ [@Nield_2016] is highly recommended.
+
+
 ## Using the {tidylog} package
 
 An important element of any table join is to check the result, to see if it conforms to our expectations. The {tidylog} package [@R-tidylog] 
@@ -46,4 +224,8 @@ library("tidylog", warn.conflicts = FALSE)
 ```
 
 https://github.com/elbersb/tidylog
+
+
+
+-30-
 

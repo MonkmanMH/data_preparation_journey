@@ -13,7 +13,7 @@ source("package_load.R")
 ```
 
 
-# Importing data {#importing}
+# Importing data: plain-text files {#importing}
 
 In this chapter:
 
@@ -84,11 +84,12 @@ Here's some advice that's worth heeding:
 1. The arguments in the import functions are your friends. Use them as your first line of defense in your project workflow.
 
 > Data import generally feels one of two ways:
-> * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
-> * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
-> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [Emphasis added.] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import.
 
-[@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
+> * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
+
+> * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
+
+> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [_Emphasis added._] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import. [@Bryan_STAT545, [Chapter 9: Writing and reading files]
 
 
 2. "Today’s outputs are tomorrow’s inputs" [@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
@@ -127,7 +128,7 @@ Plain text files come in two varieties: delimited and fixed-width. "Delimited" i
 
 
 
-### using base R
+### Using base R
 
 Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width files.
 
@@ -155,7 +156,7 @@ penguins_data <- read.csv(penguins_path)
 
 
 
-### {readr} (tidyverse)
+### Using {readr} (tidyverse)
 
 The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions when it comes to plain-text files.
 
@@ -358,16 +359,6 @@ read_fwf(authors2_path,
 ```
 
 
-### {vroom} - another package for plain text
-
-https://www.tidyverse.org/blog/2019/05/vroom-1-0-0/
-
-https://vroom.r-lib.org/
-
-
-
-
-
 
 ### An extreme example of a fixed-width file 
 
@@ -380,11 +371,17 @@ https://www150.statcan.gc.ca/n1/pub/82m0022x/2003001/4069119-eng.htm
 
 The PUMF is a fixed-width file named "JCUSH.txt". This file is quite a lot larger than the author names example above. There are the 8,688 records and each line of data takes up 552 columns! 
 
-Here's what the first record looks like:
+Here's what the first 40 characters of the first record looks like:
 
 
-```{r jcush_txt_readlines}
+```{r jcush_txt_readlines, eval=FALSE}
 readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1)
+```
+
+```{r jcush_txt_readlines_truncate, echo=FALSE}
+
+str_sub(readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1), 1, 40)
+
 ```
 
 There's not a bit of white space anywhere in this data file!
@@ -398,7 +395,7 @@ The variable is 1 character long, in position 502 of the data.
 
 The variable might be only 1 character long, but when coupled with the "content" column, it becomes a very powerful piece of information. 
 
-For our analysis question, we will read in three variables: the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
+For our analysis question, we will read in four variables: the unique respondent identification number, the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
 
 | Name | Variable | Length | Position |
 | :--- | :---     | :---:  | :---:  |

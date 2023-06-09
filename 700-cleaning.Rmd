@@ -460,7 +460,7 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
-With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{NAICS|see{North American Industry Classification System}} . This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} . This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
 
 The NAICS system, and the file we are working with, is hierarchical; higher-level categories subdivide into subsets. Let's examine employment in Mining, Quarrying, and Oil and Gas Extraction sector. 
 
