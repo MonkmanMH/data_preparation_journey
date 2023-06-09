@@ -296,7 +296,7 @@ Using the "\\n" line break character, we can split this single value into as man
 
 ```{r 300_pdf_linebreak}
 # break into lines
-bcf_11_lines <- bcf_11[[1]] %>% 
+bcf_11_lines <- bcf_11[[1]] |> 
   strsplit(split = "\n")
 
 bcf_11_lines
@@ -441,11 +441,11 @@ It's not quite perfect, and some things need to be removed:
 
 ```{r 300_remove_NA}
 # succinct way to remove a row which has a single "NA"
-bcf_table_3 <- bcf_table_2 %>% 
-  na.omit %>% 
+bcf_table_3 <- bcf_table_2 |> 
+  na.omit |> 
   select(route,
          starts_with("passengers_"),
-         starts_with("passenger_tariff_rev")) %>% 
+         starts_with("passenger_tariff_rev")) |> 
   mutate(passengers_2021 = as.numeric(passengers_2021),
          passengers_2020 = as.numeric(passengers_2020),
          passenger_tariff_revenue_2021 = as.numeric(passenger_tariff_revenue_2021),
@@ -461,7 +461,7 @@ If we need to create sub-totals by route type, it would be better to have a sepa
 
 ```{r}
 
-bcf_table_3 <- bcf_table_3 %>% 
+bcf_table_3 <- bcf_table_3 |> 
   mutate(route_type = case_when(
     route %in% c("1", "2", "3", "30") ~ "major",
     route %in% c("10", "11", "28") ~ "northern",
@@ -475,10 +475,10 @@ Now we can use our data wrangling skills to calculate the percent change between
 
 ```{r}
 
-bcf_table_3 %>% 
-  group_by(route_type) %>% 
+bcf_table_3 |> 
+  group_by(route_type) |> 
   summarise(total_2021 = sum(passengers_2021),
-            total_2020 = sum(passengers_2020)) %>% 
+            total_2020 = sum(passengers_2020)) |> 
   mutate(pct_change = (total_2021 - total_2020) / total_2020 * 100)
 
 ```

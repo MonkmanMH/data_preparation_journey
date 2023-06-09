@@ -114,8 +114,8 @@ Now all the records (except the single "NA") pass. What has happened? The first 
 Let's explore the data a bit more...if we filter our penguins by those that are over 5000 grams, what do we find?
 
 ```{r}
-penguins %>%
-  filter(body_mass_g > 5000) %>% 
+penguins |>
+  filter(body_mass_g > 5000) |> 
   distinct(species)
 
 ```
@@ -167,8 +167,8 @@ The output now includes the results of the two tests. Both tests have all of the
 We could have written code to generate a summary table to check this. In many datasets, however, there will be too many combinations to reliably investigate in this manner.
 
 ```{r}
-penguins %>% 
-  group_by(species, island) %>% 
+penguins |> 
+  group_by(species, island) |> 
   tally
 ```
 

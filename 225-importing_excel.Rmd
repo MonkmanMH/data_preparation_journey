@@ -8,7 +8,7 @@ output:
 
 ```{r setup_ch225, include=FALSE, eval=TRUE}
 
-source("package_load.R")
+#source("package_load.R")
 
 ```
 
@@ -53,7 +53,7 @@ The {readxl} package's `read_excel()` function is the one we want to use. The fi
 
 ```{r}
 uk_census_pop <- readxl::read_excel(
-  "data/census2021firstresultsenglandwales1.xlsx",
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
   sheet = "P01",
   n_max = 10
 )
@@ -69,7 +69,7 @@ The `read_excel()` function has a variety of approaches to specify the rectangul
 
 ```{r}
 uk_census_pop <- readxl::read_excel(
-  "data/census2021firstresultsenglandwales1.xlsx",
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
   sheet = "P01",
   n_max = 10,
   skip = 6 
@@ -87,7 +87,7 @@ In this code, we will also apply the `clean_names()` function from the {janitor}
 
 ```{r}
 uk_census_pop <- readxl::read_excel(
-  "data/census2021firstresultsenglandwales1.xlsx",
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
   sheet = "P01",
   range = "A7:E382"
 ) |> 
@@ -118,7 +118,7 @@ The specifics of the hierarchy are as follows:
 
 * The UA level is further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
 
-* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links from this page: https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography]^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] 
+* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).]^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] 
 
 This complicated structure means that the data has multiple subtotals—a `sum()` function on the "All persons" variable will lead to a total population of 277,092,700, roughly 4.7 times the actual population of England and Wales in 2021, which was 59,597,300. 
 
@@ -164,7 +164,7 @@ ua_pop  |>
 
 ```
 
-Another approach would be to create a list of the desired three-character codes, then create a new variable in the main data, and filter against the list:
+Another approach would be to create a list of the desired three-character codes, then create a new variable in the main data, and filter against a list of UA codes:
 
 ```{r}
 # create list of UA three-character codes
@@ -199,7 +199,7 @@ While this approach works for our particular example, it will require careful co
 ### Approach 2 - use Excel's formatting
 
 
-The leading space we see when we view the Excel file in its native software (see Figure X) is not created by space characters, but through Excel's "indent" formatting. There is an R package that has functions that allow us to turn that formatting into information that we can work with. For this, we will be using the packages {tidyxl} [@R-tidyxl] and {unpivotr} [@R-unpivotr].
+The leading space we see when we view the Excel file in its native software (see Figure X) is not created by space characters, but through Excel's "indent" formatting. The  {tidyxl} package [@R-tidyxl] has functions that allow us to turn that formatting into information, which we can then use in the functions within the {unpivotr} package [@R-unpivotr].
 
 
 ```{r, eval=FALSE}
@@ -207,14 +207,12 @@ library(tidyxl)
 library(unpivotr)
 ```
 
-In the code below, we create an object with the file path as a character string. This has the result of being less typing (and with a name like this, a far smaller risk of a typo), and RStudio can also recognize the object for the autofill feature. The second line of code uses the function `xlsx_sheet_names()` to get the names of all of the sheets in the Excel file. 
+The code below uses the function `xlsx_sheet_names()` to get the names of all of the sheets in the Excel file. 
 
 ```{r}
 
-uk_census_path <- "data/census2021firstresultsenglandwales1.xlsx"
-
-xlsx_sheet_names(
-  uk_census_path
+tidyxl::xlsx_sheet_names(
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx")
   )
 
 ```
@@ -225,8 +223,8 @@ We already know that Excel files can contain a lot of information that is outsid
 
 ```{r}
 
-uk_census <- xlsx_cells(
-  uk_census_path,
+uk_census <- tidyxl::xlsx_cells(
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
   sheets = "P01"
   )
 
@@ -258,7 +256,7 @@ The code below reads the formats, and assigns it to a new object "uk_census_form
 ```{r}
 
 uk_census_formats <- xlsx_formats(
-  uk_census_path
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
 )
 
 ```
@@ -356,7 +354,7 @@ uk_census_behead <- uk_census |>
 Did we get the results we expected? Let's do some quick checks of the data, first to see if the 1,125 cells of Excel data (CX to DY) are represented by an individual row (the result of the pivot):
 
 ```{r}
-nrow(uk_census_behead)
+glimpse(uk_census_behead)
 ```
 
 
@@ -381,9 +379,9 @@ uk_census_behead |>
 
 ```
 
-Wait! Didn't we learn that Wales is not divided into regions, and that there are no counties? You may already know that Somerset is in England, not Wales. What's gone wrong?
+Wait! Didn't we learn that Wales is not divided into regions, and that there are no divisions of the UA level? You may also already know that Somerset is in England, not Wales. What's gone wrong?
 
-A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the nature of the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! Those functions are doing things exactly correctly. 
+A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the nature of the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! Those functions are doing things exactly correctly. The values are being pulled from "left-up".
 
 The first thing that catches my eye is that "field2"—the Region—should be NA for Wales, but it has been assigned to the South West, which is the last English Region in the data. 
 
@@ -421,7 +419,11 @@ uk_census_behead |>
 ```
 
 
-Now we have diagnosed the problem, what solution can we apply? Since our diagnosis of the data is that this problem is consistent througout the data.
+Now we have diagnosed the problem, what solution can we apply? 
+
+One solution is to repopulate each level's "field" variable by stepping up a level and comparing that to the value three rows earlier in the data.^[Thanks to Duncan Garmonsway, the author of the {tidyxl} and {untidyr} packages, for the path to this solution.] (We look at the previous rows using the `dplyr::lag()` function. It has to be three rows because our beheading function has made separate rows for "All persons", "Female", and "Male".)
+
+If the prior field is not the same, it gets replaced with an "NA", but if it's the same, then the current value is retained. In the first `mutate()` function, "field1" is replaced if "field0" in the current spot is _not_ the same as the "field0" three rows prior.
 
 ```{r}
 
@@ -431,51 +433,48 @@ uk_census_behead |>
   mutate(field1 = if_else(field0 == lag(field0, n = 3), field1, NA)) |>
   mutate(field2 = if_else(field1 == lag(field1, n = 3), field2, NA)) |>
   mutate(field3 = if_else(field2 == lag(field2, n = 3), field3, NA)) |>
-  mutate(field4 = if_else(field3 == lag(field3, n = 3), field4, NA)) |>
-  select(row, starts_with("field")) |>
-  print(n = Inf)
+  mutate(field4 = if_else(field3 == lag(field3, n = 3), field4, NA)) 
 
 ```
 
-^[Thanks to Duncan Garmonsway, the author of the {tidyxl} and {untidyr} packages, for the path to this solution.]
 
+Unfortunately, this solution does not repair the mis-assignment of the UAs in Wales.
 
-
-and applies only to Wales, a solution is to replace the incorrect assignments as "NA".
-
-In the code below, a new variable "filed2_revised" is created, assigning "NA" to the cases where "field1" is "Wales", and using the existing value of field2 for the remainder. The same approach is then applied to "field3".
+In the code below, the values in "field1" are evaluated. For those with population data from Wales, the "field2" and "field3" values are replaced with an NA. 
 
 ```{r}
 
 uk_census_behead_revised <- uk_census_behead |> 
-  mutate(field2_revised = case_when(
+  mutate(field2 = case_when(
     field1 == "Wales" ~ NA_character_,
     TRUE ~ field2
   )) |>
-  mutate(field3_revised = case_when(
+  mutate(field3 = case_when(
     field1 == "Wales" ~ NA_character_,
     TRUE ~ field3
   )) |>
-  select(field0:field2, field2_revised, field3, field3_revised, field4, gender, numeric)
+  select(field0:field4, gender, numeric)
   
 uk_census_behead_revised |> 
   tail()
 
 ```
 
-Prune the subtotal rows
+In many uses of this data, we will want to remove the subtotal rows. In the code below, a `case_when()` function is applied to create a new variable that contains a value "subtotal" for the rows that are disaggregated at the next level (for example, the cities within a Metro county, or the UAs within a region).
+
+The first step is to create a new dataframe `field3_split` that identifies all of the UA-levels that have a dissaggregation. This is done by first filtering by `field4`, where there is a valid value (identifed as not an "NA"), and creating a list of the distinct values in `field3`. That list is then used as part of the evaluation within the `case_when()` to assign the value "subtotal" to the new variable `subtotal_row`.
+
 
 ```{r}
-
 field3_split <- uk_census_behead_revised |> 
   filter(!is.na(field4)) |> 
-  distinct(field3_revised)  
+  distinct(field3)  
   
 field3_split
 
 uk_census_behead_revised |> 
   mutate(subtotal_row = case_when(
-    field3_revised %in% field3_split$field3_revised & is.na(field4) ~ "subtotal",
+    field3 %in% field3_split$field3 & is.na(field4) ~ "subtotal",
     TRUE ~ NA_character_
     ))
 
@@ -485,11 +484,13 @@ uk_census_behead_revised |>
 
 ### Approach 3 - build a concordance table
 
-A second and more flexible approach we can take is to create a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once this table is built, it can be joined that our data, as well as any other table we might need to use in the future.
+If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined that our data, as well as any other table we might need to use in the future.
 
-We will save this table as a CSV file, so it's available quickly for other applications. But we can build it programatically in R, using the {tibble} package. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
+For our UK Census data, we will create two separate concordance tables. We will save these tables as a CSV file, so it's available quickly for other applications. 
 
-In addition to the name of the category, the level in the hierarchy is also encoded in this table. 
+For the first table, we will build a table with each type of administrative region and its associated three-digit code. This is done programatically in R, using the {tibble} package [@R-tibble]. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
+
+In addition to the area code prefix and the name of the adminstrative region type, the level in the hierarchy is also encoded in this table. 
 
 ```{r}
 
@@ -547,25 +548,73 @@ uk_census_pop_geo |>
 ```
 
 
-A more complex concordance table would also include the hierarchy:
+A more complex concordance table can be derived from the beheaded table we created earlier:
+
+* create variable with lowest-level value, ie what's in the source table column B
+
+* need to prune only field variables and then the non-duplicated rows (`distinct()`)
 
 ```{r}
 
-uk_census_geo <- read_csv("data/uk_census_geo.csv")
+uk_census_geo_code <- uk_census_behead_revised |> 
+  # select field variables
+  select(contains("field")) |> 
+  distinct() |> 
+  # create variable with lowest-level value
+  mutate(area_name = case_when(
+    !is.na(field4) ~ field4,
+    !is.na(field3) ~ field3,
+    !is.na(field2) ~ field2,
+    !is.na(field1) ~ field1,
+    !is.na(field0) ~ field0,
+    TRUE ~ NA_character_
+  ))
+  
 
-uk_census_geo
+uk_census_geo_code
 
 ```
 
-This file could also be joined to the contents of a population sheet, to provide additional detail. 
+Next step: join to add the area code 
+
+```{r}
+uk_census_geo_code <- uk_census_geo_code |> 
+  left_join(
+    select(uk_census_pop, area_name, area_code),
+    by = "area_name"
+    ) 
+
+uk_census_geo_code
+  
+```
+
+
+```{r}
+
+uk_census_geo_code <- uk_census_geo_code |> 
+#  select(area_code, area_name) |> 
+  mutate(area_code_3 = str_sub(uk_census_pop$area_code, 1, 3)) |> 
+  # join with classification table
+  left_join(
+    uk_region_table,
+    by = c("area_code_3" = "area_code_3")
+    )
+
+uk_census_geo_code
+
+```
+
+Now we have a comprehensive table, with all 375 of the administrative geography areas, including the name, area code, and all of the details of the hierarchy.
+
+This table could also be joined to the contents of a population sheet, to provide additional detail. 
 
 Let's imagine your assignment is to determine which region at the UA level has the highest proportion of people aged 90 or older. The code below reads the contents of sheet "P02" in the census population file, which has age detail of the population in each area. By appending the contents of the concordance table, a detailed disaggregation without double counting is possible.
 
 In addition to changing the sheet reference, the code also changes the range to reflect the differences in the contents.
 
 ```{r}
-uk_census_pop <- readxl::read_excel(
-  "data/census2021firstresultsenglandwales1.xlsx",
+uk_census_pop_90 <- readxl::read_excel(
+  dpjr::dpjr_data("census2021firstresultsenglandwales1.xlsx"),
   sheet = "P02",
   range = "A8:V383"
 ) |> 
@@ -574,45 +623,26 @@ uk_census_pop <- readxl::read_excel(
   # remove "_note_12" from population variables
   dplyr::rename_with(~str_remove(., "_note_12"))
 
-head(uk_census_pop)
+head(uk_census_pop_90)
 
 ```
 
-The `filter()` step below select the area code and the population categories of interest, but this leaves those UA regions that are further disaggregated into the city category. 
+The `filter()` step below does the following:
+
+* select the area code and the population categories of interest, 
+
+* joins the detailed geographic descriptions,
+
+* filters the level 3 values, but this leaves those UA regions that are further disaggregated into the city category. 
 
 ```{r}
 
-uk_census_pop |> 
-  select(area_code, all_persons, aged_90_years_and_over) |> 
-  full_join(uk_census_geo, by = "area_code") |> 
-  # filter so that only UAs remain
-  filter(!is.na(ua))
-
-```
-
-The solution to our disaggregation challenge is to count the number of rows for the UA regions, and use that as part of a filter. We want to remove the UA rows that have an NA in the city variable while at the same time have two or more rows representing that UA.
-
-This filter requires two tests:
-
-* all of the rows where the number of rows per UA is 1, and 
-
-* for the cases where the number of rows is greater than 1, we want to remove the aggregate, which has an NA in the city variable. For the last test, note that it is wrapped in parenthesis—this isn't always necessary, but it is useful for human readers, and there are instances where the order of operations will matter.
-
-```{r}
-
-uk_census_pop_90 <- uk_census_pop |>
+uk_census_pop_90 <- uk_census_pop_90 |>
   select(area_code, all_persons, aged_90_years_and_over) |>
-  full_join(uk_census_geo, by = "area_code") |>
+  full_join(uk_census_geo_code, by = "area_code") |>
   # filter so that only UAs remain
-  filter(!is.na(ua)) |>
-  # count the number of rows of each UA region
-  group_by(ua) |>
-  mutate(number_of_rows = n()) |>
-  ungroup() |>
-  # then filter on NA status where number of rows is >1
-  filter(number_of_rows == 1 |
-           (number_of_rows > 1 & !is.na(city)) # parenthesis!
-         )  
+  filter(geo_level == 3)
+  
 
 ```
 
@@ -621,9 +651,12 @@ With this table, the proportion of persons aged 90 or older can be calcutated an
 ```{r}
 
 uk_census_pop_90 |> 
-  mutate(pct_90_plus = aged_90_years_and_over / all_persons) |> 
+  mutate(
+    pct_90_plus = 
+      round((aged_90_years_and_over / all_persons * 100), 1)
+    ) |> 
   arrange(desc(pct_90_plus)) |> 
-  select(area_name, ua, city, aged_90_years_and_over, pct_90_plus) |> 
+  select(area_name, aged_90_years_and_over, pct_90_plus) |> 
   slice_head(n = 10) 
   
 

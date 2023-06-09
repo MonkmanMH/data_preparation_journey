@@ -92,7 +92,7 @@ We will come back to filtering and variable selection along with working with da
 ```{r}
 
 travellers_bc <-
-travellers %>% 
+travellers |> 
   filter(GEO == "British Columbia",
          REF_DATE == "2020-06")
 

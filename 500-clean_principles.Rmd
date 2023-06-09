@@ -41,91 +41,19 @@ We've read in our raw data. The next step is to make sure that the data is what 
 
 Sometimes, we will see this questions framed as whether or not the data is _dirty_, and whether it needs _cleaning_.
 
-What are common dirty data problems? In some cases, the problems are with how the data are structured and stored, and in others the problems are with the values in the data table.
-
-* Column headers are values instead of variable names, or there are duplicate variable names.
-
-* Multiple data types in a column. For example, some records are numbers and some are character strings—and this could be entirely correct, but if some number entry includes commas as thousands separators, it might be stored as a character.
-
-* Multiple variables are stored in one column (examples include first name & last name, city & province or state).
-
-* Misspellings (typing errors) 
-
-* Value in wrong field (e.g. country entered into `city` field).
-
-* Irregularities in unit of measurement (in an international survey or form, `salary` completed by respondents in the values of their local currency)
-
-* Inconsistency in how values are recorded (all-too common is finding that dates are stored as both "2017-07-01" and "July 1, 2017").
-
-* Default values in the place of missing values.
-
-* Contradiction, where two fields or databases have the same variable for the same observation but each has a different value.
-
-* Logical inconsistency between variables (for example, union dues deducted from a non-union staff member)
-
-See 
-
-* [@Zumel_Mount_2019, chapters 3 and 4]
-
-
-
-## Data quality
-
-
-We also need to ask "What is the data's _quality_?" 
-
-One resource that is useful to frame your thinking on this is Statistics Canada's _Quality Guidelines_ [@StatCan_data_quality_6]. Like other official statistical agencies around the world, Statistics Canada's reputation is staked on making high quality data available to the widest possible audience.
-
-* Relevance: The degree to which the data meets the user's needs, and relates to the issues that the user cares about.
-
-* Timeliness and punctuality: The delay between the information reference period and the date when the data becomes available.
-
-* Accuracy and reliability: Accuracy "is the degree to which the information correctly describes the phenomena it was designed to measure."
-
-* Accessibility and clarity: "The ease with which users can learn that the information (including metadata) exists, find it, view it and import it into their own work environment."
-
-* Interpretability: "The availability of supplementary information and metadata needed to interpret and use statistical information appropriately."
-
-* Coherence and comparability: "The degree to which it can be reliably combined and compared with other statistical information within a broad analytical framework over time."
-
-
 
 
 ### Data quality literature
 
-There is quite a lot of literature on how to define data quality. The concepts in the hierarchical dimensions described by Wang, Reddy and Kon ^[Richard Y. Wang, M.P. Reddy and Henry B. Kon, "Toward quality data: An attribute-based approach", _Decision Support Systems_, 13 (1995) 349-372] are as follows:
+There is quite a lot of literature on how to define data quality. The concepts in the hierarchical dimensions described by Wang, Reddy and Kon [@WangRichardY.1995TqdA] are as follows:
 
 * Accessible
 
-  - Available
-  
 * Interpretable
 
-  - Syntax
-  
-  - Semantics
-  
 * Useful
 
-  - Relevant
-  
-  - Timely
-  
-    - Current
-    
-    - Non-volatile
-    
 * Believable
-
-  - Complete
-  
-  - Consistent
-  
-  - From a credible source
-  
-  - Accurate
-  
-
 
 "Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
 
@@ -147,7 +75,7 @@ Some examples:
 
 * Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
 
-* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [_reference_] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
+* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [@Khreis_etal_2022] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
 
 
 
@@ -165,7 +93,7 @@ Some examples of inaccurate data are:
 
 * A data entry error. Perhaps the most common are typographical errors, where the wrong value is entered. Another type is what we might call a "variable transposition error" (where the value is transposed one column over, something that happens all too often with address records, where the city name might end up in the state/province column).
 
-* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "MAR1" gets converted to March 1st of the current year. [CITATION NEEDED]
+* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "SEPT1" gets converted to September 1st of the current year. There is documented evidence that this software behaviour has caused errors in gene research. [@Zeeberg_etal_2004], [@Abeysooriya_etal_2021]
 
 
 * Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
@@ -214,8 +142,9 @@ See
 
 If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? Don't we want to be _doing analysis_? 
 
-> The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis. —Randy Au, 2020-09-15 ^[["Data Cleaning IS Analysis, Not Grunt Work"](https://counting.substack.com/p/data-cleaning-is-analysis-not-grunt)]
+There is a strong argument to be made that the process of cleaning data is a fundamental part of the analytic process, or the corresponding statement that any analytic process requires data cleaning.
 
+Randy Au has written "The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis." [@Au_data_cleaning_2020]
 
 At this point we should ask what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
 

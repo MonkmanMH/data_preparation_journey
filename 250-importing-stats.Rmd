@@ -133,8 +133,8 @@ The labels in an dataframe created by {haven} can be converted to a factor type,
 If we were to tally the number of penguins in each species using the penguins dataframe that originated from the SPSS file, we would see this:
 
 ```{r}
-penguins_sav %>% 
-  group_by(species) %>% 
+penguins_sav |> 
+  group_by(species) |> 
   tally()
 
 ```
@@ -144,9 +144,9 @@ In this version, the "species" variable retains the numeric values.
 By applying the `unlabelled()` function, the "haven_labelled" type variables are transformed into factor types, with the labels now the values shown:
 
 ```{r}
-penguins_sav %>% 
-  unlabelled() %>% 
-  group_by(species) %>% 
+penguins_sav |> 
+  unlabelled() |> 
+  group_by(species) |> 
   tally()
 
 ```
@@ -155,9 +155,9 @@ penguins_sav %>%
 An alternative approach is the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions. In this first example, the variable "species" is mutated from labelled to factor type.
 
 ```{r}
-penguins_sav %>% 
-  mutate(species = as_factor(species)) %>% 
-  group_by(species) %>% 
+penguins_sav |> 
+  mutate(species = as_factor(species)) |> 
+  group_by(species) |> 
   tally
 ```
 
@@ -165,9 +165,9 @@ penguins_sav %>%
 In this second variant, the `mutate_if(is.labelled)` function transforms all of the labelled variables.
 
 ```{r}
-penguins_sav %>% 
-  mutate_if(is.labelled, to_factor) %>% 
-  group_by(species, island) %>% 
+penguins_sav |> 
+  mutate_if(is.labelled, to_factor) |> 
+  group_by(species, island) |> 
   tally()
 ```
 
@@ -403,13 +403,13 @@ The second step is to use the {dplyr} `fill()` function to populate the missing 
 
 ```{r, eval=FALSE}
 
-penguins_code <- penguins_code %>% 
+penguins_code <- penguins_code |> 
   # rename variables
   rename(Value = "variable",
     ...2 = "variable_value",
-    Label = "variable_label") %>% 
+    Label = "variable_label") |> 
   # fill in blank names
-  fill(variable) %>% 
+  fill(variable) |> 
   # change to numeric
   mutate(variable_value = as.numeric(variable_value))
 
@@ -429,8 +429,8 @@ At this point, there are two possible solutions:
 
 
 ```{r, eval=FALSE}
-penguins_code_wide <- penguins_code %>% 
-#  mutate(row_num = row_number()) %>% 
+penguins_code_wide <- penguins_code |> 
+#  mutate(row_num = row_number()) |> 
   pivot_wider(names_from = c(variable), values_from = variable_label)
 
 penguins_code_wide
