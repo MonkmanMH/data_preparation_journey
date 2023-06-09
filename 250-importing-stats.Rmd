@@ -158,7 +158,7 @@ An alternative approach is the explicitly change the variable type, with a `to_f
 penguins_sav |> 
   mutate(species = as_factor(species)) |> 
   group_by(species) |> 
-  tally
+  tally()
 ```
 
 

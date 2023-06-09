@@ -442,7 +442,7 @@ It's not quite perfect, and some things need to be removed:
 ```{r 300_remove_NA}
 # succinct way to remove a row which has a single "NA"
 bcf_table_3 <- bcf_table_2 |> 
-  na.omit |> 
+  na.omit() |> 
   select(route,
          starts_with("passengers_"),
          starts_with("passenger_tariff_rev")) |> 

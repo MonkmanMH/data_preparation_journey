@@ -169,7 +169,7 @@ We could have written code to generate a summary table to check this. In many da
 ```{r}
 penguins |> 
   group_by(species, island) |> 
-  tally
+  tally()
 ```
 
 A single `check_that()` test could be written using the "AND" operator `&`.

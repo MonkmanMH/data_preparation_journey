@@ -648,7 +648,7 @@ uk_census_pop_90 <- uk_census_pop_90 |>
 
 With this table, the proportion of persons aged 90 or older can be calcutated and the table sorted in descending order:
 
-```{r}
+```{r census_90_plus_225}
 
 uk_census_pop_90 |> 
   mutate(
