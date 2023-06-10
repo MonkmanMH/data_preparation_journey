@@ -8,10 +8,6 @@ output:
 <!-- 
 This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
 
-Elements are drawn from the reference materials for the packages
-* {haven} -- https://haven.tidyverse.org/
-* {labelled} -- http://larmarange.github.io/labelled/reference/index.html
-
 -->
 
 
@@ -29,10 +25,12 @@ In this chapter:
 
 * Importing data from web repositories
 
+* An introduction to web APIs
 
 
 
-There is a lot of valuable data out there on the internet, just waiting for curious data analysts to pull nuggets of insight out of it. There are a variety of ways to get it; in some cases, you can download a CSV or Excel file and then read that into R.
+
+There is a lot of valuable data out there on the internet, just waiting for curious data analysts to pull nuggets of insight from it. There are a variety of ways to access that data; in some cases, you can download a CSV or Excel file and then read that into R.
 
 But the brilliant people that make up the R community have made our life a whole lot easier by creating packages that allow us to write R scripts that link directly to data we want. This is particularly valuable if you are accessing a data set that gets updated regularly (say, a weekly financial report or the results of a monthly survey).
 
@@ -45,7 +43,7 @@ There are two sorts of R packages that utilize APIs. The first are those that ar
 ## R packages for direct connection
 
 
-In this section, we will explore two examples that allow access to the data repository hosted by Statistics Canada, and the British Columbia Government's open data catalogue. There are many other tools available; some are listed at the bottom of this page.
+In this section, we will explore two examples that allow access to the data repository hosted by Statistics Canada, and the British Columbia Government's open data catalogue. There are many other tools available; some are listed at the end of this chapter.
 
 Run this code chunk to load the packages we need:
 
@@ -96,13 +94,13 @@ travellers |>
   filter(GEO == "British Columbia",
          REF_DATE == "2020-06")
 
-travellers_bc
+glimpse(travellers_bc)
 
 ```
 
 There are six categories in the `Country of residence` variable. What if we just want a monthly report on a single continent? One of the features of CANSIM and other similar tables is that the individual series are given a single identifier. In the case of CANSIM, these are called the "vector numbers". Scroll to the right on this table, and you'll see a variable called `VECTOR`. The vector identifier (sometimes called "the vector number" even though it's a character string!) for European travellers entering Canada via British Columbia is v32214508.
 
-CANSIM gives us a function to select a single vector number, so we can be more efficient still. We can speed up the download time _and_ skip the filtering steps to get to the one we want. (Note that this function requires us to enter a start date, and converts the reference date variable to the YYYY-MM-DD format.)
+The {cansim} package also gives us a function to select a single vector number, so we can be more efficient still. We can speed up the download time _and_ skip the filtering steps to get to the one we want. (Note that this function requires us to enter a start date, and converts the reference date variable to the YYYY-MM-DD format.)
 
 ```{r get_cansim_vector, eval=FALSE}
 
@@ -123,7 +121,9 @@ get_cansim_table_overview("24-10-0006-01")
 
 
 
-## R packages for direct access to data
+## Other R packages for direct access to data
+
+Similar to the {cansim} package, the following is an incomplete list of other packages that have been developed to provide direct access to a specific web resource.
 
 {onsr}: package downloads data from the UK's Office of National Statistics [@R-osnr]
 
@@ -157,11 +157,15 @@ df <- ons_get(id = "wellbeing-quarterly")
 ```
 
 
-The {readabs} package downloads and tidies data from the Australian Bureau of Statistics [@R-readabs]
+* The {readabs} package downloads and tidies data from the Australian Bureau of Statistics [@R-readabs]
 
-{RBNZ} downloads data from the Reserve Bank of New Zealand Website [@R-RBNZ]
+* {RBNZ} downloads data from the Reserve Bank of New Zealand Website [@R-RBNZ]
 
+* {bcdata} [@R-bcdata] has tools to search, query, and download tabular and 'geospatial' data from the British Columbia Data Catalogue
 
+* {opendatatoronto} [@R-opendatatoronto] provides a direct connection to the City of Toronto Open Data Portal
+
+* {tidycensus} [@R-tidycensus] has tools that connect to the United States Census Bureau, and returns tidyverse-ready dataframes with the option of adding geographic details to allow for mapping. (See also [@Walker])
 
 
 ## R packages to set up API connections
