@@ -92,7 +92,7 @@ uk_census_pop <- readxl::read_excel(
   range = "A7:E382"
 ) |> 
   janitor::clean_names() |> 
-  rename(area_code = area_code_note_2)
+  rename(area_code_note_2 = area_code)
 
 uk_census_pop
 
