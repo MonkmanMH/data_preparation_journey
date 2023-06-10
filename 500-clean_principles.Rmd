@@ -85,7 +85,7 @@ When we say accurate, we mean that the value recorded in our data is the value m
 
 Some examples of inaccurate data are:
 
-* The use of a default value in place of a missing or "unknown" value. This is sometimes embedded in the data collection or database software, leading to values that should have been "unknown" be entered as the default.
+* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" be entered as the default. This can be the consequence of a data entry validation process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
 
 > Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
 

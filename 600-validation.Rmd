@@ -32,7 +32,7 @@ In this chapter:
 
 ## Identifying dirty data
 
-There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation" methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected.
+There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation"\index{data validation} methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected.
 
 The article "Nine simple ways to make it easier to (re)use your data" [@White_etal_nine_simple_ways] 
 
@@ -40,9 +40,9 @@ The article "Nine simple ways to make it easier to (re)use your data" [@White_et
 
 Validation while the data is being collected might be through the use of drop-down boxes that eliminates spelling mistakes, or that forces entries to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
-* All of these have risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a zero or a preposterously very large number, neither of them accurate.
+* All of these have risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a "1" or a preposterously very large number, neither of them accurate.
 
-For our work here, we will focus on validating data after is has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
+For our work here, we will focus on checking and validating data after is has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
 
 
 * A field such as postal code has to be structured in a certain way (this is where your regex skills come in)
@@ -65,9 +65,24 @@ EDA consists of two groups of techniques:
 
 * data visualization
 
-### Summary statistics
+The things we are looking for at this stage include:
 
-For this example, we will look at some synthetic data about the employees of a company. The data is stored in multiple sheets of an Excel file:
+* the variable types
+
+* missing values
+
+* invalid values and outliers, including sentinel values
+
+* data ranges that are too wide or too narrow
+
+* the units of the data
+
+
+(Adapted from [@Zumel_Mount_2019, p.54])
+
+
+
+For this example, we will look at some synthetic data about the employees of a company. The data is stored in multiple sheets of an Excel file; we will explore the data in the sheet "df_HR_train", which records whether someone has completed the mandatory training courses or not.
 
 ```{r}
 
@@ -76,63 +91,107 @@ readxl::excel_sheets(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"))
 
 ```
 
-We can use R's `summary()` function to quickly get a glimpse of the data.
-
-The things to look for:
-
-* missing values
-
-* invalid values and outliers
-
-* data ranges that are too wide or too narrow
-
-* the units of the data
+Once we have read the data into our environment, we can use some EDA methods to check the data.
 
 ```{r}
-summary(customer_data)
+
+df_HR_train <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+                   sheet = "df_HR_train")
+
 ```
+
+One way we might begin our investigation is the `dplyr::glimpse()` function. This function returns the dimensions of the dataframe, the variable types, and the first few values of each variable.
+
+```{r training_glimpse_600}
+glimpse(df_HR_train)
+```
+
+The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible in the `read_` function" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
+
+```{r}
+
+df_HR_train <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+                   sheet = "df_HR_train",
+                   col_types = c("text", "logical", "logical", "logical", "logical"),
+                   na = "NA")
+
+glimpse(df_HR_train)
+
+```
+
+
+
+Not that the variables are in a format we can use, applying R's `summary()` function gives us another way to see the data.
+
+
+```{r}
+summary(df_HR_train)
+```
+
+A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing...there might be a reason for this, and part of the analyst's responsibility is to make note of this, and perhaps further investigate (and record) the reason for this situation. You might start with the data's documentation, and if that doesn't hold an explanation, talking to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a cohort from what is otherwise a mandatory course.
+
+
 
 ### Data visualization
 
-A plot can show us a wealth of information that cannot be expressed in the summary statistics. Here's the `age` variable from the customer data:
+A plot can show us a wealth of information that cannot be expressed in the summary statistics. Let's work through exploring the date of birth variable from the `df_HR_main` sheet:
+
+
+```{r read_HR_main_600}
+
+df_HR_main <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+                   sheet = "df_HR_main",
+                   col_types = c("text", "date", "date"),
+                   na = "NA")
+
+```
+
+Again we will use the `glimpse()` and `summary()` functions to start our exploration:
 
 ```{r}
+glimpse(df_HR_main)
 
-summary(customer_data$age)
+summary(df_HR_main)
+```
+
+
+In the midst of this information is an interesting anomaly, one that is far more visible if we plot the data. Here is a density plot that shows the distribution of birth dates of the staff:
+
+
+```{r}
+ggplot(df_HR_main, aes(x = date_of_birth )) +
+  geom_density()
 
 ```
 
 
 
-And here is a density plot that shows the distribution of customers by their age.
 
+Here are some questions that we might want to explore further in the `date_of_birth` variable, after seeing the results of the `summary()` function and the plot:
+
+* The earliest birth date is 1901-01-01. This would mean that the oldest staff member was 119 years old at 2020-01-01, the point at which the dataset was created. Perhaps you are already aware of the fact that only one person whose age has been independently verified lived long enough to celebrate their 120th birthday (they were 122 years, 164 days old when they passed away). ^[[Wikipedia, "List of the verified oldest people"](https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people)] A possibility is that 1901-01-01 is a sentinel value\index{sentinel value}, inserted as a placeholder for unknown or missing values. Further exploration will help our understanding; we can start with counting the number of cases for any particular date:
 
 ```{r}
-
-ggplot(customer_data, aes(x = age)) +
-  geom_density(bw = .75)
+df_HR_main |> 
+  group_by(date_of_birth) |> 
+  tally() |> 
+  arrange(desc(n)) |> 
+  head()
 
 ```
 
+There are 10 cases with the birth date entry of 1901-01-01...this is the sort of pattern we would see with a sentinel value.
 
 
-Here are some questions that we might want to explore further in the `age` variable, after seeing the results of the `summary()` function and the plot:
+## Validation methods
 
-* The maximum age is 120—perhaps you are already aware of the fact that only one person whose age has been independently verified lived long enough to celebrate their 120th birthday (they were 122 years, 164 days old when they passed away). [Wikipedia, "List of the verified oldest people"](https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people)
-
-* Why is there a sudden cluster of customers age 95? We would expect this to be a relatively smooth line from one age category to the next.
-
-
-
-In the next chapter, we will look in more depth at ways to identify dirty elements in your data.
-
-**END OF TRIM**
+While exploratory data analysis uses visualization and scans of data summaries to spot potentially dirty data, validation is a structured process of testing.
 
 ### The {validate} package
 
 As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands.
 
-The first function we will investigate is `check_that()`, using the data in {palmerpenguins}. We know that these data are nice and clean—they have already gone through a validation process.
+The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins}. We know that the data in the package are nice and clean—they have already gone through a validation process.
 
 ```{r ch600_packages, eval=FALSE}
 library(tidyverse)
