@@ -157,15 +157,15 @@ df <- ons_get(id = "wellbeing-quarterly")
 ```
 
 
-* The {readabs} package downloads and tidies data from the Australian Bureau of Statistics [@R-readabs]
+* The {readabs} [@R-readabs] package downloads and tidies data from the Australian Bureau of Statistics 
 
-* {RBNZ} downloads data from the Reserve Bank of New Zealand Website [@R-RBNZ]
+* {RBNZ} [@R-RBNZ] downloads data from the Reserve Bank of New Zealand Website
 
 * {bcdata} [@R-bcdata] has tools to search, query, and download tabular and 'geospatial' data from the British Columbia Data Catalogue
 
 * {opendatatoronto} [@R-opendatatoronto] provides a direct connection to the City of Toronto Open Data Portal
 
-* {tidycensus} [@R-tidycensus] has tools that connect to the United States Census Bureau, and returns tidyverse-ready dataframes with the option of adding geographic details to allow for mapping. (See also [@Walker])
+* {tidycensus} [@R-tidycensus] has tools that connect to the United States Census Bureau, and returns tidyverse-ready dataframes with the option of adding geographic details to allow for mapping. (See also [@Walker_census_2023].)
 
 
 ## R packages to set up API connections

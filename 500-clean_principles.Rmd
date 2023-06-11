@@ -99,7 +99,7 @@ Some examples of inaccurate data are:
 * Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
 
 ```{r}
-readxl::read_excel("date.xlsx", col_types = "text")
+readxl::read_excel(dpjr::dpjr_data("date.xlsx"), col_types = "text")
 
 lubridate::today() - 44571
 ```

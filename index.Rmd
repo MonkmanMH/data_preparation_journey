@@ -17,7 +17,7 @@ site: bookdown::bookdown_site
 biblio-style: apalike
 ---
 
-```{r setup, include=FALSE}
+```{r setup_index, include=FALSE}
 options(
   htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
 )
@@ -33,7 +33,7 @@ source("package_load.R")
 
 # Preface  {-}
 
-Welcome to the online home of _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
+Welcome to _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
 
 This is a work-in-progress; the most recent update is `r Sys.Date()`.
 

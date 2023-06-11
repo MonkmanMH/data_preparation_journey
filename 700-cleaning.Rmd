@@ -98,7 +98,7 @@ By mutating these various representations into a consistent YYYY-MM-DD format, w
 
 ```{r}
 
-lfs_canada_employment <- read_rds("data/lfs_canada_employment.rds")
+lfs_canada_employment <- read_rds(dpjr::dpjr_data("lfs_canada_employment.rds"))
 
 head(lfs_canada_employment)
 
@@ -482,7 +482,7 @@ Let's look at the data now. Note t
 
 ```{r, message=FALSE}
 
-bls_employment <- read_csv("data/us_bls_employment_2010-2020.csv")
+bls_employment <- read_csv(dpjr::dpjr_data("us_bls_employment_2010-2020.csv"))
 
 gt(
   head(bls_employment)
@@ -609,14 +609,14 @@ bls_employment_naics21_3digit |>
 
 ### Example: NOC: split code from title
 
-This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
+This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code \index{National Occupation Code} \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
 
 The table we will use are occupations in British Columbia's accommodation industry.
 
 
 ```{r read_noc, include=FALSE}
 
-noc_table <- read_rds(here("data", "noc_table.rds"))
+noc_table <- read_rds(dpjr::dpjr_data("noc_table.rds"))
 
 noc_table
 
@@ -718,7 +718,7 @@ We sometimes find ourselves in a situation where we want to recode our existing 
 We can do this with a function in {dplyr}, `case_when()`.
 
 ```{r}
-canpop <- read_csv("data/canpop.csv")
+canpop <- read_csv(dpjr::dpjr_data("canpop.csv"))
 canpop
 ```
 

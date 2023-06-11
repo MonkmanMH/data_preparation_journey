@@ -139,10 +139,11 @@ A plot can show us a wealth of information that cannot be expressed in the summa
 
 ```{r read_HR_main_600}
 
-df_HR_main <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-                   sheet = "df_HR_main",
-                   col_types = c("text", "date", "date"),
-                   na = "NA")
+df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+           sheet = "df_HR_main", 
+           range = "B5:E1004")
+
+head(df_HR_main)
 
 ```
 

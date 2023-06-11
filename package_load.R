@@ -5,8 +5,6 @@
 # packages
 # --------
 
-library(memisc) # for applying labels etc to PUMF
-
 
 # print and publish
 library(gt)

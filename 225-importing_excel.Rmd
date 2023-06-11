@@ -36,13 +36,67 @@ Spreadsheets like Excel also have a dark side (at least when it comes to data st
 
 The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. 
 
+
+
 The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions.
 
 ```{r}
 library(readxl)
 ```
 
-In this example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. (Remember the "what proportion of staff could potentially retire in the next three years?" example from [\@ref(what-is-data)]?)
+
+Because Excel files can contain multiple sheets, we need to specify which one we want to read. The {readxl} function `excel_sheets()` lists them for us:
+
+```{r}
+excel_sheets(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"))
+```
+
+The one we want for our example is "df_HR_main", which contains the employee ID, name, birth date, and gender of 999 staff.
+
+In our `read_excel()` function we can specify either the name of the sheet, or the number based on its position in the Excel file. While the default is to read the first sheet, it's often good practice to be specific, as Excel users are prone to re-arranging the order of the sheets (including adding new sheets). And because they seem (slightly) less likely to rename sheets, we have another reason to use the name rather than the number.
+
+```{r}
+df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+           sheet = "df_HR_main")
+
+head(df_HR_main)
+```
+
+This sheet possesses a structure we commonly see in Excel files: in addition to the data of interest, the creators of the file have helpfully added a title for the sheet. They might also put note in the "margins" of the data (often to the right or below the data), and add formatting to make it more visually appealing to human readers (beware empty or hidden columns and rows!).
+
+While this is often useful information, its presence means that we need to trim rows and columns to get our dataframe in a useful structure for our analysis.
+
+The `read_excel()` function provides a number of different ways for us to define the range that will be read. One that works well in the function, and aligns with how many Excel users think about their spreadsheets, defines the upper left and the lower right corners of the data using Excel's column-row alpa-numeric nomenclature. For this file, that will exclude the top rows, the empty columns to the left and right of the data, as well as the additional note to the right. The corners are cells B5 and E1004. How did I know that? 
+
+**Important note: there is no shame in opening the file in Excel to make a visual scan of the file, looking for anomalous values and to note the corners of the data rectangle.**
+
+
+```{r}
+df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+           sheet = "df_HR_main", 
+           range = "B5:E1004")
+
+head(df_HR_main)
+```
+
+There are a variety of other approaches to defining the data rectangle in a `read_excel()` function, which might be more appropriate in a different context. For example, if the sheet is continually having new rows added at the bottom, using `range = anchored("B5", dim =c(4, NA))` specification might be prefered. This will start at B5, then read as many rows as there are data (the "NA" inside the `c()` function and 4 columns.^[For more options, see [the "Sheet Geometry" page at the {readxl} site](https://readxl.tidyverse.org/articles/sheet-geometry.html).]
+
+
+```{r}
+df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+           sheet = "df_HR_main", 
+           range = anchored("B5", dim =c(NA, 4)))
+
+head(df_HR_main)
+```
+
+Another splendid feature of `read_excel()` is that it returns a date type (<S3: POSIXct>) for variables that it interprets as dates.
+
+
+## Extended example
+
+Very often, Excel files are far more complicated than the case above. In the following example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
 
 Our focus is on sheet "P01", with population by sex. The first few rows of the data look like this:
 
@@ -62,9 +116,9 @@ uk_census_pop
 
 ```
 
-As is common in Excel files, the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. This is important documentation, but it's not part of the data we want for our analysis. The creators of Excel files also put note in the "margins" of the data (often to the right or below the data), much as you might see on a printed page.
+As we saw in the earlier example, the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. This is important documentation, but it's not part of the data we want for our analysis.
 
-The `read_excel()` function has a variety of approaches to specify the rectangular geometry that contains our data. One is `skip =`, which tells the function to skip the first 6 rows.
+Another of the `read_excel()` arguments to specify the rectangular geometry that contains our data is `skip =`. Here we will use it to skip the first 6 rows.
 
 
 ```{r}
@@ -81,7 +135,7 @@ uk_census_pop
 
 A second option would be define the range of the cells, using Excel nomenclature to the define the upper-left and bottom-right of the data rectangle. This is often a good approach when there is content outside the boundary of the data rectangle, such as additional notes. 
 
-**Important note: there is no shame in opening the file in Excel to make a visual scan of the file, looking for those anomalous values and to note the corners of the data rectangle.**
+Again, opening the file in Excel for a visual scan can provide some valuable insights...here, we can see the additional rows at the top, as well as the hierarchical nature of the data structure.
 
 In this code, we will also apply the `clean_names()` function from the {janitor} package [@R-janitor], which cleans the variable names. Specifically, it removes the spaces (and any other problematic characters), and puts the variable names into lower case. Finally, the `rename()` function is applied to remove the "_note_2" text from the area code variable.
 
@@ -92,7 +146,7 @@ uk_census_pop <- readxl::read_excel(
   range = "A7:E382"
 ) |> 
   janitor::clean_names() |> 
-  rename(area_code_note_2 = area_code)
+  rename(area_code = area_code_note_2)
 
 uk_census_pop
 
@@ -104,7 +158,7 @@ The data has been read correctly, including the fact that the data variables are
 
 
 
-## Excel formatting as data
+### Excel formatting as data
 
 \index{Excel}
 
@@ -137,7 +191,7 @@ As we saw earlier, the {readxl} function `read_excel()` ignores the formatting, 
 
 Let's explore approaches to extracting the information that is embedded in the data and the formatting, and use that to prune the duplicated rows.
 
-### Approach 1 - use the Area code
+#### Approach 1 - use the Area code
 
 The first approach we can take is to extract the regional element in the "area_code" variable, and use that to filter the data.
 
@@ -196,7 +250,7 @@ While this approach works for our particular example, it will require careful co
 
 
 
-### Approach 2 - use Excel's formatting
+#### Approach 2 - use Excel's formatting
 
 
 The leading space we see when we view the Excel file in its native software (see Figure X) is not created by space characters, but through Excel's "indent" formatting. The  {tidyxl} package [@R-tidyxl] has functions that allow us to turn that formatting into information, which we can then use in the functions within the {unpivotr} package [@R-unpivotr].
@@ -482,7 +536,7 @@ uk_census_behead_revised |>
 
 
 
-### Approach 3 - build a concordance table
+#### Approach 3 - build a concordance table
 
 If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined that our data, as well as any other table we might need to use in the future.
 

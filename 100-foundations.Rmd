@@ -32,7 +32,7 @@ Over the next few chapters in this book, we will look at examples of creating a 
 Whether we are preparing data as part of our own analytic project or to make it available for sharing, these should be our goals.
 
 
-## What is data?
+## What is data? {#what-is-data}
 
 Before we get started cleaning our data, we should step back and ask ourselves what we mean by "data". One definition of data is as follows:
 

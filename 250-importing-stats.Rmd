@@ -7,7 +7,6 @@ output:
 
 
 ```{r setup_ch250, include=FALSE, eval=TRUE}
-
 source("package_load.R")
 
 ```
@@ -43,7 +42,7 @@ For these examples, we will work with SPSS formatted files; the approach is simi
 
 ```{r, eval=FALSE}
 
-haven::read_dta(here::here("data", "penguins.dta"))
+haven::read_dta(dpjr::dpjr_data("penguins.dta"))
 
 ```
 
@@ -52,7 +51,7 @@ The equivalent for a SAS file is as follows:
 
 ```{r, eval=FALSE}
 
-haven::read_sas(here::here("data", "penguins.sas"))
+haven::read_sas(dpjr::dpjr_data("penguins.sas"))
 
 ```
 
@@ -60,7 +59,7 @@ Here's the code to read that same data file in SPSS's ".sav" format and assigns 
 
 ```{r}
 
-penguins_sav <- haven::read_sav(here::here("data", "penguins.sav"))
+penguins_sav <- haven::read_sav(dpjr::dpjr_data("penguins.sav"))
 
 penguins_sav
 ```
@@ -210,7 +209,7 @@ For the first step, we will read in the data with the default parameters.
 
 ```{r}
 
-df_video <- read_spss(here("data", "Video_SPSS.sav"))
+df_video <- read_spss(dpjr::dpjr_data("Video_SPSS.sav"))
 
 # display the data in the console
 df_video
@@ -237,7 +236,7 @@ look_for(df_video)
 
 #### Handling missing values 
 
-Very often, SPSS files will have "user defined missing values". In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
+Very often, SPSS files will have "user defined missing values"\index{missing values}. In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
 
 * respondent left the question blank
 
@@ -250,7 +249,7 @@ Depending on the circumstance, you may want to count some of these. For example,
 In the code below, adding the `user_na = TRUE` argument to the `read_spss()` function maintains the original values.
 
 ```{r 250_read_spss_video}
-df_video <- read_spss(here("data", "Video_SPSS.sav"), user_na = TRUE)
+df_video <- read_spss(dpjr::dpjr_data("Video_SPSS.sav"), user_na = TRUE)
 
 df_video <- janitor::clean_names(df_video)
 
@@ -334,7 +333,7 @@ In the following example, the penguins data [@R-palmerpenguins] has been stored 
 
 
 ```{r penguins_labelled, eval=FALSE}
-penguins_path <- here::here("data", "penguins_labelled.xlsx")
+penguins_path <- dpjr::dpjr_data("penguins_labelled.xlsx")
 
 penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
 
@@ -384,7 +383,7 @@ First, we read the contents of specific rectangle of data in the second sheet in
 
 ```{r, eval=FALSE}
 
-penguins_path <- here::here("data", "penguins_labelled.xlsx")
+penguins_path <- dpjr::dpjr_data("penguins_labelled.xlsx")
 
 penguins_code <- read_excel(penguins_path,
                             sheet = "penguins_codebook",
@@ -450,8 +449,8 @@ In this chapter, we will look at two circumstances where the data collectors hav
 
 Fortunately for us, there is a package that has functions to read a raw text file, and apply SPSS syntax to create an R object with labelled variables: {memisc} [@R-memisc].
 
-
 `library(memisc)`
+
 
 ### National Travel Survey (NTS)
 
@@ -530,7 +529,7 @@ The next stage is to create a definition of the dataset using the `memisc::spss.
 ```{r memisc_import}
 
 # read file, create datafile with nested lists
-nts_person_2020 <- spss.fixed.file(
+nts_person_2020 <- memisc::spss.fixed.file(
   data_file,
   columns_file,
   varlab.file = variable_labels,
@@ -541,7 +540,7 @@ nts_person_2020 <- spss.fixed.file(
 )
 
 # convert the resulting object into a "data.set" format 
-nts_person_2020_ds <- as.data.set(nts_person_2020)
+nts_person_2020_ds <- memisc::as.data.set(nts_person_2020)
 
 ```
 
@@ -564,7 +563,7 @@ The last step is to convert our dataset object into a tibble. This tibble has al
 
 ```{r convert_to_haven_tibble}
 
-nts_person_2020_hav <- as_haven(nts_person_2020_ds)
+nts_person_2020_hav <- memisc::as_haven(nts_person_2020_ds)
 nts_person_2020_hav
 
 ```
@@ -594,6 +593,9 @@ readr::write_rds(nts_person_2020_hav,
 
 
 
+```{r, include=FALSE}
+#detach("package:memisc", unload = TRUE)
+```
 
 
 <!-- 

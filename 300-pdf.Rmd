@@ -70,7 +70,7 @@ Next we can use the `str()` function to display a summary of the structure of ou
 
 ```{r}
 
-penguin_summary <- pdf_text("data/penguin_summary.pdf")
+penguin_summary <- pdf_text(dpjr::dpjr_data("penguin_summary.pdf"))
 
 str(penguin_summary)
 
@@ -228,14 +228,8 @@ Once the file has been downloaded, we can use the `str()` function to display a 
 
 ```{r}
 
-bcf <- pdf_text("bcferries_2021.pdf")
-
-```
-
-```{r, eval=FALSE}
-
 # alternative, from the {dpjr} package
-bcf <- pdf_text(dpjr_data("bcferries_2021.pdf"))
+bcf <- pdf_text(dpjr::dpjr_data("bcferries_2021.pdf"))
 
 
 str(bcf)
@@ -274,8 +268,16 @@ From the object we created from the PDF report, we can separate the contents of 
 ```{r 300_bcf_p11}
 
 bcf_11 <- bcf[11]
-
+```
+```{r, eval=FALSE}
 bcf_11
+```
+
+
+```{r, include=FALSE}
+# display first 500 characters
+str_sub(bcf_11, 1, 500)
+
 ```
 
 Wait! This isn't the page we want! While the PDF file numbers the pages, the title page isn't numbered...so page 11 is in fact the twelfth page in the file.
@@ -284,8 +286,14 @@ Wait! This isn't the page we want! While the PDF file numbers the pages, the tit
 ```{r}
 
 bcf_11 <- bcf[12]
-
+```
+```{r, eval=FALSE}
 bcf_11
+```
+```{r, include=FALSE}
+# display first 500 characters
+str_sub(bcf_11, 1, 500)
+
 ```
 
 
@@ -338,15 +346,15 @@ Below, the code creates an object with a list of the variable names.
 bcf_col_names <- c(
   "blank",
   "route",
-  "passengers_2021",
-  "passengers_2020",
+  "passengers_fy2021",
+  "passengers_fy2020",
   "passenger_growth",
-  "passenger_tariff_revenue_2021",
-  "passenger_tariff_revenue_2020",
+  "passenger_tariff_revenue_fy2021",
+  "passenger_tariff_revenue_fy2020",
   "passenger_tariff_growth",
-  "pct_sailings_10_mins_2019",
-  "pct_sailings_10_mins_2020",
-  "pct_sailings_10_mins_2021"
+  "pct_sailings_10_mins_fy2019",
+  "pct_sailings_10_mins_fy2020",
+  "pct_sailings_10_mins_fy2021"
 )
 
 ```
@@ -403,15 +411,15 @@ bcf_data <- str_remove_all(bcf_data, ",")
 bcf_col_names <- c(
   "blank",
   "route",
-  "passengers_2021",
-  "passengers_2020",
+  "passengers_fy2021",
+  "passengers_fy2020",
   "passenger_growth",
-  "passenger_tariff_revenue_2021",
-  "passenger_tariff_revenue_2020",
+  "passenger_tariff_revenue_fy2021",
+  "passenger_tariff_revenue_fy2020",
   "passenger_tariff_growth",
-  "pct_sailings_10_mins_2019",
-  "pct_sailings_10_mins_2020",
-  "pct_sailings_10_mins_2021"
+  "pct_sailings_10_mins_fy2019",
+  "pct_sailings_10_mins_fy2020",
+  "pct_sailings_10_mins_fy2021"
 )
 
 
@@ -446,10 +454,10 @@ bcf_table_3 <- bcf_table_2 |>
   select(route,
          starts_with("passengers_"),
          starts_with("passenger_tariff_rev")) |> 
-  mutate(passengers_2021 = as.numeric(passengers_2021),
-         passengers_2020 = as.numeric(passengers_2020),
-         passenger_tariff_revenue_2021 = as.numeric(passenger_tariff_revenue_2021),
-         passenger_tariff_revenue_2020 = as.numeric(passenger_tariff_revenue_2020))
+  mutate(passengers_fy2021 = as.numeric(passengers_fy2021),
+         passengers_fy2020 = as.numeric(passengers_fy2020),
+         passenger_tariff_revenue_fy2021 = as.numeric(passenger_tariff_revenue_fy2021),
+         passenger_tariff_revenue_fy2020 = as.numeric(passenger_tariff_revenue_fy2020))
 
 
 bcf_table_3
@@ -477,32 +485,15 @@ Now we can use our data wrangling skills to calculate the percent change between
 
 bcf_table_3 |> 
   group_by(route_type) |> 
-  summarise(total_2021 = sum(passengers_2021),
-            total_2020 = sum(passengers_2020)) |> 
-  mutate(pct_change = (total_2021 - total_2020) / total_2020 * 100)
+  summarise(total_fy2021 = sum(passengers_fy2021),
+            total_fy2020 = sum(passengers_fy2020)) |> 
+  mutate(pct_change = (total_fy2021 - total_fy2020) / total_fy2020 * 100)
 
 ```
 
 
-Yikes.
+The COVID-19 pandemic had an _enormous_ impact on travel. The fiscal year 2021 covers the period April 1, 2020 through March 31, 2021...starting almost exactly as the responsible goverments imposed strict limitations to travel. Even though the restrictions started to lift later in the 12-month period, the travel on the major routes was down by nearly half.
 
-
-## REFERENCES & FURTHER RESOURCES
-
-
-https://ropensci.org/technotes/2018/12/14/pdftools-20/
-
-https://www.brodrigues.co/blog/2018-06-10-scraping_pdfs/
-
-https://www.r-bloggers.com/how-to-extract-data-from-a-pdf-file-with-r/
-
-https://data.library.virginia.edu/reading-pdf-files-into-r-for-text-mining/
-
-
-
-### {tabulizer}
-
-Another package for extracting the contents of a PDF file is [{tabulizer}](https://docs.ropensci.org/tabulizer/), which is designed to extract tables from PDFs—but it requires Windows users to install of Java, which can be a challenge on many locked-down workplace computers. 
 
 
 -30-
