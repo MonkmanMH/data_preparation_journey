@@ -137,14 +137,17 @@ lfs_canada_employment |>
 
 "Strings are not glamorous, high-profile components of R, but they do play a big role in many data cleaning and preparation tasks." —{stringr} reference page
 
-R provides some robust tools for working with characters strings. In particular, the {stringr}[@R-stringr] package is very flexible. But before we get there, we need to take a look at regular expressions.
+R provides some robust tools for working with characters strings. In particular, the {stringr}[@R-stringr] package is very flexible. But before we get there, we need to take a look at regular expressions. \index{regular expressions}
+
 
 
 ### Regular expressions
 
 "Some people, when confronted with a problem, think: 'I know, I’ll use regular expressions.' Now they have two problems." — Jamie Zawinski
 
-An excellent resource for learning the basics of regular expressions\index{regular expressions} is the vignette "Regular Expressions", hosted at the {stringr} package website^[["Regular Expressions", stringr.tidyverse.org](https://stringr.tidyverse.org/articles/regular-expressions.html)].
+Regular expressions are a way to specify a pattern of characters. This pattern can be specific letters or numbers ("abc" or "123") or character types (letters, digits, white space, etc.), or a combination of the two.
+
+An excellent resource for learning the basics is the vignette "Regular Expressions", hosted at the {stringr} package website^[["Regular Expressions", stringr.tidyverse.org](https://stringr.tidyverse.org/articles/regular-expressions.html)].
 
 
 Here are some useful regex matching functions. Note that the square brackets enclose the regex to identify a single character. In the examples below, with three sets of square brackets, "[a][b][c]" contains three separate character positions, whereas "[abc]" is identifying a single character.
@@ -298,7 +301,7 @@ str_detect(string = pc_kimberley, pattern = postalcode)
 
 ```
 
-As we see, the last example postal code—which contains an extra digit at the end—returns a "FALSE" value. It might contain something that looks like a postal code in the first 7 spaces, but because it has the extra letter, it is not a postal code. To find a string that matches the postal code in any part of a string, we have to change our regex to remove the start "^" and end "$" specifications:
+As we see, the third example postal code—which contains an extra digit at the end—returns a "FALSE" value. It might contain something that looks like a postal code in the first 7 spaces, but because it has the extra letter, it is not a postal code. To find a string that matches the postal code in any part of a string, we have to change our regex to remove the start "^" and end "$" specifications:
 
 
 ```{r}
@@ -460,7 +463,8 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
-With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} . This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} \index{NAICS|see{North American Industry Classification System}}. This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+
 
 The NAICS system, and the file we are working with, is hierarchical; higher-level categories subdivide into subsets. Let's examine employment in Mining, Quarrying, and Oil and Gas Extraction sector. 
 
@@ -541,9 +545,9 @@ bls_employment_naics21 |>
 
 That doesn't work, because it leaves in the four-digit industries, starting with 2121.
 
-The solution can be found by focussing on the characters that differentiate the levels in the hierarchy. There is only a zero 
+The solution can be found by focussing on the characters that differentiate the levels in the hierarchy. 
 
-Let's add the digits 1 to 9 to the front of the second filter:
+Let's add the digits 1 to 9 to the front of the second filter (the 8th character of the string), and leave the next character (the 9th character) as a zero. This should find "CEU1021200001" but omit "CEU1021210001".
 
 ```{r}
 
@@ -609,7 +613,7 @@ bls_employment_naics21_3digit |>
 
 ### Example: NOC: split code from title
 
-This example is drawn from a real-life case, where the Canadian National Occupation Classification (NOC) code \index{National Occupation Code} \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
+This example is drawn from the Canadian National Occupation Classification (NOC) code \index{National Occupation Code} \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
 
 The table we will use are occupations in British Columbia's accommodation industry.
 
