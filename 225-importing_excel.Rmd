@@ -91,7 +91,7 @@ df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"
 head(df_HR_main)
 ```
 
-Another splendid feature of `read_excel()` is that it returns a date type (<S3: POSIXct>) for variables that it interprets as dates.
+Another splendid feature of `read_excel()` is that it returns a date type (S3: POSIXct) for variables that it interprets as dates.
 
 
 ## Extended example

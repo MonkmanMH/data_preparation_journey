@@ -186,7 +186,7 @@ The function returns a message letting us know the type that each variable is as
 
 Adding the `col_types = cols()` parameter allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be an factor.
 
-When we show the entire table, we can see that the variable `species` is now an "<fctr>" type.
+When we show the entire table, we can see that the variable `species` is now a factor type.
 
 ```{r}
 penguins_data <- read_csv(penguins_path,

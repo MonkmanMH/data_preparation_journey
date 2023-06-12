@@ -179,13 +179,36 @@ I would like to acknowledge everyone who has contributed to the books, articles,
 
 ### Data in this book {-}
 
-The various data files used in the examples are bundled in the R package {dpjr} [@R-dpjr].
+This book draws on three sources of data: 
 
-The package website is here: https://monkmanmh.github.io/dpjr/
+* R packages, such as {palmerpenguins} and {Lahman}, which bundle data ready for use.
 
-Instructions for installation and usage can be found at the package site.
+* Open source data that is freely available on the web.
 
-The data files used in the examples are covered by various open licenses; details can be found at the "Data licenses" page at the package website.
+* Mock or synthetic data that was created specifically for this book.
+
+The various data files in the second and third groups are bundled in the R package {dpjr} [@R-dpjr].
+
+To download and install the {dpjr} package, you will need the {remotes} package:
+
+```{r eval=FALSE}
+# download and install "remotes"
+install.packages("remotes")
+# download and install "dpjr"
+remotes::install_github("monkmanmh/dpjr")
+```
+
+Once the package is downloaded, the function `dpjr::dpjr_data(<filename>)` can be used to generate the path to the data file, independent of the specific location on the user's computer.
+
+For example, to read the CSV file “mpg.csv”:
+
+```{r eval=FALSE}
+df_mtcars <- read.csv(dpjr::dpjr_data("mpg.csv"))
+```
+
+The {dpjr} package website is here: https://monkmanmh.github.io/dpjr/
+
+The data files used in the {dpjr} package are covered by various open licenses; details can be found at the "Data licenses" page at the package website.
 
 
 
