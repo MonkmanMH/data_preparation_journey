@@ -37,6 +37,10 @@ In this chapter:
 * Dealing with missing values
 
 
+## Introduction
+
+We have already applied some cleaning methods. In the chapters on importing data, we tackled a variety of techniques that would fall into "data cleaning", including assigning variable types and restructuring data into a tidy format. In this chapter, we look in more depth at some examples of recurring data cleaning challenges.
+
 
 ## Cleaning dates
 
@@ -463,7 +467,8 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
-With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} \index{NAICS|see{North American Industry Classification System}}. This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. More information can be found in [@StatCan_NAICS].
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} \index{NAICS|see{North American Industry Classification System}}. This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. More information can be found in [@US_NAICS_2022] and [@StatCan_NAICS].  
+
 
 
 The NAICS system, and the file we are working with, is hierarchical; higher-level categories subdivide into subsets. Let's examine employment in Mining, Quarrying, and Oil and Gas Extraction sector. 
@@ -779,6 +784,35 @@ canpop |>
   arrange(desc(pt_pop))
 
 ```
+
+
+### Classification systems
+
+As we start to create new variables in our data, it is useful to be aware of various classification systems that already exist. That way, you can: 
+
+* save yourself the challenge of coming up with your own classifications for your variables, and
+
+* ensure that your analysis can be compared to other results.
+
+Of course, these classification systems are subject-matter specific. 
+
+As one example, in much social and business data, people's ages are often grouped into 5-year "bins", starting with ages 0–4, 5–9, 10–14, and so on. But not all age classification systems follow this; it will be driven by the specific context. The demographics of a workforce will not require a "0–4" category, while an analysis of school-age children might group them by the ages they attend junior, middle, and secondary school. As a consequence, many demographic tables will provide different data sets with the ages grouped in a variety of ways. (For an example, see [@StatCan_age_of_person].)
+
+And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
+
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. In the \@ref(Excel) chapter, we saw population statistics reported by the administrative geography of England and Wales.
+
+Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, give us access to other data that can be incorporated into our own research.
+
+Here are some other resources with further examples:
+
+* International: United Nations Statistics Division [@UNSD_classifications]
+
+* Statistics Canada [@StatCan_definitions]
+
+
+Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
+
 
 
 
@@ -1416,14 +1450,10 @@ levels(as.factor(jcush_labelled$health_desc_lab))
 This package also allows for a descriptive name of the variable to be appended with the `var_lab()` function.
 
 
-### Base R: `model.matrix`
 
-[@Friendly_Meyer_2016, p.240]
+## Further reading
 
-
-
-
-
+A useful resource that I'm not sure how to incorporate: [@Greve_Clean_data] 
 
 
 

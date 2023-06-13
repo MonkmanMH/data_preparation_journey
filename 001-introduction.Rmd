@@ -30,7 +30,7 @@ The typical data science process has been described in this model [@Wickham_Grol
 
 ![The data science process](img\data-science.png)
 
-The generalist data scientist has a hand in all the steps through this workflow [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps. We will also see how "Visualise" is an important part of Exploratory Data Analysis, a strategy for identifying dirty data.
+The generalist data scientist has a hand in all the steps through this workflow [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps. We will also see how "Visualise" is an important part of Exploratory Data Analysis, a strategy for identifying potential problems with the data prior to cleaning.
 
 
  

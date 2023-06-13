@@ -97,35 +97,6 @@ We will return to the concepts of data quality in the context of data cleaning, 
 
 
 
-## Classification systems
-
-It's useful to be aware of various classification systems that already exist. That way, you can: 
-
-* save yourself the challenge of coming up with your own classifications for your variables, and
-
-* ensure that your analysis can be compared to other results.
-
-Of course, these classification systems are subject-matter specific. 
-
-As one example, in much social and business data, people's ages are often grouped into 5-year "bins", starting with ages 0–4, 5–9, 10–14, and so on. But not all age classification systems follow this; it will be driven by the specific context. The demographics of a workforce will not require a "0–4" category, while an analysis of school-age children might group them by the ages they attend junior, middle, and secondary school. As a consequence, many demographic tables will provide different data sets with the ages grouped in a variety of ways. (For an example, see [@StatCan_age_of_person].)
-
-And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
-
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. 
-
-The North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}} is one such classification system, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS] The system is used to classify businesses into a specific industry based on their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. 
-
-Here are some other resources with further examples:
-
-* International: United Nations Statistics Division [@UNSD_classifications]
-
-* Statistics Canada [@StatCan_definitions]
-
-
-Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
-
-
-
 
 <!-- 
 This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
