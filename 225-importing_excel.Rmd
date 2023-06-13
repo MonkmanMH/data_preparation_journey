@@ -13,7 +13,7 @@ output:
 ```
 
 
-# Importing data from Excel {#Excel}
+# Importing data: Excel {#Excel}
 
 In this chapter:
 
@@ -71,6 +71,8 @@ The `read_excel()` function provides a number of different ways for us to define
 
 **Important note: there is no shame in opening the file in Excel to make a visual scan of the file, looking for anomalous values and to note the corners of the data rectangle.**
 
+[insert screenshot of Excel file]
+
 
 ```{r}
 df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
@@ -116,9 +118,9 @@ uk_census_pop
 
 ```
 
-As we saw in the earlier example, the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. This is important documentation, but it's not part of the data we want for our analysis.
+Our visual inspection had already informed us that the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. While this documentation is important, it's not part of the data we want for our analysis.
 
-Another of the `read_excel()` arguments to specify the rectangular geometry that contains our data is `skip =`. Here we will use it to skip the first 6 rows.
+Another of the `read_excel()` arguments to specify the rectangular geometry that contains our data is `skip =`. Because our visual inspection showed us that the header row for the data of interest starts at the seventh row, we will use it to skip the first 6 rows.
 
 
 ```{r}
@@ -129,7 +131,7 @@ uk_census_pop <- readxl::read_excel(
   skip = 6 
 )
 
-uk_census_pop
+head(uk_census_pop)
 
 ```
 
@@ -153,7 +155,7 @@ uk_census_pop
 ```
 
 
-The data has been read correctly, including the fact that the data variables are read in the correct format. But this loses an important piece of information: the geographical hierarchy.
+The data has been read correctly, including the fact that the data variables are read in the correct format. But this loses an important piece of information: the geographical hierarchy. In the Excel file, the levels of the hierarchy are represented  by the indentation. Our next challenge is to capture that information as data we can use.
 
 
 
@@ -162,21 +164,23 @@ The data has been read correctly, including the fact that the data variables are
 
 \index{Excel}
 
-One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The lower (smaller) levels, with the component areas of the next higher level in the hierarchy, are represented by indentations in the value. The lower the level in the hierarchy, the more indented the name of the area.
+One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The lower (smaller) levels, containing the component areas of the next higher level in the hierarchy, are represented by indentations in the area name value. The lower the level in the hierarchy, the more indented the name of the area.
 
 The specifics of the hierarchy are as follows:
 
 * The value "England and Wales" contains the total population, which is the sum of England (Excel's row 8) and Wales (row 360). 
 
-* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the "Area code" variable). These Regions are then are divided into smaller units, but the description of those units varies. These are Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11); for our purpose, let's shorthand this level as "UA".
+* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the "Area code" variable). 
 
-* The UA level is further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
+* These Regions are then are divided into smaller units, but the description of those units varies. These are Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11); for our purpose, let's shorthand this level as "counties".
 
-* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).]^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about)] 
+* The county level is further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
+
+* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).] ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about).] 
 
 This complicated structure means that the data has multiple subtotals—a `sum()` function on the "All persons" variable will lead to a total population of 277,092,700, roughly 4.7 times the actual population of England and Wales in 2021, which was 59,597,300. 
 
-What would be much more useful is a structure that has 
+What would be much more useful is a structure that has the following characteristics:
 
 * No duplication (people aren't double-counted).
 
@@ -186,16 +190,16 @@ What would be much more useful is a structure that has
 
 With that structure, we could use the different regional groupings in a `group_by()` function.
 
-As we saw earlier, the {readxl} function `read_excel()` ignores the formatting, so that there is no way to discern the level in the characters.
+As we saw earlier, the {readxl} function `read_excel()` ignores the formatting, so there is no way to discern the level in the characters.
 
 
 Let's explore approaches to extracting the information that is embedded in the data and the formatting, and use that to prune the duplicated rows.
 
-#### Approach 1 - use the Area code
+**Approach 1 - use the Area code**
 
 The first approach we can take is to extract the regional element in the "area_code" variable, and use that to filter the data.
 
-For example, if we want to plot the population in England by the UA level, an approach would be to identify all those rows that have an Area code that starts with one of the following:
+For example, if we want to plot the population in England by the county level, an approach would be to identify all those rows that have an Area code that starts with one of the following:
 
 * Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11)
 
@@ -203,17 +207,17 @@ For this, we can design a regular expression that identifies a letter "E" at the
 
 ```{r}
 
-ua_pop <- uk_census_pop |> 
+county_pop <- uk_census_pop |> 
   filter(str_detect(area_code, "^E[01][6901]"))
 
-glimpse(ua_pop)
+glimpse(county_pop)
 ```
 
 We can check to ensure that the regex has worked as intended through the `distinct()` function, examining only the first three characters of the "area_code" strings:
 
 ```{r filter_check_ua_900}
   
-ua_pop  |>  
+county_pop  |>  
   distinct(str_sub(area_code, 1, 3))
 
 ```
@@ -222,13 +226,13 @@ Another approach would be to create a list of the desired three-character codes,
 
 ```{r}
 # create list of UA three-character codes
-ua_list <- c("E06", "E09", "E10", "E11")
+county_list <- c("E06", "E09", "E10", "E11")
 
-ua_pop <- uk_census_pop |> 
+county_pop <- uk_census_pop |> 
   # create three character area prefix
   mutate(area_code_3 = str_sub(area_code, 1, 3)) |> 
-  # filter that by the ua_list
-  filter(area_code_3 %in% ua_list)
+  # filter that by the county_list
+  filter(area_code_3 %in% county_list)
 
 
 ```
@@ -237,11 +241,11 @@ For our validation checks, we will ensure that our list of UAs is complete, and 
 
 ```{r}
 # check
-ua_pop  |>  
+county_pop  |>  
   distinct(area_code_3)
 
 # check
-ua_pop  |>  
+county_pop  |>  
   summarise(total_pop = sum(all_persons))
 
 ```
@@ -250,10 +254,10 @@ While this approach works for our particular example, it will require careful co
 
 
 
-#### Approach 2 - use Excel's formatting
+**Approach 2 - use Excel's formatting**
 
 
-The leading space we see when we view the Excel file in its native software (see Figure X) is not created by space characters, but through Excel's "indent" formatting. The  {tidyxl} package [@R-tidyxl] has functions that allow us to turn that formatting into information, which we can then use in the functions within the {unpivotr} package [@R-unpivotr].
+The leading space we see when we view the Excel file in its native software is not created by space characters, but through Excel's "indent" formatting. The  {tidyxl} package [@R-tidyxl] has functions that allow us to turn that formatting into information, which we can then use in the functions within the {unpivotr} package [@R-unpivotr].
 
 
 ```{r, eval=FALSE}
@@ -433,13 +437,13 @@ uk_census_behead |>
 
 ```
 
-Wait! Didn't we learn that Wales is not divided into regions, and that there are no divisions of the UA level? You may also already know that Somerset is in England, not Wales. What's gone wrong?
+Wait! Didn't we learn that Wales is not divided into regions, and that there are no divisions of the Unitary Authority level? Furthermore, you may also already know that Somerset is in England, not Wales. What's gone wrong?
 
 A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the nature of the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! Those functions are doing things exactly correctly. The values are being pulled from "left-up".
 
 The first thing that catches my eye is that "field2"—the Region—should be NA for Wales, but it has been assigned to the South West, which is the last English Region in the data. 
 
-More problematically, the Welsh Unitary Authorities (W06) should be in "field3", at the same level as the English Unitary Authorities (E06), but instead have been assigned to "field4". This has led to Somerset, in England, to be assigned to the Welsh UAs.
+More problematically, the Welsh Unitary Authorities (W06) should be in "field3", at the same level as the English Unitary Authorities (E06), but instead have been assigned to "field4". This has led to Somerset, in England, to be assigned to the column where we expect to see the names of the  Welsh Unitary Authorities.
 
 Let's take a look at the details of the first row of the Welsh Unitary Authorities. First, in the "uk_census" object, we see that the value of "local_format_id" for the name ("Isle of Anglesey") is 60.
 
@@ -514,9 +518,9 @@ uk_census_behead_revised |>
 
 ```
 
-In many uses of this data, we will want to remove the subtotal rows. In the code below, a `case_when()` function is applied to create a new variable that contains a value "subtotal" for the rows that are disaggregated at the next level (for example, the cities within a Metro county, or the UAs within a region).
+In many uses of this data, we will want to remove the subtotal rows. In the code below, a `case_when()` function is applied to create a new variable that contains a value "subtotal" for the rows that are disaggregated at the next level (for example, the cities within a Metro county, or the counties within a region).
 
-The first step is to create a new dataframe `field3_split` that identifies all of the UA-levels that have a dissaggregation. This is done by first filtering by `field4`, where there is a valid value (identifed as not an "NA"), and creating a list of the distinct values in `field3`. That list is then used as part of the evaluation within the `case_when()` to assign the value "subtotal" to the new variable `subtotal_row`.
+The first step is to create a new dataframe `field3_split` that identifies all of the areas at the county level that have a dissaggregation. This is done by first filtering by `field4`, where there is a valid value (identifed as not an "NA"), and creating a list of the distinct values in `field3`. That list is then used as part of the evaluation within the `case_when()` to assign the value "subtotal" to the new variable `subtotal_row`.
 
 
 ```{r}
@@ -536,9 +540,9 @@ uk_census_behead_revised |>
 
 
 
-#### Approach 3 - build a concordance table
+**Approach 3 - build a concordance table**
 
-If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined that our data, as well as any other table we might need to use in the future.
+If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined to our data, as well as to any other table we might need to use in the future.
 
 For our UK Census data, we will create two separate concordance tables. We will save these tables as a CSV file, so it's available quickly for other applications. 
 
@@ -589,7 +593,7 @@ uk_census_pop_geo <- uk_census_pop |>
     by = c("area_code_3" = "area_code_3")
     )
 
-uk_census_pop_geo
+glimpse(uk_census_pop_geo)
 ```
 
 

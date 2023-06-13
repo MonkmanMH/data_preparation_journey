@@ -286,6 +286,8 @@ str_sub(readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1), 1, 40)
 
 There's not a bit of white space anywhere in this data file!
 
+Let's imagine that our research goal is to determine if there is a relationship between a person's level of education and their health outcomes. We've reviewed the data documentation, and it's clear that the JCUSH data has what we need. 
+
 Here's how one variable, highest level of post-secondary education achieved, appears in the data dictionary:
 
 
