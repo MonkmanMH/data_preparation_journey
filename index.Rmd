@@ -68,6 +68,8 @@ While some of the topics covered here may be similar to what you'll find in _R f
 ## Outline {-}
 
 
+NEED TO FIX THIS
+
 **SECTION A**
 
 **Chapter 2: Introduction**
