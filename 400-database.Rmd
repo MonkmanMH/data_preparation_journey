@@ -28,22 +28,11 @@ In this chapter:
 
 
 
-placeholder for chapter 4
-
-
-* Accessing data directly from databases (SQL)
-
-* The benefits and strengths of relational databases
-
-
-
 ## Relational data
 
-This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016].
+This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016]. Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the same database. 
 
-Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the database. 
-
-The table `flights` contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
+The table `flights` in the package contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
 
 The other tables in the database are:
 
@@ -69,7 +58,7 @@ SQL is a language widely used to manipulate and extract data in relational datab
 
 In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the RSQLite connection.
 
-```{r, package_load_400}
+```{r, package_load_400, message=FALSE, warning=FALSE}
 library(dbplyr)
 library(DBI)
 library(RSQLite)
@@ -92,19 +81,19 @@ Now we are connected to the database, we can establish a connection to a particu
 ```{r}
 
 flights <- tbl(nycf_con, "flights")
-flights
+glimpse(flights)
 ```
 
 ## Submit queries
 
 
-With the object "flights" now established in our environment, we can write R code to create a subset of the flights—those that went to Seattle. 
+With the object "flights" now established in our environment, we can write R code to create a subset of the flights—those that went to Seattle. Again, the `flights_SEA` object is not a dataframe, but a set of instructions that creates the connection and the query.
 
 ```{r}
 flights_SEA <- flights |> 
   filter(dest == "SEA")
 
-flights_SEA
+glimpse(flights_SEA)
 ```
 
 We can also use the `show_query()` function of {dbplyr} to generate the SQL translation of the R code:
@@ -188,17 +177,37 @@ flights_SEA |>
   left_join(airlines, by = "carrier") |> 
   group_by(name) |> 
   tally() |> 
-  arrange(desc(n))
+  arrange(desc(n)) 
 
 ```
 
 
-The SQL version is below.
 
-Note the semi-colon at the end to close the script. 
-
+In the SQL code below, we can see one difference in how the code is written—it runs "inside out", rather than in the linear manner we are accustomed to in our R pipes.
 
 
+
+```{sql, connection=nycf_con}
+
+-- 3. select `name` variable from joined table and apply count
+SELECT `name`, COUNT(*) AS `n`
+FROM (
+  SELECT `flights_sea`.*, `name`
+-- 1. query to filter Seattle flights
+  FROM (
+    SELECT *
+    FROM `flights`
+    WHERE (`dest` = 'SEA')
+  ) AS `flights_sea`
+-- 2. join to airlines table
+  LEFT JOIN `airlines`
+    ON (`flights_sea`.`carrier` = `airlines`.`carrier`)
+)
+-- 4. define grouping for COUNT (from step 3) and sort
+GROUP BY `name`
+ORDER BY `n` DESC
+
+```
 
 In SQL, we use `SELECT` to select the columns we want (the same term as {dplyr}). The asterix "*" is a wildcard to select all the tables.
 
