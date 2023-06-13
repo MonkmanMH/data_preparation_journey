@@ -24,15 +24,30 @@ In this chapter:
 
 * Importing data directly from relational databases\index{relational database} (SQL)\index{SQL}
 
-* Using relational data as part of the data preparation workflow
+* Using relational data as part of the data preparation workflow [add Lahman example]
 
 
 
 ## Relational data
 
+Relational databases are commonly used for data storage. The data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated. We have seen an example of this earlier, where we built a concordance table for the administrative geography of England and Wales in \@ref(Excel). 
+
+In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds to capacity of your computer. In those cases, as server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics.
+
+While SQL is the most commonly used query language, there are R packages that allow us to 
+
+* Connect to a database
+
+* Write the code for our queries in R, and 
+
+* Run the query.
+
+Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's our prefered approach.
+
+
 This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016]. Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the same database. 
 
-The table `flights` in the package contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
+In this database, there are five separate tables. The table `flights` in the database contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
 
 The other tables in the database are:
 
@@ -51,12 +66,13 @@ This diagram shows the relationships:
 
 ![nycflights13](img\relational-nycflights.png)
 
+(From [@Wickham_Grolemund2016], p.174)
 
 ### Connect to the database
 
 SQL is a language widely used to manipulate and extract data in relational databases. As a consequence, there are many relational databases built in this format. Most often, these databases will be housed on a network server, but for smaller databases, you might install the file on your computer.
 
-In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the RSQLite connection.
+In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the connection to the RSQLite databse.
 
 ```{r, package_load_400, message=FALSE, warning=FALSE}
 library(dbplyr)
@@ -65,6 +81,7 @@ library(RSQLite)
 ```
 
 
+The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `nycf_con` (for "New York City Flights Connection"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely used MySQL and Postgres.
 
 ```{r}
 # establish the connection to the database file
@@ -76,7 +93,7 @@ dbListTables(nycf_con)
 ```
 
 
-Now we are connected to the database, we can establish a connection to a particular table, using the {dplyr} function `tbl()`. Note that the `flights` object is _not_ the table, but is the connection to the table. 
+Now we have a connection to the database, we can establish a connection to a particular table, using the {dplyr} function `tbl()`. Note that the `flights` object is _not_ the table, but is the connection to the table. 
 
 ```{r}
 
@@ -84,7 +101,7 @@ flights <- tbl(nycf_con, "flights")
 glimpse(flights)
 ```
 
-## Submit queries
+### Submit queries
 
 
 With the object "flights" now established in our environment, we can write R code to create a subset of the flights—those that went to Seattle. Again, the `flights_SEA` object is not a dataframe, but a set of instructions that creates the connection and the query.
@@ -126,9 +143,9 @@ SEA
 ```
 
 
-## Using SQL in your R code
+### Using SQL in your R code
 
-In addition to writing R code, we can embed SQL inside our R functions:
+In addition to writing R code, we can embed SQL inside a `dbSendQuery()` function, and then use the `dbFetch()` function to run the SQL query. Both of these functions are from the {DBI} package.
 
 ```{r}
 
@@ -140,13 +157,13 @@ dbFetch(SEA_sql)
 
 ## Running SQL language chunks in R Markdown
 
-[_R Markdown: The Definitive Guide_, 2.7.3 SQL](https://bookdown.org/yihui/rmarkdown/language-engines.html#sql) by Yihui Xie, J. J. Allaire, Garrett Grolemund
+[, 2.7.3 SQL](https://bookdown.org/yihui/rmarkdown/language-engines.html#sql) by Yihui Xie, J. J. Allaire, Garrett Grolemund
 
-* instructions on how to set up your R Markdown (in RStudio) so that you can run SQL language chunks, including using SQLite
+The book _R Markdown: The Definitive Guide_ [@Xie_Allaire_Grolemund_RMarkdown_2019] provides instructions on how to set up your R Markdown in RStudio so that you can run SQL language chunks, including using SQLite. (See Chapter 2.7.3)
 
+Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection...the `nycf_con` object created earlier.
 
-Note that in our SQL chunk, we specify the connection...the `nycf_con` object created earlier.
-
+`sql, connection=nycf_con`
 
 ```{sql, connection=nycf_con}
 
@@ -158,7 +175,7 @@ WHERE dest = 'SEA'
 
 
 
-## Mutating joins
+### Mutating joins
 
 A mutating join is one that combines variables from two tables, based on matching observations on _keys_.
 
@@ -183,7 +200,7 @@ flights_SEA |>
 
 
 
-In the SQL code below, we can see one difference in how the code is written—it runs "inside out", rather than in the linear manner we are accustomed to in our R pipes.
+The SQL code below returns the same table. We can see one difference in how the code is written—it runs "inside out", rather than in the linear manner we are accustomed to in our R pipes.
 
 
 
