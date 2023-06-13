@@ -30,7 +30,7 @@ The typical data science process has been described in this model [@Wickham_Grol
 
 ![The data science process](img\data-science.png)
 
-The generalist data scientist has a hand in all the steps through this workflow [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps, an in-depth look at the process of getting data ready for analysis, sharing, and publication.
+The generalist data scientist has a hand in all the steps through this workflow [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps. We will also see how "Visualise" is an important part of Exploratory Data Analysis, a strategy for identifying dirty data.
 
 
  
@@ -54,34 +54,10 @@ But in real life the data we find ourselves working with is, more often than not
 
 * It might have bias...and there are many different types of bias.
 
-* It might contain sensitive information, and our sharing of the data, including the publication of reports, needs to protect the individual records of the people or businesses that provided the information. For example, you might be working with health or financial records. Any disclosure of an individual record might be considered a privacy breach...so you have to take great care to ensure that what you've published doesn't violate any legal, ethical, or moral frameworks.
+* The data may come from administrative source, and collected for a purpose other than research. In these cases, you may need to transform that data to fit the requirements of the research question.
 
+This book will introduce steps necessary to ensure that you can assemble your data in a way that allows you to undertake the rest of the data science process, including sharing the data with other data analysts who might seek to use the data in further analysis. 
 
-
-This book will introduce steps necessary to ensure that you can assemble your data in a way that allows you to undertake the rest of the data science process, including making data and analysis available for a wider audience, such as other data analysts who might seek to use the data in further analysis. 
-
-
-## A record of your work
-
-Undertaking the steps of the data science process in a scripting environment such as R means that your work will be reproducible and auditable, accurate, and has the potential to be collaborative. [@Parker_2017]
-
-The idea of reproducibility\index{reproducibility} is a fundamental element of good scientific practice, and should be extended to include the analysis of the data. "The standard of reproducibility calls for the data and the computer code used to analyze the data be made available to others." [@Peng_reproducible_2011, p.1226] 
-
-And while it's important in an academic environment, this necessity for reproducibility\index{reproducibility} extends to business and government settings as well. In any situation where the data analysis is supporting decisions, it is imperative that the analyst (i.e. you) be able to explain their methods, and quickly and effectively respond to changes in the data (you might receive an update to the data with more records or revisions to the existing records).
-
-
-David Smith has summarized the benefits of a reproducible data science process\index{reproducibility}. It: 
-
-* Saves time,
-* Produces better science,
-* Creates more trusted research,
-* Reduces the risk of errors, and
-* Encourages collaboration. [@Smith_reproducible_2017]
-
-
-All of the details involved with creating a reproducible workflow is outside the scope of this book;  a summary of approaches associated with documentation of data sourcing and preparation is included in the [**Data documentation** chapter](#datadocumentation). 
-
-For a deeper look at reproducible workflow, it has been summarized by Wilson et al. [@Wilson_Bryan_good_enough_2017]. Specific methods for reproducibility\index{reproducibility} in R and RStudio are dealt with in depth by Christopher Gandrud [@Gandrud_2015].  
 
 
 ## Data collection

@@ -1,0 +1,126 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+```{r setup_ch200, include=FALSE, eval=TRUE}
+
+source("package_load.R")
+
+```
+
+
+# Importing data {#importing}
+
+In this chapter:
+
+* Importing data
+
+
+
+
+
+
+
+## Introduction
+
+The data has been collected. It might be the result of:
+
+* Running trials or experiments in a controlled laboratory setting.
+
+* Making observations and recording the results of those observations (as an astronomer or biologist might).
+
+* Sampling the people in an area and asking them a series of questions.
+
+* Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitate operation management of the store by tracking sales and inventory, and generating orders.
+
+
+Once the data has been collected in this way, you might have direct access to it. Or there may be a layer of processing between the raw source and the way it appears to your. After this processing, you might:
+
+* Have access to a database where the raw data is stored, including where additional post-collection manipulation might happen.
+
+* Be sent a file that contains a sample of the raw data.
+
+* Be able to download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
+
+
+
+And it's important to note that your analysis project might require more than one of these methods of data collection.
+
+How you assemble the data you need will depend on many factors, including what is already available, what your budget is (for example, some business-related data is collected by companies that then make it available at a cost), and the legal and regulatory environment (note that the definition of "personal information" varies from one jurisdiction to the next).
+
+
+## Data formats
+
+The data gets stored in a variety of electronic formats. The choice of format might be influenced by any one of the following:
+
+* The underlying needs of the data collectors (some file formats are tailored to a specific use);
+
+* The technology available to the collector;
+
+* The nature of the data being collected.
+
+There is sometimes (often?) no right answer as to the best format for a particular use case—there are pros and cons to each. (With that said, there is often a clear _less good_ choice for data storage and sharing...we're looking at you, PDF.) What this means is that in your workflow you will have to deal with data that needs to be extracted from a multitude of systems, and will be available to you in a multitude of formats.
+
+> It is essential that a statistician can talk to the database specialist, and, as a team member, the statistician, along with most others, will be expected to be able to use the database facilities for most purposes by themselves, and of course advise on aspects of the design. There is always much preliminary 'data cleaning' to do before an analysis can begin, almost regardless of how good a job is done by the database specialist. [@Venables_IDT_review_2010]
+
+There are plenty of resources detailing the complexities of the different data storage formats, and the decision process that goes into determining which format is appropriate for a specific use-case. I always approach the task assuming that the professionals who built the data storage system made a well-informed decision, including balancing the various trade-offs between different formats, as well as budgetary and technology constraints that they might have faced.
+
+
+
+Reading: Chapter 5, "Data Storage" of [@Murrell_data_technologies] — [link](http://statmath.wu.ac.at/courses/data-analysis/itdtHTML/node51.html)
+
+
+
+
+## Importing data
+
+
+Here's some advice that's worth heeding:
+
+1. The arguments in the import functions are your friends. Use them as your first line of defense in your project workflow.
+
+> Data import generally feels one of two ways:
+
+> * “Surprise me!” This is the attitude you must adopt when you first get a dataset. You are just happy to import without an error. You start to explore. You discover flaws in the data and/or the import. You address them. Lather, rinse, repeat.
+
+> * “Another day in paradise.” This is the attitude when you bring in a tidy dataset you have maniacally cleaned in one or more cleaning scripts. There should be no surprises. You should express your expectations about the data in formal assertions at the very start of these downstream scripts.
+
+> In the second case, and as the first cases progresses, you actually know a lot about how the data is / should be. My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [_Emphasis added._] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import. [@Bryan_STAT545, [Chapter 9: Writing and reading files]
+
+
+2. "Today’s outputs are tomorrow’s inputs" [@Bryan_STAT545, [Chapter 9: Writing and reading files](https://stat545.com/import-export.html)]
+
+> A plain text file that is readable by a human being in a text editor should be your default until you have **actual proof** that this will not work. Reading and writing to exotic or proprietary formats will be the first thing to break in the future or on a different computer. It also creates barriers for anyone who has a different toolkit than you do. Be software-agnostic. Aim for future-proof and moron-proof.
+
+
+
+### Check your results
+
+It's always a good idea to quickly check your data after any major processing step. This can start with, but is not limited to, importing your data.
+
+Some things to ask about the data:
+
+* Did the import step give you as many records (rows) as you expected?
+
+* Are there as many variables (columns) as you expected?
+
+* Are the variable types (or classes) for those variables what you anticipated?
+
+  - Did variables that should be numbers load as numeric types, or as character?
+
+  - If working with labelled variables, did they load as factor type?
+
+
+
+We will look at structured ways investigate the contents of the data in the chapter [Validation strategies]{#validation}. For now, we will focus on the process of reading the contents of different types of files.
+
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+

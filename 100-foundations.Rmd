@@ -8,6 +8,8 @@ In this chapter:
 
 * Classification systems
 
+* Documentation
+
 
 ## The goal
 
@@ -121,6 +123,8 @@ Here are some other resources with further examples:
 
 
 Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
+
+
 
 
 <!-- 
