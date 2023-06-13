@@ -19,7 +19,7 @@ source("package_load.R")
 ```
 
 
-# Data from PDF files {#pdf}
+# Importing data: PDF files {#pdf}
 
 In this chapter:
 

@@ -12,7 +12,7 @@ source("package_load.R")
 ```
 
 
-# Importing data from statistical software {#importing-2}
+# Importing data: statistical software {#importing-2}
 
 In this chapter:
 
