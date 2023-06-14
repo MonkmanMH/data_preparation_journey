@@ -2,16 +2,17 @@
 
 In this chapter:
 
-* What is the goal?
+* The data preparation process
 
-* What is data?
+* The principles of data quality, and how dirty data is part of data quality
 
-* Classification systems
+* Understanding what makes data "clean" or “dirty”, and why context matters
 
-* Documentation
+* Understanding tidy data principles
 
 
-## The goal
+
+## The data preparation process
 
 As we get started on the path of preparing our data, we should think first about where we want to go.
 
@@ -29,57 +30,35 @@ At the end of the data preparation phase, before visualization and modeling can 
 
 **4. An explicit and exact recipe used by the researcher to go from 1 to 2 to 3.**
 
-Over the next few chapters in this book, we will look at examples of creating a tidy data set (including cleaning the data), and then creating the code book...and documenting our steps along the way, thereby creating an "explicit and exact recipe".
+Over the next few chapters in this book, we will look at examples of creating a tidy data set (including cleaning the data), creating the code book and documenting our steps along the way, thereby creating an "explicit and exact recipe".
 
 Whether we are preparing data as part of our own analytic project or to make it available for sharing, these should be our goals.
 
+### Elements of an iterative process
 
-## What is data? {#what-is-data}
+This list below are things that make up the process you will go through in preparing your data for analysis and modeling. These are not "steps", in that data preparation is an iterative process, it's not linear or even necessarily sequential.
 
-Before we get started cleaning our data, we should step back and ask ourselves what we mean by "data". One definition of data is as follows:
+1. Save a copy of the original data. Do not make any edits, and consider making the file "read-only".
 
-> Characteristics or information, usually numerical, that are collected through observation. [@OECD_glossary_2007, p.180]
+2. Start a new blank "readme" file, and in that file record a few key points, including the project's research objective and information about the data file's origin. You can also draft an outline of the steps that you think you're going to take in the preparation process, as the first contribution to a literate programming approach.
 
-This can be expanded:
+3. Import the data into your **R** environment. 
 
-> The data obtained from observations are related to the variable being studied. These data are quantitative, qualitative, discrete or continuous if the corresponding variable is quantitative, qualitative, discrete or continuous, respectively. [@Dodge_encyclopedia_2008, "Data", pp.149-150]
+4. Explore and validate the data, assessing the structure, looking for missing values and other "dirty" elements.
 
+5. Clean the data. (And then validate to make sure your cleaning has been successful...)
 
-Before we can turn these definitions into something we can put into our model, we have to attend to some nuance. In _Learning Statistics with r: A Tutorial for Psychology Students and Other Beginners_, Danielle Navarro writes:
+This whole process is iterative (you will be adding to the readme file at every step), and the individual steps themselves are iterative. For example, your first code to import the data may be revisited, as you evaluate and assign variable types through the various arguments in the read function. Or your first cleaning code may address one dirty element, only to expose a second that you hadn't previously identified.
 
-> Here are four different things that are closely related to each other:
->
-> **__A theoretical construct__**. This is the thing that you’re trying to take a measurement of, like “age”, “gender” or an “opinion”. A theoretical construct can’t be directly observed, and often they’re actually a bit vague.
->
->**__A measure__**. The measure refers to the method or the tool that you use to make your observations. A question in a survey, a behavioural observation or a brain scan could all count as a measure.
->
->**__An operationalisation__**. The term “operationalisation” refers to the logical connection between the measure and the theoretical construct, or to the process by which we try to derive a measure from a theoretical construct.
->
->**__A variable__**. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets. [@Navarro_learning_statistics_2019, pp.13–14]
-
-Let's consider an example. A company wants to understand its workforce because there's a sense that a large number of the staff are thinking about retirement in the next couple of years. The term used by the human resource (HR) department is "succession planning", meaning developing existing staff and recruiting to prepare for departures. Before making the business decision to allocate any resources to this initiative, the company's executive has asked the HR department to describe the magnitude of the risk to the organization: What percent of the staff are about to retire? In what departments? What positions do these potential retirees occupy? Now the HR department has asked you, the data scientist, for an analysis of the demographics of the company. 
-
-We know that _age_ is going to be a _theoretical construct_ we want to measure. When it comes to retirement, that is constrained to older workers, but we will have to be more precise in our definitions that simply "older". In Canada you can choose to start collecting your [Canada Pension Plan (CPP)](https://www.canada.ca/en/services/benefits/publicpensions/cpp.html) at age 60, so we might decide that our analysis will be to find the proportion of staff who are either already 60 or older (those who could collect their national pension now), and a second group who are between 55 and 59 (those who are within five years of their earliest pension).
-
-The database may have historical data, containing the records associated with people who no longer work with the organization. With that information, you would be able to build a model to predict when people might resign or retire, based on various demographic and occupational characteristics.
-
-A _measure_ we have available is in the human resource database: each staff member's date of birth. This is collected when people are hired, and is required for various purposes, including tax accounting.
-
-But you will have already noticed that your date of birth is not your age. To find your age, we have to calculate the difference between that date and today. So to _operationalize_ the measure we have, we might need an **R** equation. Using the functions in the package {lubridate} [@R-lubridate], that looks like this:
-
-`age_this_year <- ymd(19731022) %--% today() %/% years(1)` ^[The birthdate of Ichiro Suzuki.] ^[This code chunk was modified from [@Richmond_age_2018]. For more information about calculating intervals using the {lubridate} package; see [@Ford_lubridate_2017].]
-
-
-And our _variable_ results from this calculation: in the code example we called it `age_this_year`. Note that this variable will require recalculation every time we repeat our analysis—one's age is not a static value! In a company with roughly 2,500 staff, there's 50-50 chance it is someone's birthday today, and with 4,000 staff it is virtually certain at least one person is celebrating a birthday. [@Yau_birthday_2017] And of course, staff join and leave an organization, so the individuals in our database will change. This means that the variable we calculate will be precisely correct for only a few days at most.
+In addition, you will be using your data wrangling, manipulation, and visualization skills at various points along the way.
 
 
 
 ## Data quality
 
+Part of the data preparation process is to ask "What is the data's _quality_?" 
 
-We also need to ask "What is the data's _quality_?" 
-
-One resource that is useful to frame your thinking on this is Statistics Canada's _Quality Guidelines_ [@StatCan_data_quality_6]. Like other official statistical agencies around the world, Statistics Canada's reputation is staked on making high quality data available to the widest possible audience.
+One resource that is useful to frame your thinking on this is Statistics Canada's _Quality Guidelines_ [@StatCan_data_quality_6]. Like other official statistical agencies around the world, Statistics Canada's reputation is staked on making high quality data available to the widest possible audience. They have identified six elements of data quality.
 
 * Relevance: The degree to which the data meets the user's needs, and relates to the issues that the user cares about.
 
@@ -93,9 +72,111 @@ One resource that is useful to frame your thinking on this is Statistics Canada'
 
 * Coherence and comparability: "The degree to which it can be reliably combined and compared with other statistical information within a broad analytical framework over time."
 
-We will return to the concepts of data quality in the context of data cleaning, and what makes data _dirty_. 
+In our data preparation process, we want to ensure our own work is accessible and interpretable; this is the motivation behind documentation. 
+
+Another typology of "data quality" is found in [@WangRichardY.1995TqdA]. High quality data is:
+
+* Accessible
+
+* Interpretable
+
+* Useful
+
+* Believable
 
 
+"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
+
+**Complete**
+
+For our purposes, "complete" means whether any values in each record are missing (internally complete).
+
+"Complete" does not mean that every possible member of the population is represented in the data. With a well-designed sample, it is possible that a sub-set of the population can provide an accurate set of measures about the population. Furthermore, it is possible to determine whether the records are an accurate representation of the whole.
+
+**Consistent**
+
+We will consider a measure to be "consistent" if the same value is reported in the same way.
+
+Some examples of consistency:
+
+* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin. Another might be in a survey or form with an international audience, where `salary` might be completed by respondents in the values of their local currency.
+
+* Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or consider the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+
+* In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [@Khreis_etal_2022] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
+
+
+
+**Accurate**
+
+When we say "accurate", we mean that the value recorded in our data is the value measured.
+
+Some examples of inaccurate data are:
+
+* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" be entered as the default. This can be the consequence of a data entry validation process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
+
+> Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
+
+
+
+* A data entry error. Perhaps the most common are typographical errors, where the wrong value is entered. Another type is what we might call a "variable transposition error" (where the value is transposed one column over, something that happens all too often with address records, where the city name might end up in the state/province column).
+
+* Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "SEPT1" gets converted to September 1st of the current year. There is documented evidence that this software behaviour has caused errors in gene research. [@Zeeberg_etal_2004], [@Abeysooriya_etal_2021]
+
+
+* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
+
+
+* Contradiction. For example, imagine that a single individual is entered into two databases, but when we compare them we see that the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?
+
+
+* Cultural ignorance (for want of a better term).
+
+> "Prawo Jazdy" was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
+
+
+### Tidy data
+
+When we are cleaning our data, we should also consider the structure. The goal should be a tidy structure \index{tidy data}, one that meets the following three principles or rules: 
+
+* Each variable must have its own column.
+
+* Each observation mus have its own row.
+
+* Each value must have its own cell. [@tidydata]
+
+Achieving a tidy structure may require reshaping the data or splitting values (such as addresses) into separate columns.
+
+
+Other common structural problems that fall outside the four broad data quality categories include:
+
+* Column headers are values instead of variable names
+
+* Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files)
+
+* Inappropriate data types, such as numbers or logical values stored as character strings.
+
+* Multiple data types in a column. For example, some records are numbers and some are character strings. The values themselves could be entirely correct, but if some number entry includes commas as thousands separators, the variable will be read and stored as a character type.
+
+
+
+
+## Cleaning the data
+
+If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? Don't we want to be _doing analysis_? 
+
+There is a strong argument to be made that the process of cleaning data is a fundamental part of the analytic process, or the corresponding statement that any analytic process requires data cleaning.
+
+Randy Au has written "The act of cleaning data imposes values/judgments/interpretations upon data intended to allow downstream analysis algorithms to function and give results. That’s exactly the same as doing data analysis. In fact, “cleaning” is just a spectrum of reusable data transformations on the path towards doing a full data analysis." [@Au_data_cleaning_2020]
+
+At this point we should ask what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
+
+
+**The first challenge**: How do we find these things?
+
+**The second challenge**: What can and should we do about them?
+
+We will see some of these challenges and solutions in the next few chapters, as part of the data import process. We will also return to explicitly address these challenges in the chapters \@ref(validation) and \@ref(cleaning).
 
 
 <!-- 
