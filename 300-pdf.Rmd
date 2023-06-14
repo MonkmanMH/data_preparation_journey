@@ -290,7 +290,7 @@ bcf_11 <- bcf[12]
 ```{r, eval=FALSE}
 bcf_11
 ```
-```{r, include=FALSE}
+```{r, echo=FALSE}
 # display first 500 characters
 str_sub(bcf_11, 1, 500)
 
@@ -300,15 +300,14 @@ str_sub(bcf_11, 1, 500)
 Now we have an object that is a single text string. All of the data we want is there, but it is going to take some finesse to extract the columns we want, and in a format that we can use.
 
 
-Using the "\\n" line break character, we can split this single value into as many lines as there are.
+Using the "\\n" line break character, we can split this single value into as many lines as there are on the page.
 
 ```{r 300_pdf_linebreak}
 # break into lines
 bcf_11_lines <- bcf_11[[1]] |> 
   strsplit(split = "\n")
 
-bcf_11_lines
-
+length(bcf_11_lines[[1]])
 ```
 
 Now we have a list of 1, with 55 individual elements in it.
@@ -340,7 +339,7 @@ test_result
 
 This remains a single list, now with two elements—one for each row.
 
-Below, the code creates an object with a list of the variable names.
+Below, the code creates an object with a list of the variable names. (Sometimes it's more effective to tackle these cleaning problems head-on with a manual solution, rather than spend time on a one-time programmatic solution.)
 
 ```{r}
 bcf_col_names <- c(
@@ -492,7 +491,7 @@ bcf_table_3 |>
 ```
 
 
-The COVID-19 pandemic had an _enormous_ impact on travel. The fiscal year 2021 covers the period April 1, 2020 through March 31, 2021...starting almost exactly as the responsible goverments imposed strict limitations to travel. Even though the restrictions started to lift later in the 12-month period, the travel on the major routes was down by nearly half.
+Our analysis: The COVID-19 pandemic had an _enormous_ impact on travel. The fiscal year 2021 covers the period April 1, 2020 through March 31, 2021...starting almost exactly as the  strict limitations to travel were imposed. Even though the restrictions started to lift later in the 12-month period, the travel on the major routes was down by nearly half.
 
 
 

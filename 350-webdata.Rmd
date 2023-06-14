@@ -25,8 +25,6 @@ In this chapter:
 
 * Importing data from web repositories
 
-* An introduction to web APIs
-
 
 
 
@@ -43,7 +41,7 @@ There are two sorts of R packages that utilize APIs. The first are those that ar
 ## R packages for direct connection
 
 
-In this section, we will explore two examples that allow access to the data repository hosted by Statistics Canada, and the British Columbia Government's open data catalogue. There are many other tools available; some are listed at the end of this chapter.
+In this section, we will explore an example that allows access to the data repository hosted by Statistics Canada. There are many other tools available; some are listed at the end of this chapter.
 
 Run this code chunk to load the packages we need:
 
@@ -52,16 +50,14 @@ library(tidyverse)
 
 # 
 library(cansim)     # access Statistics Canada's CANSIM data repository
-library(bcdata)     # access the BC Government's open data catalogue
 
 ```
 
 
 Statistics Canada, a department of the Government of Canada, provides a socioeconomic time series database known as "CANSIM". The data posted to the database is most of the aggregate data collected by Statistics Canada on a regular basis, such as the Labour Force Survey (from which we get updates on the unemployment rate), the Consumer Price Index Survey (about inflation), and health-related information from pregnancy and births to life expectancy and deaths.
 
-One of the many tables related to international travel that is published in CANSIM is "Table: 24-10-0006-01 Non-resident travellers entering Canada, by country of residence, seasonally adjusted". 
+One of the many tables related to international travel that is published in CANSIM is "Table: 24-10-0006-01 Non-resident travellers entering Canada, by country of residence, seasonally adjusted". ^[The webpage for the table, showing the most recently available data, is here: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2410000601]
 
-The webpage for the table, showing the most recently available data, is here: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2410000601
 
 
 Here's a screenshot of the table, showing the number of people arriving by their continent of residence. 
