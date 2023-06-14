@@ -17,15 +17,13 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 In this chapter:
 
 
-* Creating documentation
-
-  - Why we want to create documentation
+* Why we want to create documentation
   
-  - What elements to record
+* What elements to record
   
-  - Project information, including data dictionaries
+* Project information, including data dictionaries
   
-  - Code documentation through literate programming
+* Code documentation through literate programming
 
 
 
@@ -50,7 +48,7 @@ The reasons for documenting our work are similar to the reasons we would save an
 
 * To make the project available to a collaborator. 
 
-* To provide a record when we move to different jobs or projects (we would want others to do that for us!)
+* To provide a record for others who might use the data in the future. Your project might repeat a year or more in the future, after you have moved on to a new role. Leaving good documentation is good karma, or a "pay it forward in advance"—imagine how good that future user is going to feel when they find your clear explanations!
 
 * To create a save point in our workflow, so that we can continue our work later but without having to go through all the steps to remember everything we've done.
 
@@ -110,13 +108,7 @@ There are three things to capture in your recordkeeping:
 ## Code documentation
 
 
-"Undertaking the steps of the data science process in a scripting environment such as R means that your work will be reproducible and auditable, accurate, and has the potential to be collaborative." [@Parker_2017]
-
-
-
 "Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan (Citation needed!)
-
-
 
 
 In the journal article "Good enough practices in scientific computing", the authors write "Good documentation is a key factor in software adoption, but in practice, people won't write comprehensive documentation until they have collaborators who will use it. They will, however, quickly see the point of a brief explanatory comment at the start of each script, so we have recommended that as a first step." [@Wilson_Bryan_good_enough_2017]
@@ -141,8 +133,6 @@ These two quotes capture the key concepts of code documentation:
 
 * "Comments should explain the why, not the what." [@Wickham_AdvancedR_2015, p.68]
     
-The "what" is the code itself.
-
 
 Using plain language in these notes also encourages you to think a second time about what you have just coded. Explaining the code to an imagined future reader (or your rubber duck) may help you to see a better way to write your code. 
 
@@ -253,29 +243,11 @@ A more detailed list of the things to capture in documentation include:
 
 Having a README file in the root folder of your project is a good place to capture a great deal of the important general information about the project. And having another README in the data folder wouldn't hurt either.
 
-The source "Art of README" ^[["Art of README"](https://github.com/noffle/art-of-readme)] has some good tips on creating one. Although it's aimed at people writing computer programs and modules, the lessons apply to data science projects as well.
-
-The author (citation needed!) states the purpose of a README is to:
-
-1. Tell them what it is (with context)
-1. Show them what it looks like in action
-1. Show them how they use it
-1. Tell them any other relevant details
-
-Some other tips the authors provide:
-
-* "The ideal README is as short as it can be without being any shorter."
-
-* "Aggressively linkify!"
-
-
-
-
 Another source that describes a README for data files is the "Guide to writing "readme" style metadata" written by the Research Data Management Service Group at Cornell University. [@Research_Data_readme]
 
-The SFBrigade, a San Francisco volunteer civic tech group, has created a data science specific README outline for their projects: https://github.com/sfbrigade/data-science-wg/blob/master/dswg_project_resources/Project-README-template.md
+The SFBrigade, a San Francisco volunteer civic tech group, has created a data science specific README outline for their projects, hosted at github. ^[Project-README-template.md(https://github.com/sfbrigade/data-science-wg/blob/master/dswg_project_resources/Project-README-template.md)]
 
-The basic minimum README structure the SFBrigade have is:
+The basic minimum README structure recommended is:
 
 * Project Intro/Objective
 
@@ -285,37 +257,21 @@ The basic minimum README structure the SFBrigade have is:
 
 * Team (with contact information)
 
-For an analytic project, you might also want to include the high-level findings. This might be something akin to an abstract in an academic journal article, or an executive summary in a business or government report.
+For an analytic project that has completed, you might also want to include the high-level findings. This might be something akin to an abstract in an academic journal article, or an executive summary in a business or government report.
+
+
+Another source of tips is "Art of README" ^[["Art of README"](https://github.com/noffle/art-of-readme)]. Although it's aimed at people writing computer programs and modules, the lessons apply to data science projects as well. The purpose of a README is to:
+
+1. Tell them what it is (with context)
+1. Show them what it looks like in action
+1. Show them how they use it
+1. Tell them any other relevant details
+
 
 Some examples:
 
-* a BC Stats repository that contains the code for accessing a variety of Statistics Canada data: https://github.com/bcgov/CANSIM-dataviewer/blob/master/README.md
-
-  - note that there are links to separate descriptive files for each data series
-
 * the R package {palmerpenguins} has a comprehensive README: https://github.com/allisonhorst/palmerpenguins/blob/master/README.md
 
-
-Some other good tips can be found in [Make a README](https://www.makeareadme.com/) and [Readme Best Practices](https://github.com/jehna/readme-best-practices#readme)
-
-
-Other references: 
-
-* [@Prana_readme_2019]
-
-* https://tilburgsciencehub.com/building-blocks/store-and-document-your-data/document-data/readme-best-practices/
-
-
-
-### Project structure
-
-Here are a couple of articles with good ideas about how to structure your projects:
-
-* Martin Chan, ["RStudio Projects and Working Directories: A Beginner's Guide"](https://martinctc.github.io/blog/rstudio-projects-and-working-directories-a-beginner's-guide/), 2020-01-23
-
-* Maëlle Salmon, ["Draw me a project"](https://masalmon.eu/2021/06/30/r-projects/), 2021-06-30
-
-  - This one goes deep into things like version control and the {targets} package, all of which are worth introducing into your workflow...but are beyond the scope of this project.
 
 
 ### Capturing the directory structure
@@ -365,7 +321,7 @@ In this example, there are elements that might not be relevant for every project
 
 ### The data dictionary or code book
 
-As we we will see, preparing data requires a number of steps, both objective and subjective, along the way. Creating a documentation of those decisions is essential. This documentation will serve as a record of the source of the data (all the better if you can also include specific information with the details of its collection sucha as dates, mode of collection, and the original survey questionnaire), the assumptions and decisions made in recoding and creating new variables, and so on.
+As we we will see, preparing data requires a number of steps, both objective and subjective, along the way. Creating a documentation of those decisions is essential. This documentation will serve as a record of the source of the data (all the better if you can also include specific information with the details of its collection such as dates, mode of collection, and the original survey questionnaire), the assumptions and decisions made in recoding and creating new variables, and so on.
 
 
 Here are the three minimum components of a data dictionary:
@@ -381,14 +337,33 @@ Here are the three minimum components of a data dictionary:
 
 
 
+Caitlin Hudon's "Field Notes: Building Data Dictionaries" [@Hudon_data_dictionary_2018] provides some explicit guidelines as to what to include in a data dictionary, and poses "questions to answer with a data dictionary:"
+
+1. What does the field mean? How should I use it?
+
+2. What is the data supply chain?
+
+  - Where does this data come from? How exactly is it collected? How often is it updated? Where does it go next?
+  
+3. What does the data in this field actually look like?
+
+4. Are there any caveats to keep in mind when using this data?
+
+5. Where can I go to get more information?
 
 
-Caitlin Hudon, ["Field Notes: Building Data Dictionaries"](https://caitlinhudon.com/2018/10/30/data-dictionaries/), 2018-10-30
+Finally, the {labelled} package [@R-labelled] contains the function `look_for()`, which generates a data dictionary of the dataframe. ^[Joseph Larmarange, ["Generate a data dictionnary and search for variables with look_for()"](http://larmarange.github.io/labelled/articles/look_for.html)]
 
+Here, we read the SPSS version of the {palmerpenguins} file, and generate a data dictionary using the `look_for()` function.
 
-Also see [@R-labelled] http://larmarange.github.io/labelled/articles/look_for.html
+```{r}
 
-* One of the most useful functions is `look_for()`, which provides a data dictionary of the dataframe.
+penguins_sav <- read_sav(dpjr::dpjr_data("penguins.sav"))
+
+labelled::look_for(penguins_sav)
+
+```
+
 
 
 
