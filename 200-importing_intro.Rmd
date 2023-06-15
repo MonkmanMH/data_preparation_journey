@@ -107,7 +107,7 @@ Some things to ask about the data:
 
 * How are missing values represented?
 
-We will look at structured ways investigate the contents of the data in the chapter [Validation strategies]{#validation}. In the next few chapters, we will focus on the process of reading the contents of different types of files.
+We will look at structured ways investigate the contents of the data in the chapter [Validation strategies](#validation). In the next few chapters, we will focus on the process of reading the contents of different types of files.
 
 
 

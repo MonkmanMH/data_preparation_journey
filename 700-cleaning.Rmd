@@ -30,7 +30,7 @@ In this chapter:
 
 * Creating conditional and calculated variables
 
-  - indicator variables [@Gelman_etal_2014, p.366] (also known as dummy variables [@Suits_1957] and "one hot" encoding)
+  - indicator variables (also known as dummy variables [@Suits_1957] and "one hot" encoding)
   
   - normalization
 
@@ -818,11 +818,9 @@ Your subject area has established classifications; seek them out and use them. E
 
 ## Indicator variables
 
-Creating indicator variables \index{indicator variables}
-
 > To include a categorical variable in a regression, a natural approach is to construct an 'indicator variable' for each category. This allows a separate effect for each level of the category, without assuming any ordering or other structure on the categories. [@Gelman_etal_2014, p.366]
 
-* also known as dummy variables\index{dummy variables|see{indicator variables}} [@Suits_1957] and "one hot" encoding\index{one hot encoding|see{indicator variables}}
+Indicator variables\index{indicator variables} are also known as dummy variables\index{dummy variables|see{indicator variables}} [@Suits_1957] and "one hot" encoding\index{one hot encoding|see{indicator variables}}.
 
 Examples of this approach abound. It can be a useful approach in forecasting methods; Hyndman and Athanasopoulos provide examples where public holidays and days of the week are set as dummy variables [@Hyndman_Athanasopoulos_2021, section 7.4 "Some useful predictors"]
 
@@ -1026,19 +1024,9 @@ https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
 
 
 
-Frequently, our data will have missing values. There are a variety of solutions to dealing with missingness, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value.
+Frequently, our data will have missing values. Some of this will be gaps in the data, and in other cases it will be due to the structure of the source data file. 
 
-### Strategies for dealing with missing values
-
-Explicit user-defined missing: convert -999 etc to `NA`
-
-Imputation methods:
-
-* fill
-
-* average or regression model estimate
-
-* hot deck imputation
+There are a variety of solutions to dealing with missingness in data values, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value. There is in-depth literature on this topic (see [@Little_Rubin_2020], [@Gelman_etal_2014, chapter 18], and [@Gelman_Hill_2007, chapter 25]); what is presented here are some solutions to common and relatively simple problems.
 
 
 ### Missing as formatting
@@ -1058,7 +1046,9 @@ head(tuition_data)
 
 ```
 
-The contents of the file have been read correctly, but there are many "NA" values in the "Economic Development Region" variable. The `fill()` function, in the {tidyr} package [@R-tidyr] [\index{{tidyr}}], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
+The contents of the file have been read correctly, but there are many "NA" values in the "Economic Development Region" variable. This is due to the manner in which the data was structured in the source Excel file.
+
+The `fill()` function, in the {tidyr} package [@R-tidyr] [\index{{tidyr}}], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
 
 ```{r}
 
@@ -1083,10 +1073,10 @@ tuition_data_filled |>
 It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an NA in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
 
 
-## Missing numeric values
+### Missing numeric values
 
 
-"Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value." [@Little_Rubin_2020 ]
+"Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value." [@Little_Rubin_2020]
 
 The functions used above for filling missing text values can also be used for missing numeric values. But when dealing with the replacement of numeric values we need to be mindful that the values we use will be incorporated into models and analysis; we need to be clear that the filled values are _estimates_, including sufficient documentation in our methodology section.
 
@@ -1114,7 +1104,7 @@ ggplot(naics721_sal, aes(x = ref_year, y = VALUE)) +
 ```
 
 
-Our first approach will be to simply drop those years that are missing a value. This might help with some calculations (for example, putting a `na.rm = TRUE` argument in a `mean()` function is doing just that).
+Our first approach will be to simply drop those years that are missing a value. This might help with some calculations (for example, putting a `na.rm = TRUE` argument in a `mean()` function is doing just that), but it will create a misleading plot—there will be the same distance between the 2009 and 2015 points as there is between 2015 and 2016.
 
 ```{r}
   
@@ -1165,7 +1155,7 @@ You may already have realized that the values we filled above are drawn from a t
 For R users, the package {forecast} has time series oriented imputation fill functions. [@R-forecast; @Hyndman_Khandakar_2008]
 
 
-The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example:
+The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series than simply extending known values. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example:
 
 ```{r}
 x <- c(1, NA, 3)
@@ -1202,7 +1192,7 @@ naics721_sal <- naics721_sal |>
 naics721_sal
 ```
 
-
+Now when we plot the data, there are no gaps. 
 
 ```{r}
 ggplot(naics721_sal, aes(x = ref_year, y = value_new)) +

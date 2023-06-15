@@ -26,7 +26,7 @@ In this chapter:
 
 * Exploratory data analysis to identify problems
 
-* Using the {validate} package
+* Using structured tests with the {validate} package
 
 
 
@@ -103,7 +103,7 @@ One way we might begin our investigation is the `dplyr::glimpse()` function. Thi
 glimpse(df_HR_train)
 ```
 
-The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible in the `read_` function" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
+The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
 
 ```{r}
 
@@ -118,14 +118,16 @@ glimpse(df_HR_train)
 
 
 
-Not that the variables are in a format we can use, applying R's `summary()` function gives us another way to see the data.
+Not that the variables are a better format, and applying R's `summary()` function gives us another way to see the data.
 
 
 ```{r}
 summary(df_HR_train)
 ```
 
-A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing...there might be a reason for this, and part of the analyst's responsibility is to make note of this, and perhaps further investigate (and record) the reason for this situation. You might start with the data's documentation, and if that doesn't hold an explanation, talking to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a cohort from what is otherwise a mandatory course.
+A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing. There might be a reason for this, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
+
+A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and record keeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 
 
 
