@@ -32,26 +32,23 @@ In this chapter:
 
 ## Identifying dirty data
 
-There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation"\index{data validation} methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected.
-
-The article "Nine simple ways to make it easier to (re)use your data" [@White_etal_nine_simple_ways] 
-
-* 7 Perform basic quality control
+There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation"\index{data validation} methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected. We can think of this as a form of quality control, from quick sanity checks to programmatic testing. [@White_etal_nine_simple_ways]
 
 Validation while the data is being collected might be through the use of drop-down boxes that eliminates spelling mistakes, or that forces entries to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
-* All of these have risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a "1" or a preposterously very large number, neither of them accurate.
+This comes with risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a "1" or a preposterously very large number, neither of them accurate.
 
-For our work here, we will focus on checking and validating data after is has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
+For our work here, we will focus on checking and validating data after it has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
 
+The type of things we might evaluate include:
 
-* A field such as postal code has to be structured in a certain way (this is where your regex skills come in)
+* A field has to be structured in a certain way; examples include postal codes and date fields. 
 
-* A value might have a certain range 
+* A value might have a certain range, or a limited number of categories.
 
-* Some values, such as age, have to be positive
+* Some values, such as age, have to be positive.
 
-* There might be a known relationship between two or more variables
+* There might be a known relationship between two or more variables.
 
 
 
