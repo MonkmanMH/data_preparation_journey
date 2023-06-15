@@ -33,16 +33,12 @@ In this chapter:
 > Portable Document Format (PDF)\index{Portable Document Format (PDF)}...is a file format developed by Adobe in 1992 to present documents, including text formatting and images, in a manner independent of application software, hardware, and operating systems.^[Wikipedia entry, "PDF" [@wiki:PDF]]
 
 
-The PDF file format provides a great deal of functionality and flexibility to create high quality output. PDF files are often used for things like  branded marketing materials and annual reports, where there is a use-case for a document that looks on screen as it would if printed on paper, with a combination of text and images, all formatted in a way to make it visually appealing.
+The PDF file format provides a great deal of functionality and flexibility to create high quality output. PDF files are often used for things like  branded marketing materials and annual reports, where there is a use-case for a document that looks on screen as it would if printed on paper, with a combination of text and images, all designed and formatted in a way to make it visually appealing.
 
 
-Included in those documents may be data we want for our analysis. Or we may want to analyze the text in the document. The way a PDF file is structured can make extracting the contents, whether it's data tables or text, a challenge.
+Included in those documents may be data we want for our analysis. Or we may want to analyze the text in the document. The way a PDF file is structured can make extracting the contents, whether it is data tables or text, a challenge. The "export to Excel" function in Adobe Acrobat and other PDF tools might work successfully; always give this a try first. The operative phrase in that sentence is _might work_. Similar to the challenges that we confront when importing a formatted Excel file, your PDF exporter will confront structures that look like tables visually, but which are not in a consistent tidy format. Sometimes text wrapping in variable names often leads to splitting into multiple rows, and in other instances what looks like multiple cells in the table is read as one.
 
-Fortunately for us, other data scientists have already confronted this challenge, and have made tools available for the rest of  us. One such package is {pdftools}[@R-pdftools]
-
-
-* the main reference page: https://docs.ropensci.org/pdftools/ 
-
+Fortunately for us, other data scientists have already confronted the challenge of reading data tables in PDF files, and have made tools available for the rest of  us. One such package is {pdftools}[@R-pdftools]
 
 In addition to {pdftools}, for this chapter we will also be using the data manipulation packages {dplyr} and {tidyr}, and the text manipulation package {stringr}[@R-stringr]
 
@@ -62,11 +58,22 @@ library(stringr)
 
 ### Getting started
 
-To get ourselves started, we will read data from a summary of the {palmerpenguins}[@R-palmerpenguins] data.
+To get started in reading data from a PDF file, we will read data from a summary of the {palmerpenguins}[@R-palmerpenguins] data. 
 
-We can read the file using the `pdf_text()` function from the {pdftools} package and assign the contents to an R object in our environment. 
+While this is for a single table on a single page, the same approach will work for multiple tables across multiple pages, if the structure of each table on each page is the same. The process is always the same: start with the smallest unit, and expand out.
 
-Next we can use the `str()` function to display a summary of the structure of our new object.
+* The way that PDF files are read, the smallest unit is a single row.
+
+* Expand that to the entire table. Apply column splitting and assigning headers at the end of this stage.
+
+* If there are multiple tables wit the same structure, tackle that next by looping through each of the tables. 
+
+* And once you have a single page working, you can loop through multiple pages.
+
+
+We read the entire contents of the file using the `pdf_text()` function from the {pdftools} package, and assign the contents to an R object in our environment. 
+
+Next we use the `str()` function to display a summary of the structure of our new object.
 
 ```{r}
 
@@ -76,6 +83,10 @@ str(penguin_summary)
 
 ```
 
+What we have as a result of this is a single character string, with the contents of the file. In this example, there is only one page, and thus one string. If you are dealing with a multi-page document, each page gets its own string.
+
+In a visual scan of this output, we see the variable names starting with "species". After the last of the variables "mean_body_mass_g" there are two end of line characters, represented by "\\n" (pronounced "backslash n"). We will be using these end of line characters as part of the parsing process.
+
 
 Another way to look at the contents of a page is to use the `cat()` function (from {base R}), which displays the contents as it would be printed:
 
@@ -84,7 +95,8 @@ Another way to look at the contents of a page is to use the `cat()` function (fr
 cat(penguin_summary)
 ```
 
-Next we use the `strsplit()` function (from {base R}) to separate the long string into separate rows. You may have noted that there are two "\\n" character pairs marking the end of each line; if we use only one in the `strsplit()` function, an extra row appears between the data rows.
+
+Next we use the `strsplit()` function (from {base R}) to separate the long string into separate rows. As we noted there are two "\\n" character pairs marking the end of each line; if we use only one in the `strsplit()` function, an extra row appears between the data rows.
 
 
 
@@ -95,9 +107,9 @@ penguin_summary_2 <- penguin_summary |>
 penguin_summary_2
 ```
 
-There is an extra line return at the end of the last data cell, so let's use a regular expression to remove it. There's also space at the beginning of the first line, and the number-space combination at the beginning of the 
+At this stage, we need to apply some cleaning. If we don't do it now, it's going to cause some challenges later. There is an extra line return at the end of the last data cell, so let's use a regular expression to remove it. There's also space at the beginning of the first line, and the number-space combination at the beginning of the data rows.
 
-And by using the square bracket accessor, the object returned is no longer nested, but instead has a single character string for each row.
+And by using the double square bracket accessor in the first row, the object returned is no longer nested, but instead has a single character string for each row.
 
 ```{r}
 penguin_summary_3 <- penguin_summary_2[[1]] |> 
@@ -109,9 +121,7 @@ penguin_summary_3
 
 ```
 
-Pull names from list
-
-Result is vector with one element
+Next, we create a list object with the variable names, in order to keep the names separate from the data in our resulting table. This is accomplished by assigning the row that contains the names (row 1, identified using the square bracket [1]) to a vector with one element.
 
 ```{r}
 
@@ -120,9 +130,9 @@ penguin_variable_vector <- as.vector(penguin_summary_3[1])
 penguin_variable_vector
 ```
 
-Split into 4 separate elements
+The next step is to split this vector into 4 separate elements at the points where there are one or more white spaces, identified in the regular expression "\\s+". The "\\s" finds a single space, and adding the "+" extends that to "one or more" of the character the precedes it.
 
-* this returns nested list
+This returns another nested list.
 
 ```{r}
 
@@ -131,7 +141,7 @@ penguin_variable_list
 
 ```
 
-In order to have the structure we need, we apply the `unlist()` function:
+In order to have the structure we need, we apply the `unlist()` function to the result.
 
 ```{r}
 penguin_variable_names <- unlist(penguin_variable_list)
@@ -148,13 +158,14 @@ penguin_variable_names
 ```
 
 
-Build table with loop
+The next step is to build a table, using a for-loop. (See [@Wickham_Grolemund2016, Chapter 21 Iteration] for a review of this process.)
+
 
 ```{r}
 # 1. define output
 penguin_table <- tibble(value = NULL)
 
-# 2. loop
+# 2. loop through the rows
 # Because the first element is the titles, we want the length to be one shorter
 loop_length <- length(penguin_summary_3) - 1
 
@@ -168,8 +179,7 @@ penguin_table
 
 ```
 
-
-Then apply string split
+The loop has created a tibble with one column, `value`. We will apply the `separate()` function to split the value into each of the variable names we assigned to the object `penguin_variable_names` earlier. The split is based on the location of one or more spaces in the original string, using the "\\s+" regular expression.
 
 ```{r}
 
@@ -184,18 +194,20 @@ penguin_table
 
 ```
 
-Fix variable types
+There is one final step: to change the variable types of the values to numeric.
 
 
 
 ```{r}
-penguin_table |> 
+penguin_table <- penguin_table |> 
   mutate(
     across(
     contains("mean_"), 
     ~ as.numeric(.x)
     )
   )
+
+penguin_table
 ```
 
 ### Extended example: ferry traffic
@@ -214,7 +226,7 @@ This report is 101 pages long, and contains a mixture of written text and data t
 
 
 ```{r 300_download_file, eval=FALSE}
-
+# download file from web URL
 download.file(url = "https://www.bcferries.com/web_image/h29/h7a/8854124527646.pdf",
               destfile = "bcferries_2021.pdf", 
               mode = "wb")
@@ -253,12 +265,10 @@ cat(bcf[1])
 ```
 
 
-If we compare these two outputs, we see that the first shows the characters "\\n", which indicates the end of a line. These have been converted in the final version.
+If we compare these two outputs, we see that the first shows the characters "\\n", which indicates the end of a line. These have been used to render the layout in the `cat()` version.
 
 
-
-
-The period covered by this annual report captures the profound impact on travel during the first year of the COVID-19 pandemic, and the report has comparisons in vehicle and passenger volumes with the previous, pre-pandemic year. Let's pull the data from the table that compares the number of passengers by each of the routes in the system. This table is on page 11:
+The period covered by this annual report captures the profound impact on travel during the first year of the COVID-19 pandemic, and the report has comparisons in vehicle and passenger volumes with the previous, pre-pandemic year. Let's pull the data from the table that compares the number of passengers by each of the routes in the system. This table is on page 11 of the PDF file:
  
 ![BC Ferries, passenger total](img/bcferries_passengers_2021.jpg)
 
@@ -269,11 +279,10 @@ From the object we created from the PDF report, we can separate the contents of 
 
 bcf_11 <- bcf[11]
 ```
+
 ```{r, eval=FALSE}
 bcf_11
 ```
-
-
 ```{r, include=FALSE}
 # display first 500 characters
 str_sub(bcf_11, 1, 500)
