@@ -307,6 +307,7 @@ Using the "\\n" line break character, we can split this single value into as man
 bcf_11_lines <- bcf_11[[1]] |> 
   strsplit(split = "\n")
 
+# how many lines in the page?
 length(bcf_11_lines[[1]])
 ```
 
@@ -447,12 +448,13 @@ It's not quite perfect, and some things need to be removed:
   * the difference columns
 
 ```{r 300_remove_NA}
-# succinct way to remove a row which has a single "NA"
 bcf_table_3 <- bcf_table_2 |> 
+# succinct way to remove a row which has a single "NA"
   na.omit() |> 
   select(route,
          starts_with("passengers_"),
          starts_with("passenger_tariff_rev")) |> 
+  # change variables to numeric
   mutate(passengers_fy2021 = as.numeric(passengers_fy2021),
          passengers_fy2020 = as.numeric(passengers_fy2020),
          passenger_tariff_revenue_fy2021 = as.numeric(passenger_tariff_revenue_fy2021),

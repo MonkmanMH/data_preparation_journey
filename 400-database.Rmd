@@ -81,14 +81,14 @@ library(RSQLite)
 ```
 
 
-The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `nycf_con` (for "New York City Flights Connection"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely used MySQL and Postgres.
+The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `con_nycf` (for "Connection to New York City Flights"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely used MySQL and Postgres.
 
 ```{r}
 # establish the connection to the database file
-nycf_con <- DBI::dbConnect(RSQLite::SQLite(), "data/nycflights13_sql.sqlite")
+con_nycf <- DBI::dbConnect(RSQLite::SQLite(), "data/nycflights13_sql.sqlite")
 
 # list the tables in the connected database
-dbListTables(nycf_con)
+dbListTables(con_nycf)
 
 ```
 
@@ -97,7 +97,7 @@ Now we have a connection to the database, we can establish a connection to a par
 
 ```{r}
 
-flights <- tbl(nycf_con, "flights")
+flights <- tbl(con_nycf, "flights")
 glimpse(flights)
 ```
 
@@ -123,7 +123,14 @@ flights_SEA <- flights |>
 ```
 
 
-In this code, we create a summary table of the average flight time from New York to Seattle, by airline.
+In SQL, we use `SELECT` to select the columns (or variables) we want (you will note this is the same term as {dplyr}). The asterix "*" is a wildcard to select all the tables.
+
+`FROM` indicates which table from which we want to draw the columns. 
+
+And finally, the filtering by city uses the SQL function `WHERE`.
+
+
+In the code below, we create a summary table of the average flight time from New York to Seattle, by airline.
 
 
 ```{r}
@@ -145,11 +152,15 @@ SEA
 
 ### Using SQL in your R code
 
-In addition to writing R code, we can embed SQL inside a `dbSendQuery()` function, and then use the `dbFetch()` function to run the SQL query. Both of these functions are from the {DBI} package.
+In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using, and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. This query instruction gets saved as the object `SEA_sql`.
+
+The R chunk then has a second line that uses the `dbFetch()` function to run the SQL query. 
+
+Both the `dbSendQuery()` and `dbFetch()` are functions from the {DBI} package.
 
 ```{r}
 
-SEA_sql <- dbSendQuery(nycf_con, "SELECT * FROM flights WHERE dest = 'SEA'")
+SEA_sql <- dbSendQuery(con_nycf, "SELECT * FROM flights WHERE dest = 'SEA'")
 dbFetch(SEA_sql)
 
 ```
@@ -157,15 +168,13 @@ dbFetch(SEA_sql)
 
 ## Running SQL language chunks in R Markdown
 
-[, 2.7.3 SQL](https://bookdown.org/yihui/rmarkdown/language-engines.html#sql) by Yihui Xie, J. J. Allaire, Garrett Grolemund
-
 The book _R Markdown: The Definitive Guide_ [@Xie_Allaire_Grolemund_RMarkdown_2019] provides instructions on how to set up your R Markdown in RStudio so that you can run SQL language chunks, including using SQLite. (See Chapter 2.7.3)
 
-Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection...the `nycf_con` object created earlier.
+Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection. A we continue to work through this example, this is the `con_nycf` object created earlier.
 
-`sql, connection=nycf_con`
+`sql, connection=con_nycf`
 
-```{sql, connection=nycf_con}
+```{sql, connection=con_nycf}
 
 SELECT * 
 FROM flights 
@@ -175,7 +184,7 @@ WHERE dest = 'SEA'
 
 
 
-### Mutating joins
+### Mutating joins & summary tables
 
 A mutating join is one that combines variables from two tables, based on matching observations on _keys_.
 
@@ -185,7 +194,7 @@ The first step is to establish a connection to the `airlines` table. Once the co
 
 ```{r}
 # establish connection to airlines table
-airlines <- tbl(nycf_con, "airlines")
+airlines <- tbl(con_nycf, "airlines")
 airlines
 
 # join and summary table
@@ -204,7 +213,7 @@ The SQL code below returns the same table. We can see one difference in how the 
 
 
 
-```{sql, connection=nycf_con}
+```{sql, connection=con_nycf}
 
 -- 3. select `name` variable from joined table and apply count
 SELECT `name`, COUNT(*) AS `n`
@@ -226,17 +235,20 @@ ORDER BY `n` DESC
 
 ```
 
-In SQL, we use `SELECT` to select the columns we want (the same term as {dplyr}). The asterix "*" is a wildcard to select all the tables.
-
-`FROM` indicates which tables. 
-
 The joins are named using terms similar to {dplyr}. This left join will return all of the records from the `flights` table, and the variables from `airlines` where there is a match.
 
 To indicate the key variable for the join, we use `ON`. Note that we specify the table and the variable, separated by a period.
 
-And finally, the filtering by city uses the SQL function `WHERE`.
 
 For more information on using SQL, with a focus on SQLite, Thomas Nield's _Getting Started with SQL_ [@Nield_2016] is highly recommended.
+
+
+
+
+```{r close_connection, echo=FALSE}
+DBI::dbDisconnect(con_nycf)
+```
+
 
 
 ## Using the {tidylog} package
