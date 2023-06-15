@@ -8,7 +8,7 @@ output:
 
 ```{r setup_ch225, include=FALSE, eval=TRUE}
 
-#source("package_load.R")
+source("package_load.R")
 
 ```
 
@@ -44,7 +44,9 @@ The {readxl} package [@R-readxl] is designed to solve many of the challenges rea
 library(readxl)
 ```
 
-For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. (Remember the "what proportion of staff could potentially retire in the next three years?" example from [\@ref(what-is-data)]?)
+For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. 
+
+> add "what proportion of staff could potentially retire in the next three years?" example
 
 Because Excel files can contain multiple sheets, we need to specify which one we want to read. The {readxl} function `excel_sheets()` lists them for us:
 
@@ -343,7 +345,7 @@ For the {tidyxl} functions to work, the first column needs to defines the hierar
 
 The `behead_if()` function identifies a level of headers in a pivot table, and makes it part of the data. Similar to the {tidyr} function `pivot_longer()`, it creates a new variable for each row based on the headers. In the case of the UK Census data, the headers are differentiated by the number of indents in the formatting.
 
-Let's test that by assigning the "left-up" position value to a new variable, field0. For each row in the `uk_census` object, the number of indentations associated with the `local_format_id` is evaluated; if it's zero, the value that is to the left and up from the data cell is assigned to the variable "field0" (for zero indents).
+Let's test that by assigning the "left-up" position value to a new variable, field0. For each row in the `uk_census` object, the number of indentations associated with the `local_format_id` is evaluated; if it's zero, the following happens: starting at the numeric value, the function looks left and then up until it finds a value that has fewer indentations. For example, the "England" row has a single indentation, so the function looks left and up until it finds a value that has zero indents in the formatting; the value from that cell is assigned to the variable "field0" (for zero indents).
 
 
 ```{r}
@@ -463,7 +465,7 @@ uk_census_formats$local$alignment$indent[60]
 
 ```
 
-There are 4 indents. You will recall that the `behead_if()` function was looking left and up. In the case of the Welsh entries, the function has looked up and left until it found an entry that has fewer indents, which happens to be in England, not Wales.
+There are 4 indents. You will recall that the `behead_if()` function was looking left and up. In the case of the Welsh entries, the function has looked left and up until it found an entry that has fewer indents, which happens to be in England, not Wales.
 
 This problem has arisen at the transition from one area to the next. Did this also happen in the England rows, for example where the North West region row appears? As we can see below, as similar problem has occurred: the value "North West" is correctly assigned to `field2`, but `field3` has been populated with the first value _above_ North West where there is a valid value in `field3`.
 
@@ -534,7 +536,8 @@ uk_census_behead_revised |>
   mutate(subtotal_row = case_when(
     field3 %in% field3_split$field3 & is.na(field4) ~ "subtotal",
     TRUE ~ NA_character_
-    ))
+    )) |> 
+  relocate(subtotal_row)
 
 ```
 
@@ -548,7 +551,7 @@ For our UK Census data, we will create two separate concordance tables. We will 
 
 For the first table, we will build a table with each type of administrative region and its associated three-digit code. This is done programatically in R, using the {tibble} package [@R-tibble]. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
 
-In addition to the area code prefix and the name of the adminstrative region type, the level in the hierarchy is also encoded in this table. 
+In addition to the area code prefix and the name of the administrative region type, the level in the hierarchy is also encoded in this table. 
 
 ```{r}
 
@@ -640,7 +643,8 @@ uk_census_geo_code <- uk_census_geo_code |>
   left_join(
     select(uk_census_pop, area_name, area_code),
     by = "area_name"
-    ) 
+    ) |> 
+  relocate(area_name, area_code)
 
 uk_census_geo_code
   
