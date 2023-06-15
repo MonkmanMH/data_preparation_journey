@@ -114,7 +114,7 @@ read_csv(penguins_path,
 ```
 
 
-## Fixed-width files
+## Fixed-width files 
 
 Fixed-width files don't use a delimiter, and instead specify which column(s) each variable occupies, consistently for every row in the entire file.
 

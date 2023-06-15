@@ -1220,13 +1220,13 @@ Other examples of time series missing value imputation functions can be found in
 
 ## Creating labelled factors from numeric variables
 
-If you are familiar with statistical software packages such as SPSS, SAS, or Stata you will be used to working with labelled variables. These are categorical variables, where there are a limited number of categories. 
+In \@ref(importing-stats) we imported statistical software packages such as SPSS, SAS, or Stata and saw the benefits, in certain circumstances, of having labelled variables. These are categorical variables, where there are a limited number of categories. 
 
 In some cases, there might be one or more values assigned to categories we might want to designate as "missing"—a common example can be found in surveys, where respondents are given the option of answering "don't know" and "not applicable". While these responses might be interesting in and of themselves, in some contexts we will want to assign them as missing.
 
 In other cases, numeric values are used to store the categorical responses. 
 
-The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in the section on importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in \@ref(importing-plaintext) importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
 
 We will use this file to create labelled factors from the numeric values in the variables we imported. Here's the code we used previously to read the file:
 
@@ -1320,7 +1320,7 @@ jcush_forcats |>
 ```
 
 
-{haven}[@R-haven] provides another option.
+Another option is provided in the {haven} package [@R-haven].
 
 ```{r}
 library(haven)
@@ -1355,17 +1355,7 @@ head(jcush_haven$health_desc_lab)
 
 ```
 
-```{r}
-
-# note: `as_factor()` works; `as.factor()` does not
-levels(as_factor(jcush_haven$health_desc_lab))             
-                                   
-levels(as.factor(jcush_haven$health_desc_lab))             
-
-```
-
-
-A third option is to use the functions within the {labelled}[@R-labelled] package. 
+A third option is to use the functions within the {labelled} package [@R-labelled]. 
 
 ```{r}
 jcush_labelled <- jcush |>
@@ -1381,9 +1371,9 @@ jcush_labelled <- jcush |>
     )
   ))
 
-jcush_labelled
 ```
 
+To view a single variable:
 
 ```{r}
 
@@ -1391,14 +1381,8 @@ head(jcush_labelled$health_desc_lab)
 
 ```
 
-```{r}
 
-# note: `as_factor()` works; `as.factor()` does not
-levels(as_factor(jcush_labelled$health_desc_lab))             
-                                   
-levels(as.factor(jcush_labelled$health_desc_lab))             
 
-```
 
 This package also allows for a descriptive name of the variable to be appended with the `var_lab()` function.
 
