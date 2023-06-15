@@ -1114,18 +1114,7 @@ ggplot(naics721_sal, aes(x = ref_year, y = VALUE)) +
 ```
 
 
-Our first approach will be to simply fill the series with the previous valid entry.  
-
-Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
-
-
-
-
-
-{tidyr} functions to deal with the missing values in the series
-
-
-* drop the rows that have an NA value
+Our first approach will be to simply drop those years that are missing a value. This might help with some calculations (for example, putting a `na.rm = TRUE` argument in a `mean()` function is doing just that).
 
 ```{r}
   
@@ -1135,13 +1124,22 @@ naics721_sal |>
 ```
 
 
-* `tidyr::fill()` variants
+Alternatively, we can fill the series with the previous valid entry.  
+
+Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
+
 
 ```{r}
 # fill down  
 naics721_sal |> 
   mutate(old_value = VALUE) |> 
   tidyr::fill(VALUE)  # default direction is down
+
+```
+
+There are a few different options to determine which way to fill; the default is `.direction = "down"`.
+
+```{r, eval=FALSE}
 
 # specified
 # down
@@ -1162,12 +1160,12 @@ naics721_sal |>
 
 ### Time series imputation
 
-You may already have realized that the values we filled above are drawn from a time series. Economists, biologists, and many other researchers who work with time series data have built up a large arsenal of tools to work with time series data, including for dealing with missing values in a time series. 
+You may already have realized that the values we filled above are drawn from a time series. Economists, biologists, and many other researchers who work with time series data have built up a large arsenal of tools to work with time series data, including for dealing with missing values. 
 
 For R users, the package {forecast} has time series oriented imputation fill functions. [@R-forecast; @Hyndman_Khandakar_2008]
 
 
-The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example
+The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example:
 
 ```{r}
 x <- c(1, NA, 3)
@@ -1198,69 +1196,24 @@ You will notice that the function has calculated replacement values that give us
 For our count of salaried employees, here's what we get when we create a new value `value_new` with this function:
 
 ```{r}
-naics721_sal |> 
+naics721_sal <- naics721_sal |> 
   mutate(value_new = forecast::na.interp(VALUE))
-```
 
-The function also has the capacity to create non-linear models.
-
-
-
-Other examples can be found in [@Hyndman_Athanasopoulos_2021].
-
-
-
-
-### {imputeTS} package
-
-{imputeTS} [@R-imputeTS] offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics."
-
-
-
-The {imputeTS} package has functions that implement more sophisticated time series imputation methods, such as those with seasonal components.
-
-https://CRAN.R-project.org/package=imputeTS
-
-
-
-
-### {zoo} fill functions
-
-Somewhat similar to {forecast}, the {zoo} package has a range of functions for time series data.
-
-CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
-
-
-
-```{r zoo_na_approx}
-library(zoo)
-
-naics721_sal |>
-  mutate(old_value = VALUE) |> 
-  mutate(VALUE = zoo::na.approx(VALUE))
-
+naics721_sal
 ```
 
 
 
-### references
+```{r}
+ggplot(naics721_sal, aes(x = ref_year, y = value_new)) +
+  geom_line() 
+```
 
-* CRAN page: https://cran.r-project.org/web/packages/zoo/index.html
+The `na.interp()` function also has the capacity to create non-linear models.
 
-* https://www.elff.eu/book/data-management-r/07-dates-times-timeseries/handling-missing-values/
+Other examples of time series missing value imputation functions can be found in the 
+{imputeTS} package [@R-imputeTS], which offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics." A fantastic resource for using R for time series analysis, including a section on imputation of missing values, is [@Hyndman_Athanasopoulos_2021].
 
-
-{simputation}: https://cran.r-project.org/web/packages/simputation/vignettes/intro.html
-
-https://github.com/markvanderloo/simputation
-
-
-[@doi:10.1080/00223891.2018.1530680]
-
-
-{forecast} examples:
-
-* https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/time-series-analysis/Dealing-with-missing-values/Imputing-missing-values/index.html
 
 
 
@@ -1451,9 +1404,4 @@ This package also allows for a descriptive name of the variable to be appended w
 
 
 
-## Further reading
-
-A useful resource that I'm not sure how to incorporate: [@Greve_Clean_data] 
-
-
-
+-30-
