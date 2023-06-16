@@ -133,7 +133,7 @@ A thorough understanding of the data and its origins will ensure that your analy
 
 ### Data visualization
 
-A plot can show us a wealth of information that cannot be expressed in the summary statistics. Let's work through exploring the date of birth variable from the `df_HR_main` sheet:
+A plot can show us a wealth of information that cannot be expressed in the summary statistics. Let's work through exploring the date of birth variable from the `df_HR_main` sheet.
 
 
 ```{r read_HR_main_600}
@@ -181,6 +181,32 @@ df_HR_main |>
 ```
 
 There are 10 cases with the birth date entry of 1901-01-01...this is the sort of pattern we would see with a sentinel value.
+
+Another approach to investigating this might be to create a single year "age" variable, and visualizing that using a box-and-whisker plot, which will also make outliers more apparent. We have heard that this might be associated with one category of occupation, so we want to visualize that. Using our relational database "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
+
+```{r}
+# read transaction table
+df_HR_transaction <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+           sheet = "df_HR_transaction", 
+           na = "NA")
+# determine occupation on the date the table was created 
+df_HR_occupation_2020 <- df_HR_transaction |> 
+  group_by(emp_id) |> 
+  summarise(occupation_current = max(occupation, na.rm = TRUE))
+
+df_HR_main |>
+  # calculate age on January 1, 2020
+  mutate(age_2020 = date_of_birth %--% ymd("2020-01-01") %/% years(1)) |> 
+  # join the current occupation table
+  left_join(df_HR_occupation_2020, by = "emp_id") |> 
+  # plot
+  ggplot(aes(x = occupation_current, y = age_2020)) + 
+  geom_boxplot()
+
+```
+
+
+In the box-and-whisker visualization, we see that the sentinel values are in four of the five occupations, so the hunch was not correct. 
 
 
 ## Validation methods
