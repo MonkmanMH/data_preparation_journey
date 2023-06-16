@@ -1,0 +1,68 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
+
+```{r setup_ch900, include=FALSE}
+
+# packages
+
+```
+
+
+# Recap {#recap}
+
+
+## Some key points
+
+In this book, we have worked through numerous examples of preparing data for analysis, whether that's summary tabulations or modeling methods such as linear regression with indicator variables or time series analysis and forecasting.
+
+
+Some key points worth re-iterating:
+
+* The data you get is not going to be the data you need. It is going to take work to prepare it for analysis.
+
+* The process of preparing data is not a linear, step-by-step process. It involves iterating, and looping back to previous steps to address issues with the data. Iteration begins with the _import_ step, and continues through _validation_ and _cleaning_.
+
+* Every one of the elements in the preparation process requires you, the researcher, to make decisions based on your judgement about how best to fulfill the research objective. Starting with defining which variables to import through to how resolving missing values in the data, you have to make informed and thoughtful decisions based on how the data is going to be used.
+
+* Documentation is essential, both in the code and in the project folder. 
+
+  - State the _why_ of the code, not the _what_.
+
+  - Create a README file with the project objective and other key pieces of information.
+  
+  - Create a data dictionary.
+  
+  - The audience for this documentation might be a collaborator you already know or a future user of the data that you have not met. The audience almost certainly includes you in the future—next year, next month, or tomorrow.
+
+* Clean data is complete, consistent, and accurate. With these three qualities it is _believable_. Validation and cleaning will strive to improve the data in all three of these dimensions.
+
+* Get as far as you can, as quickly as you can, with the import function. The fewer post-import changes you need to make, the better.
+
+* Getting the data into a tidy structure is essential.
+
+
+## Where to from here?
+
+We started this book with the metaphor of the lighthouse, which guides ships in the right direction and keeps them from running aground. I hope that the principles and the examples in this book achieve the same.
+
+The examples in this book can provide a guide to the types of challenges that you might confront when preparing data for analysis. But as you embark on your own data preparation journey, you will run into problems that are different than the ones here. The chances are high that the examples here won't be enough to solve the problem. You will require other tools, whether other R packages or a different programming language. You might encounter different data storage methods than what has been introduced here; this is particularly likely if you start working with very large databases.
+
+The answer to the fact that the problems will be different is to keep learning. If you don't find data preparation challenges in your job or the courses you take, you may want to adapt the examples in this book to other data. This might be finding an Excel file that uses colour as a variable. Or perhaps there's a SQL database that requires you to build a relation between two tables, but those two don't share a common variable, so you have to connect both to a third table that can then link to both. 
+
+The growth of the R ecosystem, including the tidyverse, has been astounding. The problems you encounter will, in all likelihood, have already been seen by someone else. And that someone may have written a blog post about their solution, or written a package with a generalized solution. 
+
+I hope that the examples in this book give you the confidence to venture forward.
+
+
+
+-30-

@@ -72,92 +72,86 @@ NEED TO FIX THIS
 
 **SECTION A**
 
-**Chapter 2: Introduction**
+**Chapter 1: Introduction**
 
 * The origin of data
 
 * Analyzing data
 
-* Understanding that data in the wild is different than typical textbook examples
-
-* Keeping a record of your work
+* Data in the wild
 
 
 **Chapter 2: Foundations**
 
-* Putting the destination first, which will guide decisions along the way
+* The data preparation process
 
-* Code for reproduciblity: keeping a record of the changes you make
-
-* Adopting good naming practices
-
-* Using appropriate and existing classification systems
+* Understanding what makes data "dirty", and why context matters
 
 
 
-**SECTION B: DATA SOURCES**
+**Chapter 3: Data documentation** 
 
-**Chapter 3: Importing data: plain-text files**
+* Creating documentation, including data dictionaries and literate programming
+
+
+**SECTION B: IMPORTING DATA**
+
+**Chapter 4: Importing data**
+
+* Principles for importing data, no matter the format
+
+**Chapter 5: Importing data: plain-text files**
 
 * Getting data in a variety of formats, including CSV and fixed-width text files
 
-**Chapter 4: Importing data: Excel**
+**Chapter 6: Importing data: Excel**
 
-* Getting data in a variety of formats, including CSV and fixed-width text files
+* Getting data from Excel files
 
-**Chapter 5: Importing data: statistical software**
+* Extracting data stored as formats
+
+**Chapter 7: Importing data: statistical software**
 
 * Capturing data and value labels from statistical software formats such as SPSS, Stata, and SAS
 
-**Chapter 6: Data from PDF files**
+**Chapter 8: Data from PDF files**
 
 * Getting data out of a PDF file, whether quantitative or qualitative (text)
 
 
-**Chapter 7: Data from web sources**
+**Chapter 9: Data from web sources**
 
-* Acquiring data using web APIs and webscraping
+* Acquiring data using R packages that leverage web APIs
 
 
-**Chapter 8: Linking to relational databases** 
+**Chapter 10: Linking to relational databases** 
 
-* Accessing data directly from databases (SQL)
+* Accessing data directly from databases
 
-* The benefits and strengths of relational databases
+* A very brief introduction to SQL
 
 
 **SECTION C: CLEANING DATA**
 
-**Chapter 9: Clean data principles**
-
-* Understanding tidy data principles
-
-* Understanding what makes data "dirty", and why context matters
-
-* Serving the research question
 
 
-**Chapter 10: Validation strategies**
+**Chapter 11: Validation strategies**
 
 * Exploratory data analysis to identify problems
 
-* Using the {validate} package
+* Using structured testing to validate data
 
 
-**Chapter 11: Cleaning techniques**
+**Chapter 12: Cleaning techniques**
 
 * Cleaning dates and strings
 
-* Creating conditional and calculated variables
+* Creating conditional and calculated variables, including indicator variables
+
+* Dealing with missing values
 
 
-**SECTION D: PREPARING DATA**
-
-**Chapter 12: Data documentation** 
-
-* Creating documentation, including data dictionaries and literate programming
-
-* Data management strategies
+**Chapter 13: Recap**
 
 
 
@@ -166,7 +160,7 @@ NEED TO FIX THIS
 
 ## Acknowledgements {-}
 
-I would like to acknowledge everyone who has contributed to the books, articles, blog posts, and R packages cited within.
+I would like to acknowledge everyone who has contributed to the books, articles, blog posts, and R packages cited within. As well, thanks to my former colleagues at BC Stats, my current colleagues at MNP, and my colleagues and students at the University of Victoria's Business Intelligence & Data Analytics program. The enthusiasm of this community of people I know well and people around the world I have never met has helped sustain my own interest, and without it I wouldn't have written this book.
 
 
 ## Some important details {-}
