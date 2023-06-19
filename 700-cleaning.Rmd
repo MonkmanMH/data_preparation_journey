@@ -403,11 +403,16 @@ If this was in a data frame, these functions can be added to a `mutate()` functi
 # convert string to tibble
 pc_kimberley_tbl <- as_tibble(pc_kimberley)
 
-# mutate new values--note that creating three separate variables allows for comparisons as the values change from one step to the next
+# mutate new values
+# --note that creating three separate variables allows for comparisons 
+#   as the values change from one step to the next
 pc_kimberley_tbl |>
-  mutate(pc_extract = str_extract(value, postalcode)) |>  # extract the postal codes
-  mutate(pc_remove = str_remove(pc_extract, "[ -]")) |>   # remove space or hyphen
-  mutate(pc_upper = str_to_upper(pc_remove))               # change to upper case
+  # extract the postal codes
+  mutate(pc_extract = str_extract(value, postalcode)) |>  
+  # remove space or hyphen
+  mutate(pc_remove = str_remove(pc_extract, "[ -]")) |> 
+  # change to upper case
+  mutate(pc_upper = str_to_upper(pc_remove))               
   
 
 ```
@@ -419,7 +424,11 @@ pc_kimberley_tbl |>
 Below, we split an address based on comma and space location, using the `str_split()` function.
 
 ```{r}
-UVic_address <- "Continuing Studies, Continuing Studies Building, 3800 Finnerty Rd, Victoria, BC, V8P 5C2"
+UVic_address <- 
+  "Continuing Studies,
+   3800 Finnerty Rd, 
+   Victoria, BC, 
+   V8P 5C2"
   
 str_split(UVic_address, ", ")
 ```
@@ -432,7 +441,12 @@ Below we will combine the components of an address into a single string, with th
 
 ```{r}
 
-UVic_address_components <- c("Continuing Studies", "Continuing Studies Building", "3800 Finnerty Rd", "Victoria", "BC", "V8P 5C2")
+UVic_address_components <- c(
+  "Continuing Studies", 
+   "3800 Finnerty Rd", 
+   "Victoria", "BC", 
+   "V8P 5C2"
+  )
 
 str_c(UVic_address_components, collapse = ", ")
 
@@ -486,12 +500,13 @@ This sector's coding is as follows:
 | * Support Activities for Mining | 213 |
 
 
-Let's look at the data now. Note t
+Let's look at the data now. Note that the original CSV file has the data for 2010 through 2020; for this example the years 2019 and 2020 are selected.
 
 
 ```{r, message=FALSE}
 
-bls_employment <- read_csv(dpjr::dpjr_data("us_bls_employment_2010-2020.csv"))
+bls_employment <- read_csv(dpjr::dpjr_data("us_bls_employment_2010-2020.csv")) |> 
+  select(`Series ID`, `Annual 2019`, `Annual 2020`)
 
 gt(
   head(bls_employment)

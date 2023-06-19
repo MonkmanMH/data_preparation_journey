@@ -16,6 +16,8 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 # packages
 source("package_load.R")
 
+options(width = 80)
+
 ```
 
 
@@ -166,7 +168,8 @@ The next step is to build a table, using a for-loop. (See [@Wickham_Grolemund201
 penguin_table <- tibble(value = NULL)
 
 # 2. loop through the rows
-# Because the first element is the titles, we want the length to be one shorter
+# Because the first element is the titles, 
+# we want the length to be one shorter
 loop_length <- length(penguin_summary_3) - 1
 
 for (i in 1:5) {
@@ -227,9 +230,11 @@ This report is 101 pages long, and contains a mixture of written text and data t
 
 ```{r 300_download_file, eval=FALSE}
 # download file from web URL
-download.file(url = "https://www.bcferries.com/web_image/h29/h7a/8854124527646.pdf",
-              destfile = "bcferries_2021.pdf", 
-              mode = "wb")
+download.file(
+  url = "https://www.bcferries.com/web_image/h29/h7a/8854124527646.pdf",
+  destfile = "bcferries_2021.pdf",
+  mode = "wb"
+  )
 
 ```
 
@@ -333,7 +338,7 @@ We can specify a range of rows; let's set up the first two rows as our tester sa
 
 ```{r}
 tester <- bcf_11_lines[[1]][13:14]
-tester
+
 ```
 
 

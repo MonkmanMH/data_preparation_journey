@@ -14,6 +14,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 ```{r setup_ch400, include=FALSE}
 
 # packages
+source("package_load.R")
 
 ```
 
@@ -85,7 +86,8 @@ The code below establishes the connection to the database, and assigns the conne
 
 ```{r}
 # establish the connection to the database file
-con_nycf <- DBI::dbConnect(RSQLite::SQLite(), "data/nycflights13_sql.sqlite")
+con_nycf <- 
+  DBI::dbConnect(RSQLite::SQLite(), "data/nycflights13_sql.sqlite")
 
 # list the tables in the connected database
 dbListTables(con_nycf)
@@ -98,7 +100,7 @@ Now we have a connection to the database, we can establish a connection to a par
 ```{r}
 
 flights <- tbl(con_nycf, "flights")
-glimpse(flights)
+
 ```
 
 ### Submit queries
@@ -110,7 +112,6 @@ With the object "flights" now established in our environment, we can write R cod
 flights_SEA <- flights |> 
   filter(dest == "SEA")
 
-glimpse(flights_SEA)
 ```
 
 We can also use the `show_query()` function of {dbplyr} to generate the SQL translation of the R code:
@@ -174,7 +175,7 @@ Once this has been done, our R Markdown document can incorporate native SQL quer
 
 `sql, connection=con_nycf`
 
-```{sql, connection=con_nycf}
+```{sql, eval=FALSE}
 
 SELECT * 
 FROM flights 
@@ -195,21 +196,28 @@ The first step is to establish a connection to the `airlines` table.
 ```{r}
 # establish connection to airlines table
 airlines <- tbl(con_nycf, "airlines")
-airlines
 
 ```
 
 Once the connection is made the tables can be joined using the `left_join()` function from {dplyr}, the grouped summary calculation made, and the table sorted from most to least frequent number of flights.
 
-```{r}
+The table is also formatted for publication using the {gt} package [@R-gt]; the core `gt()` function is the first step, and many other formatting options are possible with this package.
+
+\newpage
+
+
+```{r flights_summary}
 
 # join and summary table
-flights_SEA |>
+flights_SEA_summary <- flights_SEA |>
 #  select(-origin, -dest) |> 
   left_join(airlines, by = "carrier") |> 
   group_by(name) |> 
   tally() |> 
   arrange(desc(n)) 
+
+flights_SEA_summary |> 
+  gt()
 
 ```
 
@@ -296,6 +304,4 @@ Lahman::Batting %>%
 options("tidylog.display" = list())
 ```
 
-
--30-
 
