@@ -142,9 +142,14 @@ This simple file has four (or as we will see, sometimes three, if we combine fir
 
 If we open the file in a text editor, we see this:
 
-![authors_fwf.txt](img/authors_img.jpg)
+![authors_fwf.txt](img/authors_img.jpg){width=75%}
+
+We could also use the {base R} function `readLines()` to see the lines:
 
 
+```{r}
+readLines(authors_path)
+```
 
 The first approach would be to allow {readr} to guess where the column breaks are. The `fwf_empty()` function looks through the specified file and returns the beginning and ending locations it has guessed, as well as the `skip` value that the `read_fwf()` function uses.
 
@@ -216,13 +221,8 @@ uniqueID           12       31              42
 Visually, the file looks like this:
 
 
-![fwf-sample.txt](img/names_columns.png)
+![fwf-sample.txt](img/names_columns.png){width=75%}
 
-
-Those column positions can also be used to determine the width of each variable:
-
-
-![fwf-sample.txt](img/names_arrows.png)
 
 The widths can be added to the `fwf_widths` argument:
 

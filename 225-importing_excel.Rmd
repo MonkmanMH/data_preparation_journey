@@ -59,8 +59,11 @@ The one we want for our example is "df_HR_main", which contains the employee ID,
 In our `read_excel()` function we can specify either the name of the sheet, or the number based on its position in the Excel file. While the default is to read the first sheet, it's often good practice to be specific, as Excel users are prone to re-arranging the order of the sheets (including adding new sheets). And because they seem (slightly) less likely to rename sheets, we have another reason to use the name rather than the number.
 
 ```{r}
-df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-           sheet = "df_HR_main")
+df_HR_main <- 
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_main"
+    )
 
 head(df_HR_main)
 ```
@@ -77,9 +80,12 @@ The `read_excel()` function provides a number of different ways for us to define
 
 
 ```{r}
-df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-           sheet = "df_HR_main", 
-           range = "B5:E1004")
+df_HR_main <- 
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_main",
+    range = "B5:E1004"
+    )
 
 head(df_HR_main)
 ```
@@ -88,9 +94,12 @@ There are a variety of other approaches to defining the data rectangle in a `rea
 
 
 ```{r}
-df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-           sheet = "df_HR_main", 
-           range = anchored("B5", dim =c(NA, 4)))
+df_HR_main <- 
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_main",
+    range = anchored("B5", dim =c(NA, 4))
+    )
 
 head(df_HR_main)
 ```
