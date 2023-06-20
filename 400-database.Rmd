@@ -277,24 +277,24 @@ library("tidylog", warn.conflicts = FALSE)
 
 After running the `library()` function, the results are automatically generated.
 
-The 30 Major League Baseball teams play in cities in the United States and Canada (only Toronto!), but draw the best players from around the world. In this example the code creates a summary table to show the country of birth of the player who batted in the 1990 season.
+The Major League Baseball teams play in cities in the United States and Canada (only Toronto!), but draw the best players from around the world. In this example the code creates a summary table to show the country of birth of the player who batted in the 2001 season.
 
 For this we will use the data stored in the R package that contains the Lahman baseball database (named after Sean Lahman, the person who initially created the database) [@R-Lahman].
 
 At the completion of this run, the {tidylog} package produces some summary information about the join, the grouping, and the tally functions.
 
 ```{r Lahman_join}
-
 ## start with the Batting table
 Lahman::Batting %>% 
   ## filter
-  filter(yearID == "1990") %>% 
+  filter(yearID == "2001") %>% 
   ## join to People (where the birth country is recorded)
   left_join(Lahman::People, by = "playerID") %>% 
   ## now group_by and tally
   group_by(birthCountry) %>% 
   tally() %>% 
-  arrange(desc(n))
+  arrange(desc(n)) |> 
+  slice_head(n = 10)
 
 
 ```
