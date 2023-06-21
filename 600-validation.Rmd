@@ -306,16 +306,19 @@ The output gives us the number of cases in that year in the `passes` the test, a
 
 
 
-**Relationship**: we know that some species have only been measured on one of the three islands. Gentoo penguins have only been sampled on Biscoe Island, and chinstrap penguins in our sample come only from Dream Island. Does the data reflect that?
+**Relationship**: 
+
+We know that some species have only been measured on one of the three islands. Gentoo penguins have only been sampled on Biscoe Island, and chinstrap penguins in our sample come only from Dream Island. Does the data reflect that?
 
 In the first test (labelled `g` for gentoo), if it's not a gentoo it gets included in the `passes`--and if it is a gentoo, it has to be on Biscoe Island to get a pass. In the `c` (for chinstrap) test, we will do the same for chinstrap penguins, which should all be on Dream Island.
 
 
 ```{r}
 
-check_penguins <- check_that(penguins, 
-                             g = if (species == "Gentoo") island == "Biscoe",
-                             c = if  (species == "Chinstrap") island == "Dream")
+check_penguins <-
+  check_that(penguins,
+             g = if (species == "Gentoo") island == "Biscoe",
+             c = if (species == "Chinstrap") island == "Dream")
 
 summary(check_penguins)
 
@@ -335,9 +338,10 @@ A single `check_that()` test could be written using the "AND" operator `&`.
 
 ```{r}
 
-check_penguins <- check_that(penguins, 
-                             if (species == "Gentoo") island == "Biscoe" &
-                             if  (species == "Chinstrap") island == "Dream")
+check_penguins <- 
+  check_that(penguins,
+             if (species == "Gentoo") island == "Biscoe" &
+             if  (species == "Chinstrap") island == "Dream")
 
 summary(check_penguins)
 
@@ -351,7 +355,9 @@ We can also test against a defined list. This strategy can be useful if there is
 ```{r}
 island_list <- c("Biscoe", "Dream", "Torgersen")
 
-check_penguins <- check_that(penguins, if (species == "Adelie") island %in% island_list)
+check_penguins <- 
+  check_that(penguins, 
+             if (species == "Adelie") island %in% island_list)
 
 summary(check_penguins)
 
@@ -453,7 +459,5 @@ violating(badpenguins, penguin_confront)
 Now we know the details of the cases that have failed the test, we can now make some decisions—based on our understanding of the research we are undertaking—how to deal with these cases.
 
 
-
--30-
 
 

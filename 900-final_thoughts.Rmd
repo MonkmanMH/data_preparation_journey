@@ -67,5 +67,3 @@ The growth of the R ecosystem, including the tidyverse, has been astounding. The
 I hope that the examples in this book give you the confidence to venture forward.
 
 
-
--30-

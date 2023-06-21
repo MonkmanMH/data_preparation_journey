@@ -218,13 +218,8 @@ state              10       21              30
 uniqueID           12       31              42
 
 
-Visually, the file looks like this:
 
-
-![fwf-sample.txt](img/names_columns.png){width=75%}
-
-
-The widths can be added to the `fwf_widths` argument:
+The widths of each column can be added using the `fwf_widths` argument:
 
 ```{r}
 

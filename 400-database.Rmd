@@ -73,7 +73,7 @@ This diagram shows the relationships:
 
 SQL is a language widely used to manipulate and extract data in relational databases. As a consequence, there are many relational databases built in this format. Most often, these databases will be housed on a network server, but for smaller databases, you might install the file on your computer.
 
-In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the connection to the RSQLite databse.
+In R, we can use the package {dbplyr} [@R-dbplyr] to access SQL databases and SQL functions. In addition, we need {DBI} [@R-DBI] and {RSQLite} [@R-RSQLite] to establish the connection to the RSQLite database.
 
 ```{r, package_load_400, message=FALSE, warning=FALSE}
 library(dbplyr)
@@ -82,7 +82,7 @@ library(RSQLite)
 ```
 
 
-The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `con_nycf` (for "Connection to New York City Flights"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely used MySQL and Postgres.
+The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `con_nycf` (for "Connection to New York City Flights"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely-used MySQL and Postgres.
 
 ```{r}
 # establish the connection to the database file

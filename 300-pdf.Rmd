@@ -510,5 +510,3 @@ bcf_table_3 |>
 Our analysis: The COVID-19 pandemic had an _enormous_ impact on travel. The fiscal year 2021 covers the period April 1, 2020 through March 31, 2021...starting almost exactly as the  strict limitations to travel were imposed. Even though the restrictions started to lift later in the 12-month period, the travel on the major routes was down by nearly half.
 
 
-
--30-

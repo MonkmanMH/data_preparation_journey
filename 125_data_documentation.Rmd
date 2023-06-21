@@ -312,7 +312,7 @@ fs::dir_tree(path = "project_template", recurse = 2)
 
 Marwick, Boettinger & Mullen provide some concrete examples of that a file structure might look like; note that the structure explicitly follows that of an R package. Their figure showing a "medium compendia" is below [@Marwick_etal_2018, p.84]:
 
-![Medium research compendia](img/utas_a_1375986_f0003_b.png)
+![Medium research compendia](img/utas_a_1375986_f0003_b.png){width=25%}
 
 
 In this example, there are elements that might not be relevant for every project (for example, the licenses for the code and data). But note that there's a clear separation of the data and the code that generates the analysis. As well, this structure is well-supported by the "project" approach, where what is shown here as the "COMPENDIUM" folder would be the root folder of your project. Everything we need is self-contained within this single folder.

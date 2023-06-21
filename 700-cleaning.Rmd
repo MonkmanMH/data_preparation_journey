@@ -1392,5 +1392,3 @@ head(jcush_labelled$health_desc_lab)
 This package also allows for a descriptive name of the variable to be appended with the `var_lab()` function.
 
 
-
--30-
