@@ -20,7 +20,7 @@ source("package_load.R")
 ```
 
 
-# Validation strategies {#validation}
+# Exploration and validation strategies {#validation}
 
 In this chapter:
 
