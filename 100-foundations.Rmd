@@ -172,7 +172,7 @@ Randy Au has written "The act of cleaning data imposes values/judgments/interpre
 At this point we should ask what are we doing when we say we are "cleaning the data"? And how can we confirm that it is "cleaned" in the way that we have defined?
 
 
-**The first challenge**: How do we find these things?
+**The first challenge**: How do we find the things that are problematic with our data?
 
 **The second challenge**: What can and should we do about them?
 

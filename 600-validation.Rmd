@@ -32,11 +32,19 @@ In this chapter:
 
 ## Identifying dirty data
 
-There are some approaches to finding problems in the data that can be automated (done programmatically). These are sometimes called "data validation"\index{data validation} methods; they can be applied when the data is collected (for example, in a web-based survey tool) or after the data has been collected. We can think of this as a form of quality control, from quick sanity checks to programmatic testing. [@White_etal_nine_simple_ways]
+Earlier in \@ref(foundations), challenges associated with "dirty data" were introduced. 
 
-Validation while the data is being collected might be through the use of drop-down boxes that eliminates spelling mistakes, or that forces entries to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
+**The first challenge**: How do we find the things that are problematic with our data?
 
-This comes with risks, though. Forcing someone to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might enter a "1" or a preposterously very large number, neither of them accurate.
+**The second challenge**: What can and should we do about them?
+
+
+The term "data validation"\index{data validation} sometimes applies to verification that is applied when the data is collected (for example, in a web-based survey tool), and in other contexts it applies to a programmatic approach to ensuring the data meet specified conditions. In both cases, we can think of data validation as a form of quality control, from quick sanity checks to programmatic testing. [@White_etal_nine_simple_ways]
+
+Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes, or entry fields that force text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
+
+This comes with risks, and needs to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
+
 
 For our work here, we will focus on checking and validating data after it has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
 
@@ -54,7 +62,7 @@ The type of things we might evaluate include:
 
 ## Exploratory data analysis
 
-One way to identify dirty data is through the process of _exploratory data analysis_ (EDA). [@Tukey_1977] The EDA process is, first and foremost, intended to help guide our analysis, but it has the additional benefit of providing clues about the ways that our data is dirty.
+One way to identify dirty data is through the process of _exploratory data analysis_ (EDA) \index{exploratory data analysis}. [@Tukey_1977] The EDA process is, first and foremost, intended to help guide our analysis, but it has the additional benefit of providing clues about the ways that our data is dirty.
 
 EDA consists of two groups of techniques:
 
