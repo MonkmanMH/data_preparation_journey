@@ -36,7 +36,7 @@ source("package_load.R")
 
 <img src="img\\20478450629_50e4c32d23_c.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
 
-Welcome to _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The R Series](https://www.routledge.com/go/the-r-series/).
+Welcome to _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The Data Science Series](https://www.routledge.com/Chapman--HallCRC-Data-Science-Series/book-series/CHDSS).
 
 This is a work-in-progress; the most recent update is `r Sys.Date()`.
 
