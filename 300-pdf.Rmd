@@ -16,7 +16,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 # packages
 source("package_load.R")
 
-options(width = 80)
+options(width = 75)
 
 ```
 
@@ -113,7 +113,7 @@ At this stage, we need to apply some cleaning. If we don't do it now, it's going
 
 And by using the double square bracket accessor in the first row, the object returned is no longer nested, but instead has a single character string for each row.
 
-```{r}
+```{r, eval=FALSE}
 penguin_summary_3 <- penguin_summary_2[[1]] |> 
     str_remove("\\n$") |> 
   str_remove("^\\s+") |> 
@@ -154,7 +154,8 @@ It is possible to turn those two steps into one by wrapping the string split ins
 
 ```{r}
 
-penguin_variable_names <- unlist(str_split(penguin_variable_vector, "\\s+"))
+penguin_variable_names <- 
+  unlist(str_split(penguin_variable_vector, "\\s+"))
 penguin_variable_names
 
 ```
@@ -248,14 +249,12 @@ Once the file has been downloaded, we can use the `str()` function to display a 
 # alternative, from the {dpjr} package
 bcf <- pdf_text(dpjr::dpjr_data("bcferries_2021.pdf"))
 
-
-str(bcf)
 ```
 
-What we see is a vector with 101 character strings—one for each page of the original document. We can access each page, using the square bracket accessor syntax of R. Here is the code to see the contents of the first page:
+The code above produces a vector with 101 character strings—one for each page of the original document. We can access each page, using the square bracket accessor syntax of R. Here is the code to see the contents of the first page:
 
 
-```{r}
+```{r, eval=FALSE}
 
 bcf[1]
 
@@ -288,13 +287,8 @@ bcf_11 <- bcf[11]
 ```{r, eval=FALSE}
 bcf_11
 ```
-```{r, include=FALSE}
-# display first 500 characters
-str_sub(bcf_11, 1, 500)
 
-```
-
-Wait! This isn't the page we want! While the PDF file numbers the pages, the title page isn't numbered...so page 11 is in fact the twelfth page in the file.
+Wait! This isn't the page we want! While the PDF file numbers the pages, the title page isn't numbered...so the page numbered "11" is in fact the twelfth page in the file.
 
 
 ```{r}
@@ -303,11 +297,6 @@ bcf_11 <- bcf[12]
 ```
 ```{r, eval=FALSE}
 bcf_11
-```
-```{r, echo=FALSE}
-# display first 500 characters
-str_sub(bcf_11, 1, 500)
-
 ```
 
 
@@ -471,8 +460,10 @@ bcf_table_3 <- bcf_table_2 |>
   # change variables to numeric
   mutate(passengers_fy2021 = as.numeric(passengers_fy2021),
          passengers_fy2020 = as.numeric(passengers_fy2020),
-         passenger_tariff_revenue_fy2021 = as.numeric(passenger_tariff_revenue_fy2021),
-         passenger_tariff_revenue_fy2020 = as.numeric(passenger_tariff_revenue_fy2020))
+         passenger_tariff_revenue_fy2021 = 
+           as.numeric(passenger_tariff_revenue_fy2021),
+         passenger_tariff_revenue_fy2020 = 
+           as.numeric(passenger_tariff_revenue_fy2020))
 
 
 bcf_table_3
@@ -502,7 +493,8 @@ bcf_table_3 |>
   group_by(route_type) |> 
   summarise(total_fy2021 = sum(passengers_fy2021),
             total_fy2020 = sum(passengers_fy2020)) |> 
-  mutate(pct_change = (total_fy2021 - total_fy2020) / total_fy2020 * 100)
+  mutate(pct_change = 
+           (total_fy2021 - total_fy2020) / total_fy2020 * 100)
 
 ```
 

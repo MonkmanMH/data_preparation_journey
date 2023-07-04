@@ -304,7 +304,6 @@ The dataframe created by the `xlsx_cells()` function is nothing like the spreads
 The "local_format_id" variable is created by {tidyxlr}, and helps us solve the problem of capturing the indentation. This variable contains a unique value for every different type of formatting that is used in the sheet. Below, we look at the first ten rows of the "uk_census" object, and we can see that the value "14" appears repeatedly in the variable "local_format_id".
 
 ```{r}
-#select(uk_census_col02, row, col, data_type, character, numeric, local_format_id)
 uk_census |> 
   slice_head(n = 10) |> 
   select(address, character, local_format_id)
@@ -373,11 +372,16 @@ Let's continue that through all the levels of indentation. There are four, so we
 uk_census_behead <- uk_census |> 
   dplyr::filter((row >= 7)) |> 
   filter(col != 1) |> 
-  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
-  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
-  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
-  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
-  behead_if(indent[local_format_id] == 4, direction = "left-up", name = "field4") 
+  behead_if(indent[local_format_id] == 0, 
+            direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, 
+            direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, 
+            direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, 
+            direction = "left-up", name = "field3") |> 
+  behead_if(indent[local_format_id] == 4, 
+            direction = "left-up", name = "field4") 
 
 ```
 
@@ -388,10 +392,14 @@ In the version below, only the final line changes. All of the other indentation 
 uk_census_behead <- uk_census |> 
   dplyr::filter((row >= 7)) |> 
   filter(col != 1) |> 
-  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
-  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
-  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
-  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
+  behead_if(indent[local_format_id] == 0, 
+            direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, 
+            direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, 
+            direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, 
+            direction = "left-up", name = "field3") |> 
   behead(direction = "left", name = "field4") 
 ```
 
@@ -404,10 +412,14 @@ In the code below, the addition is the assignment of column headers. In the UK C
 uk_census_behead <- uk_census |> 
   dplyr::filter((row >= 7)) |> 
   filter(col != 1) |> 
-  behead_if(indent[local_format_id] == 0, direction = "left-up", name = "field0") |> 
-  behead_if(indent[local_format_id] == 1, direction = "left-up", name = "field1") |> 
-  behead_if(indent[local_format_id] == 2, direction = "left-up", name = "field2") |> 
-  behead_if(indent[local_format_id] == 3, direction = "left-up", name = "field3") |> 
+  behead_if(indent[local_format_id] == 0, 
+            direction = "left-up", name = "field0") |> 
+  behead_if(indent[local_format_id] == 1, 
+            direction = "left-up", name = "field1") |> 
+  behead_if(indent[local_format_id] == 2, 
+            direction = "left-up", name = "field2") |> 
+  behead_if(indent[local_format_id] == 3, 
+            direction = "left-up", name = "field3") |> 
   behead(direction = "left", name = "field4") |> 
 #  now strip (behead) the column names 
   behead(direction = "up", name = "gender") |> 
@@ -714,7 +726,7 @@ uk_census_pop_90 <- uk_census_pop_90 |>
 
 ```
 
-With this table, the proportion of persons aged 90 or older can be calcutated and the table sorted in descending order:
+With this table, the proportion of persons aged 90 or older can be calculated and the table sorted in descending order:
 
 ```{r census_90_plus_225}
 

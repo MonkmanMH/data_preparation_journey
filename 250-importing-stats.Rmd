@@ -359,7 +359,8 @@ We could write some code to apply labels and change the variable type, using the
 
 ```{r, eval=FALSE}
 # assign the species names as labels
-labelled::val_labels(penguins_data$species) <- c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" = 3)
+labelled::val_labels(penguins_data$species) <- 
+  c("Adelie" = 1, "Chinstrap" = 2, "Gentoo" = 3)
 
 # view the labels
 val_labels(penguins_data$species)

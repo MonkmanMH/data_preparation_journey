@@ -62,7 +62,7 @@ The type of things we might evaluate include:
 
 ## Exploratory data analysis
 
-One way to identify dirty data is through the process of _exploratory data analysis_ (EDA) \index{exploratory data analysis}. [@Tukey_1977] The EDA process is, first and foremost, intended to help guide our analysis, but it has the additional benefit of providing clues about the ways that our data is dirty.
+One way to identify dirty data is through the process of _exploratory data analysis_ (EDA).\index{exploratory data analysis} \index{EDA|see{exploratory data analysis}} [@Tukey_1977] The EDA process is, first and foremost, intended to help guide our analysis, but it has the additional benefit of providing clues about the ways that our data is dirty.
 
 EDA consists of two groups of techniques:
 
@@ -100,8 +100,9 @@ Once we have read the data into our environment, we can use some EDA methods to 
 
 ```{r}
 
-df_HR_train <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-                   sheet = "df_HR_train")
+df_HR_train <-
+  readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+                     sheet = "df_HR_train")
 
 ```
 
@@ -115,10 +116,13 @@ The variables that start with `train_` have been stored as character _<chr>_, be
 
 ```{r}
 
-df_HR_train <- readxl::read_excel(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-                   sheet = "df_HR_train",
-                   col_types = c("text", "logical", "logical", "logical", "logical"),
-                   na = "NA")
+df_HR_train <-
+  readxl::read_excel(
+    dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_train",
+    col_types = c("text", "logical", "logical", "logical", "logical"),
+    na = "NA"
+  )
 
 glimpse(df_HR_train)
 
@@ -146,9 +150,12 @@ A plot can show us a wealth of information that cannot be expressed in the summa
 
 ```{r read_HR_main_600}
 
-df_HR_main <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-           sheet = "df_HR_main", 
-           range = "B5:E1004")
+df_HR_main <-
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_main",
+    range = "B5:E1004"
+  )
 
 head(df_HR_main)
 
@@ -194,9 +201,12 @@ Another approach to investigating this might be to create a single year "age" va
 
 ```{r}
 # read transaction table
-df_HR_transaction <- read_excel(path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
-           sheet = "df_HR_transaction", 
-           na = "NA")
+df_HR_transaction <- 
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_transaction",
+    na = "NA"
+  )
 # determine occupation on the date the table was created 
 df_HR_occupation_2020 <- df_HR_transaction |> 
   group_by(emp_id) |> 
@@ -239,7 +249,7 @@ library(validate)
 **Range of values**: we know, being experts on all things penguin, that gentoo penguins are the third largest of the penguin species, and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
 
 
-```{r ch600_penguin_check01}
+```{r ch600_penguin_check01, eval=FALSE}
 
 check_penguins <- check_that(penguins, body_mass_g <= 8500)
 
@@ -254,7 +264,7 @@ What we see is that all of the penguins have a body mass of less than or equal t
 
 While the heaviest gentoo penguins can be up to 8.5 kg, it is very unusual to find an Adélie or Chinstrap penguin that weighs more than 5 kg. What happens if we change the body mass threshold to 5000 grams?
 
-```{r}
+```{r, eval=FALSE}
 
 check_penguins <- check_that(penguins, body_mass_g <= 5000)
 
@@ -267,7 +277,7 @@ In addition to telling us that there are 61 records where the value in the `body
 We can add an `if()` statement that filters out the gentoo penguins, and then check the body mass.
 
 
-```{r}
+```{r, eval=FALSE}
 
 check_penguins <- check_that(penguins, 
                              if (species != "Gentoo") body_mass_g <= 5000)
@@ -377,7 +387,7 @@ _What happens if we fail to include Dream Island in our list of islands where Ad
 
 The {validator} also allows us to check variable types within our `check_that()` function. Because R stores a dataframe column as a single type, this returns only one pass/fail evaluation.
 
-```{r}
+```{r, eval=FALSE}
 
 penguins
 
@@ -393,20 +403,20 @@ I changed the penguins data by adding five fictional penguins, and added some me
 
 
 
-```{r}
-#penguins_path <- dpjr_data("penguins.rds")
-
+```{r, eval=FALSE}
 badpenguins <- read_rds(dpjr_data("badpenguins.rds"))
 
 tail(badpenguins)
 
 check_penguins <- check_that(badpenguins, year >= 2007 & year <= 2009)
+
 summary(check_penguins)
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 check_penguins <- check_that(badpenguins, island %in% island_list)
+
 summary(check_penguins)
 ```
 
@@ -456,7 +466,7 @@ tail(values(penguin_confront), 10)
 
 In this example, our prior knowledge of the data gives us the insight to quickly target the rows that failed the validation tests. In the real world, filtering the object that results from our validation tests will allow us to identify the rows that contain the records that fail the tests. The function we use for this is `violating()`
 
-```{r}
+```{r, eval=FALSE}
 
 violating(badpenguins, penguin_confront)
 

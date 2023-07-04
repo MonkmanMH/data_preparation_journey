@@ -104,8 +104,6 @@ By mutating these various representations into a consistent YYYY-MM-DD format, w
 
 lfs_canada_employment <- read_rds(dpjr::dpjr_data("lfs_canada_employment.rds"))
 
-head(lfs_canada_employment)
-
 ```
 
 First, we transform the character variable "REF_DATE" variable into a date.
@@ -114,7 +112,6 @@ First, we transform the character variable "REF_DATE" variable into a date.
 lfs_canada_employment <- lfs_canada_employment |> 
   mutate(REF_DATE = ym(REF_DATE))
 
-lfs_canada_employment
 ```
 
 With the variable in the date type, we can use functions within {lubridate} for our analysis.
@@ -230,7 +227,8 @@ The regex for this is shown below, with the component parts as follows:
 # ^ : start of string
 # [A-Za-z] : all the letters upper and lower case
 # \\d : any numerical digit
-# [ -]? : space or hyphen, ? to make either optional (i.e. it may be there or not)
+# [ -]? : space or hyphen, 
+#         ? to make either optional (i.e. it may be there or not)
 # $ : end of string
 
 postalcode <- "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$"
@@ -292,8 +290,11 @@ Let's look at some of the functions within {stringr} that are particularly suite
 The {stringr} functions `str_subset()` and `str_which()` return the strings that have the pattern, either in whole or by location.
 
 ```{r}
-str_subset(pc_kimberley, postalcode)  # which strings have the pattern?
-str_which(pc_kimberley, postalcode)   # which strings have the pattern ("e"), by location?
+# which strings have the pattern?
+str_subset(pc_kimberley, postalcode)  
+
+# which strings have the pattern ("e"), by location?
+str_which(pc_kimberley, postalcode)   
 
 ```
 
@@ -323,8 +324,11 @@ If we rerun the `str_subset()` and `str_which()` functions, we see that all four
 
 
 ```{r}
-str_subset(pc_kimberley, postalcode)  # which strings have the pattern?
-str_which(pc_kimberley, postalcode)   # which strings have the pattern ("e"), by location?
+# which strings have the pattern?
+str_subset(pc_kimberley, postalcode)
+
+# which strings have the pattern ("e"), by location?
+str_which(pc_kimberley, postalcode)   
 
 ```
 
@@ -505,12 +509,11 @@ Let's look at the data now. Note that the original CSV file has the data for 201
 
 ```{r, message=FALSE}
 
-bls_employment <- read_csv(dpjr::dpjr_data("us_bls_employment_2010-2020.csv")) |> 
+bls_employment <-
+  read_csv(dpjr::dpjr_data("us_bls_employment_2010-2020.csv")) |>
   select(`Series ID`, `Annual 2019`, `Annual 2020`)
 
-gt(
-  head(bls_employment)
-)
+gt(head(bls_employment))
 
 ```
 
@@ -610,9 +613,11 @@ Starting on the inside of the parentheses, we have the `str_sub()` function to c
 ```{r}
 
 # NAICS 212
-bls_employment_naics21_3digit <- bls_employment_naics21 |> 
+bls_employment_naics21_3digit <- bls_employment_naics21 |>
   # filter those that match the regex in the 8th & 9th position
-  filter(str_detect(str_sub(`Series ID`, start = 8, end = 9), "[^0][0]"))
+  filter(str_detect(
+    str_sub(`Series ID`, start = 8, end = 9), 
+  "[^0][0]"))
 
 bls_employment_naics21_3digit
 
@@ -626,7 +631,10 @@ We can use the {tidyr} [@R-tidyr] package's `pivot_longer()` function for this:
 ```{r bls_final}
 
 bls_employment_naics21_3digit |> 
-  pivot_longer(cols = contains("Annual"), names_to = "year", values_to = "employment")
+  pivot_longer(
+    cols = contains("Annual"), 
+    names_to = "year", 
+    values_to = "employment")
 
 ```
 
@@ -769,8 +777,11 @@ But that's a lot of typing. A more streamlined approach is to put the name of ou
 
 canpop |> 
   mutate(pt_grp = case_when(
-    province_territory %in% c("Ontario", "Quebec", "British Columbia", "Alberta") ~ province_territory,
-    TRUE ~ "other"
+    province_territory %in% 
+      c("Ontario", "Quebec", "British Columbia", "Alberta") ~ 
+      province_territory,
+    TRUE ~ 
+      "other"
   ))
 
 ```
@@ -1022,16 +1033,6 @@ penguin_subset |>
 ```
 
 
-Later: add dummy rows with `dummy_rows()`
-
-### a tidyr::pivot_longer() solution
-
-https://twitter.com/_TanHo/status/1415100126272577536?s=20&t=VsY7hHNn01lS17_eXvUvhA  
-
-https://gist.github.com/tanho63/50d9b323e29165ad3e027bc3cf1c5926
-
-https://tidyr.tidyverse.org/articles/pivot.html#multiple-observations-per-row
-
 
 ## Missing values
 
@@ -1053,9 +1054,10 @@ Our first step is to read in the data. Note that the code uses the Excel naming 
 
 ```{r}
 
-tuition_data <- readxl::read_excel(dpjr::dpjr_data("intl_tuition_fees_bc.xlsx"),
-                                   sheet = "Report",
-                                   range = "A5:L36")
+tuition_data <-
+  readxl::read_excel(dpjr::dpjr_data("intl_tuition_fees_bc.xlsx"),
+                     sheet = "Report",
+                     range = "A5:L36")
 
 head(tuition_data)
 
