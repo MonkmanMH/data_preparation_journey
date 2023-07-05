@@ -22,7 +22,12 @@ install.packages(c(
 
 # data
 install.packages("palmerpenguins")
-install.packages("dpjr") # custom package for _The Data Preparation Journey_
+
+
+# download and install "remotes"
+install.packages("remotes")
+# download and install "dpjr"
+remotes::install_github("monkmanmh/dpjr")
 
 
 
