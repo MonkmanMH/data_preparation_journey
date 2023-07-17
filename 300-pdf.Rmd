@@ -113,13 +113,11 @@ At this stage, we need to apply some cleaning. If we don't do it now, it's going
 
 And by using the double square bracket accessor in the first row, the object returned is no longer nested, but instead has a single character string for each row.
 
-```{r, eval=FALSE}
+```{r}
 penguin_summary_3 <- penguin_summary_2[[1]] |> 
     str_remove("\\n$") |> 
   str_remove("^\\s+") |> 
   str_remove("^\\d ") 
-
-penguin_summary_3
 
 ```
 
