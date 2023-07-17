@@ -58,7 +58,7 @@ penguins_data <- read.csv(penguins_path)
 
 
 
-### Using {readr} (tidyverse)
+### Using {readr} 
 
 The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions when it comes to plain-text files.
 
@@ -75,12 +75,14 @@ This chunk creates a string object that contains the path name, and then uses th
 
 The `read_csv()` function is quite a bit faster with big data files, and has some useful flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [@Wickham_Grolemund2016, Tibbles])
 
-```{r}
+```{r, message=FALSE}
 # read the file and assign it to the object "penguins_data"
 # note that this uses the "penguins_path" object created earlier
 penguins_data <- read_csv(penguins_path)
 
 ```
+
+![read_csv message](img/penguin_read_csv_1.png){width=100%}
 
 The function returns a message letting us know the type that each variable is assigned.
 
@@ -88,7 +90,7 @@ Adding the `col_types = cols()` parameter allows us to alter what {readr} has de
 
 When we show the entire table, we can see that the variable `species` is now a factor type.
 
-```{r}
+```{r, message = FALSE}
 penguins_data <- read_csv(penguins_path,
                    col_types =
                      cols(species = col_factor()))
@@ -110,7 +112,9 @@ For example, if we were working with a very large file and wanted to read the fi
 
 ```{r}
 read_csv(penguins_path, 
-         n_max = 5)
+         n_max = 5,
+         show_col_types = FALSE   # option to turn off message
+         )
 ```
 
 
@@ -158,16 +162,21 @@ Note that the column names are specified in a list.
 
 
 ```{r importing_authors_path_2}
-fwf_empty(authors_path, col_names = c("first", "last", "state", "unique_id"))
+fwf_empty(
+  authors_path, 
+  col_names = c("first", "last", "state", "unique_id")
+  )
 ```
 
 That information can then be used by the `read_fwf()` function:
 
-```{r importing_authors_path_3}
+```{r importing_authors_path_3, message=FALSE}
 
-read_fwf(authors_path, 
-         fwf_empty(authors_path, 
-                   col_names = c("first", "last", "state", "unique_id")))
+read_fwf(authors_path,
+         fwf_empty(
+           authors_path,
+           col_names = c("first", "last", "state", "unique_id")
+         ))
 
 ```
 
@@ -182,8 +191,8 @@ In this example, we read a longer list of author names:
 ```{r importing_authors2_path_}
 authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
 
-fwf_empty(authors2_path, 
-                   col_names = c("first", "last", "state", "unique_id"))
+fwf_empty(authors2_path,
+          col_names = c("first", "last", "state", "unique_id"))
 
 ```
 
@@ -191,20 +200,28 @@ The `fwf_empty()` function found only three columns, as shown in the "begin" and
 
 When we use the read function, it finds three columns:
 
-```{r}
+```{r, message=FALSE}
 read_fwf(dpjr::dpjr_data("authors2_fwf.txt"))
 ```
+
+![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
+
+
 
 
 Adding the `col_names =` argument now mis-identifies the variables.
 
-```{r}
+```{r, message=FALSE}
 
-read_fwf(authors2_path, 
-         fwf_empty(authors2_path, 
-                   col_names = c("first", "last", "state", "unique_id")))
+read_fwf(authors2_path,
+         fwf_empty(
+           authors2_path,
+           col_names = c("first", "last", "state", "unique_id")
+         ))
 
 ```
+
+![read_fwf message](img/authors2_read_fwf_2.png){width=100%}
 
 A more reliable approach is to specify exactly the width of each column. Note that in the example below, we specify only "name" without splitting it into first and last.
 
@@ -221,38 +238,46 @@ uniqueID           12       31              42
 
 The widths of each column can be added using the `fwf_widths` argument:
 
-```{r}
+```{r, message=FALSE}
 
-read_fwf(authors2_path, 
-         fwf_widths(c(20, 10, 12), c("name", "state", "unique_id")))
+read_fwf(authors2_path,
+         fwf_widths(c(20, 10, 12), 
+                    c("name", "state", "unique_id")))
 
 ```
+
+![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
 
 A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable "name" starts at position 1 and ends at position 20, and the second variable "ssn" starts at 30 and ends at 42. Note that we won't read the "state" variable which occupies the ten columns from 21 through 29.
 
-```{r}
-read_fwf(authors2_path, 
-         fwf_positions(c(1, 31), c(20, 42), c("name", "unique_id")))
+```{r, message=FALSE}
+read_fwf(authors2_path,
+         fwf_positions(c(1, 31), c(20, 42), 
+                       c("name", "unique_id")))
 ```
+
+![read_fwf message](img/authors2_read_fwf_4.png){width=100%}
 
 The fourth option is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the name followed by the start and end locations.
 
-```{r}
+```{r, message=FALSE}
 
 read_fwf(authors2_path, 
          fwf_cols(name = c(1, 20), unique_id = c(31, 42)))
 
 ```
 
+![read_fwf message](img/authors2_read_fwf_5.png){width=100%}
+
 And finally, {readr} provides a fifth way to read in a fixed-width file that is a variation on the second approach we saw, with the name and the width values aggregated.
 
-```{r}
+```{r, message=FALSE}
 
 read_fwf(authors2_path, 
          fwf_cols(name = 20, state = 10, unique_id = 12))
 
 ```
-
+![read_fwf message](img/authors2_read_fwf_6.png){width=100%}
 
 
 ### An extreme example of a fixed-width file 

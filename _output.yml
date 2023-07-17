@@ -1,18 +1,3 @@
-#bookdown::gitbook:
-#  css: css/style.css
-#  config:
-#    toc:
-#      collapse: none
-#      before: |
-#        <li><a href="./">The Data Preparation Journey: Finding Your Way With R</a></li>
-#      after: |
-#        <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
-#    download: [pdf, epub]
-#    edit: https://github.com/MonkmanMH/dpjr/main%s
-#    sharing:
-#      github: true
-#      facebook: false
-
 bookdown::pdf_book:
   includes:
     in_header: latex/preamble.tex
@@ -23,12 +8,10 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   template: null
-  pandoc_args: 
-    --top-level-division=chapter
+  pandoc_args: --top-level-division=chapter
   toc_depth: 3
   toc_unnumbered: false
   toc_appendix: true
   quote_footer: ["\\VA{", "}{}"]
   highlight_bw: true
-
-
+  
