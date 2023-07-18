@@ -102,7 +102,8 @@ By mutating these various representations into a consistent YYYY-MM-DD format, w
 
 ```{r}
 
-lfs_canada_employment <- read_rds(dpjr::dpjr_data("lfs_canada_employment.rds"))
+lfs_canada_employment <- 
+  read_rds(dpjr::dpjr_data("lfs_canada_employment.rds"))
 
 ```
 
@@ -385,9 +386,12 @@ There are functions within {stringr} that have the same result, `stringr::str_re
 
 ```{r}
 
-str_replace(string = pc_kimberley_all, pattern = "[ -]", replacement = "")
+str_replace(string = pc_kimberley_all, 
+            pattern = "[ -]", 
+            replacement = "")
 
-str_remove(string = pc_kimberley_all, pattern = "[ -]")
+str_remove(string = pc_kimberley_all, 
+           pattern = "[ -]")
 
 ```
 

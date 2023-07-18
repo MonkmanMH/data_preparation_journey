@@ -133,7 +133,7 @@ travellers |>
   filter(GEO == "British Columbia",
          REF_DATE == "2020-06")
 
-glimpse(travellers_bc)
+glimpse(travellers_bc, width = 65)
 
 ```
 

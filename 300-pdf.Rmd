@@ -81,9 +81,16 @@ Next we use the `str()` function to display a summary of the structure of our ne
 
 penguin_summary <- pdf_text(dpjr::dpjr_data("penguin_summary.pdf"))
 
+```
+
+```{r, eval=FALSE}
+
 str(penguin_summary)
 
 ```
+
+![_penguin data from PDF file_](img/penguin_pdf_1.PNG)
+
 
 What we have as a result of this is a single character string, with the contents of the file. In this example, there is only one page, and thus one string. If you are dealing with a multi-page document, each page gets its own string.
 
@@ -258,6 +265,9 @@ bcf[1]
 
 ```
 
+![_BC Ferries title page from PDF file_](img/bcferries_pdf_01.PNG)
+
+
 Using the `cat()` function:
 
 ```{r}
@@ -286,6 +296,11 @@ bcf_11 <- bcf[11]
 bcf_11
 ```
 
+
+![_BC Ferries page 11 from PDF file_](img/bcferries_pdf_p11.PNG)
+
+
+
 Wait! This isn't the page we want! While the PDF file numbers the pages, the title page isn't numbered...so the page numbered "11" is in fact the twelfth page in the file.
 
 
@@ -296,6 +311,11 @@ bcf_11 <- bcf[12]
 ```{r, eval=FALSE}
 bcf_11
 ```
+
+
+
+![_BC Ferries page 12 from PDF file_](img/bcferries_pdf_p12.PNG)
+
 
 
 Now we have an object that is a single text string. All of the data we want is there, but it is going to take some finesse to extract the columns we want, and in a format that we can use.
@@ -317,9 +337,14 @@ Now we have a list of 1, with 55 individual elements in it.
 The first thing that I notice is that the table starts a few rows down, and more problematically, the header row with the variable names is split due to text wrapping. I'm going to make the decision to enter the variable names manually, and focus on extracting the numbers. The numbers start at row 13, which we can access as follows:
 
 
-```{r}
+```{r, eval=FALSE}
 bcf_11_lines[[1]][13]
 ```
+
+
+![_BC Ferries: single line_](img/bcferries_pdf_1-13.PNG)
+
+
 
 We can specify a range of rows; let's set up the first two rows as our tester sample.
 
@@ -384,7 +409,7 @@ bcf_table_2 <- tidyr::separate(bcf_table, value,
                                into = bcf_col_names,
                                "\\s+")
 
-bcf_table_2
+glimpse(bcf_table_2, width = 65)
 ```
 
 Hooray! (I should have left in all the failed attempts I made, before getting to this result...a lot of attempts that either failed outright, or ones where I managed a step or two before getting stuck.)
@@ -395,15 +420,21 @@ Let's go back to the "tester" object, and see what we can do to pull them out th
 
 For the purpose of our exercise, we won't worry about the numbers in parentheses, which are the difference between the two previous variables (and since they are negative, they are represented using the accounting format style of being in parentheses.) We won't deal with the percentages, but the percent signs could be removed in the same way as the commas.
 
-```{r}
+```{r, eval=FALSE}
 # remove all commas
 str_remove_all(tester, ",")
 
 ```
 
+
+
+![_BC Ferries: remove commas_](img/bcferries_str_remove_1.PNG)
+
+
+
 Now let's put all of this together to capture the full table.
 
-```{r}
+```{r, warning=FALSE}
 # read the relevant rows and remove the commas
 bcf_data <- bcf_11_lines[[1]][13:42]
 bcf_data <- str_remove_all(bcf_data, ",")
@@ -438,9 +469,17 @@ bcf_table
 bcf_table_2 <- tidyr::separate(bcf_table, value, 
                                into = bcf_col_names,
                                "\\s\\s+")
+```
 
+```{r bcf_table_2, eval=FALSE}
 bcf_table_2
 ```
+
+
+![_BC Ferries: table 2_](img/bcferries_table_2.PNG)
+
+
+
 
 It's not quite perfect, and some things need to be removed: 
 
@@ -462,12 +501,17 @@ bcf_table_3 <- bcf_table_2 |>
            as.numeric(passenger_tariff_revenue_fy2021),
          passenger_tariff_revenue_fy2020 = 
            as.numeric(passenger_tariff_revenue_fy2020))
-
-
-bcf_table_3
 ```
 
-(More options for removing rows can be found here: https://stackoverflow.com/questions/6437164/removing-empty-rows-of-a-data-file-in-r)
+```{r bcf_table_3, eval=FALSE}
+
+bcf_table_3
+
+```
+
+
+![_BC Ferries: table 3_](img/bcferries_table_3.PNG)
+
 
 If we need to create sub-totals by route type, it would be better to have a separate variable for that. Here's where we can use the `case_when()` function from {dplyr}.
 
@@ -480,8 +524,17 @@ bcf_table_3 <- bcf_table_3 |>
     TRUE ~ "minor"
   ))
 
+```
+
+```{r, eval=FALSE}
+
 bcf_table_3
 ```
+
+
+![_BC Ferries: table 3, final_](img/bcferries_table_3_final.PNG)
+
+
 
 Now we can use our data wrangling skills to calculate the percent change between the two years. Let's look at with passenger volume.
 

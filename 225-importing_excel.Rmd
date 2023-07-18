@@ -108,6 +108,9 @@ Another splendid feature of `read_excel()` is that it returns a date type (S3: P
 
 Very often, Excel files are far more complicated than the case above. In the following example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
 
+
+\newpage
+
 Our focus is on sheet "P01", with population by sex. The first few rows of the data look like this:
 
 ![_UK Census data_](img/UK_census_P01.PNG)
@@ -122,9 +125,16 @@ uk_census_pop <- readxl::read_excel(
   n_max = 10
 )
 
+```
+```{r, eval=FALSE}
 uk_census_pop
 
 ```
+
+![_UK Census data_](img/UK_census_read_excel_1.PNG)
+
+
+\newpage
 
 Our visual inspection had already informed us that the first few rows at the top of the spreadsheet contain the title (now in the variable name row), along with things like the source and the release date. While this documentation is important, it's not part of the data we want for our analysis.
 
@@ -218,7 +228,8 @@ For this, we can design a regular expression that identifies a letter "E" at the
 county_pop <- uk_census_pop |> 
   filter(str_detect(area_code, "^E[01][6901]"))
 
-glimpse(county_pop)
+dplyr::glimpse(county_pop, width = 65)
+
 ```
 
 We can check to ensure that the regex has worked as intended through the `distinct()` function, examining only the first three characters of the "area_code" strings:
@@ -295,7 +306,7 @@ uk_census <- tidyxl::xlsx_cells(
   )
 
 # take a quick look
-dplyr::glimpse(uk_census)
+dplyr::glimpse(uk_census, width = 65)
 
 ```
 
@@ -305,8 +316,8 @@ The "local_format_id" variable is created by {tidyxlr}, and helps us solve the p
 
 ```{r}
 uk_census |> 
-  slice_head(n = 10) |> 
-  select(address, character, local_format_id)
+  select(address, character, local_format_id) |> 
+  glimpse(width = 65)
 
 ```
 
@@ -326,9 +337,11 @@ uk_census_formats <- xlsx_formats(
 
 ```
 
-[insert image]
 
-When examining the "uk_census_formats" object, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. 
+When examining the "uk_census_formats" object in our environment, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. 
+
+![_UK Census data_](img/UK_census_excel_formats_1.PNG)
+
 
 You may have noticed that there are 62 elements in these lists, not 382 (the number of rows in the Excel file), or the 1,888 that represents each active cell in the sheet P01. What the 62 represents is the number of different formats present in the entire Excel file (across all of the sheets). 
 
@@ -432,7 +445,7 @@ uk_census_behead <- uk_census |>
 Did we get the results we expected? Let's do some quick checks of the data, first to see if the 1,125 cells of Excel data (CX to DY) are represented by an individual row (the result of the pivot):
 
 ```{r}
-glimpse(uk_census_behead)
+glimpse(uk_census_behead, width = 65)
 ```
 
 
@@ -614,7 +627,7 @@ uk_census_pop_geo <- uk_census_pop |>
     by = c("area_code_3" = "area_code_3")
     )
 
-glimpse(uk_census_pop_geo)
+glimpse(uk_census_pop_geo, width = 65)
 ```
 
 

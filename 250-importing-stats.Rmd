@@ -546,20 +546,8 @@ nts_person_2020_ds <- memisc::as.data.set(nts_person_2020)
 ```
 
 
-Do we need this?
 
-```{r eval=FALSE}
-
-outlist <- c("nts_person_2020_ds")
-
-#save(list=outlist,file="sfs2016_efam_save.Rsave")
-save(list=outlist, file = here("data_output", "nts_person_2020_ds.RSave"))
-
-```
-
-
-
-The last step is to convert our dataset object into a tibble. This tibble has all of the labels assigned, accessible via the functions in the {labelled} package.
+That dataset object is now converted into a tibble, using the `as_haven()` function. This tibble has all of the variable and value labels assigned, accessible via the functions in the {labelled} package.
 
 
 ```{r convert_to_haven_tibble}
@@ -570,7 +558,7 @@ nts_person_2020_hav
 ```
 
 
-In our final step, we will save the dataframe as an SPSS, Stata, and RDS files for future use.
+In our final step, we save the dataframe as an SPSS, Stata, and RDS files for future use.
 
 One important note for Stata users is that there is a "version" argument, which allows us to create a file that can be read by older versions of Stata (the default is Stata 15).
 

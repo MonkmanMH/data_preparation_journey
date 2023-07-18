@@ -109,7 +109,7 @@ df_HR_train <-
 One way we might begin our investigation is the `dplyr::glimpse()` function. This function returns the dimensions of the dataframe, the variable types, and the first few values of each variable.
 
 ```{r training_glimpse_600}
-glimpse(df_HR_train)
+glimpse(df_HR_train, width = 65)
 ```
 
 The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
@@ -214,11 +214,12 @@ df_HR_occupation_2020 <- df_HR_transaction |>
 
 df_HR_main |>
   # calculate age on January 1, 2020
-  mutate(age_2020 = date_of_birth %--% ymd("2020-01-01") %/% years(1)) |> 
+  mutate(age_2020 =
+           date_of_birth %--% ymd("2020-01-01") %/% years(1)) |>
   # join the current occupation table
-  left_join(df_HR_occupation_2020, by = "emp_id") |> 
+  left_join(df_HR_occupation_2020, by = "emp_id") |>
   # plot
-  ggplot(aes(x = occupation_current, y = age_2020)) + 
+  ggplot(aes(x = occupation_current, y = age_2020)) +
   geom_boxplot()
 
 ```
@@ -279,8 +280,10 @@ We can add an `if()` statement that filters out the gentoo penguins, and then ch
 
 ```{r, eval=FALSE}
 
-check_penguins <- check_that(penguins, 
-                             if (species != "Gentoo") body_mass_g <= 5000)
+check_penguins <- check_that(
+  penguins,
+  if (species != "Gentoo") body_mass_g <= 5000
+  )
 
 summary(check_penguins)
 
@@ -359,13 +362,18 @@ A single `check_that()` test could be written using the "AND" operator `&`.
 check_penguins <- 
   check_that(penguins,
              if (species == "Gentoo") island == "Biscoe" &
-             if  (species == "Chinstrap") island == "Dream")
+             if (species == "Chinstrap") island == "Dream")
+
+```
+
+```{r summary_check_penguins, eval=FALSE}
 
 summary(check_penguins)
 
-
-
 ```
+
+
+![_validate penguins_](validate_penguins_check_1.PNG)
 
 
 We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that can be read into your R environment, and the test run against that list.
@@ -403,7 +411,7 @@ I changed the penguins data by adding five fictional penguins, and added some me
 
 
 
-```{r, eval=FALSE}
+```{r}
 badpenguins <- read_rds(dpjr_data("badpenguins.rds"))
 
 tail(badpenguins)
@@ -414,7 +422,7 @@ summary(check_penguins)
 
 ```
 
-```{r, eval=FALSE}
+```{r}
 check_penguins <- check_that(badpenguins, island %in% island_list)
 
 summary(check_penguins)

@@ -161,7 +161,9 @@ Both the `dbSendQuery()` and `dbFetch()` are functions from the {DBI} package.
 
 ```{r, eval=FALSE}
 
-SEA_sql <- dbSendQuery(con_nycf, "SELECT * FROM flights WHERE dest = 'SEA'")
+SEA_sql <- dbSendQuery(con_nycf,
+                       "SELECT * FROM flights WHERE dest = 'SEA'")
+
 dbFetch(SEA_sql)
 
 ```
