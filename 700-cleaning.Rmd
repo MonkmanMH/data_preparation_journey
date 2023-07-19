@@ -168,9 +168,9 @@ Here are some useful regex matching functions. Note that the square brackets enc
 
 
 
-frequency of match
 
-| character | what it does |
+
+| character | frequency of match |
 | ---- | ---- |
 | "?" | 0 or 1 |
 | "+" | 1 or more |
@@ -179,8 +179,6 @@ frequency of match
 | "{n,}" | n or more |
 | "{n,m}" | between n and m times |
 
-
-**other special characters**
 
 These also need to be escaped:
 
@@ -654,7 +652,7 @@ The table we will use are occupations in British Columbia's accommodation indust
 
 noc_table <- read_rds(dpjr::dpjr_data("noc_table.rds"))
 
-noc_table
+gt(head(noc_table))
 
 ```
 
@@ -680,7 +678,8 @@ noc_table_clean <- noc_table |>
     names = c("noc", "occupation_title") 
     )
 
-noc_table_clean
+
+gt(head(noc_table_clean))
 
 ```
 
@@ -698,7 +697,7 @@ noc_table_clean <- noc_table_clean |>
       str_remove_all(certification_training_requirements, " ")
     )
 
-noc_table_clean
+gt(head(noc_table_clean))
 
 ```
 
@@ -738,8 +737,7 @@ noc_table_clean <- noc_table_clean |>
       as.numeric(employment)
     )
   
-
-noc_table_clean
+gt(head(noc_table_clean))
 
 ```
 
@@ -830,15 +828,9 @@ As one example, in much social and business data, people's ages are often groupe
 
 And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
 
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In the \@ref(Excel) [Excel] chapter, we saw population statistics reported by the administrative geography of England and Wales.
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS; see also @StatCan_definitions]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In Chapter \@ref(Excel), we saw population statistics reported by the administrative geography of England and Wales.
 
 Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, give us access to other data that can be incorporated into our own research.
-
-Here are some other resources with further examples:
-
-* International: 
-
-* Statistics Canada [@StatCan_definitions]
 
 
 Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
@@ -902,28 +894,30 @@ Because this type of data transformation is common, the package {fastDummies} [@
 
 ```{r}
 
-tb2 |> 
+tb2_indicator <- tb2 |> 
   fastDummies::dummy_cols() 
 
+glimpse(tb2_indicator, width = 65)
 ```
 
 The variable `gender` has now been mutated into two additional variables, `gender_female` and `gender_male`. The names of the new variables are a concatenation of the original variable name and value, separated by an underscore.
 
-Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value 1.
+Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. This parallels what was in the original data. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value 1.
 
 
 Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetic order ("female" coming before "male"), and the first is dropped.
 
-{Note to self: can this be controlled? To match the original dataframe we might want the `gender_female` variable to be the one that persists...}
 
 ```{r}
 
-tb2 |> 
+tb2_indicator <- tb2 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
+
+glimpse(tb2_indicator, width = 65)
 
 ```
 
-Note that the results of this argument can be controlled through the conversion of character variables to factors.
+Note that the results of this argument can be controlled through the conversion of character variables to factors. To match the original dataframe, we would retain the variable `gender_female`.
 
 ```{r}
 # create new tb table with "gender" as factor
@@ -937,9 +931,10 @@ Note that the default order is alphabetical, so "female" remains first. When the
 
 ```{r}
   
-tb3 |> 
+tb3_1 <- tb3 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
 
+glimpse(tb3_1, width = 65)
 
 ```
 
@@ -957,9 +952,10 @@ Rerunning the same code, the `gender_male` variable is dropped.
 
 ```{r}
   
-tb3 |> 
+tb3_2 <- tb3 |> 
   fastDummies::dummy_cols(remove_first_dummy = TRUE) 
 
+glimpse(tb3_2, width = 65)
 
 ```
 
@@ -969,9 +965,10 @@ There is also an option in `fastDummies::dummy_cols()` to `remove_most_frequent_
 
 ```{r}
 
-tb2 |> 
+tb2_frequent <- tb2 |> 
   fastDummies::dummy_cols(remove_most_frequent_dummy = TRUE) 
 
+glimpse(tb2_frequent, width = 65)
 
 ```
 
@@ -980,8 +977,10 @@ Another argument in the function is `remove_selected_columns`. The default value
 
 ```{r}
 
-tb2 |> 
+tb2_select <- tb2 |> 
   fastDummies::dummy_cols(remove_selected_columns = TRUE) 
+
+glimpse(tb2_select, width = 65)
 
 ```
 
@@ -995,7 +994,7 @@ Some important things to note about `dummy_cols()`
 
 Let's look at how `dummy_cols()` behaves with two of the variables in {palmerpenguins}: \index{palmerpenguins}  
 
-```{r ch700_dummy_penguins_1, echo=FALSE}
+```{r ch700_dummy_penguins_1}
 
 library(palmerpenguins)
 
@@ -1012,9 +1011,10 @@ penguin_subset
 
 ```{r ch700_dummy_penguins_2}
 
-penguin_subset |>  
+penguin_subset_1 <- penguin_subset |>  
   fastDummies::dummy_cols()
 
+glimpse(penguin_subset_1, width = 65)
 ```
 
 First, you will notice that we started with two factor variables, `species` and `island`, we now have indicator variables for both.
@@ -1027,12 +1027,12 @@ In addition, rather than dropping the first created variable, we can specify tha
 
 ```{r 700_penguin_dummy}
 
-
-penguin_subset |> 
+penguin_subset_2 <- penguin_subset |> 
   fastDummies::dummy_cols(
     select_columns = "species",
     remove_most_frequent_dummy = TRUE)
 
+glimpse(penguin_subset_2, width = 65)
 
 ```
 
@@ -1052,7 +1052,7 @@ There are a variety of solutions to dealing with missingness in data values, fro
 ### Missing as formatting
 
 
-A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In our example Excel file, the sheet "Report" contains the data we want in a wide format. The name individual institution is in the second column (in Excel nomenclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
+A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In the example Excel file we will use for this, the sheet "Report" contains data on tuition fees paid by international students in British Columbia, arranged in a wide format. The name individual institution is in the second column (in Excel nomenclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
 
 Our first step is to read in the data. Note that the code uses the Excel naming convention to define the rectangular range to be read, and omits the title rows at the top and the notes at the bottom of the sheet.
 
@@ -1105,7 +1105,7 @@ Furthermore, there is a great deal of literature on the topic of imputation of m
 
 For the examples presented here, we will assume that you have already given significant thought to these methodological questions. As we discussed earlier in this chapter, _how_ we clean data is influenced by our research questions. As well, we need to consider our cleaning strategy in light of why the raw data are the way they are.
 
-With that preamble, let's move to working with some real data. In this example, the data series is the number of salaried employees in the Accommodation services industry in British Columbia, Canada, for the years 2001 through 2020. The data is collected and published by Statistics Canada, and for some years the data are judged to be "too unreliable to be published". This leaves some gaps in our data. [@R-dpjr]
+With that preamble, let's move to working with some real data. In this example, the data series is the number of salaried employees in the Accommodation services industry in British Columbia, Canada, for the years 2001 through 2020. The data is collected and published by Statistics Canada, and for some years the data are judged to be "too unreliable to be published". This leaves some gaps in our data. 
 
 
 
@@ -1117,7 +1117,7 @@ head(naics721_sal)
 
 ```
 
-Plotting the data, here's what we see:
+We will employ Exploratory Data Analysis, and plot the data:
 
 ```{r}
 ggplot(naics721_sal, aes(x = ref_year, y = VALUE)) +
@@ -1137,16 +1137,26 @@ naics721_sal |>
 
 Alternatively, we can fill the series with the previous valid entry.  
 
-Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables.
+Similar to what we saw above with text, the same `fill()` function can be applied to numeric variables. We will first create a variable `new_value` that will house the same value as our existing variable; the `fill()` function will be applied to `new_value`.
 
 
 ```{r}
 # fill down  
-naics721_sal |> 
-  mutate(old_value = VALUE) |> 
-  tidyr::fill(VALUE)  # default direction is down
+naics721_sal_new <- naics721_sal |> 
+  mutate(value_fill = VALUE) |> 
+  tidyr::fill(value_fill)  # default direction is down
+
+naics721_sal_new
 
 ```
+
+Now when we plot the data, the missing points are shown:
+
+```{r}
+ggplot(naics721_sal_new, aes(x = ref_year, y = value_fill)) +
+  geom_line() 
+```
+
 
 There are a few different options to determine which way to fill; the default is `.direction = "down"`.
 
@@ -1155,12 +1165,12 @@ There are a few different options to determine which way to fill; the default is
 # specified
 # down
 naics721_sal |> 
-  mutate(down = VALUE) |> 
-  tidyr::fill(VALUE, .direction = "down")  # direction is specified as down
+  mutate(value_down = VALUE) |> 
+  tidyr::fill(value_down, .direction = "down")  # direction is specified as down
 # up
 naics721_sal |> 
-  mutate(up = VALUE) |> 
-  tidyr::fill(VALUE, .direction = "up")  # direction is specified as up
+  mutate(value_up = VALUE) |> 
+  tidyr::fill(value_up, .direction = "up")  # direction is specified as up
 
 
 ```
@@ -1208,7 +1218,7 @@ For our count of salaried employees, here's what we get when we create a new val
 
 ```{r}
 naics721_sal <- naics721_sal |> 
-  mutate(value_new = forecast::na.interp(VALUE))
+  mutate(value_interp = forecast::na.interp(VALUE))
 
 naics721_sal
 ```
@@ -1216,7 +1226,7 @@ naics721_sal
 Now when we plot the data, there are no gaps. 
 
 ```{r}
-ggplot(naics721_sal, aes(x = ref_year, y = value_new)) +
+ggplot(naics721_sal, aes(x = ref_year, y = value_interp)) +
   geom_line() 
 ```
 

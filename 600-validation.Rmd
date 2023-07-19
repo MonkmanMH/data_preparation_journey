@@ -32,7 +32,7 @@ In this chapter:
 
 ## Identifying dirty data
 
-Earlier in \@ref(foundations) [foundations], challenges associated with "dirty data" were introduced. 
+Earlier in Chapter \@ref(foundations), challenges associated with "dirty data" were introduced. 
 
 **The first challenge**: How do we find the things that are problematic with our data?
 
@@ -402,17 +402,18 @@ The {validator} also allows us to check variable types within our `check_that()`
 
 ```{r, eval=FALSE}
 
-penguins
-
-is.integer(penguins$year)
-
 summary(check_that(penguins, is.integer(year)))
 
 ```
 
+![_summary(check_that(penguins))_](img/penguins_summary_check_that.PNG)
+
+
+
+
 ### badpenguins
 
-The "badpenguins.rds" file adds five fictional penguins to the "penguins" table, including measurement data. Let's load the data file "badpenguins.rds" (an R data file) and run a couple of the tests we used earlier:
+The "badpenguins.rds" file adds five fictional penguins to the original "penguins" table, including measurement data. Let's load the data file "badpenguins.rds" (an R data file) and run a couple of the tests we used earlier:
 
 
 
@@ -484,6 +485,10 @@ In this example, our prior knowledge of the data gives us the insight to quickly
 violating(badpenguins, penguin_confront)
 
 ```
+
+
+![_violating(bad_penguins)_](img/validate_penguins_violating_1.PNG)
+
 
 
 

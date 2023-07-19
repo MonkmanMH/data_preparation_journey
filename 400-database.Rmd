@@ -296,19 +296,12 @@ For this we will use the data stored in the R package that contains the Lahman b
 At the completion of this run, the {tidylog} package produces some summary information about the join, the grouping, and the tally functions.
 
 ```{r Lahman_join}
-library(dplyr)
-library(tidylog)
 ## start with the Batting table
 Lahman::Batting |> 
   ## filter for year
   filter(yearID == "2001") |> 
   ## join to People table (where the birth country is recorded)
-  left_join(Lahman::People, by = "playerID") 
-```
-
-```{r}
-
-|> 
+  left_join(Lahman::People, by = "playerID") |> 
   ## now group_by and tally
   group_by(birthCountry) |> 
   tally() |> 
