@@ -239,7 +239,7 @@ While exploratory data analysis uses visualization and scans of data summaries t
 
 As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands.
 
-The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins}. We know that the data in the package are nice and clean—they have already gone through a validation process.
+The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We know that the data in the package are nice and clean—they have already gone through a validation process.
 
 ```{r ch600_packages, eval=FALSE}
 library(tidyverse)

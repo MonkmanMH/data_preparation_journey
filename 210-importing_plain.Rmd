@@ -32,7 +32,7 @@ Plain text files come in two varieties: delimited and fixed-width. "Delimited" i
 
 ### Using base R
 
-Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width files.
+Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width files. In the following examples, we will use versions of the data in the {palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]
 
 For example, `read.csv()` is a base R function to read CSV files.
 

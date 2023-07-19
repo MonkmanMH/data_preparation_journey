@@ -60,7 +60,7 @@ library(stringr)
 
 ### Getting started
 
-To get started in reading data from a PDF file, we will read data from a summary of the {palmerpenguins}[@R-palmerpenguins] data. 
+To get started in reading data from a PDF file, we will read data from a summary of the {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins] data. 
 
 While this is for a single table on a single page, the same approach will work for multiple tables across multiple pages, if the structure of each table on each page is the same. The process is always the same: start with the smallest unit, and expand out.
 

@@ -36,8 +36,7 @@ The **R** package {haven} [@R-haven] provides the functionality to read these th
 
 `library(haven)`
 
-
-For these examples, we will work with SPSS formatted files; the approach is similar for SAS and Stata formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension; a Stata data file has the extension ".dta", so the read function is `read_dta()`:
+In the following examples, we will use versions of the data in the {palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We will work with SPSS formatted files; the approach is similar for SAS and Stata formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension; a Stata data file has the extension ".dta", so the read function is `read_dta()`:
 
 
 ```{r, eval=FALSE}
