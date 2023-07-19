@@ -19,7 +19,7 @@ In this chapter:
 
 * Importing data from Excel \index{Excel} spreadsheets
 
-* Extracting data that is encoded as formatting
+* Extracting data that is encoded as Excel formatting
 
 
 

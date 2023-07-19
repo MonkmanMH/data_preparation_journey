@@ -32,8 +32,6 @@ In this chapter:
 
   - indicator variables (also known as dummy variables [@Suits_1957] and "one hot" encoding)
   
-  - normalization
-
 * Dealing with missing values
 
 

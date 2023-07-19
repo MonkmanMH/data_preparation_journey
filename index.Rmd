@@ -64,96 +64,15 @@ If you don't possess that knowledge yet, I would recommend that you work through
 
 While some of the topics covered here may be similar to what you'll find in _R for Data Science_ and other introductory books and similar resources, it is hoped that the examples in this book add more context and expose you to greater technical challenges.
 
-
 ## Outline {-}
 
+The first three chapters of this book provide some foundations, elements of the data preparation process that will help guide our thinking and our work, including data documentation (or recordkeeping).
 
-**SECTION A**
+Chapters 4 through 10 cover importing data from a variety of sources that are commonly encountered, including plain-text, Excel, statistical software formats, PDF files, internet sources, and databases.
 
-**Chapter 1: Introduction**
+Chapters 11 and 12 tackle finding problems in our data, and then dealing with those problems.
 
-* The origin of data
-
-* Analyzing data
-
-* Data in the wild
-
-
-**Chapter 2: Foundations**
-
-* The data preparation process
-
-* Understanding what makes data "dirty", and why context matters
-
-
-
-**Chapter 3: Data documentation** 
-
-* Creating documentation, including data dictionaries and literate programming
-
-
-**SECTION B: IMPORTING DATA**
-
-**Chapter 4: Importing data**
-
-* Principles for importing data, no matter the format
-
-**Chapter 5: Importing data: plain-text files**
-
-* Getting data in a variety of formats, including CSV and fixed-width text files
-
-**Chapter 6: Importing data: Excel**
-
-* Getting data from Excel files
-
-* Extracting data stored as formats
-
-**Chapter 7: Importing data: statistical software**
-
-* Capturing data and value labels from statistical software formats such as SPSS, Stata, and SAS
-
-**Chapter 8: Data from PDF files**
-
-* Getting data out of a PDF file, whether quantitative or qualitative (text)
-
-
-**Chapter 9: Data from web sources**
-
-* Acquiring data using R packages that leverage web APIs
-
-
-**Chapter 10: Linking to relational databases** 
-
-* Accessing data directly from databases
-
-* A very brief introduction to SQL
-
-
-**SECTION C: CLEANING DATA**
-
-
-
-**Chapter 11: Exploration and validation strategies**
-
-* Exploratory data analysis to identify problems
-
-* Using structured testing to validate data
-
-
-**Chapter 12: Cleaning techniques**
-
-* Cleaning dates and strings
-
-* Creating conditional and calculated variables, including indicator variables
-
-* Dealing with missing values
-
-
-**Chapter 13: Recap**
-
-
-
-
+Finally Chapter 13 presents a short summary, and poses the question "Where to from here?"
 
 
 ## Acknowledgements {-}
