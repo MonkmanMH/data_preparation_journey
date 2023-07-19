@@ -52,10 +52,6 @@ The reasons for documenting our work are similar to the reasons we would save an
 
 * To create a save point in our workflow, so that we can continue our work later but without having to go through all the steps to remember everything we've done.
 
-![_unfinished work_^[_Source: [monkeyuser.com](https://www.monkeyuser.com/2018/unfinished-work/), 2018-07-03_]](img/unfinished_work_400.png)
-
-
-
 
 As well, things change (the data, the software and hardware we use, the motivations for our work) and capturing the details about those things at the point we implement them helps us make any necessary changes that might be required at a later date.
 

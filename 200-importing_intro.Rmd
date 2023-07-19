@@ -17,7 +17,7 @@ source("package_load.R")
 
 In this chapter:
 
-* Importing data
+* Guidelines for importing data
 
 
 

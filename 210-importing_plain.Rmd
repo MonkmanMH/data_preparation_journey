@@ -17,8 +17,9 @@ source("package_load.R")
 
 In this chapter:
 
-* Importing data from plain text files
+* Importing data from delimited text files
 
+* Importing data from fixed-width text files
 
 
 
