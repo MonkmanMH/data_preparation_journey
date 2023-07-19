@@ -711,7 +711,7 @@ This variable should be numbers, but is a character type. This is because
 
 * the smallest categories are represented with "-*" to indicate a table note.
 
-This requires three steps:
+In order to clean this, we require three steps:
 
 1. remove commas
 
@@ -775,7 +775,7 @@ canpop |>
 
 ```
 
-But that's a lot of typing. A more streamlined approach is to put the name of our provinces in a list, and then recode our new variable with the value from the original variable:
+But that's a lot of typing. A more streamlined approach is to put the name of our provinces in a list, and then recode our new variable with the value from the original variable "province_territory":
 
 ```{r}
 
@@ -830,13 +830,13 @@ As one example, in much social and business data, people's ages are often groupe
 
 And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
 
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. In the \@ref(Excel) chapter, we saw population statistics reported by the administrative geography of England and Wales.
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In the \@ref(Excel) [Excel] chapter, we saw population statistics reported by the administrative geography of England and Wales.
 
 Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, give us access to other data that can be incorporated into our own research.
 
 Here are some other resources with further examples:
 
-* International: United Nations Statistics Division [@UNSD_classifications]
+* International: 
 
 * Statistics Canada [@StatCan_definitions]
 

@@ -132,7 +132,7 @@ Some examples of inaccurate data are:
 
 * Cultural ignorance (for want of a better term).
 
-> "Prawo Jazdy" was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
+> "Prawo Jazdy"\index{Prawo Jazdy} was a supposed Polish national who was listed by the Garda Síochána in a police criminal database as having committed more than 50 traffic violations in Ireland. A 2007 memorandum stated that an investigation revealed prawo jazdy [ˈpra.vɔ ˈjaz.dɨ] to be Polish for 'driving licence', with the error arising due to officers mistaking the phrase, printed on Polish driving licences, to be a personal name while issuing traffic tickets. [@wiki:prawo_jazdy]
 
 
 ### Tidy data

@@ -31,17 +31,19 @@ In this chapter:
 
 ## Relational data
 
-Relational databases are commonly used for data storage. The data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated. We have seen an example of this earlier, where we built a concordance table for the administrative geography of England and Wales in \@ref(Excel). 
+Relational databases are commonly used for data storage. Unlike a "flat file" which contains all of the variables, the data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated in multiple rows. We have seen an example of a relational table earlier, where we built a concordance table for the administrative geography of England and Wales in \@ref(Excel). 
 
-In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds to capacity of your computer. In those cases, as server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics.
+In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds to capacity of your computer. In those cases, a server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics, which shifts the computational load to the server.
 
 While SQL is the most commonly used query language, there are R packages that allow us to 
 
-* Connect to a database
+* Connect to a database,
 
-* Write the code for our queries in R, and 
+* Write the code for our queries in R, 
 
-* Run the query.
+* Run the query, and
+
+* Do our work in an R environment.
 
 Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's our prefered approach.
 
@@ -153,7 +155,9 @@ SEA
 
 ### Using SQL in your R code
 
-In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using, and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. This query instruction gets saved as the object `SEA_sql`.
+In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using, and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. 
+
+This query instruction gets saved as the object `SEA_sql`.
 
 The R chunk then has a second line that uses the `dbFetch()` function to run the SQL query. 
 
@@ -173,9 +177,11 @@ dbFetch(SEA_sql)
 
 The book _R Markdown: The Definitive Guide_ [@Xie_Allaire_Grolemund_RMarkdown_2019, Chapter 2.7.3] provides instructions on how to set up your R Markdown in RStudio so that you can run SQL language chunks, including using SQLite. 
 
-Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection. As we continue to work through this example, this is the `con_nycf` object created earlier.
+Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection. As we continue to work through this example, this is the `con_nycf` object created earlier. The start of our SQL code chunk would contain this text:
 
-`sql, connection=con_nycf`
+`{sql, connection=con_nycf}`
+
+
 
 ```{sql, eval=FALSE}
 
@@ -251,7 +257,7 @@ ORDER BY `n` DESC
 
 ```
 
-The joins are named using terms similar to those you are familiar with from {dplyr}. (More accurately, the join functions in {dplyr} are explicitly ) This left join will return all of the records from the `flights` table, and the variables from `airlines` where there is a match.
+The joins are named using terms similar to those you are familiar with from {dplyr}. This left join will return all of the records from the `flights` table, and the variables from `airlines` where there is a match.
 
 To indicate the key variable for the join, we use `ON`. Note that we specify the table and the variable, separated by a period.
 
@@ -273,28 +279,39 @@ An important element of any table join is to check the result, to see if it conf
 
 The authors of the package acknowledge that the functionality adds some computational and time overhead to the processing, but this may be worth the cost. Judiciously used, the information it returns can give an immediate indication if the code has worked. This is particularly true in the early stages of writing your code...the functions can be removed when you are confident you are getting the results you expect.
 
-```{r}
+```{r, eval=FALSE}
+library("tidylog")
+```
+
+```{r, echo=FALSE}
 library("tidylog", warn.conflicts = FALSE)
 ```
 
-After running the `library()` function, the results are automatically generated.
+After running the `library(tidylog)` function, the results are automatically generated.
 
-The Major League Baseball teams play in cities in the United States and Canada (only Toronto!), but draw the best players from around the world. In this example the code creates a summary table to show the country of birth of the player who batted in the 2001 season.
+The Major League Baseball teams play in cities in the United States and Canada (currently only Toronto!), but draw the best players from around the world. In this example the code creates a summary table to show the country of birth of the player who batted in the 2001 season.
 
 For this we will use the data stored in the R package that contains the Lahman baseball database (named after Sean Lahman, the person who initially created the database) [@R-Lahman].
 
 At the completion of this run, the {tidylog} package produces some summary information about the join, the grouping, and the tally functions.
 
 ```{r Lahman_join}
+library(dplyr)
+library(tidylog)
 ## start with the Batting table
-Lahman::Batting %>% 
-  ## filter
-  filter(yearID == "2001") %>% 
-  ## join to People (where the birth country is recorded)
-  left_join(Lahman::People, by = "playerID") %>% 
+Lahman::Batting |> 
+  ## filter for year
+  filter(yearID == "2001") |> 
+  ## join to People table (where the birth country is recorded)
+  left_join(Lahman::People, by = "playerID") 
+```
+
+```{r}
+
+|> 
   ## now group_by and tally
-  group_by(birthCountry) %>% 
-  tally() %>% 
+  group_by(birthCountry) |> 
+  tally() |> 
   arrange(desc(n)) |> 
   slice_head(n = 10)
 

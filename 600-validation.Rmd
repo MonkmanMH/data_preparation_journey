@@ -32,18 +32,18 @@ In this chapter:
 
 ## Identifying dirty data
 
-Earlier in \@ref(foundations), challenges associated with "dirty data" were introduced. 
+Earlier in \@ref(foundations) [foundations], challenges associated with "dirty data" were introduced. 
 
 **The first challenge**: How do we find the things that are problematic with our data?
 
 **The second challenge**: What can and should we do about them?
 
 
-The term "data validation"\index{data validation} sometimes applies to verification that is applied when the data is collected (for example, in a web-based survey tool), and in other contexts it applies to a programmatic approach to ensuring the data meet specified conditions. In both cases, we can think of data validation as a form of quality control, from quick sanity checks to programmatic testing. [@White_etal_nine_simple_ways]
+The term "data validation"\index{data validation} sometimes applies to verification that is applied when the data is collected (for example, in a web-based survey tool), and in other contexts it applies to a programmatic approach to ensuring the data meet specified conditions. In both cases, we can think of data validation as a form of quality control, from quick sanity checks to rigorous programmatic testing. [@White_etal_nine_simple_ways]
 
-Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes, or entry fields that force text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, digit. And all B.C. postal codes start with the letter "V", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
+Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes, or entry fields that require the entered text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, and digit. The first letter of the postal codes specify a region; in Newfoundland and Labrador they start with the letter "A" while in Yukon they start with "Y", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
-This comes with risks, and needs to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
+These imposed validation rules come with risks, and need to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
 
 
 For our work here, we will focus on checking and validating data after it has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
@@ -59,6 +59,8 @@ The type of things we might evaluate include:
 * There might be a known relationship between two or more variables.
 
 
+We now turn to approaches to evaluate the values in the data.
+
 
 ## Exploratory data analysis
 
@@ -69,6 +71,7 @@ EDA consists of two groups of techniques:
 * summary statistics
 
 * data visualization
+
 
 The things we are looking for at this stage include:
 
@@ -124,7 +127,7 @@ df_HR_train <-
     na = "NA"
   )
 
-glimpse(df_HR_train)
+glimpse(df_HR_train, width = 65)
 
 ```
 
@@ -247,7 +250,9 @@ library(validate)
 ```
 
 
-**Range of values**: we know, being experts on all things penguin, that gentoo penguins are the third largest of the penguin species, and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
+**Range of values**: 
+
+We know, being experts on all things penguin, that gentoo penguins (_Pygoscelis papua_) are the third largest of the penguin species, and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that()` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
 
 
 ```{r ch600_penguin_check01, eval=FALSE}
@@ -261,7 +266,7 @@ summary(check_penguins)
 What we see is that all of the penguins have a body mass of less than or equal to 8500 grams, and there are 2 "NA" values in the data.
 
 
-**Relationship**: 
+**Relationship:** 
 
 While the heaviest gentoo penguins can be up to 8.5 kg, it is very unusual to find an Adélie or Chinstrap penguin that weighs more than 5 kg. What happens if we change the body mass threshold to 5000 grams?
 
@@ -303,9 +308,9 @@ penguins |>
 So this is confirms that all of the heavier penguins are gentoos, meeting our expectations.
 
 
-**Range:** Year
+**Range:** 
 
-We know that the palmerpenguin data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls witin that range.
+We know that the {palmerpenguin} data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls witin that range.
 
 ```{r}
 
@@ -373,7 +378,7 @@ summary(check_penguins)
 ```
 
 
-![_validate penguins_](img/validate_penguins_check_1.PNG)
+![_check_penguins_](img/validate_penguins_check_1.PNG)
 
 
 We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that can be read into your R environment, and the test run against that list.
@@ -407,7 +412,7 @@ summary(check_that(penguins, is.integer(year)))
 
 ### badpenguins
 
-I changed the penguins data by adding five fictional penguins, and added some measurement data for them. Let's load the data file "badpenguins.rds" (an R data file) and run a couple of the tests we used earlier:
+The "badpenguins.rds" file adds five fictional penguins to the "penguins" table, including measurement data. Let's load the data file "badpenguins.rds" (an R data file) and run a couple of the tests we used earlier:
 
 
 
@@ -463,7 +468,7 @@ penguin_confront
 summary(penguin_confront)
 ```
 
-Let's look at the last ten rows of the results of the `confront()` function of our `badpenguins` data. Rows 340 through 344 are original to the clean `penguins` dataset; 345 through 349 are the bad penguins I added. The first one fails on all 3 tests, while the others fail on the first two but have "NA" values for the remainder.
+Let's look at the last ten rows of the results of the `confront()` function of our `badpenguins` data. Rows 340 through 344 are original to the clean `penguins` dataset; 345 through 349 are the bad penguins. The first one fails on all three tests, while the others fail on the first two but have "NA" values for the remainder.
 
 ```{r}
 
