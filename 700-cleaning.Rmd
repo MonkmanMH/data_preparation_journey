@@ -641,12 +641,10 @@ bls_employment_naics21_3digit |>
 
 ### Example: NOC: split code from title
 
-This example is drawn from the Canadian National Occupation Classification (NOC) code \index{National Occupation Code} \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
-
-The table we will use are occupations in British Columbia's accommodation industry.
+This example is drawn from a table that shows the number of people working in different occupations in British Columbia's accommodation industry. In this table the Canadian National Occupation Classification (NOC) code \index{National Occupation Code} \index{NOC|see{National Occupation Code}} is in the same column as the code's title.
 
 
-```{r read_noc, include=FALSE}
+```{r read_noc}
 
 noc_table <- read_rds(dpjr::dpjr_data("noc_table.rds"))
 
