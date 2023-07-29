@@ -104,7 +104,7 @@ There are three things to capture in your recordkeeping:
 ## Code documentation
 
 
-"Document and comment your code for yourself as if you will need to understand it in 6 months." —Jenny Bryan (Citation needed!)
+"Document and comment your code for yourself as if you will need to understand it in 6 months." — attributed to Jenny Bryan
 
 
 In the journal article "Good enough practices in scientific computing", the authors write "Good documentation is a key factor in software adoption, but in practice, people won't write comprehensive documentation until they have collaborators who will use it. They will, however, quickly see the point of a brief explanatory comment at the start of each script, so we have recommended that as a first step." [@Wilson_Bryan_good_enough_2017]

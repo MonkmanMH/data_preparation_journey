@@ -141,7 +141,7 @@ In the code below, we create a summary table of the average flight time from New
 SEA <- flights_SEA |> 
   select("month", "carrier", "air_time") |> 
   group_by(carrier) |> 
-  summarise(
+  summarize(
     n = n(),
     min_air_time = min(air_time),
     mean_air_time = mean(air_time),

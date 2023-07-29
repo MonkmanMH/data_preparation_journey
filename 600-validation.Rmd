@@ -213,7 +213,7 @@ df_HR_transaction <-
 # determine occupation on the date the table was created 
 df_HR_occupation_2020 <- df_HR_transaction |> 
   group_by(emp_id) |> 
-  summarise(occupation_current = max(occupation, na.rm = TRUE))
+  summarize(occupation_current = max(occupation, na.rm = TRUE))
 
 df_HR_main |>
   # calculate age on January 1, 2020

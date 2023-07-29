@@ -542,7 +542,7 @@ Now we can use our data wrangling skills to calculate the percent change between
 
 bcf_table_3 |> 
   group_by(route_type) |> 
-  summarise(total_fy2021 = sum(passengers_fy2021),
+  summarize(total_fy2021 = sum(passengers_fy2021),
             total_fy2020 = sum(passengers_fy2020)) |> 
   mutate(pct_change = 
            (total_fy2021 - total_fy2020) / total_fy2020 * 100)

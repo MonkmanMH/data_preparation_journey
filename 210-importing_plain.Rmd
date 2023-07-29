@@ -37,18 +37,22 @@ Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width fil
 
 For example, `read.csv()` is a base R function to read CSV files.
 
+In the code chunks below, an R object `penguins_path` is created that contains the text string with the location of the file. In the first example, the file is located in a directory called "data" that is in our RStudio project folder. The {here} package will generate the full path, with slash or backslash separators (depending on your computer's operating system), starting at the location of the RStudio project.
 
 ```{r}
-# example
-# assign path using the {here} package
+# Example 1
+# create object path using the {here} package
 penguins_path <- here::here("data", "penguins.csv")
 
 # read the contents of the CSV file
 penguins_data <- read.csv(penguins_path)
 ```
 
+In this second example, the file has been loaded to our computer using the {dpjr} package, and uses the `dpjr_data()` function from that package to access the file (no matter its location on our computer).
+
 
 ```{r penguins_csv, echo=FALSE, eval=FALSE}
+# Example 2
 # alternative approach with {dpjr} package
 library(dpjr)
 penguins_path <- dpjr_data("penguins.csv")
@@ -72,9 +76,9 @@ library(readr)
 
 This chunk creates a string object that contains the path name, and then uses the function `read_csv()` to create an object called `penguins_data`, from a CSV file of the same name.
 
-* Note: this is `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
+* Note: this is the {readr} function `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
-The `read_csv()` function is quite a bit faster with big data files, and has some useful flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a data frame. (For information about the difference, see [@Wickham_Grolemund2016, Tibbles])
+The `read_csv()` function is quite a bit faster with big data files, and has some useful flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a dataframe. (For information about the difference, see [@Wickham_Grolemund2016, Tibbles])
 
 ```{r, message=FALSE}
 # read the file and assign it to the object "penguins_data"

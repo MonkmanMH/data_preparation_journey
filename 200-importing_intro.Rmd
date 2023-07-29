@@ -78,14 +78,14 @@ Here's some advice that's worth heeding:
 
 1. The arguments in the import functions are your friends. Use them as your first line of defense in your project workflow.
 
-"My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [_Emphasis added._] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import." [@Bryan_STAT545, [Chapter 9: Writing and reading files]
+"My main import advice: **use the arguments of your import function to get as far as you can, as fast as possible.** [_Emphasis added._] Novice code often has a great deal of unnecessary post import fussing around. Read the docs for the import functions and take maximum advantage of the arguments to control the import." [@Bryan_STAT545, Chapter 9: Writing and reading files]
 
 In practice, this means that the first iteration of an import function will almost invariably not yield what you want. We will soon see some examples of this, but it might be in the variable names or how values are stored, how missing values are represented or the geometry of the spreadsheet. The arguments in the read function will allow you to address all of these issues, and more. Go back and add arguments to the function, and run the code again, and again, until you get to where you need to be.
 
 
-2. Plain text is boring but in the long run a more flexible and adaptable format; "Today’s outputs are tomorrow’s inputs" [@Bryan_STAT545, [Chapter 9: Writing and reading files]
+2. Plain text is boring but in the long run a more flexible and adaptable format; "Today’s outputs are tomorrow’s inputs" [@Bryan_STAT545, Chapter 9: Writing and reading files]
 
-"A plain text file that is readable by a human being in a text editor should be your default until you have **actual proof** that this will not work. Reading and writing to exotic or proprietary formats will be the first thing to break in the future or on a different computer. It also creates barriers for anyone who has a different toolkit than you do. Be software-agnostic. Aim for future-proof and moron-proof." [@Bryan_STAT545, [Chapter 9: Writing and reading files]
+"A plain text file that is readable by a human being in a text editor should be your default until you have **actual proof** that this will not work. Reading and writing to exotic or proprietary formats will be the first thing to break in the future or on a different computer. It also creates barriers for anyone who has a different toolkit than you do. Be software-agnostic. Aim for future-proof and moron-proof." [@Bryan_STAT545, Chapter 9: Writing and reading files]
 
 
 

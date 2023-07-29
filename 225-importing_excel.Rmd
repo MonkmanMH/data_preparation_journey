@@ -265,7 +265,7 @@ county_pop  |>
 
 # check
 county_pop  |>  
-  summarise(total_pop = sum(all_persons))
+  summarize(total_pop = sum(all_persons))
 
 ```
 
@@ -636,7 +636,7 @@ Because the level was encoded, it is possible to filter on the level to calculat
 ```{r}
 uk_census_pop_geo |> 
   filter(geo_level == 3) |> 
-  summarise(total_population = sum(all_persons))
+  summarize(total_population = sum(all_persons))
 ```
 
 
