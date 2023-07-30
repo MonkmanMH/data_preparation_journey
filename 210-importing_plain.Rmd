@@ -37,7 +37,7 @@ Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width fil
 
 For example, `read.csv()` is a base R function to read CSV files.
 
-In the code chunks below, an R object `penguins_path` is created that contains the text string with the location of the file. In the first example, the file is located in a directory called "data" that is in our RStudio project folder. The {here} package will generate the full path, with slash or backslash separators (depending on your computer's operating system), starting at the location of the RStudio project.
+In the code chunks below, an R object `penguins_path` is created that contains the text string with the location of the file "penguins.csv". In the first example, the file is located in a directory called "data" that is in our RStudio project folder. The {here} package will generate the full path, with slash or backslash separators (depending on your computer's operating system), starting at the location of the RStudio project.
 
 ```{r}
 # Example 1
@@ -74,7 +74,7 @@ library(readr)
 ```
 
 
-This chunk creates a string object that contains the path name, and then uses the function `read_csv()` to create an object called `penguins_data`, from a CSV file of the same name.
+This chunk creates a string object that contains the path name, and then uses the function `read_csv()` to create an object called `penguins_data`, using the `penguins_path` object, which contains the file path to the the CSV file "penguins.csv".
 
 * Note: this is the {readr} function `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
 
@@ -131,7 +131,7 @@ Fixed-width files are a hold-over from the days when storage was expensive and/o
 
 If you ever have to deal with a fixed-width file, you will (or should!) receive a companion file letting you know the locations of each variable in every row.
 
-In this example, we will use the one provided in the {dpjr} package, `authors_fwf.txt`. This code chunk assigns the path to the file location, which we can use in our code later.
+In this example, we will use the one provided in the {dpjr} package, "authors_fwf.txt". This code chunk assigns the path to the file location, which we can use in our code later.
 
 
 ```{r importing_authors_path}
@@ -253,7 +253,7 @@ read_fwf(authors2_path,
 
 ![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
 
-A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable "name" starts at position 1 and ends at position 20, and the second variable "ssn" starts at 30 and ends at 42. Note that we won't read the "state" variable which occupies the ten columns from 21 through 29.
+A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable `name` starts at position 1 and ends at position 20, and the second variable `unique_id` starts at 30 and ends at 42. Note that we won't read the `state` variable which occupies the ten columns from 21 through 29.
 
 ```{r, message=FALSE}
 read_fwf(authors2_path,
@@ -318,9 +318,9 @@ Here's how one variable, highest level of post-secondary education achieved, app
 
 ![health survey example](img/healthsurv_var_postsec.JPG)
 
-The variable "SDJ1GHED" is 1 character long, in position 502 of the data. The variable might be only 1 character long, but when coupled with the information in the "Content" column, it becomes a very powerful piece of information. 
+The variable `SDJ1GHED` is 1 character long, in position 502 of the data. The variable might be only 1 character long, but when coupled with the information in the Content table, it becomes a very powerful piece of information. 
 
-For our analysis question, we will read in four variables: the unique respondent identification number, the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
+For our analysis question, we will read in four variables: the unique household identification number, the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
 
 | Name | Variable | Length | Position |
 | :--- | :---     | :---:  | :---:  |
@@ -332,7 +332,7 @@ For our analysis question, we will read in four variables: the unique respondent
 
 You will note in the code below that in the case of the variables that are of length "1", the code the start and end positions are the same.
 
-As well, the `SAMPLEID` variable is a 12-digit number; the `read_fwf()` will interpret this as variable type double, and represent it in scientific notation. To be useful, we want to be able to see and evaluate the entire string. As a result, we use `col_types()` to specify `SAMPLEID` as a character.
+As well, the `SAMPLEID` variable is a 12-digit number; the `read_fwf()` function will interpret this as variable type double, and represent it in scientific notation. To be useful, we want to be able to see and evaluate the entire string. As a result, we use `col_types()` to specify `SAMPLEID` as a character.
 
 ```{r jcush_txt_read_vars}
 

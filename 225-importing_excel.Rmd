@@ -34,17 +34,18 @@ Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practic
 
 Spreadsheets like Excel also have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet, or anther sheet in another file). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
 
-The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. 
+The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. For example, leading or trailing whitespace make a number turn into a character, even if the cell is given a number format.
 
 
 
-The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions.
+The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions if it returns something different than what the analysis calls for.
 
 ```{r}
 library(readxl)
 ```
 
-For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. 
+For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. The file "cr25_human_resources.xlsx" is in the folder "cr25".
+
 
 Because Excel files can contain multiple sheets, we need to specify which one we want to read. The {readxl} function `excel_sheets()` lists them for us:
 
@@ -106,7 +107,7 @@ Another splendid feature of `read_excel()` is that it returns a date type (S3: P
 
 ## Extended example
 
-Very often, Excel files are far more complicated than the case above. In the following example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
+Very often, Excel files are far more complicated than the case above. In the following example, we will read the contents of one sheet in an Excel file published by the UK Office of National Statistics, drawn from the 2021 Census of England and Wales. The file "census2021firstresultsenglandwales1.xlsx" has the population by local authorities (regions), and includes sheets with notes about the data, and data tables containing the population by sex and five-year age groups, along with population density and number of households.
 
 
 \newpage
@@ -182,21 +183,21 @@ The data has been read correctly, including the fact that the data variables are
 
 \index{Excel}
 
-One thing to notice about this data is the "Area name" field is hierarchical, with a series of sub-totals. The lower (smaller) levels, containing the component areas of the next higher level in the hierarchy, are represented by indentations in the area name value. The lower the level in the hierarchy, the more indented the name of the area.
+One thing to notice about this data is the `Area name` variable is hierarchical, with a series of sub-totals. The lower (smaller) levels, containing the component areas of the next higher level in the hierarchy, are represented by indentations in the area name value. The lower the level in the hierarchy, the more indented the name of the area.
 
 The specifics of the hierarchy are as follows:
 
 * The value "England and Wales" contains the total population, which is the sum of England (Excel's row 8) and Wales (row 360). 
 
-* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the "Area code" variable). 
+* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the `Area code` variable). 
 
 * These Regions are then are divided into smaller units, but the description of those units varies. These are Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11); for our purpose, let's shorthand this level as "counties".
 
 * The county level is further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
 
-* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the "Area code" variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).] ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about).] 
+* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the `Area code` variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).] ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about).] 
 
-This complicated structure means that the data has multiple subtotals—a `sum()` function on the "All persons" variable will lead to a total population of 277,092,700, roughly 4.7 times the actual population of England and Wales in 2021, which was 59,597,300. 
+This complicated structure means that the data has multiple subtotals—a `sum()` function on the `All persons` variable will lead to a total population of 277,092,700, roughly 4.7 times the actual population of England and Wales in 2021, which was 59,597,300. 
 
 What would be much more useful is a structure that has the following characteristics:
 
@@ -215,7 +216,7 @@ Let's explore approaches to extracting the information that is embedded in the d
 
 **Approach 1 - use the Area code**
 
-The first approach we can take is to extract the regional element in the "area_code" variable, and use that to filter the data.
+The first approach we can take is to extract the regional element in the `area_code` variable, and use that to filter the data.
 
 For example, if we want to plot the population in England by the county level, an approach would be to identify all those rows that have an Area code that starts with one of the following:
 
@@ -232,7 +233,7 @@ dplyr::glimpse(county_pop, width = 65)
 
 ```
 
-We can check to ensure that the regex has worked as intended through the `distinct()` function, examining only the first three characters of the "area_code" strings:
+We can check to ensure that the regex has worked as intended through the `distinct()` function, examining only the first three characters of the `area_code` strings:
 
 ```{r filter_check_ua_900}
   
@@ -295,7 +296,7 @@ tidyxl::xlsx_sheet_names(
 ```
 
 
-We already know that Excel files can contain a lot of information that is outside the data rectangle. Rather than ignore all the information that's in the sheet, we will use the function `tidyxl::xlsx_cells()` to read the entire sheet. This uses the object with the file path character string and the `sheets = ` argument to specify which one to read. Unlike `readxl::read_excel()`, we won't specify the sheet geometry. This will read the contents of the entire sheet, and we will extract the data we want from the object "uk_census" created at this step. 
+We already know that Excel files can contain a lot of information that is outside the data rectangle. Rather than ignore all the information that's in the sheet, we will use the function `tidyxl::xlsx_cells()` to read the entire sheet. This uses the object with the file path character string and the `sheets = ` argument to specify which one to read. Unlike `readxl::read_excel()`, we won't specify the sheet geometry. This will read the contents of the entire sheet, and we will extract the data we want from the object `uk_census` created at this step. 
 
 
 ```{r}
@@ -310,9 +311,9 @@ dplyr::glimpse(uk_census, width = 65)
 
 ```
 
-The dataframe created by the `xlsx_cells()` function is nothing like the spreadsheet in the Excel file. Instead, every cell in Excel file is row, and details about that cell are captured. The cell location is captured in the variable "address", while there is also a separate variable for the row number and another for the column number. There is also the value we would see if we were to look at the file, in the variable "character". (If there is a formula in a cell, the function returns the result of the formula in the "character" variable, and the text of the formula in the "formula" variable.)
+The dataframe created by the `xlsx_cells()` function is nothing like the spreadsheet in the Excel file. Instead, every cell in Excel file is row, and details about that cell are captured. The cell location is captured in the variable "address", while there is also a separate variable for the row number and another for the column number. There is also the value we would see if we were to look at the file, in the variable `character`. (If there is a formula in a cell, the function returns the result of the formula in the `character` variable, and the text of the formula in the `formula` variable.)
 
-The "local_format_id" variable is created by {tidyxlr}, and helps us solve the problem of capturing the indentation. This variable contains a unique value for every different type of formatting that is used in the sheet. Below, we look at the first ten rows of the "uk_census" object, and we can see that the value "14" appears repeatedly in the variable "local_format_id".
+The `local_format_id` variable is created by {tidyxlr}, and helps us solve the problem of capturing the indentation. This variable contains a unique value for every different type of formatting that is used in the sheet. Below, we look at the first ten rows of the `uk_census` object, and we can see that the value "14" appears repeatedly in the variable "local_format_id".
 
 ```{r}
 uk_census |> 
@@ -325,9 +326,9 @@ uk_census |>
 
 The next thing we need to do is read the details of each of the formats stored in the Excel file—the format "14" has particular characteristics, including the number of indentations in the cell. 
 
-For this, we use the {tidyxl} function `xlsx_formats()`. For this, we only need to specify the path to the file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
+For this, we use the {tidyxl} function `xlsx_formats()`. We only need to specify the path to the file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
 
-The code below reads the formats, and assigns it to a new object "uk_census_formats".
+The code below reads the formats, and assigns it to a new object `uk_census_formats`.
 
 ```{r}
 
@@ -338,7 +339,7 @@ uk_census_formats <- xlsx_formats(
 ```
 
 
-When examining the "uk_census_formats" object in our environment, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. 
+When examining the `uk_census_formats` object in our environment, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. 
 
 ![_UK Census data_](img/UK_census_excel_formats_1.PNG)
 
@@ -357,13 +358,13 @@ indent
 This shows that for most of the various cell formattings used in the file most have zero indentation, but some have 1, 2, 3, or 4 indents.
 
 
-Back to the object "uk_census". We are interested in the data starting in the eighth row, so we need to filter for that. 
+Back to the object `uk_census`. We are interested in the data starting in the eighth row, so we need to filter for that. 
 
-For the {tidyxl} functions to work, the first column needs to defines the hierarchical structure. To accomplish this, we will select it out using the "!=" operator.
+For the {tidyxl} functions to work, the first column needs to defines the hierarchical structure. To accomplish this, we will select it out using the `!=` operator.
 
 The `behead_if()` function identifies a level of headers in a pivot table, and makes it part of the data. Similar to the {tidyr} function `pivot_longer()`, it creates a new variable for each row based on the headers. In the case of the UK Census data, the headers are differentiated by the number of indents in the formatting.
 
-Let's test that by assigning the "left-up" position value to a new variable, field0. For each row in the `uk_census` object, the number of indentations associated with the `local_format_id` is evaluated; if it's zero, the following happens: starting at the numeric value, the function looks left and then up until it finds a value that has fewer indentations. For example, the "England" row has a single indentation, so the function looks left and up until it finds a value that has zero indents in the formatting; the value from that cell is assigned to the variable "field0" (for zero indents).
+Let's test that by assigning the "left-up" position value to a new variable, field0. For each row in the `uk_census` object, the number of indentations associated with the `local_format_id` is evaluated; if it's zero, the following happens: starting at the numeric value, the function looks left and then up until it finds a value that has fewer indentations. For example, the "England" row has a single indentation, so the function looks left and up until it finds a value that has zero indents in the formatting; the value from that cell is assigned to the variable `field0` (for zero indents).
 
 
 ```{r}
@@ -379,7 +380,7 @@ uk_census |>
 
 ```
 
-Let's continue that through all the levels of indentation. There are four, so we will create a variable that starts with "field" and then has the number of indentations. 
+Let's continue that through all the levels of indentation. There are four, so we will create a variable that starts with `field` and then a digit with the number of indentations. 
 
 ```{r}
 uk_census_behead <- uk_census |> 
@@ -472,13 +473,13 @@ uk_census_behead |>
 
 Wait! Didn't we learn that Wales is not divided into regions, and that there are no divisions of the Unitary Authority level? Furthermore, you may also already know that Somerset is in England, not Wales. What's gone wrong?
 
-A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the nature of the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! Those functions are doing things exactly correctly. The values are being pulled from "left-up".
+A check of the tail of the data (above) reveals a problem with the structure of the Excel file, which (mostly) reflects the nature of the hierarchy. This is not a problem with the {tidyr} and {unpivotr} functions! Those functions are doing things exactly correctly. The values are being pulled from the value that is found at "left-up".
 
-The first thing that catches my eye is that "field2"—the Region—should be NA for Wales, but it has been assigned to the South West, which is the last English Region in the data. 
+The first thing that catches my eye is that `field2`—the Region—should be NA for Wales, but it has been assigned to the South West, which is the last English Region in the data. 
 
-More problematically, the Welsh Unitary Authorities (W06) should be in "field3", at the same level as the English Unitary Authorities (E06), but instead have been assigned to "field4". This has led to Somerset, in England, to be assigned to the column where we expect to see the names of the  Welsh Unitary Authorities.
+More problematically, the Welsh Unitary Authorities (W06) should be in `field3`, at the same level as the English Unitary Authorities (E06), but instead have been assigned to `field4`. This has led to Somerset, in England, to be assigned to the column where we expect to see the names of the  Welsh Unitary Authorities.
 
-Let's take a look at the details of the first row of the Welsh Unitary Authorities. First, in the "uk_census" object, we see that the value of "local_format_id" for the name ("Isle of Anglesey") is 60.
+Let's take a look at the details of the first row of the Welsh Unitary Authorities. First, in the `uk_census` object, we see that the value of `local_format_id` for the name ("Isle of Anglesey") is 60.
 
 ```{r}
 
@@ -488,7 +489,7 @@ uk_census |>
 
 ```
 
-We can then use this to examine the details of the indent formatting, which we captured in the "formats" object.
+We can then use this to examine the details of the indent formatting, which we captured in the `formats` object.
 
 ```{r}
 
@@ -512,9 +513,9 @@ uk_census_behead |>
 
 Now we have diagnosed the problem, what solution can we apply? 
 
-One solution is to repopulate each level's "field" variable by stepping up a level and comparing that to the value three rows earlier in the data.^[Thanks to Duncan Garmonsway, the author of the {tidyxl} and {untidyr} packages, for the path to this solution.] (We look at the previous rows using the `dplyr::lag()` function. It has to be three rows because our beheading function has made separate rows for "All persons", "Female", and "Male".)
+One solution is to repopulate each level's `field` variable by stepping up a level and comparing that to the value three rows earlier in the data.^[Thanks to Duncan Garmonsway, the author of the {tidyxl} and {untidyr} packages, for the path to this solution.] (We look at the previous rows using the `dplyr::lag()` function. It has to be three rows because our beheading function has made separate rows for "All persons", "Female", and "Male".)
 
-If the prior field is not the same, it gets replaced with an "NA", but if it's the same, then the current value is retained. In the first `mutate()` function, "field1" is replaced if "field0" in the current spot is _not_ the same as the "field0" three rows prior.
+If the prior field is not the same, it gets replaced with an "NA", but if it's the same, then the current value is retained. In the first `mutate()` function, `field1` is replaced if `field0` in the current spot is _not_ the same as the `field0` three rows prior.
 
 ```{r}
 
@@ -531,7 +532,7 @@ uk_census_behead |>
 
 Unfortunately, this solution does not repair the mis-assignment of the UAs in Wales.
 
-In the code below, the values in "field1" are evaluated. For those with population data from Wales, the "field2" and "field3" values are replaced with an NA. 
+In the code below, the values in `field1` are evaluated. For those with population data from Wales, the `field2` and `field3` values are replaced with an NA. 
 
 ```{r}
 
@@ -553,7 +554,7 @@ uk_census_behead_revised |>
 
 In many uses of this data, we will want to remove the subtotal rows. In the code below, a `case_when()` function is applied to create a new variable that contains a value "subtotal" for the rows that are disaggregated at the next level (for example, the cities within a Metro county, or the counties within a region).
 
-The first step is to create a new dataframe `field3_split` that identifies all of the areas at the county level that have a dissaggregation. This is done by first filtering by `field4`, where there is a valid value (identifed as not an "NA"), and creating a list of the distinct values in `field3`. That list is then used as part of the evaluation within the `case_when()` to assign the value "subtotal" to the new variable `subtotal_row`.
+The first step is to create a new dataframe `field3_split` that identifies all of the areas at the county level that have a dissaggregation. This is done by first filtering by `field4`, where there is a valid value (identified as not an "NA"), and creating a list of the distinct values in `field3`. That list is then used as part of the evaluation within the `case_when()` to assign the value "subtotal" to the new variable `subtotal_row`.
 
 
 ```{r}
