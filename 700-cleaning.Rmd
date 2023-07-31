@@ -66,7 +66,7 @@ Lahman::People |>
 ```
 
 
-The second problematic way dates are stored is in a variety of often-ambiguous sequences. This might included text strings for the month (for example "Jan", "January", or "Janvier" rather than "01"), two-digit years (does "12" refer to 2012 or 1912?), and ambiguous ordering of months and days (does "12" refer to December or the twelfth day of the month?)
+The second problematic way dates are stored is in a variety of often-ambiguous sequences. This might included text strings for the month (for example "Jan", "January", or "Janvier" rather than "01"), two-digit years (does "12" refer to 2012 or 1912?), and ambiguous ordering of months and days (does "12" refer to the twelfth day of the month or December?)
 
 If we know the way the data is stored, we can use {lubridate} functions to process the data into YYYY-MM-DD. These three very different date formats can be transformed into a consistent format:
 
@@ -105,7 +105,7 @@ lfs_canada_employment <-
 
 ```
 
-First, we transform the character variable "REF_DATE" variable into a date.
+First, we transform the character variable `REF_DATE` variable into a date.
 
 ```{r}
 lfs_canada_employment <- lfs_canada_employment |> 
@@ -247,7 +247,7 @@ postalcode <- "(?i)^[A-Z]\\d[A-Z][ -]?\\d[A-Z]\\d$(?-i)"
 
 ```
 
-The postal code for Kimberley, British Columbia is "V1A 2B3". Here's a list with some variations of that code, which we will use to test our regular expression.
+The postal code for the town of Kimberley, British Columbia is "V1A 2B3". Here's a list with some variations of that code, which we will use to test our regular expression.
 
 ```{r postalcode_kimberley}
 
@@ -769,7 +769,7 @@ canpop |>
 
 ```
 
-But that's a lot of typing. A more streamlined approach is to put the name of our provinces in a list, and then recode our new variable with the value from the original variable "province_territory":
+But that's a lot of typing. A more streamlined approach is to put the name of our provinces in a list, and then recode our new variable with the value from the original variable `province_territory`:
 
 ```{r}
 
@@ -863,7 +863,7 @@ head(tb)
 
 In this data, the variable `female` is coded as numeric, so it can be used as part of the regression modeling. 
 
-More commonly, though, this variable will have been captured and saved in one called "gender" or "sex", and often as a character string. The source data for the above table might have originally looked like this:
+More commonly, though, this variable will have been captured and saved in one called `gender` or `sex`, and often as a character string. The source data for the above table might have originally looked like this:
 
 ```{r}
 
@@ -898,7 +898,7 @@ glimpse(tb2_indicator, width = 65)
 
 The variable `gender` has now been mutated into two additional variables, `gender_female` and `gender_male`. The names of the new variables are a concatenation of the original variable name and value, separated by an underscore.
 
-Where the value of `gender` is "female", the value of `gender_female` is assigned as 1, and where `gender` is "male", `gender_female` is 0. This parallels what was in the original data. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value 1.
+Where the value of `gender` is "female", the value of `gender_female` is assigned as "1", and where `gender` is "male", `gender_female` is "0". This parallels what was in the original data. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value "1".
 
 
 Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetic order ("female" coming before "male"), and the first is dropped.
@@ -1063,7 +1063,7 @@ head(tuition_data)
 
 ```
 
-The contents of the file have been read correctly, but there are many "NA" values in the "Economic Development Region" variable. This is due to the manner in which the data was structured in the source Excel file.
+The contents of the file have been read correctly, but there are many "NA" values in the `Economic Development Region` variable. This is due to the manner in which the data was structured in the source Excel file.
 
 The `fill()` function, in the {tidyr} package [@R-tidyr] [\index{{tidyr}}], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
 
@@ -1087,7 +1087,7 @@ tuition_data_filled |>
 
 ```
 
-It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an NA in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
+It's worth noting that the `drop_na()` function provides an argument where we can specify columns. This gives us the flexibility to drop some rows where there is an "NA" in a specific variable, while keeping other rows that have a value in that variable but not in other variables.
 
 
 ### Missing numeric values
@@ -1243,7 +1243,7 @@ In some cases, there might be one or more values assigned to categories we might
 
 In other cases, numeric values are used to store the categorical responses. 
 
-The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in \@ref(importing-plaintext) importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable "SPJ1_TYP" is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in \@ref(importing-plaintext) importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable `SPJ1_TYP` is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
 
 We will use this file to create labelled factors from the numeric values in the variables we imported. Here's the code we used previously to read the file:
 
@@ -1286,7 +1286,7 @@ The values for these variables are as follows:
 
 
 
-The variable "GHJ1DHDI" has the respondent's self-assessment of their overall health. Here's a summary table of the responses:
+The variable `GHJ1DHDI` has the respondent's self-assessment of their overall health. Here's a summary table of the responses:
 
 ```{r}
 jcush |> 
@@ -1327,7 +1327,7 @@ The `levels()` function allows us to inspect the labels. Note that because we sp
 levels(jcush_forcats$health_desc_fct)
 ```
 
-When we tally the results by our new variable, the "GHJ1DHDI" records with the value 9 are shown as "NA".
+When we tally the results by our new variable, the `GHJ1DHDI` records with the value 9 are shown as "NA".
 
 ```{r}
 jcush_forcats |> 
