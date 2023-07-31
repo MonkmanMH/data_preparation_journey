@@ -237,7 +237,7 @@ While exploratory data analysis uses visualization and scans of data summaries t
 
 ### The {validate} package
 
-As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands.
+As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands, and provides tools for us to write structured validation tests.
 
 The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We know that the data in the package are nice and clean—they have already gone through a validation process.
 
@@ -310,7 +310,7 @@ So this is confirms that all of the heavier penguins are gentoos, meeting our ex
 
 **Range:** 
 
-We know that the {palmerpenguin} data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls witin that range.
+We know that the {palmerpenguin} data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls within that range.
 
 ```{r}
 
@@ -336,7 +336,7 @@ The output gives us the number of cases in that year in the `passes` the test, a
 
 We know that some species have only been measured on one of the three islands. Gentoo penguins have only been sampled on Biscoe Island, and chinstrap penguins in our sample come only from Dream Island. Does the data reflect that?
 
-In the first test (labelled `g` for gentoo), if it's not a gentoo it gets included in the `passes`--and if it is a gentoo, it has to be on Biscoe Island to get a pass. In the `c` (for chinstrap) test, we will do the same for chinstrap penguins, which should all be on Dream Island.
+In the first test (labelled `g` for gentoo), if it's not a gentoo it gets included in the `passes`—and if it is a gentoo, it has to be on Biscoe Island to get a pass. In the `c` (for chinstrap) test, we will do the same for chinstrap penguins, which should all be on Dream Island.
 
 
 ```{r}
@@ -381,7 +381,7 @@ summary(check_penguins)
 ![_check_penguins_](img/validate_penguins_check_1.PNG)
 
 
-We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that can be read into your R environment, and the test run against that list.
+We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that list can be read into your R environment, and the test run against that list. In this example, an object called `island_list` is created, and the validation check is run against the contents of that list.
 
 ```{r}
 island_list <- c("Biscoe", "Dream", "Torgersen")

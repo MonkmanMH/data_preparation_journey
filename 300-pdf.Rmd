@@ -94,7 +94,7 @@ str(penguin_summary)
 
 What we have as a result of this is a single character string, with the contents of the file. In this example, there is only one page, and thus one string. If you are dealing with a multi-page document, each page gets its own string.
 
-In a visual scan of this output, we see the variable names starting with "species". After the last of the variables "mean_body_mass_g" there are two end of line characters, represented by "\\n" (pronounced "backslash n"). We will be using these end of line characters as part of the parsing process.
+In a visual scan of this output, we see the variable names starting with `species`. After the last of the variables `mean_body_mass_g` there are two end of line characters, represented by "\\n" (pronounced "backslash n"). We will be using these end of line characters as part of the parsing process.
 
 
 Another way to look at the contents of a page is to use the `cat()` function (from {base R}), which displays the contents as it would be printed:
@@ -416,7 +416,7 @@ Hooray! (I should have left in all the failed attempts I made, before getting to
 
 Except...all of the variables are character type, because of the commas that are used as thousand separators and the percent signs.
 
-Let's go back to the "tester" object, and see what we can do to pull them out the commas using the {stringr} function `str_remove_all()`. (Note that `str_remove()` removes the first instance of the specified string.)
+Let's go back to the `tester` object, and see what we can do to pull them out the commas using the {stringr} function `str_remove_all()`. (Note that `str_remove()` removes the first instance of the specified string.)
 
 For the purpose of our exercise, we won't worry about the numbers in parentheses, which are the difference between the two previous variables (and since they are negative, they are represented using the accounting format style of being in parentheses.) We won't deal with the percentages, but the percent signs could be removed in the same way as the commas.
 
@@ -536,7 +536,7 @@ bcf_table_3
 
 
 
-Now we can use our data wrangling skills to calculate the percent change between the two years. Let's look at with passenger volume.
+Now we can use our data wrangling skills to calculate the percent change between the two years. Let's look at the change in passenger volume.
 
 ```{r}
 

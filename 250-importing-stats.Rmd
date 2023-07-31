@@ -86,7 +86,7 @@ The first function we will use is `look_for()`, which returns the labels, column
 look_for(penguins_sav)
 ```
 
-In this view, we can spot the species names in the "values" column. Also notice that the "col_type" column shows "dbl+lbl": double and label. In this dataframe, there are no labels.
+In this view, we can spot the species names in the "values" column. Also notice that the "col_type" column shows "dbl+lbl": double and label. In this dataframe, no labels have been defined.
 
 The function `var_label()` allows us to add a descriptive label to a variable. In the next code chunk, we add a label to the `species` variable:
 
@@ -110,18 +110,6 @@ var_label(penguins_sav) <- list(island = "Island of record",
 look_for(penguins_sav)
 ```
 
-
-
-For more about {labelled}, see 
-
-* http://larmarange.github.io/labelled/
-
-* https://cran.r-project.org/web/packages/labelled/
-
-
-The package's reference page is here: http://larmarange.github.io/labelled/index.html
-
-As well, there is a good introduction to the functions in the package here: http://larmarange.github.io/labelled/articles/intro_labelled.html
 
 
 #### Using labels
@@ -150,7 +138,7 @@ penguins_sav |>
 ```
 
 
-An alternative approach is the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions. In this first example, the variable "species" is mutated from labelled to factor type.
+An alternative approach is the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions, `mutate()` and `mutate_if()`. In this first example, the variable `species` is mutated from labelled to factor type.
 
 ```{r}
 penguins_sav |> 
@@ -322,7 +310,7 @@ You might encounter a circumstance where the data collectors have originally use
 
 Typically in these circumstances, the data collectors make the data available in two parts: 
 
-* The individual records, with the variables codedd numerically.
+* The individual records, with the variables coded numerically.
 
 * A separate "codebook", with the labels associated with each numeric value.
 
@@ -352,7 +340,7 @@ penguins_data <- read_excel(penguins_path, sheet = "penguins_values")
 ```
 
 
-A glance at the dataframe shows that the variables "species", "island", and "sex" are all coded as numeric variables. Unlike the .sav file we read earlier in this chapter, this dataframe does not carry the labels as part of the variable.
+A glance at the dataframe shows that the variables `species`, `island`, and `sex` are all coded as numeric variables. Unlike the ".sav" file we read earlier in this chapter, this dataframe does not carry the labels as part of the variable.
 
 We could write some code to apply labels and change the variable type, using the `val_labels()` function from the {labelled} package:
 
@@ -379,7 +367,7 @@ Of particular interest to us are the values associated with each variable. This 
 
 !["Variable Values" from penguins SPSS output](img/penguins_variable_values_spss.JPG)
 
-First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the codebook. Note that we start reading at row 37, so that row with "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
+First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the codebook. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
 
 ```{r, eval=FALSE}
 
@@ -396,9 +384,9 @@ penguins_code
 
 We have read the table as output by SPSS and saved in the Excel file, but there is additional wrangling required.
 
-The first step in the pipe is to rename the variables. Not only has the "Value" been given to the "Variable" column, but the value has interpreted as blank, and has been given the variable name "...2". 
+The first step in the pipe is to rename the variables. Not only has the name `Value` been given to the "Variable" column, but the name of the value column has interpreted as blank and has been assigned the variable name `...2`. 
 
-The second step is to use the {dplyr} `fill()` function to populate the missing values in the "variable" variable. The default direction of the fill is downwards, so we don't need to specify the direction as an argument. We will examine other options for cleaning data later.
+The second step is to use the {dplyr} `fill()` function to populate the missing values in the `variable` variable. The default direction of the fill is downwards, so we don't need to specify the direction as an argument. We will examine other options for cleaning data later.
 
 ```{r, eval=FALSE}
 

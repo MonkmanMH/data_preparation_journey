@@ -40,7 +40,7 @@ There are two sorts of R packages that utilize APIs. The first are those that ar
 
 ## R packages for direct connection
 
-In this section, we will explore an example that allows access to the data repository hosted by Statistics Canada. There are many other tools available; some are listed at the end of this chapter.
+In this section, we will explore examples that allows access to the data repositories hosted by the UK Office of National Statistics and Statistics Canada. There are many other tools available; some are listed at the end of this chapter.
 
 
 

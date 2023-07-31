@@ -197,7 +197,7 @@ WHERE dest = 'SEA'
 
 A mutating join is one that combines variables from two tables, based on matching observations on _keys_.
 
-In this R code, we create a summary table of the flights that went from New York to Seattle, by the name of the airline. The full airline names is not in the `flights` table; to get that, we need to join the airline name from the `airlines` table to the Seattle summary of the `flights` table. 
+In this R code, we create a summary table of the flights that went from New York to Seattle, by the name of the airline. The full airline name is not in the `flights` table; to get that, we need to join the airline name from the `airlines` table to the Seattle summary of the `flights` table. 
 
 The first step is to establish a connection to the `airlines` table. 
 
@@ -231,7 +231,7 @@ flights_SEA_summary |>
 
 
 
-The SQL code below returns the same table. We can see one difference in how the code is written—it runs "inside out", rather than in the linear manner we are accustomed to in our R pipes.
+The SQL code below returns the same table. We can see one difference in how the code is written—it runs "inside out" with the third step coming before the first and second, rather than in the linear manner we are accustomed to in our R pipes.
 
 
 
@@ -259,7 +259,7 @@ ORDER BY `n` DESC
 
 The joins are named using terms similar to those you are familiar with from {dplyr}. This left join will return all of the records from the `flights` table, and the variables from `airlines` where there is a match.
 
-To indicate the key variable for the join, we use `ON`. Note that we specify the table and the variable, separated by a period.
+To indicate the key variable for the join, we use the SQL term `ON`. Note that we specify the table and the variable, separated by a period.
 
 
 For more information on using SQL, with a focus on SQLite, Thomas Nield's _Getting Started with SQL_ [@Nield_2016] is highly recommended.
