@@ -294,7 +294,7 @@ Statistics Canada has made available a Public-Use Microdata File (PUMF) of the J
 The webpage for the survey, including the PUMF file, data dictionary, and methodological notes, is here:
 https://www150.statcan.gc.ca/n1/pub/82m0022x/2003001/4069119-eng.htm
 
-The PUMF is a fixed-width file named "JCUSH.txt". This file is quite a lot larger than the author names example above. There are the 8,688 records and each line of data takes up 552 columns! 
+The PUMF is a fixed-width file named "JCUSH.txt". This file is quite a lot larger than the author names example above. There are the 8,688 records, one for each survey respondent. The data also consists of 366 variables, a combination of assigned variables (such as the unique respondent identification number and the country), survey question responses, and derived variables that are calculated as part of the post-survey data processing. 
 
 Here's what the first 40 characters of the first record looks like:
 
@@ -309,7 +309,7 @@ str_sub(readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1), 1, 40)
 
 ```
 
-There's not a bit of white space anywhere in this data file!
+There's not a bit of white space anywhere in this data file. The 366 variables are stored in only 552 columns—an average of 1.5 columns per variable! This is a good example of the efficiency associated with this approach to encoding the data.
 
 Let's imagine that our research goal is to determine if there is a relationship between a person's level of education and their health outcomes. We've reviewed the data documentation, and it's clear that the JCUSH data has what we need. 
 
