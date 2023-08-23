@@ -348,13 +348,13 @@ Caitlin Hudon's "Field Notes: Building Data Dictionaries" [@Hudon_data_dictionar
 5. Where can I go to get more information?
 
 
-Finally, the {labelled} package [@R-labelled] contains the function `look_for()`, which generates a data dictionary of the dataframe. ^[Joseph Larmarange, ["Generate a data dictionnary and search for variables with look_for()"](http://larmarange.github.io/labelled/articles/look_for.html)]
+Finally, the {labelled} package [@R-labelled] contains the function `look_for()`, which generates a data dictionary of the dataframe. ^[Joseph Larmarange, ["Generate a data dictionary and search for variables with look_for()"](http://larmarange.github.io/labelled/articles/look_for.html)]
 
-Here, we read the SPSS version of the {palmerpenguins} file, and generate a data dictionary using the `look_for()` function.
+Here, we read the SPSS version of the {palmerpenguins} file, and then generate a data dictionary using the `look_for()` function. (We will return to using the {haven} package for reading data from SPSS, SAS, and Stata files later in this book.)
 
 ```{r}
 
-penguins_sav <- read_sav(dpjr::dpjr_data("penguins.sav"))
+penguins_sav <- haven::read_sav(dpjr::dpjr_data("penguins.sav"))
 
 labelled::look_for(penguins_sav)
 

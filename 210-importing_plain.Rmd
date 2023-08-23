@@ -351,7 +351,7 @@ head(jcush)
 
 ```
 
-Imagine, though, the challenge of handling this amount of data at one time! Between the many variables and the complex value labels, the "data" is more than just the fixed-width file. This is a circumstance where a different data storage solution ([as we will see later](#700_labelled_factors)) might have some strengths.
+Imagine, though, the challenge of handling this amount of data at one time! Between the many variables and the complex value labels, the "data" is more than just the fixed-width file. This is a circumstance where a different data storage solution ([as we will see later](#700_labelled_factors)) has some strengths.
 
 
 
