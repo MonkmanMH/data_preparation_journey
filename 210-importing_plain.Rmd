@@ -29,43 +29,10 @@ Plain-text (sometimes called "ASCII files", after the character encoding standar
 
 Plain text files come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common delimited format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, somewhat less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
 
-
-
-### Using base R
-
-Base R [@R-base] has a number of functions to read CSV, TSV, and fixed-width files. In the following examples, we will use versions of the data in the {palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]
-
-For example, `read.csv()` is a base R function to read CSV files.
-
-In the code chunks below, an R object `penguins_path` is created that contains the text string with the location of the file "penguins.csv". In the first example, the file is located in a directory called "data" that is in our RStudio project folder. The {here} package will generate the full path, with slash or backslash separators (depending on your computer's operating system), starting at the location of the RStudio project.
-
-```{r}
-# Example 1
-# create object path using the {here} package
-penguins_path <- here::here("data", "penguins.csv")
-
-# read the contents of the CSV file
-penguins_data <- read.csv(penguins_path)
-```
-
-In this second example, the file has been loaded to our computer using the {dpjr} package, and uses the `dpjr_data()` function from that package to access the file (no matter its location on our computer).
-
-
-```{r penguins_csv, echo=FALSE, eval=FALSE}
-# Example 2
-# alternative approach with {dpjr} package
-library(dpjr)
-penguins_path <- dpjr_data("penguins.csv")
-
-penguins_data <- read.csv(penguins_path)
-
-```
+There are base R functions to read this type of file. The functions within the {readr} [@R-readr] package has some advantages over the base R functions when it comes to plain-text files. (The {readr} package is part of the tidyverse.) Compared to the equivalent base R functions, the {readr} functions are quite a bit faster with big data files, and has some useful flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a dataframe. (For information about the difference, see [@Wickham_Grolemund2016, Tibbles])
 
 
 
-### Using {readr} 
-
-The {readr} [@R-readr] package is part of the tidyverse, and has some advantages over the base R functions when it comes to plain-text files.
 
 We activate {readr} by using the `library()` function:
 
@@ -74,22 +41,69 @@ library(readr)
 ```
 
 
-This chunk creates a string object that contains the path name, and then uses the function `read_csv()` to create an object called `penguins_data`, using the `penguins_path` object, which contains the file path to the the CSV file "penguins.csv".
+In this chapter, we will be using two of the {readr} functions. Each has a variety of arguments that allow us to control the behaviour of the function; those will be dealt with in the examples.
 
-* Note: this is the {readr} function `read` _underscore_ `csv`, not base R's `read` _dot_ `csv`.
+| function | purpose |
+| ---- | ---- |
+| `read_csv()` | reads the contents of a CSV file |
+| `read_fwf()` | reads the contents of a fixed-width text file |
 
-The `read_csv()` function is quite a bit faster with big data files, and has some useful flexibility when it comes to defining variable types as part of the read function (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a dataframe. (For information about the difference, see [@Wickham_Grolemund2016, Tibbles])
 
-```{r, message=FALSE}
-# read the file and assign it to the object "penguins_data"
-# note that this uses the "penguins_path" object created earlier
+
+
+## Using {readr} to read a CSV file
+
+In the following examples, we will use versions of the data in the {palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]
+
+In the code chunks below, an R character string object `penguins_path` is created that contains the text string with the location of the file "penguins.csv". 
+
+
+In the first example, the file has been loaded to our computer using the {dpjr} package, and uses the `dpjr_data()` function from that package to access the file (no matter its location on our computer).
+
+
+```{r penguins_csv, echo=FALSE, eval=FALSE}
+# Example 1
+# alternative approach with {dpjr} package
+library(dpjr)
+penguins_path <- dpjr_data("penguins.csv")
+
 penguins_data <- read_csv(penguins_path)
 
 ```
 
+
+In the second example, the file is located in a directory called "data" that is in our RStudio project folder. The {here} package will generate the full path, with slash or backslash separators (depending on your computer's operating system), starting at the location of the RStudio project.
+
+The `penguins_path` object is then used in the function `read_csv()` to create a dataframe object called `penguins_data`. 
+
+
+```{r, message=FALSE}
+# Example 2
+# create object path using the {here} package
+penguins_path <- here::here("data", "penguins.csv")
+
+# read the contents of the CSV file
+penguins_data <- read_csv(penguins_path)
+```
+
+
 ![read_csv message](img/penguin_read_csv_1.png){width=100%}
 
 The function returns a message letting us know the type that each variable is assigned.
+
+
+The {readr} package allows a lot of control over how the file is read. Of particular utility are the following:
+
+
+
+| argument | purpose |
+| ---- | ---- |
+| `col_types = cols()` | define variable types |
+| `na = ""` | specify which values you want to be turned into `NA` |
+| `skip = 0` | specify how many rows to skip; the default is 0 |
+| `n_max = Inf` | the maximum number of records to read; the default is `Inf` for infinity, interpreted as the last row of the file |
+
+
 
 Adding the `col_types = cols()` parameter allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be an factor.
 
@@ -104,16 +118,7 @@ penguins_data
 
 
 
-The {readr} package allows a lot of control over how the file is read. Of particular utility are 
-
-* `na = ""` -- specify which values you want to be turned into `NA`
-
-* `skip = 0` -- specify how many rows to skip 
-
-* `n_max = Inf` -- the maximum number of records to read
-
-
-For example, if we were working with a very large file and wanted to read the first five rows, just to see what's there, we could write the following:
+If we were working with a very large file and wanted to read the first five rows, just to see what's there, we could use the `n_max =` argument:
 
 ```{r}
 read_csv(penguins_path, 
