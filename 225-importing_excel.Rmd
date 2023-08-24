@@ -38,11 +38,25 @@ The "format as data" and "formatting as information" approaches of storing infor
 
 
 
-The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files. {readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions if it returns something different than what the analysis calls for.
+The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files.  To access the functions in {readxl}, we use the `library()` function to load the package into our active project:
 
 ```{r}
 library(readxl)
 ```
+
+
+{readxl} tries to figure out what's going on with each variable, but like {readr} it allows you to override some of those automated decisions if it returns something different than what the analysis calls for. The {readxl} arguments we will use include the following:
+
+
+| argument | purpose |
+| ---- | ---- |
+| `sheet = ""` | a character string with the name of the sheet in the Excel workbook to be read |
+| `range = ""` | define the rectangle to be read; see the examples below for syntax options |
+| `skip = 0` | specify how many rows to skip; the default is 0 |
+| `n_max = Inf` | the maximum number of records to read; the default is `Inf` for infinity, interpreted as the last row of the file |
+
+
+
 
 For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. The file "cr25_human_resources.xlsx" is in the folder "cr25".
 
@@ -88,7 +102,21 @@ df_HR_main <-
 head(df_HR_main)
 ```
 
-There are a variety of other approaches to defining the data rectangle in a `read_excel()` function, which might be more appropriate in a different context. For example, if the sheet is continually having new rows added at the bottom, using `range = anchored("B5", dim =c(4, NA))` specification might be prefered. This will start at B5, then read as many rows as there are data (the "NA" inside the `c()` function and 4 columns.^[For more options, see [the "Sheet Geometry" page at the {readxl} site](https://readxl.tidyverse.org/articles/sheet-geometry.html).]
+The `range =` argument also gives us the option to use Excel's row number-column number specification, which would change the above `range = "B5:E1004"` to `range = "R5C2:R1004C5"` ("B" refers to the second column, and "E" to the fifth).
+
+
+```{r, eval=FALSE}
+df_HR_main <- 
+  read_excel(
+    path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
+    sheet = "df_HR_main",
+    range = "R5C2:R1004C5"
+    )
+
+```
+
+
+There are a variety of other approaches to defining the data rectangle in a `read_excel()` function, which might be more appropriate in a different context. For example, if the sheet is continually having new rows added at the bottom, using `range = anchored("B5", dim =c(NA, 4))` specification might be prefered. This will start at cell B5, then read as many rows as there are data (the "NA" inside the `c()` function and four columns.^[For more options, see [the "Sheet Geometry" page at the {readxl} site](https://readxl.tidyverse.org/articles/sheet-geometry.html).]
 
 
 ```{r}

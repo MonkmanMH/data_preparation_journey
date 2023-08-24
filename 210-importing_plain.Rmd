@@ -92,7 +92,7 @@ penguins_data <- read_csv(penguins_path)
 The function returns a message letting us know the type that each variable is assigned.
 
 
-The {readr} package allows a lot of control over how the file is read. Of particular utility are the following:
+The arguments of the {readr} package allow a lot of control over how the file is read. Of particular utility are the following:
 
 
 
