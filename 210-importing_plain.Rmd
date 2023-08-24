@@ -165,6 +165,22 @@ We could also use the {base R} function `readLines()` to see the lines:
 readLines(authors_path)
 ```
 
+
+The arguments within the `readr::read_fwf()` function include those listed above for the `read_csv()` function, and some others that are specific to fixed width files.
+
+
+| argument | purpose |
+| ---- | ---- |
+| `col_names = c()` | defines a list of the names for the variables |
+| `fwf_widths(widths = c(), col_names = c())` | a list of the character length of each variable, and their names|
+| `fwf_positions(start = , end = , col_names = c())` | character position of the start and end of each variable, and their names |
+| `fwf_cols(variable1_name = c(), variable2_name = c())` | name followed by start and end position of each variable)
+| `fwf_cols(variable1_name = width, variable2_name = width)` | name followed by width of each variable)
+
+
+The examples below will elaborate on these arguments.
+
+
 The first approach would be to allow {readr} to guess where the column breaks are. The `fwf_empty()` function looks through the specified file and returns the beginning and ending locations it has guessed, as well as the `skip` value that the `read_fwf()` function uses.
 
 Note that the column names are specified in a list. 
