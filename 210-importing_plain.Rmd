@@ -348,7 +348,7 @@ For our analysis question, we will read in four variables: the unique household 
 | SAMPLEID | Household identifier | 12 | 1 - 12 |
 | SPJ1_TYP | Sample type [country] | 1 | 13 |
 | GHJ1DHDI | Health Description Index | 1 | 32 |
-| SDJ1GHED | Highest level of post-secondary education attained | 1 | 32 |
+| SDJ1GHED | Highest level of post-secondary education attained | 1 | 502 |
 
 
 You will note in the code below that in the case of the variables that are of length "1", the code the start and end positions are the same.
