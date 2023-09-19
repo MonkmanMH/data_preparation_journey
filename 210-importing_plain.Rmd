@@ -267,24 +267,24 @@ The widths of each column can be added using the `fwf_widths` argument:
 ```{r, message=FALSE}
 
 read_fwf(authors2_path,
-         fwf_widths(c(20, 10, 12), 
-                    c("name", "state", "unique_id")))
+         fwf_widths(widths = c(20, 10, 12), 
+                    col_names = c("name", "state", "unique_id")))
 
 ```
 
 ![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
 
-A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable `name` starts at position 1 and ends at position 20, and the second variable `unique_id` starts at 30 and ends at 42. Note that we won't read the `state` variable which occupies the ten columns from 21 through 29.
+A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable `name` starts at position 1 and ends at position 20, and the second variable `unique_id` starts at 30 and ends at 42. Note that we won't read the `state` variable which occupies the ten columns from 21 through 30.
 
 ```{r, message=FALSE}
 read_fwf(authors2_path,
-         fwf_positions(c(1, 31), c(20, 42), 
-                       c("name", "unique_id")))
+         fwf_positions(start = c(1, 31), end = c(20, 42), 
+                       col_names = c("name", "unique_id")))
 ```
 
 ![read_fwf message](img/authors2_read_fwf_4.png){width=100%}
 
-The fourth option is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the name followed by the start and end locations.
+The fourth option is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the variable name followed by the start and end locations.
 
 ```{r, message=FALSE}
 
