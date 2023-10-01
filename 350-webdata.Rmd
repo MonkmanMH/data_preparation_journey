@@ -99,13 +99,13 @@ library(cansim)     # access Statistics Canada's CANSIM data repository
 ```
 
 
-One of the many tables related to international travel that is published in CANSIM is "Table: 24-10-0006-01 Non-resident travellers entering Canada, by country of residence, seasonally adjusted". ^[The webpage for the table, showing the most recently available data, is here: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2410000601]
+One of the many tables related to international travel that is published in CANSIM is "Table: 24-10-0050-01 Non-resident visitors entering Canada, by country of residence". ^[The webpage for the table, showing the most recently available data, is here: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2410005001]
 
 
 
 Here's a screenshot of the table, showing the number of people arriving by their continent of residence. 
 
-![table](img\cansim_24-10-0006-01_2020-09-10.JPG)
+![table](img\cansim_25-10-0050-01_2020-09-10_2023-09-30.PNG)
 
 
 This table might be useful if you were developing a marketing campaign and you wanted to understand where tourists are coming from—the biggest markets and the fastest growing. But as shown, it is at too high a level; this is Canada by continent. For our purposes, we need to see specific country, those entering Canada via British Columbia, and a longer time series. 
@@ -118,43 +118,54 @@ Step 1: download the data.
 
 * the `get_cansim()` function takes the table number as the parameter, and connects to CANSIM and downloads the data into an R dataframe.
 
-```{r get_cansim_2410000601}
+```{r get_cansim_2410005001}
 
-travellers <- get_cansim("24-10-0006-01")
+travellers <- get_cansim("24-10-0050-01")
 
 ```
 
-We will come back to filtering and variable selection along with working with date fields later, but here's the code in R using the functions of the {dplyr} package to filter for the British Columbia cases during the month of June 2020:
+We will come back to filtering and variable selection along with working with date fields later, but here's the code in R using the functions of the {dplyr} package to filter for the British Columbia cases during the month of June 2019:
 
 ```{r}
 
 travellers_bc <-
 travellers |> 
   filter(GEO == "British Columbia",
-         REF_DATE == "2020-06")
+         REF_DATE == "2019-06")
 
 glimpse(travellers_bc, width = 65)
 
 ```
 
-There are six categories in the `Country of residence` variable. What if we just want a monthly report on a single continent? One of the features of CANSIM and other similar tables is that the individual series are given a single identifier. In the case of CANSIM, these are called the "vector numbers". Scroll to the right on this table, and you'll see a variable called `VECTOR`. The vector identifier (sometimes called "the vector number" even though it's a character string!) for European travellers entering Canada via British Columbia is v32214508.
+There are 287 rows, one for each of the categories in the `Country of residence` variable. It's important to note that these are not just countries, but the variable also includes subtotals. What if we just want a monthly report on a single continent? One option would be for us to filter the "COUNTRY" variable; here we filter for visitors from Europe.
+
+```{r}
+travellers_bc |> 
+  filter(`Country of residence` == "Europe")
+
+
+```
+
+
+One of the features of CANSIM and other similar tables is that the individual series are given a single identifier. In the case of CANSIM, these are called the "vector numbers". Scroll to the right on this table, and you'll see a variable called `VECTOR`. The vector identifier (sometimes called "the vector number" even though it's a character string!) for European travellers entering Canada via British Columbia is v1277198032.
 
 The {cansim} package also gives us a function to select a single vector number, so we can be more efficient still. We can speed up the download time _and_ skip the filtering steps to get to the one we want. (Note that this function requires us to enter a start date, and converts the reference date variable to the YYYY-MM-DD format.)
 
 ```{r get_cansim_vector, eval=FALSE}
 
-get_cansim_vector("v32214508", "2015-01-01")
+get_cansim_vector("v1277198032", start_time = "2015-01-01")
 
 ```
 
+This table has the shortcoming of not including the "GEO" or "Country of residence" variables, so we need to ensure that we have adequately documented what has been accessed.
 
-There are other very useful functions if you find yourself exploring Statistics Canada data sets. 
+The {cansim} package includes other very useful functions if you find yourself exploring Statistics Canada data sets. 
 
 The function `get_cansim_table_overview()` provides an abstract about the data table.
 
 ```{r get_cansim_table_overview, eval=FALSE}
 
-get_cansim_table_overview("24-10-0006-01")
+get_cansim_table_overview("24-10-0050-01")
 
 ```
 
