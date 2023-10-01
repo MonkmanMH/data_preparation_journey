@@ -124,7 +124,7 @@ The data files used in the {dpjr} package are covered by various open licenses; 
 
 ### Source code {-}
 
-The source code for this ebook can be found at this github repository: https://github.com/MonkmanMH/data_preparation_with_r 
+The source code for this ebook can be found at this github repository: https://github.com/MonkmanMH/data_preparation_journey 
 
 This book is written in **Markdown**, using the {bookdown} package [@R-bookdown], and published to the web at [bookdown.org](https://bookdown.org/).
 
