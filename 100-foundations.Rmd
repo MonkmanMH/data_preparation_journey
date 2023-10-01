@@ -150,9 +150,47 @@ Achieving a tidy structure may require reshaping the data or splitting values (s
 
 Other common structural problems that fall outside the four broad data quality categories include:
 
-* Column headers are values instead of variable names
+* Column headers are values instead of variable names. A frequently-encountered example are units of time, as in the example below, showing the population of Canada and the United States in 1952 and 2007:
 
-* Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files)
+```{r gapminder_untidy, echo=FALSE}
+
+gap_pop <- gapminder |> 
+  filter(country %in% c("Canada", "United States")) |> 
+  filter(year %in% c(1952, 2007)) |> 
+  select(country, year, "population" = pop) |> 
+  mutate(year = as.character(year))
+
+gap_pop_untidy <- gap_pop |> 
+  pivot_wider(id_cols = country, values_from = population, names_from = year) 
+
+gap_pop_untidy |> 
+  gt() |> 
+  fmt_number(sep_mark = ",")
+```
+
+These tables are also constrained in that they can only display one variable; in this case, it is the population of the country.
+
+A preferable structure would be to have a variable "year" and another with "population". This tidy structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
+
+```{r}
+gap_pop_2 <- gapminder |> 
+  filter(country %in% c("Canada", "United States")) |> 
+  filter(year %in% c(1952, 2007)) |> 
+  select(country, 
+         year, 
+         "population" = pop,
+         "life expectancy" = lifeExp) |> 
+  mutate(year = as.character(year))
+
+gap_pop_2 |> 
+  gt() |> 
+  fmt_number(sep_mark = ",")
+  
+```
+
+
+
+* Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files).
 
 * Inappropriate data types, such as numbers or logical values stored as character strings.
 
