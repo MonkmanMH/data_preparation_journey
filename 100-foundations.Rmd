@@ -1,5 +1,6 @@
 # Foundations {#foundations}
 
+
 In this chapter:
 
 * The data preparation process
@@ -150,29 +151,34 @@ Achieving a tidy structure may require reshaping the data or splitting values (s
 
 Other common structural problems that fall outside the four broad data quality categories include:
 
-* Column headers are values instead of variable names. A frequently-encountered example are units of time, as in the example below, showing the population of Canada and the United States in 1952 and 2007:
+1. Column headers are values instead of variable names. A frequently-encountered example are units of time, as in the example below. In the table below, the "values" are the years. Tables structured in this way can only display the values of one variable; in this case, it is the population of the country.
+
+
 
 ```{r gapminder_untidy, echo=FALSE}
 
 gap_pop <- gapminder |> 
   filter(country %in% c("Canada", "United States")) |> 
   filter(year %in% c(1952, 2007)) |> 
-  select(country, year, "population" = pop) |> 
-  mutate(year = as.character(year))
+  mutate(year = as.character(year),
+         pop = as.integer(pop)) |> 
+  select(country, year, "population" = pop)
 
 gap_pop_untidy <- gap_pop |> 
   pivot_wider(id_cols = country, values_from = population, names_from = year) 
 
 gap_pop_untidy |> 
   gt() |> 
-  fmt_number(sep_mark = ",")
-```
+  fmt_integer(
+    columns = c("1952", "2007"),
+    sep_mark = ","
+    )
 
-These tables are also constrained in that they can only display one variable; in this case, it is the population of the country.
+```
 
 A preferable structure would be to have a variable "year" and another with "population". This tidy structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
 
-```{r}
+```{r, echo=FALSE}
 gap_pop_2 <- gapminder |> 
   filter(country %in% c("Canada", "United States")) |> 
   filter(year %in% c(1952, 2007)) |> 
@@ -184,17 +190,20 @@ gap_pop_2 <- gapminder |>
 
 gap_pop_2 |> 
   gt() |> 
-  fmt_number(sep_mark = ",")
+  fmt_integer(
+    columns = c("population"),
+    sep_mark = ","
+    )
   
 ```
 
 
 
-* Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files).
+2. Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files).
 
-* Inappropriate data types, such as numbers or logical values stored as character strings.
+3. Inappropriate data types, such as numbers or logical values stored as character strings.
 
-* Multiple data types in a column. For example, some records are numbers and some are character strings. The values themselves could be entirely correct, but if some number entry includes commas as thousands separators, the variable will be read and stored as a character type.
+4. Multiple data types in a column. For example, some records are numbers and some are character strings. The values themselves could be entirely correct, but if some number entry includes commas as thousands separators, the variable will be read and stored as a character type.
 
 
 
