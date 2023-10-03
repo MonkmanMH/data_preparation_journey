@@ -26,7 +26,7 @@ public health strategies during a pandemic [@Polonsky_etal_2019].
 
 The process of going from raw data, collected during processes like those described above, to support decision making is often called data science. Data science combines the academic disciplines of statistics, computer programming, and the subject matter (be it astronomy, psychology, economics, or business). [@Conway_Venn_2010]
 
-The typical data science process has been described in this model [@Wickham_Grolemund2016]:
+The typical data science process has been described in this model [@Wickham_Cetinkaya-Rundel_Grolemund2023]:
 
 ![The data science process](img\data-science.png)
 

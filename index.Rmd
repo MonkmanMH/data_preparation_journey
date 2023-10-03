@@ -60,7 +60,9 @@ You might be an academic, working in the physical sciences, social sciences, or 
 
 It is assumed that the reader of this book will have a working knowledge of the fundamental data manipulation functions in R (whether base or tidyverse or packages beyond those) or another programming language that supports that work. If you can filter for specific values in the variables and select the columns you want, know the difference between a character string and a numeric value (`"1"` or `1`), and can create a new variable as the result of a manipulation of others, then we're on our way. 
 
-If you don't possess that knowledge yet, I would recommend that you work through _R for Data Science_ by Hadley Wickham and Garrett Grolemund [@Wickham_Grolemund2016]. This book, freely available at [r4ds.had.co.nz](https://r4ds.had.co.nz/), will give you a running start.
+This book leans heavily on R Markdown, particularly when it comes to describing documentation, and the packages of the tidyverse. Familiarity with both will be very helpful.
+
+If you don't possess that knowledge yet, I would recommend that you work through _R for Data Science (2nd edition)_ by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund [@Wickham_Cetinkaya-Rundel_Grolemund2023]. This book, freely available at [4ds.hadley.nz](https://r4ds.hadley.nz/), will give you a running start.
 
 While some of the topics covered here may be similar to what you'll find in _R for Data Science_ and other introductory books and similar resources, it is hoped that the examples in this book add more context and expose you to greater technical challenges.
 

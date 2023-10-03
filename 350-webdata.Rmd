@@ -118,7 +118,7 @@ Step 1: download the data.
 
 * the `get_cansim()` function takes the table number as the parameter, and connects to CANSIM and downloads the data into an R dataframe.
 
-```{r get_cansim_2410005001}
+```{r get_cansim_2410005001, eval=FALSE}
 
 travellers <- get_cansim("24-10-0050-01")
 
@@ -126,7 +126,7 @@ travellers <- get_cansim("24-10-0050-01")
 
 We will come back to filtering and variable selection along with working with date fields later, but here's the code in R using the functions of the {dplyr} package to filter for the British Columbia cases during the month of June 2019:
 
-```{r}
+```{r, eval=FALSE}
 
 travellers_bc <-
 travellers |> 
@@ -139,7 +139,7 @@ glimpse(travellers_bc, width = 65)
 
 There are 287 rows, one for each of the categories in the `Country of residence` variable. It's important to note that these are not just countries, but the variable also includes subtotals. What if we just want a monthly report on a single continent? One option would be for us to filter the "COUNTRY" variable; here we filter for visitors from Europe.
 
-```{r}
+```{r, eval=FALSE}
 travellers_bc |> 
   filter(`Country of residence` == "Europe")
 

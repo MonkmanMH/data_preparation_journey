@@ -166,7 +166,7 @@ penguin_variable_names
 ```
 
 
-The next step is to build a table, using a for-loop. (See [@Wickham_Grolemund2016, Chapter 21 Iteration] for a review of this process.)
+The next step is to build a table, using a for-loop. (See [@Wickham_Cetinkaya-Rundel_Grolemund2023, Chapter 27 Iteration] for a review of this process.)
 
 
 ```{r}
