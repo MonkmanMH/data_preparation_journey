@@ -66,7 +66,7 @@ datasets |>
 
 ```
 
-From this, we know we want "Retail sales data for Great Britain in value and volume terms, seasonally and non-seasonally adjusted", which has the `id` value of "retail-sales-index".
+From this, will select "Retail sales data for Great Britain in value and volume terms, seasonally and non-seasonally adjusted", which has the `id` value of "retail-sales-index".
 
 
 The function `ons_ids()` provides a list of the `id` column that is obtained from the `ons_datasets` function.
@@ -74,18 +74,16 @@ The function `ons_ids()` provides a list of the `id` column that is obtained fro
 Another option is the `ons_browse_qmi()` function, which opens the relevant ONS page in your web browser software.
 
 ```{r, eval=FALSE}
-# opens web browser on the relevant ONS webpage
 ons_browse_qmi(id = "retail-sales-index")
 ```
 
 Finally, we will use the relevant `id` value in an `ons_get()` function to retrieve the data. 
 
 ```{r, eval=FALSE}
-# 
 df_retail_sales <- ons_get(id = "retail-sales-index")
 ```
 
-THere are 42,400 rows in this data (as of 2023-06-14), with multiple variables for each month. Your analysis will require further filtering and selecting, but with the {onsr} package providing the access to the data, you are well on your way.
+There are 42,400 rows in this data (as of 2023-06-14), with multiple variables for each month. Your analysis will require further filtering and selecting, but with the {onsr} package providing the access to the data, you are well on your way.
 
 ### Statistics Canada
 
@@ -95,7 +93,6 @@ The package {cansim} [@R-cansim] uses the API that Statistics Canada has created
 
 ```{r, eval = FALSE}
 library(cansim)     # access Statistics Canada's CANSIM data repository
-
 ```
 
 
@@ -142,8 +139,6 @@ There are 287 rows, one for each of the categories in the `Country of residence`
 ```{r, eval=FALSE}
 travellers_bc |> 
   filter(`Country of residence` == "Europe")
-
-
 ```
 
 

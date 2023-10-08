@@ -287,10 +287,10 @@ Let's look at some of the functions within {stringr} that are particularly suite
 The {stringr} functions `str_subset()` and `str_which()` return the strings that have the pattern, either in whole or by location.
 
 ```{r}
-# which strings have the pattern?
+# which strings have the postal code pattern?
 str_subset(pc_kimberley, postalcode)  
 
-# which strings have the pattern ("e"), by location?
+# which strings have the postal code pattern, by location?
 str_which(pc_kimberley, postalcode)   
 
 ```
@@ -352,47 +352,28 @@ This table shows the functions we will use.
 | ---- | ---- |
 | `str_match()` | extracts the text of the match and parts of the match within parenthesis |
 | `str_replace()` and `str_replace_all()` | replaces the matches with new text |
+| `str_remove()` and `str_remove_all()` | removes the matches |
 | `str_split()` | splits up a string at the pattern |
 
 
-The first step will be to remove the space or hyphen.
-
-The code below shows two separate lines to achieve this, one for replacing a space, and one for a hyphen, that uses the `gsub()` function in {base} R.  
-
+The first step will be to remove the space hyphen, using `stringr::str_replace()` where the replacement string is "". 
 
 ```{r}
-
-gsub(pattern = " ", replacement = "", x = pc_kimberley_all)
-gsub(pattern = "-", replacement = "", x = pc_kimberley_all)
-
-```
-
-Those two steps can be combined by using a single regular expression which replaces either a space or a hyphen:
-
-```{r}
-
-pc_kimberley_clean <- gsub("[ -]", "", pc_kimberley_all)
-pc_kimberley_clean
-
-
-```
-
-There are functions within {stringr} that have the same result, `stringr::str_replace()` and `stringr::str_remove()`.
-
-
-```{r}
-
 str_replace(string = pc_kimberley_all, 
-            pattern = "[ -]", 
+            pattern = "",
             replacement = "")
+```
 
+A more concise way to do this would be to use the `stringr::str_remove()` function. As well, we can use a regular expression with both a space and a hyphen inside the square brackets, which has the result of replacing _either_ a space or a hyphen.
+
+```{r}
 str_remove(string = pc_kimberley_all, 
-           pattern = "[ -]")
-
+            pattern = "[ -]")
 ```
 
 
-The second step will be to capitalize the letters. The {stringr} function for this is `str_to_upper`. (There is also parallel `str_to_lower`, `str_to_title`, and `str_to_sentence` functions.)
+
+The second step will be to capitalize the letters. The {stringr} function for this is `str_to_upper`. (There are also parallel `str_to_lower`, `str_to_title`, and `str_to_sentence` functions.)
 
 ```{r}
 pc_kimberley_clean <- str_to_upper(pc_kimberley_clean)
@@ -1042,7 +1023,7 @@ glimpse(penguin_subset_2, width = 65)
 
 Frequently, our data will have missing values. Some of this will be gaps in the data, and in other cases it will be due to the structure of the source data file. 
 
-There are a variety of solutions to dealing with missingness in data values, from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value. There is in-depth literature on this topic (see [@Little_Rubin_2020], [@Gelman_etal_2014, chapter 18], and [@Gelman_Hill_2007, chapter 25]); what is presented here are some solutions to common and relatively simple problems.
+There are a variety of solutions to dealing with gaps in data values (sometimes called "missingness"), from listwise deletion (removing all rows with missing values) to complex algorithms that apply methods to impute the best estimate of the missing value. There is in-depth literature on this topic (see [@Little_Rubin_2020], [@Gelman_etal_2014, chapter 18], and [@Gelman_Hill_2007, chapter 25]); what is presented here are some solutions to common and relatively simple problems.
 
 
 ### Missing as formatting
