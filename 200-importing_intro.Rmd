@@ -19,13 +19,14 @@ In this chapter:
 
 * Guidelines for importing data
 
-
+* Setting the stage for subsequent chapters
 
 
 
 
 
 ## Introduction
+
 
 The data has been collected. It might be the result of:
 
@@ -38,7 +39,7 @@ The data has been collected. It might be the result of:
 * Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitate operation management of the store by tracking sales and inventory, and generating orders.
 
 
-Once the data has been collected in this way, you might have direct access to it. Or there may be a layer of processing between the raw source and the way it appears to your. After this processing, you might:
+Once the data has been collected, one of the first steps in the analytic process is to import the data...read the contents of the file (or files) and begin preparing that data for the analysis. You might have collected the data yourself, and designed the data storage. Or there may be a layer of processing between the raw source and the way it appears to your. After this processing, you might:
 
 * Have access to a database where the raw data is stored, including where additional post-collection manipulation might happen.
 
@@ -46,11 +47,11 @@ Once the data has been collected in this way, you might have direct access to it
 
 * Be able to download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
 
-
-
 And it's important to note that your analysis project might require more than one of these methods of data collection.
 
 How you assemble the data you need will depend on many factors, including what is already available, what your budget is (for example, some business-related data is collected by companies that then make it available at a cost), and the legal and regulatory environment (note that the definition of "personal information" varies from one jurisdiction to the next).
+
+The specifics of the "import" step will differ by such things as the format of file and the variables, all of which we will explore in the next chapters.
 
 
 ## Data formats
@@ -65,9 +66,7 @@ The data gets stored in a variety of electronic formats. The choice of format mi
 
 There is sometimes (often?) no right answer as to the best format for a particular use case—there are pros and cons to each. (With that said, there is often a clear _less good_ choice for data storage and sharing...we're looking at you, PDF.) What this means is that in your workflow you will have to deal with data that needs to be extracted from a multitude of systems, and will be available to you in a multitude of formats.
 
-:::{.callout-note}
-It is essential that a statistician can talk to the database specialist, and, as a team member, the statistician, along with most others, will be expected to be able to use the database facilities for most purposes by themselves, and of course advise on aspects of the design. There is always much preliminary 'data cleaning' to do before an analysis can begin, almost regardless of how good a job is done by the database specialist. [@Venables_IDT_review_2010]
-:::
+>It is essential that a statistician can talk to the database specialist, and, as a team member, the statistician, along with most others, will be expected to be able to use the database facilities for most purposes by themselves, and of course advise on aspects of the design. There is always much preliminary 'data cleaning' to do before an analysis can begin, almost regardless of how good a job is done by the database specialist. [@Venables_IDT_review_2010]
 
 There are plenty of resources detailing the complexities of the different data storage formats, and the decision process that goes into determining which format is appropriate for a specific use-case. I always approach the task assuming that the professionals who built the data storage system made a well-informed decision, including balancing the various trade-offs between different formats, as well as budgetary and technology constraints that they might have faced.
 
@@ -109,8 +108,18 @@ Some things to ask about the data:
 
 * How are missing values represented?
 
+  - As we will see in the next chapters, many import functions provide the flexibility to encode NA values based on specific characters. 
+
 We will look at structured ways investigate the contents of the data in the chapter [Validation strategies](#validation). In the next few chapters, we will focus on the process of reading the contents of different types of files.
 
+
+### Conclusion
+
+In order to import data from different file types, we require different R functions, which we will delve into in the next chapters. While the specifics vary from one file type to the next, there are two general principles worth noting:
+
+1. Use the arguments of your import function to get as far as you can, as fast as possible.
+
+2. Check your results at the end of the import step—don't wait until later to discover that something went awry.
 
 
 <!-- 

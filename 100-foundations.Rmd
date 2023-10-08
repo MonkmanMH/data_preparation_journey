@@ -146,7 +146,7 @@ When we are cleaning our data, we should also consider the structure. The goal s
 
 * Each value must have its own cell. [@tidydata]
 
-Achieving a tidy structure may require reshaping the data or splitting values (such as addresses) into separate columns.
+In many instances, achieving a tidy structure may require reshaping the data, using the {tidyr}[@R-tidyr] packages's `pivot_()` functions. In others, the data may have multiple variables in each cell which need to be split (such as addresses) into a separate column for each variable.
 
 
 Other common structural problems that fall outside the four broad data quality categories include:
