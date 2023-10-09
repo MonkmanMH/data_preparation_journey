@@ -23,6 +23,7 @@ library(glue)
 library(here)
 library(janitor)
 library(labelled)
+library(skimr)
 
 # 
 # reference docs:
@@ -32,6 +33,7 @@ library(labelled)
 
 
 # data
+library(gapminder)
 library(Lahman)
 library(palmerpenguins)
 library(dpjr) # custom package for _The Data Preparation Journey_

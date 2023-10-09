@@ -17,7 +17,8 @@ install.packages(c(
   "here",
   "janitor",
   "labelled",
-  "pdftools"
+  "pdftools",
+  "skimr"
   ))
 
 # data

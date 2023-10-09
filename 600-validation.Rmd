@@ -24,7 +24,7 @@ source("package_load.R")
 
 In this chapter:
 
-* Exploratory data analysis to identify problems
+* Exploratory data analysis to identify problems, including the {skimr} package
 
 * Using structured tests with the {validate} package
 
@@ -140,7 +140,42 @@ Not that the variables are a better format, and applying R's `summary()` functio
 summary(df_HR_train)
 ```
 
-A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing. There might be a reason for this, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
+
+
+Another tool for summary statistics EDA is the package {skimr}[@R-skimr]. The function `skim()` splits the output by variable type. There are no numeric variables in the HR training data; if there were, those would have the same statistics as produced by the `summary()` function, including the mean, standard deviation, and the interquartile range.
+
+
+```{r skimr_intro}
+skim(df_HR_train)
+```
+
+The `skim()` function, and others in the {skimr} package, can be put into a piped sequence.
+
+
+
+The `skim()` output can be streamlined, depending on the data and the questions you are exploring. The first option is to specify the variable types with the `yank()` function:
+
+```{r}
+
+df_HR_train |> 
+  skim() |> 
+  yank("logical")
+
+```
+
+We can also specify the outputs, using the `focus()` function. For our HR data, we might be only interested in the "n_missing" number.
+
+```{r}
+
+df_HR_train |> 
+  skim() |> 
+  focus(n_missing)
+
+```
+
+
+
+Now we have an output of our preliminary EDA. A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing. There might be a reason for this, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
 
 A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and record keeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 

@@ -60,9 +60,9 @@ There doesn't seem to be a single-best how-to instruction on "documentation" in 
 
 "Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use." [@Au_documentation_2020b]
 
-I like the way Au has framed this. In this view, "documentation" then becomes a fully-realized user manual, suitable for complex and recurring projects with many different contributors, and that might be considered mission critical. A lot of data science work doesn't meet those criteria, so what is needed isn't "documentation" but the notes that someone could use to build the documentation.
+I like the way this is framed. In this view, "documentation" becomes a fully-realized user manual, suitable for complex and recurring projects with many different contributors, and that might be considered mission critical. A lot of data science work doesn't meet those criteria, so what is needed isn't "documentation" but the notes that someone could use to build the documentation.
 
-If it's a one-off project, you can probably have a minimum (but not zero!) recordkeeping. But a project that repeats on a regular schedule (whether daily, monthly, or annually) should have more robust recordkeeping, and potentially some documentation.
+If it's a one-off project, you can probably have minimal (but not zero!) recordkeeping. But a project that repeats on a regular schedule (whether daily, monthly, or annually) should have more robust recordkeeping, and potentially some documentation.
 
 And it's important to think about this at the beginning of your work, perhaps even _before_ the beginning. Taking this approach, recordkeeping gets built into the process and your daily workflow, and becomes part of the work of data analysis. For example, you could record the source of your data as you're downloading it, or make comments about why you chose a particular function as soon as you incorporate the function into your script. These habits will not only capture what you're thinking at the time, but will also encourage you to think about the "why" of your decisions—and perhaps lead you to a different choice.
 
@@ -72,7 +72,7 @@ The idea of reproducibility\index{reproducibility} is a fundamental element of g
 And while it's important in an academic environment, this necessity for reproducibility\index{reproducibility} extends to business and government settings as well. In any situation where the data analysis is supporting decisions, it is imperative that the analyst (i.e. you) be able to explain their methods, and quickly and effectively respond to changes in the data (you might receive an update to the data with more records or revisions to the existing records).
 
 
-David Smith has summarized the benefits of a reproducible data science process\index{reproducibility}. It: 
+The benefits of a reproducible data science process\index{reproducibility} are summarized here: 
 
 * Saves time,
 * Produces better science,
@@ -81,9 +81,7 @@ David Smith has summarized the benefits of a reproducible data science process\i
 * Encourages collaboration. [@Smith_reproducible_2017]
 
 
-All of the details involved with creating a reproducible workflow is outside the scope of this book;  a summary of approaches associated with documentation of data sourcing and preparation is included in the [**Data documentation** chapter](#datadocumentation). 
-
-For a deeper look at reproducible workflow, it has been summarized by Wilson et al. [@Wilson_Bryan_good_enough_2017]. Specific methods for reproducibility\index{reproducibility} in R and RStudio are dealt with in depth by Christopher Gandrud [@Gandrud_2015].  
+All of the details involved with creating a reproducible workflow is outside the scope of this book; here we will concern ourselves with documentation.  
 
 
 
