@@ -356,18 +356,18 @@ This table shows the functions we will use.
 | `str_split()` | splits up a string at the pattern |
 
 
-The first step will be to remove the space hyphen, using `stringr::str_replace()` where the replacement string is "". 
+The first step will be to remove the space where the pattern is `" "` using the `stringr::str_remove()` function. This step would then be repeated with `pattern = "-"`
 
-```{r}
-str_replace(string = pc_kimberley_all, 
-            pattern = "",
-            replacement = "")
-```
-
-A more concise way to do this would be to use the `stringr::str_remove()` function. As well, we can use a regular expression with both a space and a hyphen inside the square brackets, which has the result of replacing _either_ a space or a hyphen.
 
 ```{r}
 str_remove(string = pc_kimberley_all, 
+            pattern = " ")
+```
+
+More efficiently, we can use a regular expression with both a space and a hyphen inside the square brackets, which has the result of replacing _either_ a space or a hyphen.
+
+```{r}
+pc_kimberley_clean <- str_remove(string = pc_kimberley_all, 
             pattern = "[ -]")
 ```
 
