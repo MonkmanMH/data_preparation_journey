@@ -11,7 +11,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 
 
-```{r setup_ch600, include=FALSE}
+```{r setup_ch600, include=FALSE, eval=FALSE}
 
 # packages
 source("package_load.R")
@@ -115,7 +115,7 @@ One way we might begin our investigation is the `dplyr::glimpse()` function. Thi
 glimpse(df_HR_train, width = 65)
 ```
 
-The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
+The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string in the original Excel file. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
 
 ```{r}
 
@@ -133,7 +133,7 @@ glimpse(df_HR_train, width = 65)
 
 
 
-Not that the variables are a better format, and applying R's `summary()` function gives us another way to see the data.
+Now that the variables are all in a type that suits what is being represented, applying R's `summary()` function gives us another way to see the data.
 
 
 ```{r}
@@ -142,40 +142,10 @@ summary(df_HR_train)
 
 
 
-Another tool for summary statistics EDA is the package {skimr}[@R-skimr]. The function `skim()` splits the output by variable type. There are no numeric variables in the HR training data; if there were, those would have the same statistics as produced by the `summary()` function, including the mean, standard deviation, and the interquartile range.
 
+This output is our preliminary EDA. What do we notice? Because there are no numeric values, we are not looking for outlier values or sentinel values, or the range of the values. 
 
-```{r skimr_intro}
-skim(df_HR_train)
-```
-
-The `skim()` function, and others in the {skimr} package, can be put into a piped sequence.
-
-
-
-The `skim()` output can be streamlined, depending on the data and the questions you are exploring. The first option is to specify the variable types with the `yank()` function:
-
-```{r}
-
-df_HR_train |> 
-  skim() |> 
-  yank("logical")
-
-```
-
-We can also specify the outputs, using the `focus()` function. For our HR data, we might be only interested in the "n_missing" number.
-
-```{r}
-
-df_HR_train |> 
-  skim() |> 
-  focus(n_missing)
-
-```
-
-
-
-Now we have an output of our preliminary EDA. A few NA values might be expected in a dataframe like this, and may not have an impact on our analysis. But the `train_qc` variable has nearly 40% of the values missing. There might be a reason for this, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
+A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
 
 A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and record keeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 
@@ -208,7 +178,7 @@ summary(df_HR_main)
 ```
 
 
-In the midst of this information is an interesting anomaly, one that is far more visible if we plot the data. Here is a density plot that shows the distribution of birth dates of the staff:
+In the midst of this information is an interesting anomaly—you may have spotted it. It is one that is far more visible if we plot the data. Below is a density plot that shows the distribution of birth dates of the staff:
 
 
 ```{r}
@@ -218,7 +188,7 @@ ggplot(df_HR_main, aes(x = date_of_birth )) +
 ```
 
 
-
+With a plot it is easy to see that there are a handful of birth dates around the year 1900, and then it takes off in the 1950s.
 
 Here are some questions that we might want to explore further in the `date_of_birth` variable, after seeing the results of the `summary()` function and the plot:
 
@@ -235,21 +205,25 @@ df_HR_main |>
 
 There are 10 cases with the birth date entry of 1901-01-01...this is the sort of pattern we would see with a sentinel value.
 
-Another approach to investigating this might be to create a single year "age" variable, and visualizing that using a box-and-whisker plot, which will also make outliers more apparent. We have heard that this might be associated with one category of occupation, so we want to visualize that. Using our relational database "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
+Another approach to investigating this might be to derive a single year "age" variable from the date of birth, and visualize age using a box-and-whisker plot by one of the categorical variables to make outliers more apparent. We have a hunch that the "1901-01-01" sentinel value for date of birth might be associated with one category of occupation. Using our relational database "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
 
 ```{r}
-# read transaction table
+# step 1: read transaction table, which contains occupation
 df_HR_transaction <- 
   read_excel(
     path = dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"),
     sheet = "df_HR_transaction",
     na = "NA"
   )
-# determine occupation on the date the table was created 
+
+# step 2: determine occupation on the date the table was created 
 df_HR_occupation_2020 <- df_HR_transaction |> 
   group_by(emp_id) |> 
   summarize(occupation_current = max(occupation, na.rm = TRUE))
 
+# step 3: in the main table calculate age and 
+#   join the occupation table created in step 2,
+#   then plot the result
 df_HR_main |>
   # calculate age on January 1, 2020
   mutate(age_2020 =
@@ -298,7 +272,7 @@ summary(check_penguins)
 
 ```
 
-What we see is that all of the penguins have a body mass of less than or equal to 8500 grams, and there are 2 "NA" values in the data.
+The `summary()` function on the object that the `check_that()` function creates shows that all of the penguins have a body mass of less than or equal to 8500 grams, and there are 2 "NA" values in the data.
 
 
 **Relationship:** 
@@ -475,7 +449,11 @@ In both cases, we get 5 "fails".
 
 How can we check which records have failed?
 
-{validate} provides two other functions, `validator()` and `confront()`, which give us a way to generate detailed record-by-record account of which records have failed our test.
+{validate} provides two other functions, `validator()` and `confront()`, which give us a way to 
+
+* run multiple checks at a time, and
+
+* generate detailed record-by-record account of which records have failed our test.
 
 First, we assign the syntax of our tests using `validator()` to an object "penguin_tests".
 
@@ -504,7 +482,7 @@ penguin_confront
 summary(penguin_confront)
 ```
 
-Let's look at the last ten rows of the results of the `confront()` function of our `badpenguins` data. Rows 340 through 344 are original to the clean `penguins` dataset; 345 through 349 are the bad penguins. The first one fails on all three tests, while the others fail on the first two but have "NA" values for the remainder.
+Let's look at the last ten rows of the results of the `confront()` function of our `badpenguins` data. Rows 340 through 344 are original to the clean `penguins` dataset; 345 through 349 are the bad penguins. The first of the bad penguins fails on all three tests, while the others fail on the first two and have "NA" values for the third. 
 
 ```{r}
 
@@ -513,7 +491,13 @@ tail(values(penguin_confront), 10)
 ```
 
 
-In this example, our prior knowledge of the data gives us the insight to quickly target the rows that failed the validation tests. In the real world, filtering the object that results from our validation tests will allow us to identify the rows that contain the records that fail the tests. The function we use for this is `violating()`
+In this example, our prior knowledge of the data gives us the insight to quickly target the rows that failed the validation tests. In the real world, filtering the object that results from our validation tests will allow us to identify the rows that contain the records that fail the tests.
+
+The function we use for this is `violating()`. The two arguments in the `violating()` function are 
+
+* the original data frame `badpenguins` and 
+
+* the object that resulted from the `confront()` function, `penguin_confront`.
 
 ```{r, eval=FALSE}
 
