@@ -28,14 +28,11 @@ In this book, we have worked through numerous examples of preparing data for ana
 
 Some key points worth re-iterating:
 
-* The data you get is not going to be the data you need. It is going to take work to prepare it for analysis.
+* The data you get is not going to be the data you need. It is going to take work—thoughtful work—to prepare it for analysis.
 
 * The process of preparing data is not a linear, step-by-step process. It involves iterating, and looping back to previous steps to address issues with the data. Iteration begins with the _import_ step, and continues through _validation_ and _cleaning_.
 
 * Every one of the elements in the preparation process requires you, the researcher, to make decisions based on your judgement about how best to fulfill the research objective. Starting with defining which variables to import through to how resolving missing values in the data, you have to make informed and thoughtful decisions based on how the data is going to be used.
-
-
-* Clean data is complete, consistent, and accurate. With these three qualities it is _believable_. Validation and cleaning will strive to improve the data in all three of these dimensions.
 
 * Get as far as you can, as quickly as you can, with the import function. The fewer post-import changes you need to make, the better.
 
@@ -53,17 +50,32 @@ Some key points worth re-iterating:
   - The audience for this documentation might be a collaborator you already know or a future user of the data that you have not met. The audience almost certainly includes you in the future—next year, next month, or tomorrow.
 
 
+* The data you receive will come in a variety of formats, each format having its own characteristics. Being familiar with what various formats bring (or don't bring) to the analysis can help you be more efficient. For example, labelled formats such as SPSS and SAS files carry with them valuable meta data about the variables and values; taking advantage of that additional information can create greater insights in the analysis.
+
+
+* Clean data is complete, consistent, and accurate. With these three qualities it is _believable_. Validation and cleaning will strive to improve the data in all three of these dimensions.
+
+
+* Exploring and validating data requires subject matter knowledge. 
+
+* Use a combination of approaches, including visualization and structured testing, to first identify the ways in which your data is dirty, and then after taking the necessary steps, to ensure that the data is clean.
+
+* The steps necessary to clean the data are going to be contingent on the research question. The same source data may need to be cleaned in completely different ways for two different research questions.
+
+* In some instances, replacement of missing values helps resolve structural problems with our data. In other cases, replacing missing values can introduce changes to the results of our analysis. Be careful as you introduce replacement into your data cleaning.
+
+
 
 ## Where to from here?
 
 We started this book with the metaphor of the lighthouse, which guides ships in the right direction and keeps them from running aground. I hope that the principles and the examples in this book achieve the same, in the context of preparing data for analysis.
 
-The examples in this book provide a guide to some of the types of challenges that you might confront when preparing data for analysis. But as you embark on your own data preparation journey, you will run into problems that are different than the ones here. The chances are high that the examples here won't be enough to solve the problem. You will require other tools, whether other R packages or a different programming language. You might encounter different data storage methods than what has been introduced here; this is particularly likely if you start working with very large databases.
+The examples in this book provide a guide to some of the types of challenges that you might confront when preparing data for analysis. But as you embark on your own data preparation journey, you will run into problems that are different than the ones here. The chances are high that the examples here won't be enough to solve the problem. You may need to think through the problem in a different way, in order to come to the solution. You may require other tools, whether other R packages or a different programming language. You might encounter different data storage methods than what has been introduced here; this is particularly likely if you start working with very large databases.
 
 Our knowledge is always incomplete. This is why we need to keep learning, and practicing our craft. If you don't find data preparation challenges in your job or the courses you take, you may want to adapt the examples in this book to other data. This might be finding an Excel file that uses colour as a variable. Or perhaps there's a SQL database that requires you to build a relation between two tables, but those two don't share a common variable, so you have to connect both to a third table that can then link to both. 
 
-The growth of the R ecosystem, including the tidyverse, has been astounding. The problems you encounter will, in all likelihood, have already been seen by someone else. And that someone may have written a blog post about their solution, or written a package with a generalized solution. 
+The growth of the R ecosystem, including the tidyverse, has been astounding. There is a high likelihood that the problems you encounter will have already been seen by someone else. And that someone may have written a blog post about their solution, or written a package with a generalized solution. 
 
-I hope that the examples in this book give you the confidence to venture forward.
+I hope that the examples in this book give you the confidence to venture forward, and to face those challenges as they appear.
 
 

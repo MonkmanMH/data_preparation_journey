@@ -1046,7 +1046,7 @@ head(tuition_data)
 
 The contents of the file have been read correctly, but there are many "NA" values in the `Economic Development Region` variable. This is due to the manner in which the data was structured in the source Excel file.
 
-The `fill()` function, in the {tidyr} package [@R-tidyr] [\index{{tidyr}}], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
+The `fill()` function, in the {tidyr} package [@R-tidyr]\index{{tidyr}}, provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
 
 ```{r}
 
@@ -1078,7 +1078,7 @@ It's worth noting that the `drop_na()` function provides an argument where we ca
 
 The functions used above for filling missing text values can also be used for missing numeric values. But when dealing with the replacement of numeric values we need to be mindful that the values we use will be incorporated into models and analysis; we need to be clear that the filled values are _estimates_, including sufficient documentation in our methodology section.
 
-Furthermore, there is a great deal of literature on the topic of imputation of missing values. As researchers, we need to be aware of _why_ the values are missing; are we dealing with values that are missing "at completely random", "at random", or "not at random"? Delving into the literature, you'll discover that these terms are precisely defined, and the solutions we adopt to deal with missingness will depend on why the data are missing. [@Little_Rubin_2020]
+Furthermore, there is a great deal of literature on the topic of imputation of missing values. As researchers, we need to be aware of _why_ the values are missing; are we dealing with values that are missing "at completely random", "at random", or "not at random"? Delving into the literature, you'll discover that these terms are precisely defined, and the solutions we adopt to deal with missingness will depend on the reason (or reasons) why the data are missing. [@Little_Rubin_2020]
 
 For the examples presented here, we will assume that you have already given significant thought to these methodological questions. As we discussed earlier in this chapter, _how_ we clean data is influenced by our research questions. As well, we need to consider our cleaning strategy in light of why the raw data are the way they are.
 
@@ -1158,12 +1158,12 @@ naics721_sal |>
 
 ### Time series imputation
 
-You may already have realized that the values we filled above are drawn from a time series. Economists, biologists, and many other researchers who work with time series data have built up a large arsenal of tools to work with time series data, including for dealing with missing values. 
+You may already have realized that the values we filled above are drawn from a time series. Economists, biologists, and many other researchers who work with time series data have built up a large arsenal of tools to work with time series data, including robust methodologies for dealing with missing values. 
 
-For R users, the package {forecast} has time series oriented imputation fill functions. [@R-forecast; @Hyndman_Khandakar_2008]
+For R users, the package {forecast} has time series-oriented imputation fill functions. [@R-forecast; @Hyndman_Khandakar_2008]
 
 
-The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series than simply extending known values. This function, by default, uses as linear interpolation to calculate values between two non-missing values. Here's a simple example:
+The `na.interp()` function from {forecast} gives us a much better way to fill the missing values in our time series than simply extending known values. This function, by default, uses a linear interpolation to calculate values between two non-missing values. Here's a simple example:
 
 ```{r}
 x <- c(1, NA, 3)
@@ -1210,7 +1210,7 @@ ggplot(naics721_sal, aes(x = ref_year, y = value_interp)) +
 The `na.interp()` function also has the capacity to create non-linear models.
 
 Other examples of time series missing value imputation functions can be found in the 
-{imputeTS} package [@R-imputeTS], which offers multiple "imputation algorithm implementations along with plotting functions for time series missing data statistics." A fantastic resource for using R for time series analysis, including a section on imputation of missing values, is [@Hyndman_Athanasopoulos_2021].
+{imputeTS} package [@R-imputeTS], which offers multiple imputation algorithms and plotting functions. A fantastic resource for using R for time series analysis, including a section on imputation of missing values, is [@Hyndman_Athanasopoulos_2021].
 
 
 
