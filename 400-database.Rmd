@@ -45,7 +45,7 @@ While SQL is the most commonly used query language, there are R packages that al
 
 * Do our work in an R environment.
 
-Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's our prefered approach.
+Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's our preferred approach.
 
 
 This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016]. Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the same database. 
@@ -126,7 +126,7 @@ flights_SEA <- flights |>
 ```
 
 
-In SQL, we use `SELECT` to select the columns (or variables) we want (you will note this is the same term as {dplyr}). The asterix "*" is a wildcard to select all the tables.
+In SQL, we use `SELECT` to select the columns (or variables) we want (you will note this is the same term as {dplyr}). The asterisk "*" is a wildcard to select all the tables.
 
 `FROM` indicates which table from which we want to draw the columns. 
 

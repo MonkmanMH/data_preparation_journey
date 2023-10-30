@@ -165,7 +165,7 @@ What do these principles look like in practice? This example shows what each ste
 
 We start with the Outline:
 
-* Objective: Tind relative sizes of the 10 largest economies in the world.
+* Objective: Find relative sizes of the 10 largest economies in the world.
 
 * Data: The {gapminder} package will be used, using the most recent year of data (2007).
 

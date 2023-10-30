@@ -420,7 +420,7 @@ str_split(UVic_address, ", ")
 
 
 
-{stringr} contains three useful functions for combining strings. `str_c()` collapses multipe strings into a single string, separated by whatever we specify (the default is nothing, that is to say, `""`.)
+{stringr} contains three useful functions for combining strings. `str_c()` collapses multiple strings into a single string, separated by whatever we specify (the default is nothing, that is to say, `""`.)
 
 Below we will combine the components of an address into a single string, with the components separated by a comma and a space.
 
@@ -504,7 +504,7 @@ Mining, Quarrying, and Oil and Gas Extraction is a sector within the goods-produ
 
 Mining (NAICS 212) is a subsector, comprised of three industries (at the four-digit level).
 
-The hierarchical structure of the dataframe means that if we simply summed the column we would end up double-counting: the sum of coal, metal ore, and non-metalic mineral industry rows is reported as the employment in Mining (except Oil and Gas).
+The hierarchical structure of the dataframe means that if we simply summed the column we would end up double-counting: the sum of coal, metal ore, and non-metallic mineral industry rows is reported as the employment in Mining (except Oil and Gas).
 
 
 Let's imagine our assignment is to produce a chart showing the employment in the three subsectors, represented at the three-digit level.
@@ -549,7 +549,7 @@ bls_employment_naics21 |>
 
 That doesn't work, because it leaves in the four-digit industries, starting with 2121.
 
-The solution can be found by focussing on the characters that differentiate the levels in the hierarchy. 
+The solution can be found by focusing on the characters that differentiate the levels in the hierarchy. 
 
 Let's add the digits 1 to 9 to the front of the second filter (the 8th character of the string), and leave the next character (the 9th character) as a zero. This should find "CEU1021200001" but omit "CEU1021210001".
 

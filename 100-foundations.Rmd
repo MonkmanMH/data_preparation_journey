@@ -100,7 +100,7 @@ We will consider a measure to be "consistent" if the same value is reported in t
 
 Some examples of consistency:
 
-* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Farenheit and Kelvin. Another might be in a survey or form with an international audience, where `salary` might be completed by respondents in the values of their local currency.
+* Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Fahrenheit and Kelvin. Another might be in a survey or form with an international audience, where `salary` might be completed by respondents in the values of their local currency.
 
 * Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or consider the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
 
