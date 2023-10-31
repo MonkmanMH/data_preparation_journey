@@ -34,6 +34,8 @@ source("package_load.R")
 # Preface  {-}
 
 
+<img src="img\\shutterstock_351132254.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
+
 Welcome to _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The Data Science Series](https://www.routledge.com/Chapman--HallCRC-Data-Science-Series/book-series/CHDSS).
 
 This is a work-in-progress; the most recent update is `r Sys.Date()`.
@@ -140,9 +142,10 @@ install.packages("bookdown")
 
 ### Cover image {-}
 
-The cover image is a wayfinder close to my home: [Fisgard Lighthouse](https://www.pc.gc.ca/en/lhn-nhs/bc/fortroddhill), marking the entrance to Esquimalt Harbour in Victoria, British Columbia, Canada. (Location: https://www.openstreetmap.org/#map=16/48.4307/-123.4477)
+The cover image is a wayfinder close to my home: <a href="https://www.pc.gc.ca/en/lhn-nhs/bc/fortroddhill" target="_blank">Fisgard Lighthouse</a>, marking the entrance to Esquimalt Harbour in Victoria, British Columbia, Canada. (Location: <a href="https://www.openstreetmap.org/#map=16/48.4307/-123.4477" target="_blank">48.4307, -123.4477</a>)
 
-Cover photo by jennyt, used with permission.
+
+The cover photo is by jennyt, and used with permission.
 
 
 
