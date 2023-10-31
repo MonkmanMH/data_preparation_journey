@@ -34,8 +34,6 @@ source("package_load.R")
 # Preface  {-}
 
 
-<img src="img\\20478450629_50e4c32d23_c.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
-
 Welcome to _The Data Preparation Journey: Finding Your Way With R_, a forthcoming book published with CRC Press as part of [The Data Science Series](https://www.routledge.com/Chapman--HallCRC-Data-Science-Series/book-series/CHDSS).
 
 This is a work-in-progress; the most recent update is `r Sys.Date()`.
@@ -50,7 +48,7 @@ There is no shortage of material—textbooks, journal articles, blog posts, onli
 
 The book will introduce the principles of data preparation, framed in a systematic approach that follows a typical data science or statistical workflow. With that context, readers will then work through practical solutions to resolving problems in data using the statistical and data science programming language R. These solutions will include examples of complex real-world data.
 
-In _Exploratory Data Analysis_, Tukey writes "the analyst of data needs both tools and understanding. The purpose of this book is to provide some of each." [@Tukey_1977, p.1] It is my modest hope that this book accomplishes the same.
+In _Exploratory Data Analysis_, Tukey writes "the analyst of data needs both tools and understanding. The purpose of this book is to provide some of each." [@Tukey_1977, p.1] It is my modest hope that this book also provides you both tools and understanding.
 
 
 
@@ -79,7 +77,9 @@ Finally Chapter 13 presents a short summary, and poses the question "Where to fr
 
 ## Acknowledgements {-}
 
-I would like to acknowledge everyone who has contributed to the books, articles, blog posts, and R packages cited within. As well, thanks to my current colleagues at MNP, my former colleagues at BC Stats, and my colleagues and students at the University of Victoria's Business Intelligence & Data Analytics program. The enthusiasm of this community of people I know well, along with people around the world I have never met, has helped sustain my own interest, and without that interest I wouldn't have written this book.
+I would like to acknowledge everyone who has contributed to the books, articles, blog posts, and R packages cited within. As well, thanks to my current colleagues at MNP, my former colleagues at BC Stats, and my colleagues and students at the University of Victoria's Business Intelligence & Data Analytics program. The enthusiasm of this community of people—some I know well and others around the world I have never met—has helped sustain my own interest, and without that interest I wouldn't have written this book.
+
+Particular thanks to Julie Hawkins and Emily Riederer, both of whom provided valuable feedback on early drafts, and through their critiques made this book better than it would have otherwise been. 
 
 
 ## Some important details {-}
@@ -142,7 +142,7 @@ install.packages("bookdown")
 
 The cover image is a wayfinder close to my home: [Fisgard Lighthouse](https://www.pc.gc.ca/en/lhn-nhs/bc/fortroddhill), marking the entrance to Esquimalt Harbour in Victoria, British Columbia, Canada. (Location: https://www.openstreetmap.org/#map=16/48.4307/-123.4477)
 
-The photo was taken by Jeff Hitchcock, and was downloaded from [flickr.com](https://flic.kr/p/xcBpUZ); that site notes that the image is licensed under the [Creative Commons license Attribution 2.0 Generic (CC BY 2.0)](https://creativecommons.org/licenses/by/2.0/).
+Cover photo by jennyt, used with permission.
 
 
 
