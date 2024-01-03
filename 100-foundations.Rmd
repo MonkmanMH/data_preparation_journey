@@ -102,7 +102,7 @@ Some examples of consistency:
 
 * Units are consistent. One example is temperature, and ensuring that the values are consistently reporting in degrees Celsius, not mixing Fahrenheit and Kelvin. Another might be in a survey or form with an international audience, where `salary` might be completed by respondents in the values of their local currency.
 
-* Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or consider the 57 different ways to spell "Philadelphia". ^[In this tweet, you can see 57 different ways of spelling "Philadelphia" in the data collected in a US Government loan form (https://twitter.com/dataeditor/status/1280278987797942272?s=20)]
+* Spelling is consistent. My home province in Canada is "British Columbia", but is often abbreviated to "B.C." or "BC". Or consider the 57 different ways that "Philadelphia" was spelled in the US Paycheck Protection Program (PPP) applications. [@Au_data_cleaning_2020]
 
 * In some cases, the mode of data collection can introduce differences in the value recorded. This can apply to everything from variability of scientific instruments such as air quality sensors [@Khreis_etal_2022] to how people respond to surveys conducted in different media [@Abeysundera_2015] [@Holbrook_Green_Krosnick_2003] [@St-Pierre_Beland_2004].
 

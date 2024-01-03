@@ -247,7 +247,6 @@ download.file(
 
 Once the file is downloaded, we can then read the file using the `pdf_text()` function and assign the contents to an R object in our environment. Of course, we also have the option to read a file that we've already downloaded.
 
-Once the file has been downloaded, we can use the `str()` function to display a summary of the structure of our new object.
 
 ```{r}
 
