@@ -28,7 +28,7 @@ The process of going from raw data, collected during processes like those descri
 
 The typical data science process has been described in this model [@Wickham_Cetinkaya-Rundel_Grolemund2023]:
 
-![The data science process](img\data-science.png)
+![_The data science process._](img\data-science.png)
 
 The generalist data scientist has a hand in all the steps through this workflow [@Monkman_bird_2019]; in this book we will focus on the Import to Tidy to Transform steps. We will also see how "Visualise" is an important part of Exploratory Data Analysis\index{exploratory data analysis}, a strategy for identifying potential problems with the data prior to cleaning.
 

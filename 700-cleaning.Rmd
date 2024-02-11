@@ -842,7 +842,7 @@ tb <- tibble(
 head(tb)
 ```
 
-In this data, the variable `female` is coded as numeric, so it can be used as part of the regression modeling. 
+In this data, the variable `female` is coded as numeric, so it can be used as part of the regression modelling. 
 
 More commonly, though, this variable will have been captured and saved in one called `gender` or `sex`, and often as a character string. The source data for the above table might have originally looked like this:
 
@@ -865,7 +865,7 @@ tb2
 
 Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables. 
 
-> If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy Modeling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8 "Feature Engineering with recipes".
+> If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy modelling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8 "Feature Engineering with recipes".
 
 
 

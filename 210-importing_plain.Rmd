@@ -87,7 +87,7 @@ penguins_data <- read_csv(penguins_path)
 ```
 
 
-![read_csv message](img/penguin_read_csv_1.png){width=100%}
+![_read_csv message._](img/penguin_read_csv_1.png){width=100%}
 
 The function returns a message letting us know the type that each variable is assigned.
 
@@ -158,7 +158,7 @@ This simple file has four (or as we will see, sometimes three, if we combine fir
 
 If we open the file in a text editor, we see this:
 
-![authors_fwf.txt](img/authors_img.jpg){width=75%}
+![_authors_fwf.txt._](img/authors_img.jpg){width=75%}
 
 We could also use the {base R} function `readLines()` to see the lines:
 
@@ -232,7 +232,7 @@ When we use the read function, it finds three columns:
 read_fwf(dpjr::dpjr_data("authors2_fwf.txt"))
 ```
 
-![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_1.png){width=100%}
 
 
 
@@ -249,7 +249,7 @@ read_fwf(authors2_path,
 
 ```
 
-![read_fwf message](img/authors2_read_fwf_2.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_2.png){width=100%}
 
 A more reliable approach is to specify exactly the width of each column. Note that in the example below, we specify only "name" without splitting it into first and last.
 
@@ -274,7 +274,7 @@ read_fwf(authors2_path,
 
 ```
 
-![read_fwf message](img/authors2_read_fwf_1.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_1.png){width=100%}
 
 A third option is to provide two lists of locations using `fwf_positions()`, the first with the start positions, and the second with the end positions. The first variable `name` starts at position 1 and ends at position 20, and the second variable `unique_id` starts at 30 and ends at 42. Note that we won't read the `state` variable which occupies the ten columns from 21 through 30.
 
@@ -284,7 +284,7 @@ read_fwf(authors2_path,
                        col_names = c("name", "unique_id")))
 ```
 
-![read_fwf message](img/authors2_read_fwf_4.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_4.png){width=100%}
 
 The fourth option is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the variable name followed by the start and end locations.
 
@@ -295,7 +295,7 @@ read_fwf(authors2_path,
 
 ```
 
-![read_fwf message](img/authors2_read_fwf_5.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_5.png){width=100%}
 
 And finally, {readr} provides a fifth way to read in a fixed-width file that is a variation on the second approach we saw, with the name and the width values aggregated.
 
@@ -305,7 +305,7 @@ read_fwf(authors2_path,
          fwf_cols(name = 20, state = 10, unique_id = 12))
 
 ```
-![read_fwf message](img/authors2_read_fwf_6.png){width=100%}
+![_read_fwf message._](img/authors2_read_fwf_6.png){width=100%}
 
 
 ### An extreme example of a fixed-width file 
@@ -334,12 +334,12 @@ str_sub(readLines(dpjr::dpjr_data("JCUSH.txt"), n = 1), 1, 40)
 
 There's not a bit of white space anywhere in this data file. The 366 variables are stored in only 552 columns—an average of 1.5 columns per variable! This is a good example of the efficiency associated with this approach to encoding the data.
 
-Let's imagine that our research goal is to determine if there is a relationship between a person's level of education and their health outcomes. We've reviewed the data documentation, and it's clear that the JCUSH data has what we need. 
+Let's imagine that our research goal is to determine if there is a relationship between a person's level of education and their health outcomes. We've reviewed the data documentation, and it is clear that the JCUSH data has what we need. 
 
 Here's how one variable, highest level of post-secondary education achieved, appears in the data dictionary:
 
 
-![health survey example](img/healthsurv_var_postsec.JPG)
+![_JCUSH health survey example._](img/healthsurv_var_postsec.JPG)
 
 The variable `SDJ1GHED` is 1 character long, in position 502 of the data. The variable might be only 1 character long, but when coupled with the information in the Content table, it becomes a very powerful piece of information. 
 

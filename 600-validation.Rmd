@@ -387,7 +387,7 @@ summary(check_penguins)
 ```
 
 
-![_check_penguins_](img/validate_penguins_check_1.PNG)
+![_check_penguins._](img/validate_penguins_check_1.PNG)
 
 
 We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that list can be read into your R environment, and the test run against that list. In this example, an object called `island_list` is created, and the validation check is run against the contents of that list.
@@ -415,7 +415,7 @@ summary(check_that(penguins, is.integer(year)))
 
 ```
 
-![_summary(check_that(penguins))_](img/penguins_summary_check_that.PNG)
+![_summary(check_that(penguins))._](img/penguins_summary_check_that.PNG)
 
 
 
@@ -506,7 +506,7 @@ violating(badpenguins, penguin_confront)
 ```
 
 
-![_violating(bad_penguins)_](img/validate_penguins_violating_1.PNG)
+![_violating(bad_penguins)._](img/validate_penguins_violating_1.PNG)
 
 
 

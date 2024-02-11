@@ -23,7 +23,7 @@ This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0
 
 ## Some key points
 
-In this book, we have worked through numerous examples of preparing data for analysis, whether that's summary tabulations or modeling methods such as linear regression with indicator variables or time series analysis and forecasting.
+In this book, we have worked through numerous examples of preparing data for analysis, whether that's summary tabulations or modelling methods such as linear regression with indicator variables or time series analysis and forecasting.
 
 
 Some key points worth re-iterating:

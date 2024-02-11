@@ -67,7 +67,7 @@ The tables are _related_ to `flights` by the fact that they have variables in co
 
 This diagram shows the relationships:
 
-![nycflights13](img\relational-nycflights.png)
+![_nycflights13._](img\relational-nycflights.png)
 
 (From [@Wickham_Grolemund2016], p.174)
 

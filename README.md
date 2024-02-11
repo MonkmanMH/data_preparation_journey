@@ -1,6 +1,6 @@
 # The Data Preparation Journey: Finding Your Way With R
 
-It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modeling, data visualization, and communication.
+It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modelling, data visualization, and communication.
 
 There is no shortage of material—textbooks, journal articles, blog posts, online courses, podcasts, etc.—about the 20%. That's not to say that there is no material for the other 80%. But it is scattered, found across technique-specific articles and domain-specific books, along with Stack Overflow questions and miscellaneous blog posts. This book serves as a travel guide: an introduction and wayfinder through some of the scattered resources for readers seeking to understand the core elements of data preparation. Like a lighthouse, it is hoped that it will both guide you in the right direction and keep you from running aground.
 

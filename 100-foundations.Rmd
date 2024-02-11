@@ -19,9 +19,9 @@ As we get started on the path of preparing our data, we should think first about
 
 Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
 
-While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modeling, visualization, and reporting. That same person might also be responsible for the modeling, visualization, and reporting.
+While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modelling, visualization, and reporting. That same person might also be responsible for the modelling, visualization, and reporting.
 
-At the end of the data preparation phase, before visualization and modeling can start, there should be:
+At the end of the data preparation phase, before visualization and modelling can start, there should be:
 
 **1. The raw data.**
 
@@ -37,7 +37,7 @@ Whether we are preparing data as part of our own analytic project or to make it 
 
 ### Elements of an iterative process
 
-This list below are things that make up the process you will go through in preparing your data for analysis and modeling. These are not "steps", in that data preparation is an iterative process, it's not linear or even necessarily sequential.
+This list below are things that make up the process you will go through in preparing your data for analysis and modelling. These are not "steps", in that data preparation is an iterative process, it's not linear or even necessarily sequential.
 
 1. Save a copy of the original data. Do not make any edits, and consider making the file "read-only".
 

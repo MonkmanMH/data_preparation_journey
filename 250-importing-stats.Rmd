@@ -170,20 +170,20 @@ https://www.sheffield.ac.uk/mash/statistics/datasets
 
 If you were working in SPSS, when you open the file, you would see the data like this:
 
-![SPSS data view](img\video_view_data.PNG)
+![_SPSS data view._](img\video_view_data.PNG)
 
 
 SPSS also gives you the option to view the variables:
 
-![SPSS variable view](img\video_view_variable.PNG)
+![_SPSS variable view._](img\video_view_variable.PNG)
 
 In this view, we can see both the variable names and the variable labels (in this case, the precise wording of the survey question).
 
-![SPSS variable label](img\video_heard_label.PNG)
+![_SPSS variable label._](img\video_heard_label.PNG)
 
 And we can also drill deeper, and see the value labels:
 
-![SPSS variable label](img\video_heard_values.PNG)
+![_SPSS variable label._](img\video_heard_values.PNG)
 
 
 The R package {haven} allows us to capture all of this information.
@@ -365,7 +365,7 @@ If we return to the Excel file "penguins_labelled.xlsx" we find that the second 
 
 Of particular interest to us are the values associated with each variable. This information is saved under the heading "Variable Values"; for the penguins data file, this appears in row 36 of the Excel sheet.
 
-!["Variable Values" from penguins SPSS output](img/penguins_variable_values_spss.JPG)
+![_"Variable Values" from penguins SPSS output._](img/penguins_variable_values_spss.JPG)
 
 First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the codebook. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
 

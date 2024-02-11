@@ -142,7 +142,7 @@ Very often, Excel files are far more complicated than the case above. In the fol
 
 Our focus is on sheet "P01", with population by sex. The first few rows of the data look like this:
 
-![_UK Census data_](img/UK_census_P01.PNG)
+![_UK Census data._](img/UK_census_P01.PNG)
 
 
 The {readxl} package's `read_excel()` function is the one we want to use. The first item is the path to the file. The function's default is to read the first sheet in the Excel file, which is not what we want, so we use the `sheet = ` argument to specify "P01". We will also read only the first 10 rows in the sheet, using the `n_max = 10` specification.
@@ -160,7 +160,7 @@ uk_census_pop
 
 ```
 
-![_UK Census data_](img/UK_census_read_excel_1.PNG)
+![_UK Census data._](img/UK_census_read_excel_1.PNG)
 
 
 \newpage
@@ -369,7 +369,7 @@ uk_census_formats <- xlsx_formats(
 
 When examining the `uk_census_formats` object in our environment, we see that it contains two lists, one called "local" and the other "style". If we look inside "local", we see one called "alignment", and within that is "indent"—this is what we're looking for. 
 
-![_UK Census data_](img/UK_census_excel_formats_1.PNG)
+![_UK Census data._](img/UK_census_excel_formats_1.PNG)
 
 
 You may have noticed that there are 62 elements in these lists, not 382 (the number of rows in the Excel file), or the 1,888 that represents each active cell in the sheet P01. What the 62 represents is the number of different formats present in the entire Excel file (across all of the sheets). 

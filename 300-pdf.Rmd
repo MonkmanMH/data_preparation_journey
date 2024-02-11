@@ -89,7 +89,7 @@ str(penguin_summary)
 
 ```
 
-![_penguin data from PDF file_](img/penguin_pdf_1.PNG)
+![_penguin data from PDF file._](img/penguin_pdf_1.PNG)
 
 
 What we have as a result of this is a single character string, with the contents of the file. In this example, there is only one page, and thus one string. If you are dealing with a multi-page document, each page gets its own string.
@@ -264,7 +264,7 @@ bcf[1]
 
 ```
 
-![_BC Ferries title page from PDF file_](img/bcferries_pdf_01.PNG)
+![_BC Ferries title page from PDF file._](img/bcferries_pdf_01.PNG)
 
 
 Using the `cat()` function:
@@ -281,7 +281,7 @@ If we compare these two outputs, we see that the first shows the characters "\\n
 
 The period covered by this annual report captures the profound impact on travel during the first year of the COVID-19 pandemic, and the report has comparisons in vehicle and passenger volumes with the previous, pre-pandemic year. Let's pull the data from the table that compares the number of passengers by each of the routes in the system. This table is on page 11 of the PDF file:
  
-![BC Ferries, passenger total](img/bcferries_passengers_2021.jpg)
+![_BC Ferries, passenger total._](img/bcferries_passengers_2021.jpg)
 
 
 From the object we created from the PDF report, we can separate the contents of page 11 into its own object:
@@ -296,7 +296,7 @@ bcf_11
 ```
 
 
-![_BC Ferries page 11 from PDF file_](img/bcferries_pdf_p11.PNG)
+![_BC Ferries page 11 from PDF file._](img/bcferries_pdf_p11.PNG)
 
 
 
@@ -313,7 +313,7 @@ bcf_11
 
 
 
-![_BC Ferries page 12 from PDF file_](img/bcferries_pdf_p12.PNG)
+![_BC Ferries page 12 from PDF file._](img/bcferries_pdf_p12.PNG)
 
 
 
@@ -341,7 +341,7 @@ bcf_11_lines[[1]][13]
 ```
 
 
-![_BC Ferries: single line_](img/bcferries_pdf_1-13.PNG)
+![_BC Ferries: single line._](img/bcferries_pdf_1-13.PNG)
 
 
 
@@ -427,7 +427,7 @@ str_remove_all(tester, ",")
 
 
 
-![_BC Ferries: remove commas_](img/bcferries_str_remove_1.PNG)
+![_BC Ferries: remove commas._](img/bcferries_str_remove_1.PNG)
 
 
 
@@ -475,7 +475,7 @@ bcf_table_2
 ```
 
 
-![_BC Ferries: table 2_](img/bcferries_table_2.PNG)
+![_BC Ferries: table 2._](img/bcferries_table_2.PNG)
 
 
 
@@ -509,7 +509,7 @@ bcf_table_3
 ```
 
 
-![_BC Ferries: table 3_](img/bcferries_table_3.PNG)
+![_BC Ferries: table 3._](img/bcferries_table_3.PNG)
 
 
 If we need to create sub-totals by route type, it would be better to have a separate variable for that. Here's where we can use the `case_when()` function from {dplyr}.
@@ -531,7 +531,7 @@ bcf_table_3
 ```
 
 
-![_BC Ferries: table 3, final_](img/bcferries_table_3_final.PNG)
+![_BC Ferries: table 3, final._](img/bcferries_table_3_final.PNG)
 
 
 

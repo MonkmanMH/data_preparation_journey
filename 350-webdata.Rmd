@@ -105,7 +105,7 @@ One of the many tables related to international travel that is published in CANS
 
 Here's a screenshot of the table, showing the number of people arriving by their continent of residence. 
 
-![table](img\cansim_25-10-0050-01_2020-09-10_2023-09-30.PNG)
+![_CANSIM table 25-10-0050-01._](img\cansim_25-10-0050-01_2020-09-10_2023-09-30.PNG)
 
 
 This table might be useful if you were developing a marketing campaign and you wanted to understand where tourists are coming from—the biggest markets and the fastest growing. But as shown, it is at too high a level; this is Canada by continent. For our purposes, we need to see specific country, those entering Canada via British Columbia, and a longer time series. 
