@@ -312,7 +312,7 @@ Typically in these circumstances, the data collectors make the data available in
 
 * The individual records, with the variables coded numerically.
 
-* A separate "codebook", with the labels associated with each numeric value.
+* A separate "code book", with the labels associated with each numeric value.
 
 
 In the following example, the penguins data [@R-palmerpenguins] has been stored in an Excel file. The first sheet in this Excel file contains the data, where the values in the three character variables (species, island, and sex) have been converted to numeric codes. For example, for the species variable, the Adelie penguins are represented by the value "1", Chinstrap are represented by "2", and Gentoo are represented by "3".
@@ -367,7 +367,7 @@ Of particular interest to us are the values associated with each variable. This 
 
 ![_"Variable Values" from penguins SPSS output._](img/penguins_variable_values_spss.JPG)
 
-First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the codebook. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
+First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the code book. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
 
 ```{r, eval=FALSE}
 

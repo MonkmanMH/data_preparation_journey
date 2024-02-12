@@ -404,7 +404,7 @@ pc_kimberley_tbl |>
 
 
 
-### split and combine strings
+### Split and combine strings
 
 Below, we split an address based on comma and space location, using the `str_split()` function.
 

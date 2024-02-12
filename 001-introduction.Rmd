@@ -8,7 +8,7 @@ Data is proliferating, collected as part of scientific research (whether measuri
 
 Today, data about _you_ might be collected when you: 
 
-* Buy a cup of coffee at a café. This generates at least three types of data: about the type of drink you ordered, about your coffee habits through the rewards program, and about the financial transaction—which is used by the store to measure sales and by you to manage your personal budget. 
+* Buy a cup of coffee at a café. This generates at least three types of data: about the type of drink you ordered, about your coffee habits through the rewards program, and about the financial transaction—which are used by the store to measure sales and by you to manage your personal budget. 
 
 * Use a streaming service to watch a movie or listen to some music. The service provider builds a profile about your preferences, which it can then use to make recommendations as to what you might also enjoy. The service can also use the aggregated data from all subscribers to evaluate the success of the content on their platform, and pay the creators of the content.
 
@@ -21,7 +21,7 @@ Today, data about _you_ might be collected when you:
 
 ## Analyzing data: the data science process
 
-A lot has been written about the benefits of organizations being "data-driven", when good data analysis leads to better decisions. There is no limit to the contexts where data analysis is being applied. In the private sector businesses can compete on analytics [@Davenport_Harris_2007], including retailers [@stitchfix_algo] and supply chain management [@Ashton_2018]. It can also be used in the public sector: data analysis can inform 
+A lot has been written about the benefits of organizations being "data-driven", when good data analysis leads to better decisions. There is no limit to the contexts where data analysis is being applied. In the private sector, businesses can compete on analytics [@Davenport_Harris_2007], including retailers [@stitchfix_algo] and supply chain management [@Ashton_2018]. It can also be used in the public sector: data analysis can inform 
 public health strategies during a pandemic [@Polonsky_etal_2019].
 
 The process of going from raw data, collected during processes like those described above, to support decision making is often called data science. Data science combines the academic disciplines of statistics, computer programming, and the subject matter (be it astronomy, psychology, economics, or business). [@Conway_Venn_2010]
@@ -37,24 +37,24 @@ The generalist data scientist has a hand in all the steps through this workflow 
 
 ## Data in the wild
 
-Most data science and statistics textbooks use example data sets that are nicely formatted and easy to import.  Anscombe's Quartet [@Anscombe_1973] is a famous example of a small data set that was designed to produce specific statistical results; it is included in the base version of R [@R-base]. Other data sets might be excerpted to use as teaching examples [@R-gapminder], chosen for their statistical properties [@Horst_Presmanes_Hill_Gorman_2022], compiled as examples to demonstrate a methodology or technique [@R-modeldata], or to clean, validate, and aggregate still-larger data collections [@R-Lahman]. 
+Most data science and statistics textbooks use example data sets that are nicely formatted and easy to import.  Anscombe's Quartet [@Anscombe_1973] is a famous example of a small data set that was designed to produce specific statistical results; it is included in the base version of R [@R-base]. Other data sets might be excerpted to use as teaching examples [@R-gapminder], chosen for their statistical properties [@Horst_Presmanes_Hill_Gorman_2022], compiled as examples to demonstrate a methodology or technique [@R-modeldata], or used to clean, validate, and aggregate still-larger data collections [@R-Lahman]. 
 
 
 But in real life the data we find ourselves working with is, more often than not, entirely different from those text book examples. 
 
-> _Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out its mouth._ ^[quote attributed to Jenny Bryan, "Teach Data Science and They Will Come", Joint Statistical Meetings, 2015]
+> _Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out of its mouth._ ^[quote attributed to Jenny Bryan, "Teach Data Science and They Will Come," Joint Statistical Meetings, 2015]
 
 * Data can be stored in different formats–spreadsheets, databases, software-specific file formats, websites, and PDF files. We need to have tools to access the data, no matter the file format.
 
 * The data might be stored in an untidy layout [@tidydata], or inconsistently structured.
 
-* We might receive data from multiple sources, so we end up with two files that have the same value but coded in different ways. For example, my home province in Canada can be represented as "British Columbia", "B.C.", or "BC". All three are accurate, but these variations can cause problems if they are inconsistent across the data sources (or even more problematically, in the same variable). And don't get me started on date formats—we'll save that for later.
+* We might receive data from multiple sources, so we end up with two files that have the same value but are coded in different ways. For example, my home province in Canada can be represented as "British Columbia", "B.C.", or "BC". All three are accurate, but these variations can cause problems if they are inconsistent across the data sources (or even more problematically, in the same variable). And don't get me started on date formats—we'll save that for later.
 
 * Data might have as-of-yet undetected errors. It might be incomplete, inconsistent, or it might have data entry mistakes and typos.
 
 * It might have bias...and there are many different types of bias.
 
-* The data may come from administrative source, and collected for a purpose other than research. In these cases, you may need to transform that data to fit the requirements of the research question.
+* The data may come from an administrative source, and collected for a purpose other than research. In these cases, you may need to transform that data to fit the requirements of the research question.
 
 This book will introduce steps necessary to ensure that you can assemble your data in a way that allows you to undertake the rest of the data science process, including sharing the data with other data analysts who might seek to use the data in further analysis. 
 

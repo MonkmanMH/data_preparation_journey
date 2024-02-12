@@ -193,7 +193,7 @@ WHERE dest = 'SEA'
 
 
 
-### Mutating joins & summary tables
+### Mutating joins and summary tables
 
 A mutating join is one that combines variables from two tables, based on matching observations on _keys_.
 

@@ -17,21 +17,21 @@ In this chapter:
 
 As we get started on the path of preparing our data, we should think first about where we want to go.
 
-Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician". 
+Ellis and Leek's article "How to Share Data for Collaboration" [@Ellis_Leek_2017] is aimed at scientists ("data generators") who have collected the data and are preparing it for further analysis in an academic environment—the authors speak about "preparing data for a statistician." 
 
-While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities, and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data, but who does the preparation of the data for the modelling, visualization, and reporting. That same person might also be responsible for the modelling, visualization, and reporting.
+While Ellis and Leek have a specific context in mind, the principles in their paper have broad applicability, and the practices are  essential in any environment, including a business, government, or non-profit organization. And in those contexts, the roles and responsibilities and the division of labour in the workflow, are often different than in an academic environment. The data collection and storage might be to support a business need, and the use of the data for business intelligence is a secondary benefit. As a result, there is often a middle person who isn't involved in the collection of the data but who does the preparation of the data for the modelling, visualization, and reporting. That same person might also be responsible for the modelling, visualization, and reporting.
 
 At the end of the data preparation phase, before visualization and modelling can start, there should be:
 
 **1. The raw data.**
 
-**2. A tidy dataset [@tidydata]**
+**2. A tidy dataset [@tidydata].**
 
 **3. A code book describing each variable and its values in the tidy dataset.**
 
 **4. An explicit and exact recipe used by the researcher to go from 1 to 2 to 3.**
 
-Over the next few chapters in this book, we will look at examples of creating a tidy data set (including cleaning the data), creating the code book and documenting our steps along the way, thereby creating an "explicit and exact recipe".
+Over the next few chapters in this book, we will look at examples of creating a tidy data set (including cleaning the data), creating the code book, and documenting our steps along the way, thereby creating an "explicit and exact recipe."
 
 Whether we are preparing data as part of our own analytic project or to make it available for sharing, these should be our goals.
 
@@ -47,7 +47,7 @@ This list below are things that make up the process you will go through in prepa
 
 4. Explore and validate the data, assessing the structure, looking for missing values and other "dirty" elements.
 
-5. Clean the data. (And then validate to make sure your cleaning has been successful...)
+5. Clean the data. (And then validate to make sure your cleaning has been successful.)
 
 This whole process is iterative (you will be adding to the readme file at every step), and the individual steps themselves are iterative. For example, your first code to import the data may be revisited, as you evaluate and assign variable types through the various arguments in the read function. Or your first cleaning code may address one dirty element, only to expose a second that you hadn't previously identified.
 
@@ -57,11 +57,11 @@ In addition, you will be using your data wrangling, manipulation, and visualizat
 
 ## Data quality
 
-Part of the data preparation process is to ask "What is the data's _quality_?" 
+Part of the data preparation process is to ask, "What is the data's _quality_?" 
 
 One resource that is useful to frame your thinking on this is Statistics Canada's _Quality Guidelines_ [@StatCan_data_quality_6]. Like other official statistical agencies around the world, Statistics Canada's reputation is staked on making high quality data available to the widest possible audience. They have identified six elements of data quality.
 
-* Relevance: The degree to which the data meets the user's needs, and relates to the issues that the user cares about.
+* Relevance: The degree to which the data meets the user's needs and relates to the issues that the user cares about.
 
 * Timeliness and punctuality: The delay between the information reference period and the date when the data becomes available.
 
@@ -86,7 +86,7 @@ Another typology of "data quality" is found in [@WangRichardY.1995TqdA]. High qu
 * Believable
 
 
-"Dirty data" is data that falls short on the _believable_ dimension, in particular evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
+"Dirty data" is data that falls short on the _believable_ dimension, in particular, evaluating whether the data are complete, consistent, and accurate. It is important to note that these categories are not mutually exclusive; a variable might be simultaneously inconsistent and inaccurate.
 
 **Complete**
 
@@ -114,7 +114,7 @@ When we say "accurate", we mean that the value recorded in our data is the value
 
 Some examples of inaccurate data are:
 
-* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" be entered as the default. This can be the consequence of a data entry validation process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
+* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" being entered as the default. This can be the consequence of a data entry validation process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
 
 > Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
 
@@ -125,10 +125,10 @@ Some examples of inaccurate data are:
 * Values are transformed automagically by software. Microsoft's Excel spreadsheet program is the most famous of these, converting many non-date values into date format, and assigning new values to store the data. For example, entering the character string "SEPT1" gets converted to September 1st of the current year. There is documented evidence that this software behaviour has caused errors in gene research. [@Zeeberg_etal_2004], [@Abeysooriya_etal_2021]
 
 
-* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier versions Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
+* Dates may be stored as a numeric value (or "serial number") representing the number of days elapsed from a fixed starting point—a starting point that varies by operating system. For example, Excel for Windows uses January 1, 1900 as the first day, while earlier version Macintosh computers, and by extension Excel for Macintosh, used January 1, 1904 as the start date. Thus the same date would be stored as different values. ^["Differences between the 1900 and the 1904 date system in Excel"](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system)
 
 
-* Contradiction. For example, imagine that a single individual is entered into two databases, but when we compare them we see that the date of birth differs, perhaps due to non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?
+* Contradiction. For example, imagine that a single individual is entered into two databases, but when we compare them we see that the date of birth differs, perhaps due to a non-ISO8601 entry: 07-08-79 and 08-07-79 both have the same digits but one could be mm-dd-yy and the other dd-mm-yy...we just don't know which is the correct one. Or is one a typo?
 
 
 * Cultural ignorance (for want of a better term).
@@ -138,11 +138,11 @@ Some examples of inaccurate data are:
 
 ### Tidy data
 
-When we are cleaning our data, we should also consider the structure. The goal should be a tidy structure \index{tidy data}, one that meets the following three principles or rules: 
+When we are cleaning our data, we should also consider the structure. The goal should be a tidy structure, \index{tidy data} one that meets the following three principles or rules: 
 
 * Each variable must have its own column.
 
-* Each observation mus have its own row.
+* Each observation must have its own row.
 
 * Each value must have its own cell. [@tidydata]
 
@@ -176,7 +176,7 @@ gap_pop_untidy |>
 
 ```
 
-A preferable structure would be to have a variable "year" and another with "population". This tidy structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
+A preferable structure would be to have a variable "year" and another "population". This tidy structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
 
 ```{r, echo=FALSE}
 gap_pop_2 <- gapminder |> 
@@ -199,7 +199,7 @@ gap_pop_2 |>
 
 
 
-2. Variable names that are duplicated (this is possible in some data storage formats, including plain text and Excel files).
+2. Variable names that are duplicated (this is possible in some data storage formats, including plain-text and Excel files).
 
 3. Inappropriate data types, such as numbers or logical values stored as character strings.
 
@@ -223,7 +223,7 @@ At this point we should ask what are we doing when we say we are "cleaning the d
 
 **The second challenge**: What can and should we do about them?
 
-We will see some of these challenges and solutions in the next few chapters, as part of the data import process. We will also return to explicitly address these challenges in the chapters \@ref(validation) and \@ref(cleaning).
+We will see some of these challenges and solutions in the next few chapters, as part of the data import process. We will also return to explicitly address these challenges in Chapters \@ref(validation) and \@ref(cleaning).
 
 
 <!-- 

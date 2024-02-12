@@ -147,7 +147,7 @@ This output is our preliminary EDA. What do we notice? Because there are no nume
 
 A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
 
-A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and record keeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
+A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and recordkeeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 
 
 

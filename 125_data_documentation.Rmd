@@ -42,7 +42,7 @@ Documentation is also essential if you intend to share your data [@White_etal_ni
 
 
 
-## Documentation and Recordkeeping
+## Documentation and recordkeeping
 
 The reasons for documenting our work are similar to the reasons we would save and output our cleaned data file: 
 
