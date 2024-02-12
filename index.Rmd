@@ -36,7 +36,7 @@ source("package_load.R")
 
 <img src="img\\shutterstock_351132254.jpg" width="350" height="460" alt="Fisgard Lighthouse" />
 
-Welcome to _The Data Preparation Journey: Finding Your Way With R_, [a forthcoming book published with CRC Press](https://www.routledge.com/The-Data-Preparation-Journey-Finding-Your-Way-with-R/Monkman/p/book/9781032189758) as part of [The Data Science Series](https://www.routledge.com/Chapman--HallCRC-Data-Science-Series/book-series/CHDSS).
+Welcome to _The Data Preparation Journey: Finding Your Way With R_, [a book published with CRC Press](https://www.routledge.com/The-Data-Preparation-Journey-Finding-Your-Way-with-R/Monkman/p/book/9781032189758) as part of [The Data Science Series](https://www.routledge.com/Chapman--HallCRC-Data-Science-Series/book-series/CHDSS).
 
 This is a work-in-progress; the most recent update is `r Sys.Date()`.
 
@@ -44,9 +44,9 @@ This is a work-in-progress; the most recent update is `r Sys.Date()`.
 ---
 
 
-It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modeling, data visualization, and communication.
+It is routinely noted that the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) applies to data science—80% of one's time is spent on data collection and preparation, and the remaining 20% on the "fun stuff" like modelling, data visualization, and communication.
 
-There is no shortage of material—textbooks, journal articles, blog posts, online courses, podcasts, etc.—about the 20%. That's not to say that there is no material for the other 80%. But it is scattered, found across technique-specific articles and domain-specific books, along with Stack Overflow questions and miscellaneous blog posts. This book serves as a travel guide: an introduction and wayfinder through some of the scattered resources for readers seeking to understand the core elements of data preparation. Like a lighthouse, it is hoped that it will both guide you in the right direction and keep you from running aground.
+There is no shortage of material—textbooks, journal articles, blog posts, online courses, podcasts, etc.—about the 20%. That's not to say that there is no material for the other 80%. But it is scattered, found across technique-specific articles and domain-specific books, along with Stack Overflow questions and miscellaneous blog posts. This book serves as a travel guide: an introduction and wayfinder through some of the scattered resources for readers seeking to understand the core elements of data preparation. It is hoped that, like a lighthouse, it will both guide you in the right direction and keep you from running aground.
 
 The book will introduce the principles of data preparation, framed in a systematic approach that follows a typical data science or statistical workflow. With that context, readers will then work through practical solutions to resolving problems in data using the statistical and data science programming language R. These solutions will include examples of complex real-world data.
 
@@ -60,7 +60,7 @@ You might be an academic, working in the physical sciences, social sciences, or 
 
 It is assumed that the reader of this book will have a working knowledge of the fundamental data manipulation functions in R (whether base or tidyverse or packages beyond those) or another programming language that supports that work. If you can filter for specific values in the variables and select the columns you want, know the difference between a character string and a numeric value (`"1"` or `1`), and can create a new variable as the result of a manipulation of others, then we're on our way. 
 
-This book leans heavily on R Markdown, particularly when it comes to describing documentation, and the packages of the tidyverse. Familiarity with both will be very helpful.
+This book leans heavily on R Markdown, particularly when it comes to describing documentation and the packages of the tidyverse. Familiarity with both will be very helpful.
 
 If you don't possess that knowledge yet, I would recommend that you work through _R for Data Science (2nd edition)_ by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund [@Wickham_Cetinkaya-Rundel_Grolemund2023]. This book, freely available at [4ds.hadley.nz](https://r4ds.hadley.nz/), will give you a running start.
 
@@ -74,7 +74,7 @@ Chapters 4 through 10 cover importing data from a variety of sources that are co
 
 Chapters 11 and 12 tackle finding problems in our data, and then dealing with those problems.
 
-Finally Chapter 13 presents a short summary, and poses the question "Where to from here?"
+Finally Chapter 13 presents a short summary and poses the question, "Where to from here?"
 
 
 ## Acknowledgements {-}
