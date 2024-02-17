@@ -56,7 +56,7 @@ The reasons for documenting our work are similar to the reasons we would save an
 As well, things change (the data, the software and hardware we use, the motivations for our work) and capturing the details about those things at the point we implement them helps us make any necessary changes that might be required at a later date.
 
 
-There doesn't seem to be a single-best how-to instruction on "documentation" in the context of data analytics or data science. What advice exists tends to be prescriptive and at a high level, and not overly descriptive of what makes good documentation. The term appears in some of the textbooks and manuals on how to do data science, and there are some journal articles that address documentation in the context of reproducible research. In the blog post "Let's Get Intentional About Documentation" Randy Au presents the case that a better term might be "recordkeeping".
+There doesn't seem to be a single-best how-to instruction on "documentation" in the context of data analytics or data science. What advice exists tends to be prescriptive and at a high level, and not overly descriptive of what makes good documentation. The term appears in some of the textbooks and manuals on how to do data science, and there are some journal articles that address documentation in the context of reproducible research. In the blog post "Let's Get Intentional About Documentation," Randy Au presents the case that a better term might be "recordkeeping".
 
 "Recordkeeping is keeping records, notes, and artifacts around to **help in creating documentation in the future.** It’s done by the people involved in doing the actual work saving things and making clarifications that only they really understand, with no expectation that someone else needs to understand everything. The material collected is primarily intended for use to write the actual documentation. Think of it as preserving raw data for future use." [@Au_documentation_2020b]
 
@@ -81,7 +81,7 @@ The benefits of a reproducible data science process\index{reproducibility} are s
 * Encourages collaboration. [@Smith_reproducible_2017]
 
 
-All of the details involved with creating a reproducible workflow is outside the scope of this book; here we will concern ourselves with documentation.  
+All of the details involved with creating a reproducible workflow are outside the scope of this book; here we will concern ourselves with documentation.  
 
 
 
@@ -115,7 +115,7 @@ In the journal article "Good enough practices in scientific computing", the auth
 
 ### Literate programming
 
-Computer scientist Donald Knuth introduced the idea of "literate programming" in 1984. In this approach, a natural language explanation takes a central role, and the code chunks for each step follow that explanation. The idea is to "code your documentation", instead of "document your code".
+Computer scientist Donald Knuth introduced the idea of "literate programming" in 1984. In this approach, a natural language explanation takes a central role, and the code chunks for each step follow that explanation. The idea is to "code your documentation," instead of "document your code."
 
 Knuth wrote "Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."  [@Knuth_literate_programming_1992, p.99]
 
@@ -137,21 +137,21 @@ Using plain language in these notes also encourages you to think a second time a
 
 The instruction list is descriptive text that describes what chunks of code are doing.
 
-In "How to Share Data for Collaboration", Ellis and Leek [@Ellis_Leek_2017] suggest something that is essential is a high-level outline of what the code is doing. Here's a rephrase of their first two steps:  
+In "How to Share Data for Collaboration," Ellis and Leek [@Ellis_Leek_2017] suggest something that is essential is a high-level outline of what the code is doing. Here's a rephrase of their first two steps:  
 
 * Step 1: Take the raw data file, run summarize code with parameters _a_ = 1, _b_ = 2
 
 * Step 2: Run the code separately for each sample 
 
-To then apply Knuth's "Literate Programming" ideas, each step would then be followed by the code to carry out that step. The R Markdown format is ideal for this sort of work; the text description would be followed by a chunk of R code, followed by another text description / R chunk pair, and so on.
+To then apply Knuth's "Literate Programming" ideas, each step would then be followed by the code to carry out that step. The R Markdown format is ideal for this sort of work; the text description would be followed by a chunk of R code, followed by another text description/R chunk pair, and so on.
 
 
 
 In practice, you may find yourself taking a step-by-step approach:
 
-1. Create an outline of the basic plan
+1. Create an outline of the basic plan,
 
-2. Within that plan add the steps that you will take in your analysis
+2. Within that plan add the steps that you will take in your analysis,
 
 3. Add some text detail for each step, 
 
@@ -243,7 +243,7 @@ software" [@Lee_ten_simple_rules_2018] is "Write comments as you code."
 
 Part of the higher-level documentation is the structure of the files in your project.
 
-For those working in an academic setting, Marwick, Boettiger and Mullen [@Marwick_etal_2018] have defined three generic principles for what should be included in research compendia. These principles can also be adapted to other settings:
+For those working in an academic setting, Marwick, Boettiger, and Mullen [@Marwick_etal_2018] have defined three generic principles for what should be included in research compendia. These principles can also be adapted to other settings:
 
 * Organize the files according to the prevailing standards. 
 
@@ -254,45 +254,45 @@ For those working in an academic setting, Marwick, Boettiger and Mullen [@Marwic
 
 This information is also referred to as a project's "metadata"  [@White_etal_nine_simple_ways]. 
 
-A more detailed list of the things to capture in documentation include:
+A more detailed list of the things to capture in documentation includes:
 
-* A brief description of the project, analysis, and research objective
+* A brief description of the project, analysis, and research objective.
 
-* A map of the file folder structure
+* A map of the file folder structure.
 
 
 * Detailed information about the data source
 
-  - Name of organization that collected the data
+  - Name of the organization that collected the data.
   
-  - Name and contact information of individual at that organization
+  - Name and contact information of the individual at that organization.
   
-  - Date of download or extract
+  - Date of download or extract.
   
-  - Web links
+  - Web links.
   
-  - Original file names
+  - Original file names.
   
-  - Links to additional documentation about the data, such as the data dictionary
+  - Links to additional documentation about the data, such as the data dictionary.
 
 * A high-level statement about _how_ the analysis was done
 
-  - For example: "This analysis used the daily data from 2010 through 2019 to calculate average per month volumes, which were then used in an ARIMA model to develop a 6 month forecast".
+  - For example: "This analysis used the daily data from 2010 through 2019 to calculate average per month volumes, which were then used in an ARIMA model to develop a 6 month forecast."
 
 
 * Details about the analysis and code:
  
   - Things that informed decisions ("I chose this statistical test because..." or "The variable date of birth was transformed into 'Age on July 1, 2020' because...")
   
-  - The instruction list—descriptive text that describes what files or chunks of code are doing, but not how they are doing it
+  - The instruction list—descriptive text that describes what files or chunks of code are doing, but not how they are doing it.
 
-  - The data dictionary or code book
+  - The data dictionary or code book.
 
 
 
 * Details about the software and packages used:
 
-  - Versions and (if available) release dates
+  - Versions and (if available) release dates.
 
 
 
@@ -319,24 +319,22 @@ The basic minimum README structure recommended is:
 
 * Project Description
 
-  - A missing component is "Data source" 
+  - A missing component is "Data source". 
 
 * Team (with contact information)
 
-For an analytic project that has completed, you might also want to include the high-level findings. This might be something akin to an abstract in an academic journal article, or an executive summary in a business or government report.
+For an analytic project that has been completed, you might also want to include the high-level findings. This might be something akin to an abstract in an academic journal article or an executive summary in a business or government report.
 
 
 Another source of tips is "Art of README" ^[["Art of README"](https://github.com/noffle/art-of-readme)]. Although it's aimed at people writing computer programs and modules, the lessons apply to data science projects as well. The purpose of a README is to:
 
-1. Tell them what it is (with context)
-1. Show them what it looks like in action
-1. Show them how they use it
-1. Tell them any other relevant details
+1. Tell them what it is (with context).
+1. Show them what it looks like in action.
+1. Show them how they use it.
+1. Tell them any other relevant details.
 
 
-Some examples:
-
-* the R package {palmerpenguins} has a comprehensive README: https://github.com/allisonhorst/palmerpenguins/blob/master/README.md
+An example is the R package {palmerpenguins} which has a comprehensive README on the github page.^[[{palmerpenguins} github page](https://github.com/allisonhorst/palmerpenguins/blob/master/README.md).]
 
 
 
@@ -376,7 +374,7 @@ fs::dir_tree(path = "project_template", recurse = 2)
 
 
 
-Marwick, Boettinger & Mullen provide some concrete examples of that a file structure might look like; note that the structure explicitly follows that of an R package. Their figure showing a "medium compendium" is below [@Marwick_etal_2018, p.84]:
+Marwick, Boettinger, and Mullen provide some concrete examples of a file structure might look like; note that the structure explicitly follows that of an R package. Their figure showing a "medium compendium" is below [@Marwick_etal_2018, p.84]:
 
 ![_Medium research compendium._](img/utas_a_1375986_f0003_b.png){width=25%}
 
@@ -387,7 +385,7 @@ In this example, there are elements that might not be relevant for every project
 
 ### The data dictionary or code book
 
-As we we will see, preparing data requires a number of steps, both objective and subjective, along the way. Creating a documentation of those decisions is essential. This documentation will serve as a record of the source of the data (all the better if you can also include specific information with the details of its collection such as dates, mode of collection, and the original survey questionnaire), the assumptions and decisions made in recoding and creating new variables, and so on.
+As we will see, preparing data requires a number of steps, both objective and subjective, along the way. Creating a documentation of those decisions is essential. This documentation will serve as a record of the source of the data (all the better if you can also include specific information with the details of its collection such as dates, mode of collection, and the original survey questionnaire), the assumptions and decisions made in recoding and creating new variables, and so on.
 
 
 Here are the three minimum components of a data dictionary:
