@@ -30,15 +30,15 @@ Spreadsheets and similar data tables are perhaps the most common way that data i
 
 While the data in a spreadsheet often gets stored in a manner similar to a plain-text file such as the CSV files we worked with in the previous chapter, Excel is designed to deliver far more functionality. 
 
-Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet, but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and I to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. 
+Broman and Woo [@Broman_Woo_2017] provide a how-to for good data storage practice in a spreadsheet, but you are much more likely to find yourself working with a spreadsheet that doesn't achieve that standard. Paul Murrell titled his article "Data Intended for Human Consumption, Not Machine Consumption" [@Murrell_consumption] for a reason: all too often, a spreadsheet is used to make data easy for you and me to read, but this makes it harder for us to get it into a structure where our software program can do further analysis. 
 
 Spreadsheets like Excel also have a dark side (at least when it comes to data storage)—the values you see are not necessarily what's in the cell. For example, a cell might be the result of an arithmetic function that brings one or more values from elsewhere in the sheet (or in some cases, from another sheet, or anther sheet in another file). Some users will colour-code cells, but with no index to tell you what each colour means. [@Bryan_spreadsheets_2016] (For an alternative vision, see "Sanesheets" [@Bryan_sanesheets_2016].)
 
-The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. For example, leading or trailing whitespace make a number turn into a character, even if the cell is given a number format.
+The "format as data" and "formatting as information" approaches of storing information can make it hard for us to undertake our analysis. Excel files can also contain a wide variety of data format types. For example, when using Excel you will find that leading or trailing whitespace makes a number turn into a character, even if the cell is given an Excel number format.
 
 
 
-The {readxl} package [@R-readxl] is designed to solve many of the challenges reading Excel files.  To access the functions in {readxl}, we use the `library()` function to load the package into our active project:
+The {readxl} package [@R-readxl] is designed to solve many of the challenges of reading Excel files.  To access the functions in {readxl}, we use the `library()` function to load the package into our active project:
 
 ```{r}
 library(readxl)
@@ -58,7 +58,7 @@ library(readxl)
 
 
 
-For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of a human resource data to support business decision-making. The file "cr25_human_resources.xlsx" is in the folder "cr25".
+For this example, we will use some mock data that is the type a data analyst might encounter when undertaking analysis of human resource data to support business decision-making. The file "cr25_human_resources.xlsx" is in the folder "cr25".
 
 
 Because Excel files can contain multiple sheets, we need to specify which one we want to read. The {readxl} function `excel_sheets()` lists them for us:
@@ -69,7 +69,7 @@ excel_sheets(dpjr::dpjr_data("cr25/cr25_human_resources.xlsx"))
 
 The one we want for our example is "df_HR_main", which contains the employee ID, name, birth date, and gender for each of the 999 staff.
 
-In our `read_excel()` function we can specify either the name of the sheet, or the number based on its position in the Excel file. While the default is to read the first sheet, it's often good practice to be specific, as Excel users are prone to re-arranging the order of the sheets (including adding new sheets). And because they seem (slightly) less likely to rename sheets, we have another reason to use the name rather than the number.
+In our `read_excel()` function we can specify either the name of the sheet or the number based on its position in the Excel file. While the default is to read the first sheet, it's often good practice to be specific, as Excel users are prone to re-arranging the order of the sheets (including adding new sheets). And because they seem (slightly) less likely to rename sheets, we have another reason to use the name rather than the number.
 
 ```{r}
 df_HR_main <- 
@@ -81,7 +81,7 @@ df_HR_main <-
 head(df_HR_main)
 ```
 
-This sheet possesses a structure we commonly see in Excel files: in addition to the data of interest, the creators of the file have helpfully added a title for the sheet. They might also put note in the "margins" of the data (often to the right or below the data), and add formatting to make it more visually appealing to human readers (beware empty or hidden columns and rows!).
+This sheet possesses a structure we commonly see in Excel files: in addition to the data of interest, the creators of the file have helpfully added a title for the sheet. They might also put a note in the "margins" of the data (often to the right or below the data), and add formatting to make it more visually appealing to human readers (beware empty or hidden columns and rows!).
 
 While this is often useful information, its presence means that we need to trim rows and columns to get our dataframe in a useful structure for our analysis.
 
@@ -116,7 +116,7 @@ df_HR_main <-
 ```
 
 
-There are a variety of other approaches to defining the data rectangle in a `read_excel()` function, which might be more appropriate in a different context. For example, if the sheet is continually having new rows added at the bottom, using `range = anchored("B5", dim =c(NA, 4))` specification might be prefered. This will start at cell B5, then read as many rows as there are data (the "NA" inside the `c()` function and four columns.^[For more options, see [the "Sheet Geometry" page at the {readxl} site](https://readxl.tidyverse.org/articles/sheet-geometry.html).]
+There are a variety of other approaches to defining the data rectangle in a `read_excel()` function, which might be more appropriate in a different context. For example, if the sheet is continually having new rows added at the bottom, using the `range = anchored("B5", dim =c(NA, 4))` specification might be prefered. This will start at cell B5, then read as many rows as there are data (the "NA" inside the `c()` function and four columns.^[For more options, see [the "Sheet Geometry" page at the {readxl} site](https://readxl.tidyverse.org/articles/sheet-geometry.html).]
 
 
 ```{r}
@@ -182,7 +182,7 @@ head(uk_census_pop)
 
 ```
 
-A second option would be define the range of the cells, using Excel nomenclature to the define the upper-left and bottom-right of the data rectangle. This is often a good approach when there is content outside the boundary of the data rectangle, such as additional notes. 
+A second option would be to define the range of the cells, using Excel nomenclature to define the upper-left and bottom-right of the data rectangle. This is often a good approach when there is content outside the boundary of the data rectangle, such as additional notes. 
 
 Again, opening the file in Excel for a visual scan can provide some valuable insights...here, we can see the additional rows at the top, as well as the hierarchical nature of the data structure.
 
@@ -217,13 +217,13 @@ The specifics of the hierarchy are as follows:
 
 * The value "England and Wales" contains the total population, which is the sum of England (Excel's row 8) and Wales (row 360). 
 
-* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in first three characters of the `Area code` variable). 
+* England (but not Wales) is then further subdivided into nine sub-national Regions (coded as "E12" in the first three characters of the `Area code` variable). 
 
 * These Regions are then are divided into smaller units, but the description of those units varies. These are Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11); for our purpose, let's shorthand this level as "counties".
 
 * The county level is further divided into Non-Metropolitan Districts (E07), and Metropolitan Counties are subdivided into Metropolitan Districts (E08). The image above shows Tyne and Wear (an E11 Met County, at row 18) is subdivided, starting with Gateshead, while Cumbria (an E10 County, at row 31) is also subdivided, starting with Allerdale.
 
-* Wales is divided into Unitary Authorities, coded as "W06" in first three characters of the `Area code` variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).] ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about).] 
+* Wales is divided into Unitary Authorities, coded as "W06" in the first three characters of the `Area code` variable. In Wales, there is no intervening Region, so these are at the same level as the Unitary Authorities in England. ^[The hierarchy of the administrative geographies of the UK can be found at the "England" and "Wales" links on [the ONS "Administrative geographies" page] (https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).] ^[You can download a map of these regions at ["Local Authority Districts, Counties and Unitary Authorities (April 2021) Map in United Kingdom"](https://geoportal.statistics.gov.uk/documents/ons::local-authority-districts-counties-and-unitary-authorities-april-2021-map-in-united-kingdom--1/about).] 
 
 This complicated structure means that the data has multiple subtotals—a `sum()` function on the `All persons` variable will lead to a total population of 277,092,700, roughly 4.7 times the actual population of England and Wales in 2021, which was 59,597,300. 
 
@@ -233,7 +233,7 @@ What would be much more useful is a structure that has the following characteris
 
 * A code for the level of the hierarchy, to enable filtering.
 
-* Additional variables (columns), so that each row has the higher level area of which it is a part For example, County Durham would have a column that contains the regional value "North East" and the country value of "England".
+* Additional variables (columns), so that each row has the higher level area of which it is a part. For example, County Durham would have a column that contains the regional value "North East" and the country value of "England".
 
 With that structure, we could use the different regional groupings in a `group_by()` function.
 
@@ -339,7 +339,7 @@ dplyr::glimpse(uk_census, width = 65)
 
 ```
 
-The dataframe created by the `xlsx_cells()` function is nothing like the spreadsheet in the Excel file. Instead, every cell in Excel file is row, and details about that cell are captured. The cell location is captured in the variable "address", while there is also a separate variable for the row number and another for the column number. There is also the value we would see if we were to look at the file, in the variable `character`. (If there is a formula in a cell, the function returns the result of the formula in the `character` variable, and the text of the formula in the `formula` variable.)
+The dataframe created by the `xlsx_cells()` function is nothing like the spreadsheet in the Excel file. Instead, every cell in the Excel file is a row, and details about that cell are captured. The cell location is captured in the variable "address", while there is also a separate variable for the row number and another for the column number. There is also the value we would see if we were to look at the file, in the variable `character`. (If there is a formula in a cell, the function returns the result of the formula in the `character` variable, and the text of the formula in the `formula` variable.)
 
 The `local_format_id` variable is created by {tidyxlr}, and helps us solve the problem of capturing the indentation. This variable contains a unique value for every different type of formatting that is used in the sheet. Below, we look at the first ten rows of the `uk_census` object, and we can see that the value "14" appears repeatedly in the variable "local_format_id".
 
@@ -356,7 +356,7 @@ The next thing we need to do is read the details of each of the formats stored i
 
 For this, we use the {tidyxl} function `xlsx_formats()`. We only need to specify the path to the file. "Excel defines only one of these dictionaries for the whole workbook, so that it records each combination of formats only once. Two cells that have the same formatting, but are in different sheets, will have the same format code, referring to the same entries in that dictionary." ^[Duncan Garmonsway, response to issue #84, {tidyxl} package repository, 2022-05-26. https://github.com/nacnudus/tidyxl/issues/84]
 
-The code below reads the formats, and assigns it to a new object `uk_census_formats`.
+The code below reads the formats and assigns the results to a new object `uk_census_formats`.
 
 ```{r}
 
@@ -388,7 +388,7 @@ This shows that for most of the various cell formattings used in the file most h
 
 Back to the object `uk_census`. We are interested in the data starting in the eighth row, so we need to filter for that. 
 
-For the {tidyxl} functions to work, the first column needs to defines the hierarchical structure. To accomplish this, we will select it out using the `!=` operator.
+For the {tidyxl} functions to work, the first column needs to define the hierarchical structure. To accomplish this, we will select it out using the `!=` operator.
 
 The `behead_if()` function identifies a level of headers in a pivot table, and makes it part of the data. Similar to the {tidyr} function `pivot_longer()`, it creates a new variable for each row based on the headers. In the case of the UK Census data, the headers are differentiated by the number of indents in the formatting.
 
@@ -539,7 +539,7 @@ uk_census_behead |>
 ```
 
 
-Now we have diagnosed the problem, what solution can we apply? 
+Now that we have diagnosed the problem, what solution can we apply? 
 
 One solution is to repopulate each level's `field` variable by stepping up a level and comparing that to the value three rows earlier in the data.^[Thanks to Duncan Garmonsway, the author of the {tidyxl} and {untidyr} packages, for the path to this solution.] (We look at the previous rows using the `dplyr::lag()` function. It has to be three rows because our beheading function has made separate rows for "All persons", "Female", and "Male".)
 
@@ -607,7 +607,7 @@ uk_census_behead_revised |>
 
 If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined to our data, as well as to any other table we might need to use in the future.
 
-For our UK Census data, we will create two separate concordance tables. We will save these tables as a CSV file, so it's available quickly for other applications. 
+For the UK Census data, we will create two separate concordance tables. We will save these tables as a CSV file, so they are readily available for other applications. 
 
 For the first table, we will build a table with each type of administrative region and its associated three-digit code. This is done programatically in R, using the {tibble} package [@R-tibble]. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
 
@@ -644,7 +644,7 @@ write_csv(uk_region_table, "data_output/uk_region_table.csv")
 
 
 
-Our next step is to extract the unique values in the area code and area name from the original data file.
+Our next step is to extract the unique values in the area code and area name from the original data in the object `uk_census_pop`.
 
 ```{r}
 uk_census_pop_geo <- uk_census_pop |> 
@@ -671,9 +671,10 @@ uk_census_pop_geo |>
 
 A more complex concordance table can be derived from the beheaded table we created earlier:
 
-* create variable with lowest-level value, ie what's in the source table column B
+* A variable with lowest-level value, i.e. the values in the source table column B.
 
 * need to prune only field variables and then the non-duplicated rows (`distinct()`)
+
 
 ```{r}
 
