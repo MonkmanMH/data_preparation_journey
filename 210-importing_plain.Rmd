@@ -25,11 +25,11 @@ In this chapter:
 
 ## Delimited plain-text files
 
-Plain-text (sometimes called "ASCII files", after the character encoding standard they use) files are often used to share data. They are limited in what they can contain, which has both downsides and upsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
+Plain-text files (sometimes called "ASCII files", after the character encoding standard they use) are often used to share data. They are limited in what they can contain, which has both downsides and upsides. On the downside, they can't carry any additional information with them, such as variable types and labels. But on the upside, they don't carry any additional information that requires additional interpretation by the software. This means they can be read consistently by a wide variety of software tools.
 
 Plain-text files come in two varieties: delimited and fixed-width. "Delimited" is a reference to the fact that the files have a character that marks the boundary between two variables. A very common delimited format is the CSV file; the letters in the file name stand for "Comma Separated Values", and use a comma as the variable delimiter. Another delimited type, somewhat less common, uses the tab character to separate the variables, and will have the extension "TSV" for, you guessed it, "Tab Separated Values". Occasionally you will find files that use semi-colons, colons, or spaces as the delimiters.
 
-There are base R functions to read this type of file. The functions within the {readr} [@R-readr] package has some advantages over the base R functions when it comes to plain-text files. (The {readr} package is part of the tidyverse.) Compared to the equivalent base R functions, the {readr} functions are quite a bit faster, and the package's functions provide some useful flexibility when it comes to defining variable types as part of the read operation (rather than reading in the data, and then altering the variable types). As well, it returns a tibble instead of a dataframe. (For information about the difference, see [@Wickham_AdvancedR_2019, 3.6 Data frames and tibbles]. For working with very large files, you may want to investigate the `fread()` function in the {data.table} package[@R-data.table].)
+There are base R functions to read this type of file. The functions within the {readr} [@R-readr] package has some advantages over the base R functions when it comes to plain-text files. (The {readr} package is part of the tidyverse.) Compared to the equivalent base R functions, the {readr} functions are quite a bit faster, and the package's functions provide some useful flexibility when it comes to defining variable types as part of the read operation (rather than reading in the dat and then altering the variable types). As well, it returns a tibble instead of a dataframe. (For information about the difference, see [@Wickham_AdvancedR_2019, 3.6 Data frames and tibbles]. For working with very large files, you may want to investigate the `fread()` function in the {data.table} package[@R-data.table].)
 
 
 
@@ -107,7 +107,7 @@ The arguments of the {readr} package allow a lot of control over how the file is
 
 Adding the `col_types = cols()` parameter has two benefits. First, defining the variable type avoids errors (such as numeric fields will be read as such, and not as characters) and speeds up the read process since R doesn't have to check and infer the variable type.
 
-Second, it allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be an factor.
+Second, it allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be a factor type variable.
 
 When we show the entire table, we can see that the variable `species` is now a factor type.
 
@@ -134,7 +134,7 @@ read_csv(penguins_path,
 
 Fixed-width files don't use a delimiter, and instead specify which column(s) each variable occupies, consistently for every row in the entire file.
 
-Fixed-width files are a hold-over from the days when storage was expensive and/or on punch cards. This meant that specific columns in the table (or card) were assigned to a particular variable, and precious space was not consumed with a delimiter. Compression methods have since meant that a CSV file with unfixed variable lengths are more common, but in some big data applications, fixed-width files can be much more efficient.
+Fixed-width files are a hold-over from the days when storage was expensive and/or on punch cards. This meant that specific columns in the table (or card) were assigned to a particular variable, and precious space was not consumed with a delimiter. Compression methods have since meant that a CSV file with unfixed variable lengths is more common, but in some big data applications, fixed-width files can be much more efficient.
 
 If you ever have to deal with a fixed-width file, you will (or should!) receive a companion file letting you know the locations of each variable in every row.
 
@@ -168,7 +168,7 @@ readLines(authors_path)
 ```
 
 
-The arguments within the `readr::read_fwf()` function include those listed above for the `read_csv()` function, and some others that are specific to fixed width files.
+The arguments within the `readr::read_fwf()` function include those listed above for the `read_csv()` function, and some others that are specific to fixed-width files.
 
 
 | argument | purpose |
@@ -212,7 +212,7 @@ read_fwf(authors_path,
 Note that {readr} will impute the variable type, as it did with the CSV file. And although we won't implement it in these examples, in the same way `read_fwf()` allows us to use the `col_types` specification, as well as `na`, `skip`, and others. See the `read_fwf()` reference at https://readr.tidyverse.org/reference/read_fwf.html for all the details.
 
 
-Reading this fixed-width file with these three author names worked, but it could break quite easily. We just need one person with a three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the `read_fwf()` parser.
+Reading this fixed-width file with these three author names worked, but it could break quite easily. We just need one person with three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values, and the inconsistent structure throws off the `read_fwf()` parser.
 
 In this example, we read a longer list of author names:
 
@@ -256,7 +256,7 @@ A more reliable approach is to specify exactly the width of each column. Note th
 The variables and their widths are as follows:
 
 
-Variable           Width   Start position   End position
+variable           width   start position   end position
 --------           -----   --------------   ------------
 name               20       1               20
 state              10       21              30
@@ -345,7 +345,7 @@ The variable `SDJ1GHED` is 1 character long, in position 502 of the data. The va
 
 For our analysis question, we will read in four variables: the unique household identification number, the country, the overall health outcomes, and education level. For the variable names, we will use the same ones used in the data dictionary:
 
-| Name | Variable | Length | Position |
+| name | variable | length | position |
 | :--- | :---     | :---:  | :---:  |
 | SAMPLEID | Household identifier | 12 | 1 - 12 |
 | SPJ1_TYP | Sample type [country] | 1 | 13 |
@@ -353,7 +353,7 @@ For our analysis question, we will read in four variables: the unique household 
 | SDJ1GHED | Highest level of post-secondary education attained | 1 | 502 |
 
 
-You will note in the code below that in the case of the variables that are of length "1", the code the start and end positions are the same.
+You will note in the code below that in the case of the variables that are of length "1", the value to indicate the start and end positions are the same.
 
 As well, the `SAMPLEID` variable is a 12-digit number; the `read_fwf()` function will interpret this as variable type double, and represent it in scientific notation. To be useful, we want to be able to see and evaluate the entire string. As a result, we use `col_types()` to specify `SAMPLEID` as a character.
 

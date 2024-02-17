@@ -36,14 +36,14 @@ The data has been collected. It might be the result of:
 
 * Sampling the people in an area and asking them a series of questions.
 
-* Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitate operation management of the store by tracking sales and inventory, and generating orders.
+* Collecting information as part of a business operation. A familiar example are supermarket checkout scanners which collect data about grocery purchases. That data then facilitates operation management of the store by tracking sales and inventory and generating orders.
 
 
-Once the data has been collected, one of the first steps in the analytic process is to import the data...read the contents of the file (or files) and begin preparing that data for the analysis. You might have collected the data yourself, and designed the data storage. Or there may be a layer of processing between the raw source and the way it appears to your. After this processing, you might:
+Once the data has been collected, one of the first steps in the analytic process is to import the data—read the contents of the file (or files) and begin preparing that data for the analysis. You might have collected the data yourself and designed the data storage. Or there may be a layer of processing between the raw source and the way it appears to you. After this processing, you might:
 
-* Have access to a database where the raw data is stored, including where additional post-collection manipulation might happen.
+* Have access to a database where the raw data is stored, including where additional post-collection manipulation might happen,
 
-* Be sent a file that contains a sample of the raw data.
+* Be sent a file that contains a sample of the raw data,
 
 * Be able to download data from a website, where the downloaded table has data that has already been compiled and summarized from a larger data set. An example would be a country's census data tables.
 
@@ -64,7 +64,7 @@ The data gets stored in a variety of electronic formats. The choice of format mi
 
 * The nature of the data being collected.
 
-There is sometimes (often?) no right answer as to the best format for a particular use case—there are pros and cons to each. (With that said, there is often a clear _less good_ choice for data storage and sharing...we're looking at you, PDF.) What this means is that in your workflow you will have to deal with data that needs to be extracted from a multitude of systems, and will be available to you in a multitude of formats.
+There is sometimes (often?) no right answer as to the best format for a particular use case—there are pros and cons to each. (With that said, there is often a clearly _less good_ choice for data storage and sharing—we're looking at you, PDF.) What this means is that in your workflow you will have to deal with data that needs to be extracted from a multitude of systems, and will be available to you in a multitude of formats.
 
 >It is essential that a statistician can talk to the database specialist, and, as a team member, the statistician, along with most others, will be expected to be able to use the database facilities for most purposes by themselves, and of course advise on aspects of the design. There is always much preliminary 'data cleaning' to do before an analysis can begin, almost regardless of how good a job is done by the database specialist. [@Venables_IDT_review_2010]
 
