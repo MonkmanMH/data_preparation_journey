@@ -642,9 +642,9 @@ This table has four variables in three columns, each of which has at least one d
 
 **`noc_occupation_title`**
 
-This variable combines two values: the three-digit NOC code, and the title of the occupation.
+This variable combines two values: the three-digit NOC code and the title of the occupation.
 
-We will use the {tidyr} function `separate_wider_delim()` to split it into two variables. The function gives us the arguments to name the new columns that result from the separation, and the character string that will be used to identify the separation point, in this case ": ". **Don't forget the space!**
+We will use the {tidyr} function `separate_wider_delim()` to split it into two variables. The function gives us the arguments to name the new columns that result from the separation and the character string that will be used to identify the separation point, in this case ": ". **Don't forget the space!**
 
 This function also has an argument `cols_remove =`. The default is set to `TRUE`, which removes the original column. Set to `FALSE` it retains the original column; we won't use that here but it can be useful.
 
@@ -691,7 +691,7 @@ gt(head(noc_table_clean))
 
 **`employment`**
 
-This variable should be numbers, but is a character type. This is because
+This variable should be numbers but is a character type. This is because
 
 * there are commas used as the thousands separator
 
@@ -816,9 +816,9 @@ As one example, in much social and business data, people's ages are often groupe
 
 And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
 
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS; see also @StatCan_definitions]. A similar classifications system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In Chapter \@ref(Excel), we saw population statistics reported by the administrative geography of England and Wales.
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS; see also @StatCan_definitions]. A similar classification system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In Chapter \@ref(Excel), we saw population statistics reported by the administrative geography of England and Wales.
 
-Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, give us access to other data that can be incorporated into our own research.
+Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, gives us access to other data that can be incorporated into our own research.
 
 
 Your subject area has established classifications; seek them out and use them. Ensuring that your data can be combined with and compared to other datasets will add value to your analysis, and make it easier for future researchers (including future you!) to work with your data. [@White_etal_nine_simple_ways]
@@ -876,7 +876,7 @@ tb2
 
 Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables. 
 
-> If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy modelling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8 "Feature Engineering with recipes".
+> If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy modelling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8, "Feature Engineering with recipes".
 
 
 
@@ -893,7 +893,7 @@ The variable `gender` has now been mutated into two additional variables, `gende
 Where the value of `gender` is "female", the value of `gender_female` is assigned as "1", and where `gender` is "male", `gender_female` is "0". This parallels what was in the original data. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value "1".
 
 
-Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetic order ("female" coming before "male"), and the first is dropped.
+Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetical order ("female" coming before "male"), and the first is dropped.
 
 
 ```{r}
@@ -1005,11 +1005,11 @@ penguin_subset_1 <- penguin_subset |>
 glimpse(penguin_subset_1, width = 65)
 ```
 
-First, you will notice that we started with two factor variables, `species` and `island`, we now have indicator variables for both.
+First, you will notice that we started with two factor variables, `species` and `island`; we now have indicator variables for both.
 
 And because there are three species of penguins and three islands, we have three indicator variables for both of the original variables.
 
-In the instance where we have multiple character or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
+In the instance where we have multiple character or factor variables in our source data, we can control which variables get the `dummy_cols()` treatment with the option, `select_columns`. In the example below, the result provides us with an indicator variable for `species` but not `island`.
 
 In addition, rather than dropping the first created variable, we can specify that the most frequently occurring value be removed with the argument `remove_most_frequent_dummy = TRUE`. Because there are more Gentoo penguins in our sample of the data, the indicator variable `species_Gentoo` is not created.
 
@@ -1040,9 +1040,9 @@ There are a variety of solutions to dealing with gaps in data values (sometimes 
 ### Missing as formatting
 
 
-A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In the example Excel file we will use for this, the sheet "Report" contains data on tuition fees paid by international students in British Columbia, arranged in a wide format. The name individual institution is in the second column (in Excel nomenclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data", and deserve kudos for sharing the data in a variety of layouts. But please be aware that this is approach the exception, not the rule.]
+A common spreadsheet formatting practice that makes the tables human-readable but less analysis-ready is to have a sub-section heading, often in a separate column. In the example Excel file that we will use for this, the sheet "Report" contains data on tuition fees paid by international students in British Columbia, arranged in a wide format. The name of the individual institution is in the second column (in Excel nomenclature, "B"), and the region ("Economic Development Region") is in the first column. However, the name of the region only appears in the row above the institutions in that region. This makes for a nicely formatted table, but isn't very helpful if we are trying to calculate average tuition fees by region.^[The creators of the file have provided us with a tidy sheet named "Data" and deserve kudos for sharing the data in a variety of layouts. But please be aware that this approach is the exception, not the rule.]
 
-Our first step is to read in the data. Note that the code uses the Excel naming convention to define the rectangular range to be read, and omits the title rows at the top and the notes at the bottom of the sheet.
+Our first step is to read in the data. Note that the code uses the Excel naming convention to define the rectangular range to be read and omits the title rows at the top and the notes at the bottom of the sheet.
 
 ```{r}
 
@@ -1067,7 +1067,7 @@ tuition_data_filled <- tuition_data |>
 head(tuition_data_filled)
 ```
 
-The next step is to use the {tidyr} function `drop_na()` to omit any row that contains an NA value. In this case, we want to drop what were the header rows that contained just the region name in the first column, and no values in the other columns.
+The next step is to use the {tidyr} function `drop_na()` to omit any row that contains an NA value. In this case, we want to drop what were the header rows that contained just the region name in the first column and no values in the other columns.
 
 These two solutions yield the same result:
 
@@ -1087,13 +1087,13 @@ It's worth noting that the `drop_na()` function provides an argument where we ca
 
 "Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value." [@Little_Rubin_2020]
 
-The functions used above for filling missing text values can also be used for missing numeric values. But when dealing with the replacement of numeric values we need to be mindful that the values we use will be incorporated into models and analysis; we need to be clear that the filled values are _estimates_, including sufficient documentation in our methodology section.
+The functions used above for filling missing text values can also be used for missing numeric values. But when dealing with the replacement of numeric values, we need to be mindful that the values we use will be incorporated into models and analysis; we need to be clear that the filled values are _estimates_, including sufficient documentation in our methodology section.
 
-Furthermore, there is a great deal of literature on the topic of imputation of missing values. As researchers, we need to be aware of _why_ the values are missing; are we dealing with values that are missing "at completely random", "at random", or "not at random"? Delving into the literature, you'll discover that these terms are precisely defined, and the solutions we adopt to deal with missingness will depend on the reason (or reasons) why the data are missing. [@Little_Rubin_2020]
+Furthermore, there is a great deal of literature on the topic of imputation of missing values. As researchers, we need to be aware of _why_ the values are missing; are we dealing with values that are missing "at completely random," "at random," or "not at random?" Delving into the literature, you'll discover that these terms are precisely defined, and the solutions we adopt to deal with missingness will depend on the reason (or reasons) why the data are missing. [@Little_Rubin_2020]
 
 For the examples presented here, we will assume that you have already given significant thought to these methodological questions. As we discussed earlier in this chapter, _how_ we clean data is influenced by our research questions. As well, we need to consider our cleaning strategy in light of why the raw data are the way they are.
 
-With that preamble, let's move to working with some real data. In this example, the data series is the number of salaried employees in the Accommodation services industry in British Columbia, Canada, for the years 2001 through 2020. The data is collected and published by Statistics Canada, and for some years the data are judged to be "too unreliable to be published". This leaves some gaps in our data. 
+With that preamble, let's move to working with some real data. In this example, the data series is the number of salaried employees in the Accommodation services industry in British Columbia, Canada, for the years 2001 through 2020. The data are collected and published by Statistics Canada, and for some years the data are judged to be "too unreliable to be published." This leaves some gaps in our data. 
 
 
 
@@ -1202,7 +1202,7 @@ forecast::na.interp(y)
 
 You will notice that the function has calculated replacement values that give us a linear series.
 
-For our count of salaried employees, here's what we get when we create a new value `value_new` with this function:
+For our count of salaried employees, here's what we get when we create a new value, `value_new`, with this function:
 
 ```{r}
 naics721_sal <- naics721_sal |> 
@@ -1229,13 +1229,13 @@ Other examples of time series missing value imputation functions can be found in
 
 ## Creating labelled factors from numeric variables
 
-In \@ref(importing-stats) we imported statistical software packages such as SPSS, SAS, or Stata and saw the benefits, in certain circumstances, of having labelled variables. These are categorical variables, where there are a limited number of categories. 
+In Chapter \@ref(importing-stats) we imported statistical software packages such as SPSS, SAS, or Stata and saw the benefits, in certain circumstances, of having labelled variables. These are categorical variables, where there are a limited number of categories. 
 
-In some cases, there might be one or more values assigned to categories we might want to designate as "missing"—a common example can be found in surveys, where respondents are given the option of answering "don't know" and "not applicable". While these responses might be interesting in and of themselves, in some contexts we will want to assign them as missing.
+In some cases, there might be one or more values assigned to categories we might want to designate as "missing"—a common example can be found in surveys, where respondents are given the option of answering "don't know" and "not applicable." While these responses might be interesting in and of themselves, in some contexts we will want to assign them as missing.
 
 In other cases, numeric values are used to store the categorical responses. 
 
-The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in \@ref(importing-plaintext) importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable `SPJ1_TYP` is either a "1" for responses from the Canadian sample, and a "2" for the sample from the United States. 
+The Joint Canada/United States Survey of Health (JCUSH)\index{Joint Canada/United States Survey of Health (JCUSH)} file we saw in Chapter \@ref(importing-plaintext) importing fixed width files gives us a good example of where categories are stored as numerical variables. For example, the variable `SPJ1_TYP` is either a "1" for responses from the Canadian sample and a "2" for the sample from the United States. 
 
 We will use this file to create labelled factors from the numeric values in the variables we imported. Here's the code we used previously to read the file:
 
@@ -1351,9 +1351,12 @@ jcush_haven <- jcush |>
 
 Note that our new variable is a "S3: haven_labelled" class, and the `ls.str()` function shows it as "dbl+lbl":
 
-```{r}
+```{r 700_jcush_haven, eval=FALSE}
 ls.str(jcush_haven)
 ```
+
+
+![_ls.str(jcush_haven)._](img/12_jcush_haven_ls-str.PNG)
 
 
 The `levels()` function can be used to inspect the result of this mutate.
@@ -1382,7 +1385,7 @@ jcush_labelled <- jcush |>
 
 ```
 
-To view a single variable:
+To view a single variable, use:
 
 ```{r}
 
