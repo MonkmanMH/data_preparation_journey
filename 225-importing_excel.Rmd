@@ -605,9 +605,9 @@ uk_census_behead_revised |>
 
 **Approach 3 - build a concordance table**
 
-If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). Once a table like this is built, it can be joined to our data, as well as to any other table we might need to use in the future.
+If we need a more flexible and re-usable approach, we can consider the option of creating a separate concordance table \index{concordance table} (also known as a crosswalk table\index{crosswalk table|see{concordance table}}). A table of this sort contains the distinct values of key variables and their corresponding values in another typology or schema. Once a table like this is built, it can be joined to our data, as well as to any other table we might need to use in the future.
 
-For the UK Census data, we will create two separate concordance tables. We will save these tables as a CSV file, so they are readily available for other applications. 
+For the UK Census data, we will create two separate concordance tables. We will save these tables as CSV files, so they are readily available for other instances when their use will make filtering and summarizing the data more efficient. 
 
 For the first table, we will build a table with each type of administrative region and its associated three-digit code. This is done programatically in R, using the {tibble} package [@R-tibble]. We will use the `tribble()` function, which transposes the layout so it resembles the final tabular structure.
 
@@ -644,7 +644,7 @@ write_csv(uk_region_table, "data_output/uk_region_table.csv")
 
 
 
-Our next step is to extract the unique values in the area code and area name from the original data in the object `uk_census_pop`.
+Our next step is to use a `mutate()` function to extract the unique values in the area code variable in the dataframe `uk_census_pop`, and then use that new variable to join the dataframe to the `uk_region_table` created in the previous chunk.
 
 ```{r}
 uk_census_pop_geo <- uk_census_pop |> 
@@ -660,7 +660,7 @@ glimpse(uk_census_pop_geo, width = 65)
 ```
 
 
-Because the level was encoded, it is possible to filter on the level to calculate the total population for England and Wales.
+Because the level is now encoded in the relevant rows of the dataframe, it is possible to filter on the level variable to calculate the total population for England and Wales.
 
 ```{r}
 uk_census_pop_geo |> 
@@ -669,11 +669,11 @@ uk_census_pop_geo |>
 ```
 
 
-A more complex concordance table can be derived from the beheaded table we created earlier:
+A more complex concordance table can be derived from the beheaded table we created earlier. The two steps in this process are:
 
-* A variable with lowest-level value, i.e. the values in the source table column B.
+* Select the field variables and then create a table with only the distinct values across all the rows,
 
-* need to prune only field variables and then the non-duplicated rows (`distinct()`)
+* Create a new variable "area_name" with the lowest-level value, i.e. the values in the source table column B.
 
 
 ```{r}
@@ -697,7 +697,7 @@ uk_census_geo_code
 
 ```
 
-Next step: join to add the area code 
+The third step is to join the area code variable from the `uk_census_pop` table.
 
 ```{r}
 uk_census_geo_code <- uk_census_geo_code |> 
@@ -711,6 +711,7 @@ uk_census_geo_code
   
 ```
 
+To this table the geographic level values are added by joining the `uk_region_table` created earlier.
 
 ```{r}
 
@@ -752,7 +753,7 @@ head(uk_census_pop_90)
 
 The `filter()` step below does the following:
 
-* select the area code and the population categories of interest, 
+* selects the area code and the population categories of interest, 
 
 * joins the detailed geographic descriptions,
 
