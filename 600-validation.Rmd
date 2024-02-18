@@ -41,9 +41,9 @@ Earlier in Chapter \@ref(foundations), challenges associated with "dirty data" w
 
 The term "data validation"\index{data validation} sometimes applies to verification that is applied when the data is collected (for example, in a web-based survey tool), and in other contexts it applies to a programmatic approach to ensuring the data meet specified conditions. In both cases, we can think of data validation as a form of quality control, from quick sanity checks to rigorous programmatic testing. [@White_etal_nine_simple_ways]
 
-Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes, or entry fields that require the entered text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, and digit. The first letter of the postal codes specify a region; in Newfoundland and Labrador they start with the letter "A" while in Yukon they start with "Y", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
+Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes or entry fields that require the entered text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, and digit. The first letter of the postal codes specify a region; in Newfoundland and Labrador they start with the letter "A" while in Yukon they start with "Y", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
-These imposed validation rules come with risks, and need to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
+These imposed validation rules come with risks and need to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
 
 
 For our work here, we will focus on checking and validating data after it has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
@@ -52,7 +52,7 @@ The type of things we might evaluate include:
 
 * A field has to be structured in a certain way; examples include postal codes and date fields. 
 
-* A value might have a certain range, or a limited number of categories.
+* A value might have a certain range or a limited number of categories.
 
 * Some values, such as age, have to be positive.
 
@@ -115,7 +115,7 @@ One way we might begin our investigation is the `dplyr::glimpse()` function. Thi
 glimpse(df_HR_train, width = 65)
 ```
 
-The variables that start with `train_` have been stored as character _<chr>_, because of the "NA" string in the original Excel file. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and host of other possibilities.
+The variables that start with `train_` have been stored as character type `_<chr>_` because of the "NA" string in the original Excel file. This variable could be more useful in our analysis if it was instead stored as logical. One option is to mutate the variable types on the existing object in our environment, or (taking the "go as far as possible at the import stage" approach) we can reread the contents of the file and apply the variable type definition at that point. The second option also gives us a way to explicitly define as `NA` those variables where it has been coded as a different character. Here `NA` is represented as "NA", but in other data you may encounter "not available", "9999", "-", and a host of other possibilities.
 
 ```{r}
 
@@ -143,11 +143,11 @@ summary(df_HR_train)
 
 
 
-This output is our preliminary EDA. What do we notice? Because there are no numeric values, we are not looking for outlier values or sentinel values, or the range of the values. 
+This output is our preliminary EDA. What do we notice? Because there are no numeric values, we are not looking for outlier values or sentinel values or the range of the values. 
 
-A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is understand why this might be the case. First, record that you've observed this in your notes about the data. 
+A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is to understand why this might be the case. First, record that you've observed this in your notes about the data. 
 
-A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and recordkeeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department...perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
+A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and recordkeeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department—perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 
 
 
@@ -203,7 +203,7 @@ df_HR_main |>
 
 ```
 
-There are 10 cases with the birth date entry of 1901-01-01...this is the sort of pattern we would see with a sentinel value.
+There are 10 cases with the birth date entry of 1901-01-01. This is the sort of pattern we would see with a sentinel value.
 
 Another approach to investigating this might be to derive a single year "age" variable from the date of birth, and visualize age using a box-and-whisker plot by one of the categorical variables to make outliers more apparent. We have a hunch that the "1901-01-01" sentinel value for date of birth might be associated with one category of occupation. Using our relational database "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
 
@@ -246,7 +246,7 @@ While exploratory data analysis uses visualization and scans of data summaries t
 
 ### The {validate} package
 
-As with other data analysis topics, people in the R user community have confronted the problem of dirty data, and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands, and provides tools for us to write structured validation tests.
+As with other data analysis topics, people in the R user community have confronted the problem of dirty data and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands, and provides tools for us to write structured validation tests.
 
 The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We know that the data in the package are nice and clean—they have already gone through a validation process.
 
@@ -259,9 +259,9 @@ library(validate)
 ```
 
 
-**Range of values**: 
+**Range of values:** 
 
-We know, being experts on all things penguin, that gentoo penguins (_Pygoscelis papua_) are the third largest of the penguin species, and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that()` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
+We know, being experts on all things penguin, that gentoo penguins (_Pygoscelis papua_) are the third largest of the penguin species and can weigh up to 8.5 kg. So we might want to see if we have any records with penguins with a body mass of more than 8500 grams. The `check_that()` function inverts this question; we are ensuring that all of the records have penguin body mass values that are less than or equal to 8500 grams. If the value is below that value, it returns a "pass". 
 
 
 ```{r ch600_penguin_check01, eval=FALSE}
@@ -277,7 +277,7 @@ The `summary()` function on the object that the `check_that()` function creates 
 
 **Relationship:** 
 
-While the heaviest gentoo penguins can be up to 8.5 kg, it is very unusual to find an Adélie or Chinstrap penguin that weighs more than 5 kg. What happens if we change the body mass threshold to 5000 grams?
+While the heaviest gentoo penguins can be up to 8.5 kg, it is very unusual to find an Adélie or chinstrap penguin that weighs more than 5 kg. What happens if we change the body mass threshold to 5000 grams?
 
 ```{r, eval=FALSE}
 
@@ -305,7 +305,7 @@ summary(check_penguins)
 
 Now all the records (except the single "NA") pass. What has happened? The first thing is that we have excluded all of the gentoo penguins—if it's gentoo, it gets marked "pass". All the remaining penguins (that is, the chinstrap and Adélie birds) are evaluated against the body mass value of 5000 grams. And they all pass.
 
-Let's explore the data a bit more...if we filter our penguins by those that are over 5000 grams, what do we find?
+Let's explore the data a bit more. If we filter our penguins by those that are over 5000 grams, what do we find?
 
 ```{r}
 penguins |>
@@ -336,7 +336,7 @@ summary(check_penguins)
 
 ```
 
-The output gives us the number of cases in that year in the `passes` the test, and the number of cases that are not in that year in the `fails`.
+The output gives us the number of cases in that year in the column `passes`, and the number of cases that are not in that year in the column `fails`.
 
 
 
@@ -390,7 +390,7 @@ summary(check_penguins)
 ![_check_penguins._](img/validate_penguins_check_1.PNG)
 
 
-We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live...if you have pre-defined list of those names in an existing data file, that list can be read into your R environment, and the test run against that list. In this example, an object called `island_list` is created, and the validation check is run against the contents of that list.
+We can also test against a defined list. This strategy can be useful if there is an extensive list against which we need to evaluate our data. Imagine checking the spellings of every city and town in the region where you live. If you have a pre-defined list of those names in an existing data file, that list can be read into your R environment, and the test run against that list. In this short example, an object called `island_list` is created, and the validation check is run against the contents of that list.
 
 ```{r}
 island_list <- c("Biscoe", "Dream", "Torgersen")
@@ -453,7 +453,7 @@ How can we check which records have failed?
 
 * run multiple checks at a time, and
 
-* generate detailed record-by-record account of which records have failed our test.
+* generate a detailed record-by-record account of which records have failed our test.
 
 First, we assign the syntax of our tests using `validator()` to an object "penguin_tests".
 
@@ -511,7 +511,7 @@ violating(badpenguins, penguin_confront)
 
 
 
-Now we know the details of the cases that have failed the test, we can now make some decisions—based on our understanding of the research we are undertaking—how to deal with these cases.
+Now that we know the details of the cases that have failed the test, we can make some decisions—based on our understanding of the research we are undertaking—about how to deal with these cases.
 
 
 

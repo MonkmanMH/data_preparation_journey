@@ -33,7 +33,7 @@ In this chapter:
 
 Relational databases are commonly used for data storage. Unlike a "flat file" which contains all of the variables, the data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated in multiple rows. We have seen an example of a relational table earlier, where we built a concordance table for the administrative geography of England and Wales in \@ref(Excel). 
 
-In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds to capacity of your computer. In those cases, a server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics, which shifts the computational load to the server.
+In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds the capacity of your computer. In those cases, a server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics, which shifts the computational load to the server.
 
 While SQL is the most commonly used query language, there are R packages that allow us to 
 
@@ -45,22 +45,22 @@ While SQL is the most commonly used query language, there are R packages that al
 
 * Do our work in an R environment.
 
-Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's our preferred approach.
+Writing your code in an R Markdown or Quarto document also gives you the flexibility to write the code in SQL, if that's your preferred approach.
 
 
 This exercise replicates the joins described in the "Relational data" chapter of _R for Data Science_ by Hadley Wickham & Garrett Grolemund [@Wickham_Grolemund2016]. Instead of using the R {nycflights13} package [@R-nycflights13], we will use a SQLite version of the same database. 
 
-In this database, there are five separate tables. The table `flights` in the database contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics, and is documented in `?flights` 
+In this database, there are five separate tables. The table `flights` in the database contains all 336,776 flights that departed from New York City in 2013. The data comes from the US Bureau of Transportation Statistics and is documented in `?flights` 
 
 The other tables in the database are:
 
-* `airlines` lets you look up the full carrier name from its abbreviated code
+* `airlines` lets you look up the full carrier name from its abbreviated code,
 
-* `airports` gives information about each airport, identified by the `faa` airport code
+* `airports` gives information about each airport, identified by the `faa` airport code,
 
-* `planes` gives information about each plane, identified by its `tailnum`
+* `planes` gives information about each plane, identified by its `tailnum`,
 
-* `weather` gives the weather at each NYC airport for each hour:
+* `weather` gives the weather at each NYC airport for each hour.
 
 
 The tables are _related_ to `flights` by the fact that they have variables in common. These are known as the "key" variables.
@@ -84,7 +84,7 @@ library(RSQLite)
 ```
 
 
-The code below establishes the connection to the database, and assigns the connection (not the data table!) to the object `con_nycf` (for "Connection to New York City Flights"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely-used MySQL and Postgres.
+The code below establishes the connection to the database and assigns the connection (not the data table!) to the object `con_nycf` (for "Connection to New York City Flights"). You will note that the {RSQLite} function `SQLite()` is inside the {DBI} function `dbConnect()`. The {DBI} package supports a wide range of different database types, including the widely-used MySQL and Postgres.
 
 ```{r}
 # establish the connection to the database file
@@ -97,7 +97,7 @@ dbListTables(con_nycf)
 ```
 
 
-Now we have a connection to the database, we can establish a connection to a particular table, using the {dplyr} function `tbl()`. Note that the `flights` object is _not_ the table, but is the connection to the table. 
+Now that we have a connection to the database, we can establish a connection to a particular table, using the {dplyr} function `tbl()`. Note that the `flights` object is _not_ the table but is the connection to the table. 
 
 ```{r}
 
@@ -155,7 +155,7 @@ SEA
 
 ### Using SQL in your R code
 
-In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using, and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. 
+In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. 
 
 This query instruction gets saved as the object `SEA_sql`.
 
@@ -277,7 +277,7 @@ DBI::dbDisconnect(con_nycf)
 
 An important element of any table join is to check the result, to see if it conforms to our expectations. The {tidylog} package [@R-tidylog] 
 
-The authors of the package acknowledge that the functionality adds some computational and time overhead to the processing, but this may be worth the cost. Judiciously used, the information it returns can give an immediate indication if the code has worked. This is particularly true in the early stages of writing your code...the functions can be removed when you are confident you are getting the results you expect.
+The authors of the package acknowledge that the functionality adds some computational and time overhead to the processing, but this may be worth the cost. Judiciously used, the information it returns can give an immediate indication if the code has worked. This is particularly true in the early stages of writing your code—the functions can be removed when you are confident you are getting the results you expect.
 
 ```{r, eval=FALSE}
 library("tidylog")
