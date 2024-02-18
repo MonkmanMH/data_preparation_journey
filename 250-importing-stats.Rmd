@@ -63,7 +63,7 @@ penguins_sav <- haven::read_sav(dpjr::dpjr_data("penguins.sav"))
 penguins_sav
 ```
 
-You will notice that the values of the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables, including those that were character strings, are numeric. For example the variable "species", instead of being the names of the species, the values are a column of "1"s, "2"s, and "3"s.
+You will notice that the values of the variables in the `.sav` version of the `penguins` dataframe are different than what was read in from the `.csv` version. All of the variables, including those that were character strings, are numeric. For example in the variable "species" the values are a column of "1"s, "2"s, and "3"s instead of being the names of the species.
 
 Note also that in the variable descriptions, it includes `<S3: haven_labelled>` for those that bring the SPSS labels with them.
 
@@ -127,7 +127,7 @@ penguins_sav |>
 
 In this version, the "species" variable retains the numeric values.
 
-By applying the `unlabelled()` function, the "haven_labelled" type variables are transformed into factor types, with the labels now the values shown:
+By applying the `unlabelled()` function, the "haven_labelled" type variables are transformed into factor types, with the labels (that is, the species names) now the shown in our summary table:
 
 ```{r}
 penguins_sav |> 
@@ -138,7 +138,7 @@ penguins_sav |>
 ```
 
 
-An alternative approach is the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions, `mutate()` and `mutate_if()`. In this first example, the variable `species` is mutated from labelled to factor type.
+An alternative approach is to the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions, `mutate()` and `mutate_if()`. In this first example, the variable `species` is mutated from labelled to factor type.
 
 ```{r}
 penguins_sav |> 
@@ -163,8 +163,7 @@ penguins_sav |>
 
 The functionality of a labelled dataframe is very beneficial when working with survey data. The dataframe can contain the variable codes as captured in the form, the values associated with those values, as well as the text of the question in the label.
 
-The file used in this example comes from the University of Sheffield Mathematics and Statistics Help's "Datasets for Teaching"
-https://www.sheffield.ac.uk/mash/statistics/datasets
+The file used in this example comes from the University of Sheffield Mathematics and Statistics Help's ["Datasets for Teaching"](https://www.sheffield.ac.uk/mash/statistics/datasets)
 
 > This dataset was collected by Scott Smith (University of Sheffield) to evaluate the use of best method for informing the public about a certain medical condition. There were three videos (New general video A, new medical profession video B, the old video C and a demonstration using props D). He wanted to see if the new methods were more popular so collected data using mostly Likert style questions about a range of things such as understanding and general impressions. This reduced dataset contains some of those questions and 4 scale scores created from summing 5 ordinal questions to give a scale score.
 
@@ -203,7 +202,7 @@ df_video
 
 ```
 
-Some of the variable names have leading `@` (at sign)...they will cause us some headaches later, so let's use the `clean_names()` function from the {janitor} package [@R-janitor]^[The reference page for {janitor} is here: http://sfirke.github.io/janitor/] to clean them up.
+Some of the variable names have leading `@` (at sign)—they will cause us some headaches later, so let's use the `clean_names()` function from the {janitor} package [@R-janitor]^[The reference page for {janitor} is here: http://sfirke.github.io/janitor/] to clean them up.
 
 
 ```{r}
@@ -223,7 +222,7 @@ look_for(df_video)
 
 #### Handling missing values 
 
-Very often, SPSS files will have "user defined missing values"\index{missing values}. In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
+Very often, SPSS files will have "user defined missing values."\index{missing values} In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
 
 * respondent left the question blank
 
@@ -231,7 +230,7 @@ Very often, SPSS files will have "user defined missing values"\index{missing val
 
 * the analyst may have decided to code "Don't know" or "Not applicable" as "missing" when calculating the percentages of responses in the other categories.
 
-Depending on the circumstance, you may want to count some of these. For example, if there a lot of "Don't know" and "Not applicable" responses, you may wish to analyze which one it is (they mean very different things!) If the are all coded as "NA", you have lost the ability to gain that insight.
+Depending on the circumstance, you may want to count some of these. For example, if there a lot of "Don't know" and "Not applicable" responses, you may wish to analyze which one it is (they mean very different things!) If they are all coded as "NA", you have lost the ability to gain that insight.
 
 In the code below, adding the `user_na = TRUE` argument to the `read_spss()` function maintains the original values.
 
@@ -282,7 +281,7 @@ attributes(df_video$heardofcondition)$labels
 
 ### Factors
 
-Factors behave differently than labels: they don't preserve both the label and the value. Instead they display the value and preserve the sort order (that can be either automatically set, or defined in the code).
+Factors behave differently than labels: they don't preserve both the label and the value. Instead they display the value and preserve the sort order (that can be either automatically set or defined in the code).
 
 In the code below, we will set all of the variables in the `df_video` dataframe as factors. In the first code chunk there are no additional parameters.
 
@@ -359,7 +358,7 @@ attr(penguins_data$species, "labels")
 
 
 
-We can also use R to read in the values, and apply them programmatically. This will save time and effort, and reduce the risk of typographical errors, particularly if there are many variables and those variables have many values to label.
+We can also use R to read in the values and apply them programmatically. This will save time and effort and reduce the risk of typographical errors, particularly if there are many variables and those variables have many values to label.
 
 If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains output SPSS creates when the "DISPLAY DICTIONARY" syntax (or the "File > Display Data File Information > Working File" GUI menu sequence) in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
 
@@ -367,7 +366,7 @@ Of particular interest to us are the values associated with each variable. This 
 
 ![_"Variable Values" from penguins SPSS output._](img/penguins_variable_values_spss.JPG)
 
-First, we read the contents of specific rectangle of data in the second sheet in the Excel file, containing the code book. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
+First, we read the contents of a specific rectangle of data in the second sheet in the Excel file, containing the code book. Note that we start reading at row 37, so that "Value" and "Label" are assigned as our variable names. In this code, the "anchored" approach is used, where the upper left corner Excel cell is specified, and then the number of rows and columns to be read in the `dim =` argument.
 
 ```{r, eval=FALSE}
 
@@ -384,7 +383,7 @@ penguins_code
 
 We have read the table as output by SPSS and saved in the Excel file, but there is additional wrangling required.
 
-The first step in the pipe is to rename the variables. Not only has the name `Value` been given to the "Variable" column, but the name of the value column has interpreted as blank and has been assigned the variable name `...2`. 
+The first step in the pipe is to rename the variables. Not only has the name `Value` been given to the "Variable" column, but the name of the value column has been interpreted as blank and has been assigned the variable name `...2`. 
 
 The second step is to use the {dplyr} `fill()` function to populate the missing values in the `variable` variable. The default direction of the fill is downwards, so we don't need to specify the direction as an argument. We will examine other options for cleaning data later.
 
@@ -545,7 +544,7 @@ nts_person_2020_hav
 ```
 
 
-In our final step, we save the dataframe as an SPSS, Stata, and RDS files for future use.
+In our final step, we save the dataframe as SPSS, Stata, and RDS files for future use.
 
 One important note for Stata users is that there is a "version" argument, which allows us to create a file that can be read by older versions of Stata (the default is Stata 15).
 
