@@ -11,8 +11,8 @@ documentclass: krantz
 github-repo: MonkmanMH/data_preparation_with_r
 graphics: yes
 link-citations: yes
-lof: yes
-lot: yes
+#lof: yes
+#lot: yes
 site: bookdown::bookdown_site
 biblio-style: apalike
 ---
