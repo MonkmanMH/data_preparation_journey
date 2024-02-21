@@ -109,6 +109,7 @@ Adding the `col_types = cols()` parameter has two benefits. First, defining the 
 
 Second, it allows us to alter what {readr} has decided for us. For example, we could set the `species` variable to be a factor type variable.
 
+\newpage
 When we show the entire table, we can see that the variable `species` is now a factor type.
 
 ```{r, message = FALSE}
@@ -129,7 +130,7 @@ read_csv(penguins_path,
          )
 ```
 
-
+\newpage
 ## Fixed-width files 
 
 Fixed-width files don't use a delimiter, and instead specify which column(s) each variable occupies, consistently for every row in the entire file.
@@ -214,7 +215,8 @@ Note that {readr} will impute the variable type, as it did with the CSV file. An
 
 Reading this fixed-width file with these three author names worked, but it could break quite easily. We just need one person with three or more components to their name (initials, spaces, or hyphens, as in [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin) or [Ta-Nehisi Coates](https://en.wikipedia.org/wiki/Ta-Nehisi_Coates)), or some missing values\index{missing values}, and the inconsistent structure throws off the `read_fwf()` parser.
 
-In this example, we read a longer list of author names:
+\newpage
+In the following example, we read a longer list of author names:
 
 ```{r importing_authors2_path_}
 authors2_path <- dpjr::dpjr_data("authors2_fwf.txt")
