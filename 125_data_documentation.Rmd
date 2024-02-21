@@ -348,8 +348,8 @@ Your documentation (perhaps as part of the README file) can include a diagram th
 library(fs)
 ```
 
-
-The `recurse =` argument specifies how deep into the directory structure the diagram will be drawn. The default is to show all of the sub-folders and files below the current directory.
+\newpage
+The default is to show all of the sub-folders and files below the current directory.
 
 ```{r dir_tree_true}
 
@@ -357,14 +357,13 @@ fs::dir_tree(path = "project_template")
 
 ```
 
-Specifying `recurse = FALSE` limits what is shown to the files and sub-folders within the current directory. 
+The `recurse =` argument specifies how deep into the directory structure the diagram will be drawn. Specifying `recurse = FALSE` limits what is shown to the files and sub-folders within the current directory. 
 
 
 ```{r dir_tree_false}
 fs::dir_tree(path = "project_template", recurse = FALSE)
 ```
 
-\newpage
 It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
 
 ```{r dir_tree_integer}
