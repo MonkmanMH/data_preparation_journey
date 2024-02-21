@@ -45,7 +45,7 @@ This list below are things that make up the process you will go through in prepa
 
 3. Import the data into your **R** environment. 
 
-4. Explore and validate the data, assessing the structure, looking for missing values and other "dirty" elements.
+4. Explore and validate the data, assessing the structure, looking for missing values\index{missing values} and other "dirty" elements.
 
 5. Clean the data. (And then validate to make sure your cleaning has been successful.)
 
@@ -114,7 +114,7 @@ When we say "accurate", we mean that the value recorded in our data is the value
 
 Some examples of inaccurate data are:
 
-* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" being entered as the default. This can be the consequence of a data entry validation process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
+* The use of a default (or sentinel) value\index{sentinel value}, inserted as a placeholder for unknown or missing values in place of a missing\index{missing values} or "unknown" value. This is sometimes part of the data collection or database software, leading to values that should have been "unknown" being entered as the default. This can be the consequence of a data entry validation\index{data validation} process that requires an entry (that is, data entry cannot continue until the field has an entry) or an entry in a particular format, such as a date. In these cases, the sentinel value can be entered instead of an explicit "NA".
 
 > Dr Davis Lawrence, director of safety-literature database the SafeLit Foundation...tells me that 'in most US states the quality of police crash reports is at best poor for use as a research tool. ... Data-quality checks were rare and when quality was evaluated it was found wanting. For example, in Louisiana for most crashes in the 1980s most of the occupants were males who were born on January 1st, 1950. Almost all of the vehicles involved in crashes were the 1960 model year.' Except they weren't. These were just the default settings. [@Criado_Perez_2019, p.190]
 
@@ -148,7 +148,7 @@ When we are cleaning our data, we should also consider the structure. The goal s
 
 In many instances, achieving a tidy structure may require reshaping the data, using the {tidyr}[@R-tidyr] packages's `pivot_()` functions. In others, the data may have multiple variables in each cell which need to be split (such as addresses) into a separate column for each variable.
 
-
+\newpage
 Other common structural problems that fall outside the four broad data quality categories include:
 
 1. Column headers are values instead of variable names. A frequently-encountered example are units of time, as in the example below. In the table below, the "values" are the years. Tables structured in this way can only display the values of one variable; in this case, it is the population of the country.
@@ -176,7 +176,7 @@ gap_pop_untidy |>
 
 ```
 
-A preferable structure would be to have a variable "year" and another "population". This tidy structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
+A preferable structure would be to have a variable "year" and another "population". This tidy\index{tidy data} structure also permits other variables measured during those years to be incorporated, rather than displayed in a separate table.
 
 ```{r, echo=FALSE}
 gap_pop_2 <- gapminder |> 
@@ -207,7 +207,7 @@ gap_pop_2 |>
 
 
 
-
+\newpage
 ## Cleaning the data
 
 If the data fails to meet our standards or quality, we need to _clean the data_. Which doesn't sound like a lot of fun. Didn't we want to be data scientists or business intelligence experts or academic scientists uncovering the insights hiding in the data? Don't we want to be _doing analysis_? 

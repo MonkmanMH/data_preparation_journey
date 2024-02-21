@@ -43,7 +43,7 @@ The term "data validation"\index{data validation} sometimes applies to verificat
 
 Validation of data during collection might be through the use of drop-down boxes that eliminates spelling mistakes or entry fields that require the entered text to match a particular pattern. For example, a Canadian postal code is always in the pattern of capital letter (but not all letters), digit from 0 to 9, capital letter, space, digit, capital letter, and digit. The first letter of the postal codes specify a region; in Newfoundland and Labrador they start with the letter "A" while in Yukon they start with "Y", adding another dimension for possible validation. Electronic data collection can also enforce that an element is completed before submission. 
 
-These imposed validation rules come with risks and need to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
+These imposed validation rules come with risks and need to be thoughtfully implemented. Forcing a person to complete a field might lead to made-up values, which might be worse than a missing field\index{missing values}. Imagine forcing someone to report their income—they might not be comfortable sharing that information, and in order to fulfill the requirements of the field enter a "1" or a preposterously very large number, neither of them accurate. In this case, it might be better for the form to provide a "Prefer not to answer" field, giving respondents an option that does not distort the final result.
 
 
 For our work here, we will focus on checking and validating data after it has been collected. The analyst can specify parameters prior to it being made available for the next steps. These can be expressed as rules or assumptions, and are based on knowledge of the subject. [@Van_der_Loo_de_Jonge_2018, Chapter 6: Data Validation]
@@ -77,9 +77,9 @@ The things we are looking for at this stage include:
 
 * the variable types
 
-* missing values
+* missing values\index{missing values}
 
-* invalid values and outliers, including sentinel values
+* invalid values and outliers, including sentinel values\index{sentinel value}
 
 * data ranges that are too wide or too narrow
 
@@ -143,9 +143,9 @@ summary(df_HR_train)
 
 
 
-This output is our preliminary EDA. What do we notice? Because there are no numeric values, we are not looking for outlier values or sentinel values or the range of the values. 
+This output is our preliminary EDA. What do we notice? Because there are no numeric values, we are not looking for outlier values or sentinel values\index{sentinel value} or the range of the values. 
 
-A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is to understand why this might be the case. First, record that you've observed this in your notes about the data. 
+A few NA values might be expected in a survey dataframe like this, and a handful may not have an impact on our analysis. But the `train_qc` variable has 395 missing values\index{missing values}—nearly 40% of the 999 records. There might be a reason for a large number of missing values, and part of the analyst's responsibility is to understand why this might be the case. First, record that you've observed this in your notes about the data. 
 
 A thorough understanding of the data and its origins will ensure that your analysis is accurate. Further investigation (and recordkeeping) of this situation is warranted. You might start with the data documentation you received with the file. If that doesn't hold an explanation, talk to the people who understand how the data are collected, and then the people in the human resources department—perhaps there's a policy that exempts a group of employees from what is otherwise a mandatory course.
 
@@ -205,7 +205,7 @@ df_HR_main |>
 
 There are 10 cases with the birth date entry of 1901-01-01. This is the sort of pattern we would see with a sentinel value.
 
-Another approach to investigating this might be to derive a single year "age" variable from the date of birth, and visualize age using a box-and-whisker plot by one of the categorical variables to make outliers more apparent. We have a hunch that the "1901-01-01" sentinel value for date of birth might be associated with one category of occupation. Using our relational database "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
+Another approach to investigating this might be to derive a single year "age" variable from the date of birth, and visualize age using a box-and-whisker plot by one of the categorical variables to make outliers more apparent. We have a hunch that the "1901-01-01" sentinel value for date of birth might be associated with one category of occupation. Using our relational database\index{relational database} "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
 
 ```{r}
 # step 1: read transaction table, which contains occupation
@@ -237,18 +237,18 @@ df_HR_main |>
 ```
 
 
-In the box-and-whisker visualization, we see that the sentinel values are in four of the five occupations, so the hunch was not correct. 
+In the box-and-whisker visualization, we see that the sentinel values\index{sentinel value} are in four of the five occupations, so the hunch was not correct. 
 
 
 ## Validation methods
 
-While exploratory data analysis uses visualization and scans of data summaries to spot potentially dirty data, validation is a structured process of testing.
+While exploratory data analysis uses visualization and scans of data summaries to spot potentially dirty data, validation\index{data validation} is a structured process of testing.
 
 ### The {validate} package
 
 As with other data analysis topics, people in the R user community have confronted the problem of dirty data and have written and shared functions to help the rest of us. The {validate} package [@van2021data, @R-validate] was written and is supported by methodologists at Statistics Netherlands, and provides tools for us to write structured validation tests.
 
-The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We know that the data in the package are nice and clean—they have already gone through a validation process.
+The first function we will investigate in the package is `check_that()`, using the data in {palmerpenguins}\index{palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We know that the data in the package are nice and clean—they have already gone through a validation process.
 
 ```{r ch600_packages, eval=FALSE}
 library(tidyverse)
@@ -319,7 +319,7 @@ So this is confirms that all of the heavier penguins are gentoos, meeting our ex
 
 **Range:** 
 
-We know that the {palmerpenguin} data is from three seasons of measurement, 2007–2009. We can write a validation test to ensure that our `year` variable falls within that range.
+We know that the {palmerpenguin}\index{palmerpenguins} data is from three seasons of measurement, 2007–2009. We can write a validation\index{data validation} test to ensure that our `year` variable falls within that range.
 
 ```{r}
 

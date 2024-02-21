@@ -99,6 +99,7 @@ There are three things to capture in your recordkeeping:
 
 
 
+\newpage
 ## Code documentation
 
 
@@ -173,6 +174,7 @@ We start with the Outline:
 
 * Table: Create table with top 10 countries.
 
+\newpage
 _With that outline, we can proceed into the "Data" step_
 
 ```{r}
@@ -205,7 +207,7 @@ head(gapminder_gdp)
 
 ```
 
-_Finally, creating the table_
+_Finally, creating the table and formatting it with the {gt} package [@R-gt]_
 
 ```{r}
 gapminder_gdp |> 
@@ -231,11 +233,11 @@ gapminder_gdp |>
 ```
 
 
+
+
+\newpage
 > The first of Benjamin D. Lee's "Ten simple rules for documenting scientific
 software" [@Lee_ten_simple_rules_2018] is "Write comments as you code."
-
-
-
 
 
 ## Project documentation
@@ -334,7 +336,7 @@ Another source of tips is "Art of README" ^[["Art of README"](https://github.com
 1. Tell them any other relevant details.
 
 
-An example is the R package {palmerpenguins} which has a comprehensive README on the github page.^[[{palmerpenguins} github page](https://github.com/allisonhorst/palmerpenguins/blob/master/README.md).]
+An example is the R package {palmerpenguins}\index{palmerpenguins} which has a comprehensive README on the github page.^[[{palmerpenguins} github page](https://github.com/allisonhorst/palmerpenguins/blob/master/README.md).]
 
 
 
@@ -355,13 +357,14 @@ fs::dir_tree(path = "project_template")
 
 ```
 
-The `recurse =` argument gives control over how many layers of the directory structure are shown. Specifying `recurse = FALSE` limits what is shown to the files and sub-folders within the current directory. 
+Specifying `recurse = FALSE` limits what is shown to the files and sub-folders within the current directory. 
 
 
 ```{r dir_tree_false}
 fs::dir_tree(path = "project_template", recurse = FALSE)
 ```
 
+\newpage
 It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
 
 ```{r dir_tree_integer}
@@ -390,7 +393,7 @@ As we will see, preparing data requires a number of steps, both objective and su
 
 Here are the three minimum components of a data dictionary:
 
-1. Information about the variables (including units!) in the dataset not contained in the tidy data,
+1. Information about the variables (including units!) in the dataset not contained in the tidy data\index{tidy data},
 
 1. Information about the summary choices made, and
 
@@ -416,9 +419,9 @@ Caitlin Hudon's "Field Notes: Building Data Dictionaries" [@Hudon_data_dictionar
 5. Where can I go to get more information?
 
 
-Finally, the {labelled} package [@R-labelled] contains the function `look_for()`, which generates a data dictionary of the dataframe. ^[Joseph Larmarange, ["Generate a data dictionary and search for variables with look_for()"](http://larmarange.github.io/labelled/articles/look_for.html)]
+Finally, the {labelled} package [@R-labelled] contains the function `look_for()`, which generates a data dictionary of the dataframe that contains labelled variables\index{labelled variables}. ^[Joseph Larmarange, ["Generate a data dictionary and search for variables with look_for()"](http://larmarange.github.io/labelled/articles/look_for.html)]
 
-Here, we read the SPSS version of the {palmerpenguins} file, and then generate a data dictionary using the `look_for()` function. (We will return to using the {haven} package for reading data from SPSS, SAS, and Stata files later in this book.)
+Here, we read the SPSS\index{SPSS} version of the {palmerpenguins}\index{palmerpenguins} file, and then generate a data dictionary using the `look_for()` function. (We will return to using the {haven} package for reading data from SPSS, SAS, and Stata files later in this book.)
 
 ```{r}
 

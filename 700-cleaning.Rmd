@@ -237,7 +237,7 @@ postalcode <- "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$"
 
 
 
-The regular expression for Canadian postal codes can be shortened, using the case sensitivity operator,  "(?i)". Putting this at the beginning of the expression applies it to all of the letter identifiers in the regex; it can be turned off with "(?-i)".
+The regular expression\index{regular expressions} for Canadian postal codes can be shortened, using the case sensitivity operator,  "(?i)". Putting this at the beginning of the expression applies it to all of the letter identifiers in the regex; it can be turned off with "(?-i)".
 
 ```{r}
 
@@ -295,7 +295,7 @@ str_which(pc_kimberley, postalcode)
 
 ```
 
-Another of the {stringr} function, `str_detect()`, tests for the presence of a pattern and returns a logical value (true or false). Here, we test the list of four postal codes using the `postalcode` object that contains the regular expression for Canadian postal codes.
+Another of the {stringr} function, `str_detect()`, tests for the presence of a pattern and returns a logical value (true or false). Here, we test the list of four postal codes using the `postalcode` object that contains the regular expression\index{regular expressions} for Canadian postal codes.
 
 ```{r str_detect_postalcode}
 
@@ -364,7 +364,7 @@ str_remove(string = pc_kimberley_all,
             pattern = " ")
 ```
 
-More efficiently, we can use a regular expression with both a space and a hyphen inside the square brackets, which has the result of replacing _either_ a space or a hyphen.
+More efficiently, we can use a regular expression\index{regular expressions} with both a space and a hyphen inside the square brackets, which has the result of replacing _either_ a space or a hyphen.
 
 ```{r}
 pc_kimberley_clean <- str_remove(string = pc_kimberley_all, 
@@ -466,7 +466,7 @@ str_flatten(UVic_address_components, collapse = ", ", last = " ")
 
 In this example, we will use regular expressions to filter a table of employment data published by the US Bureau of Labor Statistics. The table shows the annual employment by industry, for the years 2010 to 2020, in thousands of people.
 
-With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System} \index{NAICS|see{North American Industry Classification System}}. This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. More information can be found in [@US_NAICS_2022] and [@StatCan_NAICS].  
+With this data, it's important to understand the structure of the file, which is rooted in the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}. This typology is used in Canada, the United States, and Mexico, grouping companies by their primary output. This consistency allows for reliable and comparable analysis of the economies of the three countries. More information can be found in [@US_NAICS_2022] and [@StatCan_NAICS].  
 
 
 
@@ -498,7 +498,7 @@ gt(head(bls_employment))
 
 ```
 
-There are three "supersectors" in the NAICS system: primary industries, goods-producing industries, and service-producing industries. The "Series ID" variable string starts with "CEU" followed by the digits in positions 4 and 5 representing the supersector. The first row, supersector "00", is the aggregation of the entire workforce.
+There are three "supersectors" in the NAICS\index{North American Industry Classification System} system: primary industries, goods-producing industries, and service-producing industries. The "Series ID" variable string starts with "CEU" followed by the digits in positions 4 and 5 representing the supersector. The first row, supersector "00", is the aggregation of the entire workforce.
 
 Mining, Quarrying, and Oil and Gas Extraction is a sector within the goods-producing industries, with the NAICS code number 21. This is represented at digits 6 and 7 of the string. 
 
@@ -605,7 +605,7 @@ bls_employment_naics21_3digit
 ```
 
 
-The final step in cleaning this table would be to put it into a tidy structure. Currently it violates the second principle of tidy data, that each observation forms a row. [@tidydata, p.4] In this case, each year should have its own row, rather than a separate column for each.
+The final step in cleaning this table would be to put it into a tidy\index{tidy data} structure. Currently it violates the second principle of tidy data, that each observation forms a row. [@tidydata, p.4] In this case, each year should have its own row, rather than a separate column for each.
 
 We can use the {tidyr} [@R-tidyr] package's `pivot_longer()` function for this:
 
@@ -633,7 +633,6 @@ gt(head(noc_table))
 
 ```
 
-
 ![_NOC table: step 1._](img/12_noc_table_01.PNG)
 
 
@@ -648,7 +647,7 @@ We will use the {tidyr} function `separate_wider_delim()` to split it into two v
 
 This function also has an argument `cols_remove =`. The default is set to `TRUE`, which removes the original column. Set to `FALSE` it retains the original column; we won't use that here but it can be useful.
 
-There are also `separate_wider_()` functions based on fixed-width positions and regular expressions. 
+There are also `separate_wider_()` functions based on fixed-width positions and regular expressions\index{regular expressions}. 
 
 
 ```{r 700_noc_table_2, eval=FALSE}
@@ -687,6 +686,7 @@ gt(head(noc_table_clean))
 ```
 
 ![_NOC table: step 3._](img/12_noc_table_03.PNG)
+
 
 
 **`employment`**
@@ -816,7 +816,7 @@ As one example, in much social and business data, people's ages are often groupe
 
 And be aware that the elements with a classification system can change over time. One familiar example is that the geographical boundaries of cities and countries of the world have changed. City boundaries change, often with the more populous city expanding to absorb smaller communities within the larger legal entity. (The current City of Toronto is an amalgamation of what were six smaller municipalities.) Some regions have a rather turbulent history of changes in their boundaries, and some countries have been created only to disappear a few years later. 
 
-If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}\index{NAICS|see{North American Industry Classification System}}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS; see also @StatCan_definitions]. A similar classification system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In Chapter \@ref(Excel), we saw population statistics reported by the administrative geography of England and Wales.
+If you're working in the area of social and economic research, the national and international statistics agencies provide robust and in-depth classification systems, much of which is explicitly designed to allow for international comparisons. These systems cover a wide range of economic and social statistics. Earlier in this chapter there was an example using the North American Industry Classification System (NAICS)\index{North American Industry Classification System}, used in Canada, the United States, and Mexico. [@US_NAICS_2022, @StatCan_NAICS; see also @StatCan_definitions]. A similar classification system exists for Australia and New Zealand [@ABS_ANZSIC_2006], and the European Union's Eurostat office publishes a standard classification system for the products that are created through mining, manufacturing, and material recovery [@Eurostat_prodcom_2023]. For international statistics, you can start with the classification system maintained by the United Nations Statistics Division [@UNSD_classifications]. In Chapter \@ref(Excel), we saw population statistics reported by the administrative geography of England and Wales.
 
 Following these standardized categories in our own work is advantageous. It provides us with a validated structure, and should it be appropriate, gives us access to other data that can be incorporated into our own research.
 
@@ -874,7 +874,7 @@ tb2
 
 ### `{fastDummies}` 
 
-Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables. 
+Because this type of data transformation is common, the package {fastDummies} [@R-fastDummies] has been created, containing the function `dummy_cols()` (or `dummy_columns()` if you prefer extra typing) that creates indicator variables\index{indicator variables}. 
 
 > If you are using the _tidymodels_ pipeline, the {recipes} package [@R-recipes] contains the `step_dummy()` function, which accomplishes much the same result as `fastDummies::dummy_cols()`. The book _Tidy modelling with R_ by Max Kuhn and Julia Silge [@Kuhn_Silge_2022] is recommended; the creation of indicator variables is covered in Chapter 8, "Feature Engineering with recipes".
 
@@ -893,7 +893,7 @@ The variable `gender` has now been mutated into two additional variables, `gende
 Where the value of `gender` is "female", the value of `gender_female` is assigned as "1", and where `gender` is "male", `gender_female` is "0". This parallels what was in the original data. The opposite is true of `gender_male`; the rows where the value of `gender` is "male" `gender_male` has the value "1".
 
 
-Multicollinearity can occur in a multiple regression model where multiple indicator variables are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetical order ("female" coming before "male"), and the first is dropped.
+Multicollinearity can occur in a multiple regression model where multiple indicator variables\index{indicator variables} are included, since they are the inverse of one another. Accordingly, an important set of options in the `dummy_cols()` function revolve around removing all but one of the created variables. The argument `remove_first_dummy = TRUE` does just that; in this case, the `gender_female()` variable does not appear in the final result. This is because the new indicator variables are created in alphabetical order ("female" coming before "male"), and the first is dropped.
 
 
 ```{r}
@@ -976,7 +976,7 @@ glimpse(tb2_select, width = 65)
 
 Some important things to note about `dummy_cols()` 
 
-* the function will create as many indicator variables as there are values in the character or factor variable
+* the function will create as many indicator variables\index{indicator variables} as there are values in the character or factor variable
 
 * the function will create indicator variables for all of the character and factor variables in the data, unless otherwise specified.
 
@@ -1005,7 +1005,7 @@ penguin_subset_1 <- penguin_subset |>
 glimpse(penguin_subset_1, width = 65)
 ```
 
-First, you will notice that we started with two factor variables, `species` and `island`; we now have indicator variables for both.
+First, you will notice that we started with two factor variables, `species` and `island`; we now have indicator variables\index{indicator variables} for both.
 
 And because there are three species of penguins and three islands, we have three indicator variables for both of the original variables.
 
@@ -1057,7 +1057,7 @@ head(tuition_data)
 
 The contents of the file have been read correctly, but there are many "NA" values in the `Economic Development Region` variable. This is due to the manner in which the data was structured in the source Excel file.
 
-The `fill()` function, in the {tidyr} package [@R-tidyr]\index{{tidyr}}, provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
+The `fill()` function, in the {tidyr} package [@R-tidyr], provides the solution to this. The function replaces a missing value with either the previous or the next value in a variable. In the example here, it will replace all of the "NA" values with the region name above, stopping when it comes to the next non-NA record.
 
 ```{r}
 
@@ -1229,7 +1229,7 @@ Other examples of time series missing value imputation functions can be found in
 
 ## Creating labelled factors from numeric variables
 
-In Chapter \@ref(importing-stats) we imported statistical software packages such as SPSS, SAS, or Stata and saw the benefits, in certain circumstances, of having labelled variables. These are categorical variables, where there are a limited number of categories. 
+In Chapter \@ref(importing-stats) we imported statistical software packages such as SPSS\index{SPSS}, SAS\index{SAS}, or Stata\index{Stata} and saw the benefits, in certain circumstances, of having labelled variables. These are categorical variables, where there are a limited number of categories. 
 
 In some cases, there might be one or more values assigned to categories we might want to designate as "missing"—a common example can be found in surveys, where respondents are given the option of answering "don't know" and "not applicable." While these responses might be interesting in and of themselves, in some contexts we will want to assign them as missing.
 

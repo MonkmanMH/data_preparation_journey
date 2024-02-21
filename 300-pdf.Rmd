@@ -60,7 +60,7 @@ library(stringr)
 
 ### Getting started
 
-To get started in reading data from a PDF file, we will read data from a summary of the {palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins] data. 
+To get started in reading data from a PDF file, we will read data from a summary of the {palmerpenguins}\index{palmerpenguins} [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins] data. 
 
 While this is for a single table on a single page, the same approach will work for multiple tables across multiple pages, if the structure of each table on each page is the same. The process is always the same: start with the smallest unit and expand out.
 
@@ -116,7 +116,7 @@ penguin_summary_2 <- penguin_summary |>
 penguin_summary_2
 ```
 
-At this stage, we need to apply some cleaning. If we don't do it now, it's going to cause some challenges later. There is an extra line return at the end of the last data cell, so let's use a regular expression to remove it. There's also space at the beginning of the first line and the number-space combination at the beginning of the data rows.
+At this stage, we need to apply some cleaning. If we don't do it now, it's going to cause some challenges later. There is an extra line return at the end of the last data cell, so let's use a regular expression\index{regular expressions} to remove it. There's also space at the beginning of the first line and the number-space combination at the beginning of the data rows.
 
 And by using the double square bracket accessor in the first row, the object returned is no longer nested, but instead has a single character string for each row.
 
@@ -137,7 +137,7 @@ penguin_variable_vector <- as.vector(penguin_summary_3[1])
 penguin_variable_vector
 ```
 
-The next step is to split this vector into 4 separate elements at the points where there are one or more white spaces, identified in the regular expression "\\s+". The "\\s" finds a single space, and adding the "+" extends that to "one or more" of the character the precedes it.
+The next step is to split this vector into 4 separate elements at the points where there are one or more white spaces, identified in the regular expression\index{regular expressions} "\\s+". The "\\s" finds a single space, and adding the "+" extends that to "one or more" of the character the precedes it.
 
 This returns another nested list.
 
@@ -188,7 +188,7 @@ penguin_table
 
 ```
 
-The loop has created a tibble with one column, `value`. We will apply the `separate()` function to split the value into each of the variable names we assigned to the object `penguin_variable_names` earlier. The split is based on the location of one or more spaces in the original string, using the "\\s+" regular expression.
+The loop has created a tibble with one column, `value`. We will apply the `separate()` function to split the value into each of the variable names we assigned to the object `penguin_variable_names` earlier. The split is based on the location of one or more spaces in the original string, using the "\\s+" regular expression\index{regular expressions}.
 
 ```{r}
 
@@ -223,7 +223,7 @@ penguin_table
 
 For this exercise, we will extract a data table from _Annual Report to the British Columbia Ferries Commissioner_ for the fiscal year ending March 31, 2021 (that is, the twelve month period from 2020-04-01 to 2021-03-31) [@BCFerries_2021].
 
-This report is published as a PDF file that is 101 pages long and contains a mixture of written text and data tables.
+This report is published as a PDF file\index{Portable Document Format (PDF)} that is 101 pages long and contains a mixture of written text and data tables.
 
 
 {pdftools} gives us the ability to download and read the file from a local copy or from the web. The chunk below shows the code to download the file from a URL.
@@ -348,7 +348,7 @@ tester <- bcf_11_lines[[1]][13:14]
 ```
 
 
-So how will we split this into separate pieces? Here's where the {stringr} package and our knowledge of regular expressions comes into use. We want to split the string where there are multiple spaces. If we split at every space, we'd get lots of columns. So we are separating (or splitting) where the spaces occur.
+So how will we split this into separate pieces? Here's where the {stringr} package and our knowledge of regular expressions\index{regular expressions} comes into use. We want to split the string where there are multiple spaces. If we split at every space, we'd get lots of columns. So we are separating (or splitting) where the spaces occur.
 
 The regular expression to find any white space is "\\s", and to find any number of them we need to add the plus sign "+". Remember that in R, we need to escape the backslash, so our regex gets expresses as "\\s+". 
 

@@ -17,6 +17,13 @@ site: bookdown::bookdown_site
 biblio-style: apalike
 ---
 
+
+
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
 ```{r setup_index, include=FALSE}
 options(
   htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
@@ -93,7 +100,7 @@ Particular thanks to Julie Hawkins and Emily Riederer, both of whom provided val
 This work by [Martin Monkman](https://github.com/MonkmanMH) is licensed under a  [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 
-
+\newpage
 ### Data in this book {-}
 
 This book draws on three sources of data: 
@@ -150,8 +157,3 @@ The cover image is a wayfinder close to my home: <a href="https://www.pc.gc.ca/e
 
 The cover photo is by jennyt, and used with permission.
 
-
-
-<!-- 
-This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
--->

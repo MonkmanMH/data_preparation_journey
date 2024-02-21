@@ -16,7 +16,7 @@ source("package_load.R")
 
 In this chapter:
 
-* Importing survey data from statistical software packages that include labelled data formats, with an emphasis on SPSS
+* Importing survey data from statistical software packages that include labelled data formats\index{labelled variables}, with an emphasis on SPSS\index{SPSS}
 
 * Importing survey data from an Excel file, including the data dictionary created by survey software, and creating labels from the data dictionary.
 
@@ -36,7 +36,7 @@ The **R** package {haven} [@R-haven] provides the functionality to read these th
 
 `library(haven)`
 
-In the following examples, we will use versions of the data in the {palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We will work with SPSS formatted files; the approach is similar for SAS and Stata formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension; a Stata data file has the extension ".dta", so the read function is `read_dta()`:
+In the following examples, we will use versions of the data in the {palmerpenguins}\index{palmerpenguins} data [@Horst_Presmanes_Hill_Gorman_2022; @R-palmerpenguins]. We will work with SPSS formatted files; the approach is similar for SAS and Stata formats, and only differs in the details. For example, the `haven::read_()` functions vary only with the extension; a Stata data file has the extension ".dta", so the read function is `read_dta()`:
 
 
 ```{r, eval=FALSE}
@@ -114,9 +114,9 @@ look_for(penguins_sav)
 
 #### Using labels
 
-The labels in an dataframe created by {haven} can be converted to a factor type, using the `unlabelled()` function. 
+The labels\index{labelled variables} in an dataframe created by {haven} can be converted to a factor type, using the `unlabelled()` function. 
 
-If we were to tally the number of penguins in each species using the penguins dataframe that originated from the SPSS file, we would see this:
+If we were to tally the number of penguins in each species using the penguins dataframe that originated from the SPSS\index{SPSS} file, we would see this:
 
 ```{r}
 penguins_sav |> 
@@ -138,7 +138,7 @@ penguins_sav |>
 ```
 
 
-An alternative approach is to the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions, `mutate()` and `mutate_if()`. In this first example, the variable `species` is mutated from labelled to factor type.
+An alternative approach is to the explicitly change the variable type, with a `to_factor` transformation inside one of the mutate functions, `mutate()` and `mutate_if()`. In this first example, the variable `species` is mutated from labelled\index{labelled variables} to factor type.
 
 ```{r}
 penguins_sav |> 
@@ -167,7 +167,7 @@ The file used in this example comes from the University of Sheffield Mathematics
 
 > This dataset was collected by Scott Smith (University of Sheffield) to evaluate the use of best method for informing the public about a certain medical condition. There were three videos (New general video A, new medical profession video B, the old video C and a demonstration using props D). He wanted to see if the new methods were more popular so collected data using mostly Likert style questions about a range of things such as understanding and general impressions. This reduced dataset contains some of those questions and 4 scale scores created from summing 5 ordinal questions to give a scale score.
 
-If you were working in SPSS, when you open the file, you would see the data like this:
+If you were working in SPSS\index{SPSS}, when you open the file, you would see the data like this:
 
 ![_SPSS data view._](img\video_view_data.PNG)
 
@@ -191,7 +191,7 @@ The R package {haven} allows us to capture all of this information.
 
 #### Read SPSS\index{SPSS} data into R
 
-For the first step, we will read in the data with the default parameters.
+For the first step, we will read in the data from the SPSS\index{SPSS} file with the default parameters.
 
 ```{r}
 
@@ -222,7 +222,7 @@ look_for(df_video)
 
 #### Handling missing values 
 
-Very often, SPSS files will have "user defined missing values."\index{missing values} In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
+Very often, SPSS\index{SPSS} files will have "user defined missing values."\index{missing values} In the video survey file, they have been coded as "NA". But often, the analysis of survey results will have multiple types of "missing values":
 
 * respondent left the question blank
 
@@ -303,9 +303,9 @@ In this second chunk, the `levels` parameter is set to `both`.
 
 
 
-## Creating a labelled dataframe from an Excel file
+## Creating a labelled\index{labelled variables} dataframe from an Excel file
 
-You might encounter a circumstance where the data collectors have originally used SPSS, SAS, or Stata, but share the data as an Excel file. This might be because the receiving organization does not have the proprietary software, and the ubiquity of Excel as an analytic tool makes it a functional choice.
+You might encounter a circumstance where the data collectors have originally used SPSS\index{SPSS}, SAS\index{SAS}, or Stata\{Stata}, but share the data as an Excel file. This might be because the receiving organization does not have the proprietary software, and the ubiquity of Excel as an analytic tool makes it a functional choice.
 
 Typically in these circumstances, the data collectors make the data available in two parts: 
 
@@ -314,7 +314,7 @@ Typically in these circumstances, the data collectors make the data available in
 * A separate "code book", with the labels associated with each numeric value.
 
 
-In the following example, the penguins data [@R-palmerpenguins] has been stored in an Excel file. The first sheet in this Excel file contains the data, where the values in the three character variables (species, island, and sex) have been converted to numeric codes. For example, for the species variable, the Adelie penguins are represented by the value "1", Chinstrap are represented by "2", and Gentoo are represented by "3".
+In the following example, the Palmer penguins data\index{palmerpenguins} [@R-palmerpenguins] has been stored in an Excel file. The first sheet in this Excel file contains the data, where the values in the three character variables (species, island, and sex) have been converted to numeric codes. For example, for the species variable, the Adelie penguins are represented by the value "1", Chinstrap are represented by "2", and Gentoo are represented by "3".
 
 
 
@@ -360,7 +360,7 @@ attr(penguins_data$species, "labels")
 
 We can also use R to read in the values and apply them programmatically. This will save time and effort and reduce the risk of typographical errors, particularly if there are many variables and those variables have many values to label.
 
-If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains output SPSS creates when the "DISPLAY DICTIONARY" syntax (or the "File > Display Data File Information > Working File" GUI menu sequence) in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
+If we return to the Excel file "penguins_labelled.xlsx" we find that the second sheet in the Excel file is called "penguins_codebook_source". This sheet contains the output SPSS\index{SPSS} creates when the "DISPLAY DICTIONARY" syntax (or the "File > Display Data File Information > Working File" GUI menu sequence) in SPSS is used to produce the "dictionary" (or codebook). There is information about each of the variables, including whether that variable is nominal or scale.
 
 Of particular interest to us are the values associated with each variable. This information is saved under the heading "Variable Values"; for the penguins data file, this appears in row 36 of the Excel sheet.
 
@@ -381,7 +381,7 @@ penguins_code
 
 ```
 
-We have read the table as output by SPSS and saved in the Excel file, but there is additional wrangling required.
+We have read the table as output by SPSS\index{SPSS} and saved in the Excel file, but there is additional wrangling required.
 
 The first step in the pipe is to rename the variables. Not only has the name `Value` been given to the "Variable" column, but the name of the value column has been interpreted as blank and has been assigned the variable name `...2`. 
 
@@ -408,7 +408,7 @@ At this point, there are two possible solutions:
 
 1. Join the values from the "penguins_code" dataframe, so that in addition to the variable with numeric values, there is also a variable with the character strings.
 
-2. Using the functions in the {labelled} package, convert the variables into "labelled" type, so the the numeric values remain and the labels are applied. In this scenario, the end-state is the same as reading the SPSS file directly.
+2. Using the functions in the {labelled} package, convert the variables into "labelled" type, so the the numeric values remain and the labels are applied. In this scenario, the end-state is the same as reading the SPSS\index{SPSS} file directly.
 
 
 **Final step: join variables**
@@ -533,7 +533,7 @@ nts_person_2020_ds <- memisc::as.data.set(nts_person_2020)
 
 
 
-That dataset object is now converted into a tibble, using the `as_haven()` function. This tibble has all of the variable and value labels assigned, accessible via the functions in the {labelled} package.
+That dataset object is now converted into a tibble, using the `as_haven()` function. This tibble has all of the variable and value labels\index{labelled variables} assigned, accessible via the functions in the {labelled} package.
 
 
 ```{r convert_to_haven_tibble}

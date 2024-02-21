@@ -31,7 +31,7 @@ In this chapter:
 
 ## Relational data
 
-Relational databases are commonly used for data storage. Unlike a "flat file" which contains all of the variables, the data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated in multiple rows. We have seen an example of a relational table earlier, where we built a concordance table for the administrative geography of England and Wales in \@ref(Excel). 
+Relational databases are commonly used for data storage. Unlike a "flat file" which contains all of the variables, the data is stored in multiple tables, which are linked via common variables (known as the "keys"). This facilitates efficient storage, as information does not need to be duplicated in multiple rows. We have seen an example of a relational table earlier, where we built a concordance table\index{concordance table} for the administrative geography of England and Wales in \@ref(Excel). 
 
 In that example, all of the data was loaded into our computer's memory. In other instances, the size of the database, across multiple tables, will be such that it exceeds the capacity of your computer. In those cases, a server-based database will be established, and as the data analyst, we will need to retrieve only the variables and records that we need for our work. A database query can also include the calculation of summary statistics, which shifts the computational load to the server.
 
@@ -116,7 +116,7 @@ flights_SEA <- flights |>
 
 ```
 
-We can also use the `show_query()` function of {dbplyr} to generate the SQL translation of the R code:
+We can also use the `show_query()` function of {dbplyr} to generate the SQL\index{SQL} translation of the R code:
 
 ```{r}
 flights_SEA <- flights |> 
@@ -155,7 +155,7 @@ SEA
 
 ### Using SQL in your R code
 
-In addition to writing native R code, we can embed SQL inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. 
+In addition to writing native R code, we can embed SQL\index{SQL} inside R code. In the example below, an R chunk in the R Markdown document has R code that uses the `dbSendQuery()` function. Inside this function, we first name the connection we are using and then inside the quotation marks write SQL code: `"SELECT * FROM flights WHERE dest = 'SEA'"`. 
 
 This query instruction gets saved as the object `SEA_sql`.
 
@@ -175,7 +175,7 @@ dbFetch(SEA_sql)
 
 ## Running SQL language chunks in R Markdown
 
-The book _R Markdown: The Definitive Guide_ [@Xie_Allaire_Grolemund_RMarkdown_2019, Chapter 2.7.3] provides instructions on how to set up your R Markdown in RStudio so that you can run SQL language chunks, including using SQLite. 
+The book _R Markdown: The Definitive Guide_ [@Xie_Allaire_Grolemund_RMarkdown_2019, Chapter 2.7.3] provides instructions on how to set up your R Markdown in RStudio so that you can run SQL\index{SQL} language chunks, including using SQLite. 
 
 Once this has been done, our R Markdown document can incorporate native SQL queries into the workflow. Note that in our SQL chunk, we specify the connection. As we continue to work through this example, this is the `con_nycf` object created earlier. The start of our SQL code chunk would contain this text:
 
@@ -231,7 +231,7 @@ flights_SEA_summary |>
 
 
 
-The SQL code below returns the same table. We can see one difference in how the code is written—it runs "inside out" with the third step coming before the first and second, rather than in the linear manner we are accustomed to in our R pipes.
+The SQL\index{SQL} code below returns the same table. We can see one difference in how the code is written—it runs "inside out" with the third step coming before the first and second, rather than in the linear manner we are accustomed to in our R pipes.
 
 
 
@@ -262,7 +262,7 @@ The joins are named using terms similar to those you are familiar with from {dpl
 To indicate the key variable for the join, we use the SQL term `ON`. Note that we specify the table and the variable, separated by a period.
 
 
-For more information on using SQL, with a focus on SQLite, Thomas Nield's _Getting Started with SQL_ [@Nield_2016] is highly recommended.
+For more information on using SQL\index{SQL}, with a focus on SQLite, Thomas Nield's _Getting Started with SQL_ [@Nield_2016] is highly recommended.
 
 
 

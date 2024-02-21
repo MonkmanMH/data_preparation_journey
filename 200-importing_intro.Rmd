@@ -104,9 +104,9 @@ Some things to ask about the data:
 
   - Did variables that should be numbers load as numeric types, or as character?
 
-  - If working with labelled variables, did they load as factor type?
+  - If working with labelled variables\index{labelled variables}, did they load as factor type?
 
-* How are missing values represented?
+* How are missing values\index{missing values} represented?
 
   - As we will see in the next chapters, many import functions provide the flexibility to encode NA values based on specific characters. 
 

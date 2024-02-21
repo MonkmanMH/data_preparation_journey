@@ -250,7 +250,7 @@ For example, if we want to plot the population in England by the county level, a
 
 * Unitary Authorities (E06), London Boroughs (E09), Counties (E10), and Metropolitan Counties (E11)
 
-For this, we can design a regular expression that identifies a letter "E" at the beginning by using the "^" character. (Remember, the "E" is for England, and "W" for Wales.) This is then followed by either a 0 or a 1 in the 2nd character spot (within the first set of square brackets), and in the third spot one of 6, 9, 0, or 1 (within the second set of square brackets). 
+For this, we can design a regular expression\index{regular expressions}\index{regex|see{regular expressions}} that identifies a letter "E" at the beginning by using the "^" character. (Remember, the "E" is for England, and "W" for Wales.) This is then followed by either a 0 or a 1 in the 2nd character spot (within the first set of square brackets), and in the third spot one of 6, 9, 0, or 1 (within the second set of square brackets). 
 
 ```{r}
 
@@ -285,7 +285,7 @@ county_pop <- uk_census_pop |>
 
 ```
 
-For our validation checks, we will ensure that our list of UAs is complete, and that the calculated total population matches what is given in the "England" row of the source data:
+For our validation\index{data validation} checks, we will ensure that our list of UAs is complete, and that the calculated total population matches what is given in the "England" row of the source data:
 
 ```{r}
 # check

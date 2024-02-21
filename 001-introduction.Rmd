@@ -44,7 +44,7 @@ But in real life the data we find ourselves working with is, more often than not
 
 > _Classroom data are like teddy bears; real data are like a grizzly with salmon blood dripping out of its mouth._ ^[quote attributed to Jenny Bryan, "Teach Data Science and They Will Come," Joint Statistical Meetings, 2015]
 
-* Data can be stored in different formats–spreadsheets, databases, software-specific file formats, websites, and PDF files. We need to have tools to access the data, no matter the file format.
+* Data can be stored in different formats–spreadsheets, databases, software-specific file formats, websites, and PDF files\index{Portable Document Format (PDF)}. We need to have tools to access the data, no matter the file format.
 
 * The data might be stored in an untidy layout [@tidydata], or inconsistently structured.
 
