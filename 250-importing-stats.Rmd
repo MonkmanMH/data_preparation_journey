@@ -5,6 +5,11 @@ output:
 ---
 
 
+<!-- 
+This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
+-->
+
+
 
 ```{r setup_ch250, include=FALSE, eval=TRUE}
 source("package_load.R")
@@ -510,7 +515,7 @@ missing_values <- glue(layout_folder, missing_values_1, .sep = "/")
 
 ```
 
-
+\newpage
 The next stage is to create a definition of the dataset using the `memisc::spss.fixed.file()` import procedure.
 
 ```{r memisc_import}
@@ -571,9 +576,4 @@ readr::write_rds(nts_person_2020_hav,
 ```{r, include=FALSE}
 #detach("package:memisc", unload = TRUE)
 ```
-
-
-<!-- 
-This file by Martin Monkman is licensed under a Creative Commons Attribution 4.0 International License. 
--->
 

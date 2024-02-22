@@ -161,6 +161,7 @@ If we open the file in a text editor, we see this:
 
 ![_authors_fwf.txt._](img/authors_img.jpg){width=75%}
 
+\newpage
 We could also use the {base R} function `readLines()` to see the lines:
 
 
@@ -189,6 +190,7 @@ The first approach would be to allow {readr} to guess where the column breaks ar
 Note that the column names are specified in a list. 
 
 
+\newpage
 
 ```{r importing_authors_path_2}
 fwf_empty(
@@ -255,6 +257,7 @@ read_fwf(authors2_path,
 
 A more reliable approach is to specify exactly the width of each column. Note that in the example below, we specify only "name" without splitting it into first and last.
 
+\newpage
 The variables and their widths are as follows:
 
 
@@ -290,6 +293,7 @@ read_fwf(authors2_path,
 
 The fourth option is a syntactic variation on the third, with the same values but in a different order. This time, all of the relevant information about each variable is aggregated, with the variable name followed by the start and end locations.
 
+\newpage
 ```{r, message=FALSE}
 
 read_fwf(authors2_path, 
@@ -300,6 +304,8 @@ read_fwf(authors2_path,
 ![_read_fwf message._](img/authors2_read_fwf_5.png){width=100%}
 
 And finally, {readr} provides a fifth way to read in a fixed-width file that is a variation on the second approach we saw, with the name and the width values aggregated.
+
+\newpage
 
 ```{r, message=FALSE}
 
@@ -359,6 +365,7 @@ You will note in the code below that in the case of the variables that are of le
 
 As well, the `SAMPLEID` variable is a 12-digit number; the `read_fwf()` function will interpret this as variable type double, and represent it in scientific notation. To be useful, we want to be able to see and evaluate the entire string. As a result, we use `col_types()` to specify `SAMPLEID` as a character.
 
+\newpage
 ```{r jcush_txt_read_vars}
 
 jcush <- readr::read_fwf(dpjr::dpjr_data("JCUSH.txt"), 

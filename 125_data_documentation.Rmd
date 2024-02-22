@@ -344,6 +344,7 @@ An example is the R package {palmerpenguins}\index{palmerpenguins} which has a c
 
 Your documentation (perhaps as part of the README file) can include a diagram that shows the directory structure. The package {fs} [@R-fs] has a function `dir_tree()` that will create a dendogram of the file folder structure and files in your project folder.
 
+
 ```{r, eval=FALSE}
 library(fs)
 ```
@@ -364,6 +365,7 @@ The `recurse =` argument specifies how deep into the directory structure the dia
 fs::dir_tree(path = "project_template", recurse = FALSE)
 ```
 
+\newpage
 It's also possible to specify how many layers, by using an integer rather than `FALSE` or `TRUE`.
 
 ```{r dir_tree_integer}
