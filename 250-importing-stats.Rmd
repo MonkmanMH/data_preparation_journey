@@ -100,7 +100,7 @@ var_label(penguins_sav$species) <- "Penguin species"
 
 ```
 
-The label is now incorporated into the dataframe:
+We can see that the label is now incorporated into the dataframe using the `look_for()` function:
 
 ```{r}
 look_for(penguins_sav)
@@ -111,7 +111,10 @@ It's also possible to add multiple labels. Note that in this example, a label is
 ```{r}
 var_label(penguins_sav) <- list(island = "Island of record", 
                                 body_mass_g = "Weight, in grams")
+```
 
+\newpage
+```{r}
 look_for(penguins_sav)
 ```
 
@@ -155,6 +158,7 @@ penguins_sav |>
 
 In this second variant, the `mutate_if(is.labelled)` function transforms all of the labelled variables.
 
+\newpage
 ```{r}
 penguins_sav |> 
   mutate_if(is.labelled, to_factor) |> 
@@ -187,7 +191,7 @@ In this view, we can see both the variable names and the variable labels (in thi
 
 And we can also drill deeper, and see the value labels:
 
-![_SPSS variable label._](img\video_heard_values.PNG)
+![_SPSS value label._](img\video_heard_values.PNG)
 
 
 The R package {haven} allows us to capture all of this information.
