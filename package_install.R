@@ -21,8 +21,17 @@ install.packages(c(
   "skimr"
   ))
 
+install.packages("forecast")
+install.packages("memisc")
+install.packages("onsr")
+install.packages("tidylog")
+install.packages("tidyxl")
+install.packages("unpivotr")
+install.packages("validate")
+
 # data
 install.packages("palmerpenguins")
+install.packages("bcdata")
 
 
 # download and install "remotes"
