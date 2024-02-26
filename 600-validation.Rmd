@@ -135,7 +135,7 @@ glimpse(df_HR_train, width = 65)
 
 Now that the variables are all in a type that suits what is being represented, applying R's `summary()` function gives us another way to see the data.
 
-
+\newpage
 ```{r}
 summary(df_HR_train)
 ```
@@ -155,6 +155,7 @@ A thorough understanding of the data and its origins will ensure that your analy
 
 A plot can show us a wealth of information that cannot be expressed in the summary statistics. Let's work through exploring the date of birth variable from the `df_HR_main` sheet.
 
+\newpage
 
 ```{r read_HR_main_600}
 
@@ -173,15 +174,19 @@ Again we will use the `glimpse()` and `summary()` functions to start our explora
 
 ```{r}
 glimpse(df_HR_main)
+```
 
+
+
+\newpage
+```{r}
 summary(df_HR_main)
 ```
 
 
 In the midst of this information is an interesting anomaly—you may have spotted it. It is one that is far more visible if we plot the data. Below is a density plot that shows the distribution of birth dates of the staff:
 
-
-```{r}
+```{r 600_data_vis_1, out.height="40%"}
 ggplot(df_HR_main, aes(x = date_of_birth )) +
   geom_density()
 
@@ -193,6 +198,7 @@ With a plot it is easy to see that there are a handful of birth dates around the
 Here are some questions that we might want to explore further in the `date_of_birth` variable, after seeing the results of the `summary()` function and the plot:
 
 * The earliest birth date is 1901-01-01. This would mean that the oldest staff member was 119 years old at 2020-01-01, the point at which the dataset was created. Perhaps you are already aware of the fact that only one person whose age has been independently verified lived long enough to celebrate their 120th birthday (they were 122 years, 164 days old when they passed away). ^[[Wikipedia, "List of the verified oldest people"](https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people)] A possibility is that 1901-01-01 is a sentinel value\index{sentinel value}, inserted as a placeholder for unknown or missing values. Further exploration will help our understanding; we can start with counting the number of cases for any particular date:
+
 
 ```{r}
 df_HR_main |> 
@@ -207,7 +213,7 @@ There are 10 cases with the birth date entry of 1901-01-01. This is the sort of 
 
 Another approach to investigating this might be to derive a single year "age" variable from the date of birth, and visualize age using a box-and-whisker plot by one of the categorical variables to make outliers more apparent. We have a hunch that the "1901-01-01" sentinel value for date of birth might be associated with one category of occupation. Using our relational database\index{relational database} "join" skills, we link the occupation variable from the "transaction" table and use occupation as a grouping variable in our plot. You'll notice that the transaction table is not in a structure that suits our analysis needs, so we have to do some data wrangling first.
 
-```{r}
+```{r 600_data_vis_2, out.height="40%"}
 # step 1: read transaction table, which contains occupation
 df_HR_transaction <- 
   read_excel(
@@ -428,7 +434,10 @@ The "badpenguins.rds" file adds five fictional penguins to the original "penguin
 
 ```{r}
 badpenguins <- read_rds(dpjr_data("badpenguins.rds"))
+```
 
+\newpage
+```{r}
 tail(badpenguins)
 
 check_penguins <- check_that(badpenguins, year >= 2007 & year <= 2009)
@@ -474,11 +483,13 @@ In the next step, we apply those tests in a sequence of "confrontations" using t
 
 
 ```{r}
-
 penguin_confront <- confront(badpenguins, penguin_tests)
 
 penguin_confront
+```
 
+\newpage
+```{r}
 summary(penguin_confront)
 ```
 

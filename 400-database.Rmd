@@ -132,9 +132,9 @@ In SQL, we use `SELECT` to select the columns (or variables) we want (you will n
 
 And finally, the filtering by city uses the SQL function `WHERE`.
 
-
 In the code below, we create a summary table of the average flight time from New York to Seattle, by airline.
 
+\newpage
 
 ```{r}
 
@@ -211,7 +211,6 @@ Once the connection is made the tables can be joined using the `left_join()` fun
 
 The table is also formatted for publication using the {gt} package [@R-gt]; the core `gt()` function is the first step, and many other formatting options are possible with this package.
 
-\newpage
 
 
 ```{r flights_summary}
